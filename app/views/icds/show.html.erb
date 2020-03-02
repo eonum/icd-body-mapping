@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @icd.code %>
+</p>
+
+<p>
+  <strong>Version:</strong>
+  <%= @icd.version %>
+</p>
+
+<p>
+  <strong>Text de:</strong>
+  <%= @icd.text_de %>
+</p>
+
+<p>
+  <strong>Text fr:</strong>
+  <%= @icd.text_fr %>
+</p>
+
+<p>
+  <strong>Text it:</strong>
+  <%= @icd.text_it %>
+</p>
+
+<%= link_to 'Edit', edit_icd_path(@icd) %> |
+<%= link_to 'Back', icds_path %>

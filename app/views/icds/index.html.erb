@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Icds</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Version</th>
+      <th>Text de</th>
+      <th>Text fr</th>
+      <th>Text it</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @icds.each do |icd| %>
+      <tr>
+        <td><%= icd.code %></td>
+        <td><%= icd.version %></td>
+        <td><%= icd.text_de %></td>
+        <td><%= icd.text_fr %></td>
+        <td><%= icd.text_it %></td>
+        <td><%= link_to 'Show', icd %></td>
+        <td><%= link_to 'Edit', edit_icd_path(icd) %></td>
+        <td><%= link_to 'Destroy', icd, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Icd', new_icd_path %>

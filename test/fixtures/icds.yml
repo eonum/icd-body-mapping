@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  version: MyString
+  text_de: MyString
+  text_fr: MyString
+  text_it: MyString
+
+two:
+  code: MyString
+  version: MyString
+  text_de: MyString
+  text_fr: MyString
+  text_it: MyString
