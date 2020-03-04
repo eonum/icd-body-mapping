@@ -4,12 +4,18 @@ class IcdsController < ApplicationController
   # GET /icds
   # GET /icds.json
   def index
-    @icds = Icd.all
+    icd = Icd.all.order(code: :asc)
+    render json: icd
   end
 
   # GET /icds/1
   # GET /icds/1.json
   def show
+    if icd
+      render json: icd
+    else
+      render json: icd.errors
+    end
   end
 
   # GET /icds/new
@@ -69,6 +75,10 @@ class IcdsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def icd_params
-      params.require(:icd).permit(:code, :version, :text_de, :text_fr, :text_it)
+      params.require(:icd).permit(:code, :version, :text_de, :text_fr, :text_it, :annotationen)
+    end
+
+    def icd
+      @icd ||= Icd.find(params[:id])
     end
 end

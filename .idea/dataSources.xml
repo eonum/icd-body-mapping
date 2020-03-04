@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="Rails icd-body-mapping: production" uuid="0dea5673-6e25-4b48-a6fd-5c35e022ecd5">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/config/database.yml</remarks>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://127.0.0.1:5432/icd_body_mapping_production</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="Rails icd-body-mapping: test" uuid="95dfccb8-c35c-478d-ae01-e138013bc984">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/config/database.yml</remarks>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://127.0.0.1:5432/icd_body_mapping_test</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="Rails icd-body-mapping: development" uuid="0108d711-e684-4035-80cc-8527aee69f8f">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/config/database.yml</remarks>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://127.0.0.1:5432/icd_body_mapping_development</jdbc-url>
+    </data-source>
+  </component>
+</project>
