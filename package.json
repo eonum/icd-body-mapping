@@ -19,6 +19,8 @@
   },
   "version": "0.1.0",
   "devDependencies": {
+    "@material-ui/core": "^4.9.5",
+    "@material-ui/icons": "^4.9.1",
     "webpack-dev-server": "^3.10.3"
   }
 }

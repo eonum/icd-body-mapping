@@ -29,7 +29,7 @@ class Icds extends React.Component {
                 <div className="card mb-4">
                     <div className="card-body">
                         <h5 className="card-title">{icd.code}</h5>
-                        <Link to={`/icds/${icd.id}`} className="btn custom-button">
+                        <Link to={`/icdDetail/${icd.id}`} className="btn custom-button">
                             View Icd
                         </Link>
                     </div>

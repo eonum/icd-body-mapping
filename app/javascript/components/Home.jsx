@@ -11,7 +11,7 @@ export default () => (
                 </p>
                 <hr className="my-4" />
                 <Link
-                    to="/icds"
+                    to="/icdCatalogue"
                     className="btn btn-lg custom-button"
                     role="button"
                 >
