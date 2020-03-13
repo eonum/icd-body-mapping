@@ -1,22 +1,26 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import Search from "../components/Search";
+import SearchResults from "../components/SearchResults";
 import $ from "jquery";
 
+/**
+ * The home component is our main component to which you get linked by default
+ */
 class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             term: '',
-            icds: [],
-            itemSelected: {},
-            showItemSelected: false
+            icds: []
         };
 
         $.getJSON('/search?q=' + this.state.term)
             .then(response => this.setState({ icds: response }))
     }
 
+    /**
+     * Gets the search results from the link '/search?q=' + this.state.term
+     * and saves them into the icds array, this will be later passed on to the search results component
+     */
     getAutoCompleteResults(e){
         this.setState({
             term: e.target.value
@@ -26,9 +30,16 @@ class Home extends React.Component {
         });
     }
 
+    /**
+     * Link is responsible for the tab icon
+     * input is the search-bar, which gets the Icds from the backend through '/search?q='
+     * SearchResults is passed an array of Icds as to display them, see ./SearchResults.jsx
+     * @returns {The home Page render}
+     */
     render() {
         return (
             <div>
+                <link rel="shortcut icon" href="./images/favicon.ico"/>
                 <div className="jumbotron jumbotron-fluid bg-transparent">
                     <div className="container secondary-color">
                         <h1 className="display-4">ICD-Body-Mapping</h1>
@@ -40,7 +51,7 @@ class Home extends React.Component {
                                value={ this.state.term }
                                onChange={ this.getAutoCompleteResults.bind(this) }
                                type='text' placeholder='Search...' />
-                        <Search SearchState={this.state}/>
+                        <SearchResults SearchState={this.state}/>
                     </div>
                 </div>
             </div>
