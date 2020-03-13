@@ -25,6 +25,8 @@ gem 'jbuilder', '~> 2.7'
 gem 'yaml_db'
 gem 'haml'
 gem 'ransack'
+gem 'react-rails'
+gem 'react_on_rails'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

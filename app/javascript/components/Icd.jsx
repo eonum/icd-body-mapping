@@ -74,7 +74,7 @@ class Icd extends React.Component {
                         />
                     </div>
                 </div>
-                <Link to="/icds" className="btn btn-link">
+                <Link to="/icdCatalogue" className="btn btn-link">
                     Back to other numbers
                 </Link>
             </div>
