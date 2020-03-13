@@ -1,5 +1,3 @@
-# icd-body-mapping
-Web app for the mapping of medical codes (ICD and CHOP) to the human body
 # Documentation
 
 Required frameworks
@@ -10,19 +8,12 @@ Ruby on Rails, PostgreSQL ReactJS, Node.js, npm (included in most Node.js instal
 
 ### Linux (Ubuntu) (requires configured git account)
 
-Always update & upgrade before installing new software
-
-#### Install Node.js (12.16.1)
-
 Open Terminal (ctrl+alt+t)
 
-sudo apt install nodejs
-sudo apt install npm
+Add Webpacker support by adding Node.js and yarn repositories
 
-
-#### Add Webpacker support by yarn (v1.22.4) repositories
-
-Open Terminal (ctrl+alt+t)
+sudo apt-get update -y
+sudo apt-get upgrade -y
 
 sudo apt install curl
 curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
@@ -32,7 +23,7 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/source
 sudo apt-get update
 sudo apt-get install git-core zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev software-properties-common libffi-dev nodejs yarn
 
-#### Install Ruby (2.6.0) via rbenv (rbenv install included)
+Install Ruby via rbenv (rbenv install included)
 
 cd
 git clone https://github.com/rbenv/rbenv.git ~/.rbenv
@@ -48,11 +39,11 @@ rbenv install 2.7.0
 rbenv global 2.7.0
 ruby -v
 
-#### Install additional bundler
+Install additional bundler
 
 gem install bundler
 
-#### Install Rails (6.0.2.1)
+Install Rails (check for correct version first)
 
 gem install rails -v 6.0.2.1
 rbenv rehash
@@ -61,12 +52,7 @@ check version
 
 rails -v
 
-#### nokogiri (1.10.8) might come preinstalled with rails
-
-sudo apt-get install build-essential patch ruby-dev zlib1g-dev liblzma-dev
-gem install nokogiri
-
-#### Install PostgreSQL (12.2):
+Install PostgreSQL (12.2):
 
 sudo apt install postgresql-12 libpq-dev
 
@@ -87,17 +73,17 @@ rake db:data:load
 
 ### Windows
 
-#### Node.js (12.16.1):
+Node.js:
 
-Download Node.js from 'https://nodejs.org/en/download/' and install, npm (6.13.4) is included
+Download Node.js (12.16.1) from 'https://nodejs.org/en/download/' and install, npm (6.13.4) is included
 
-#### Yarn (v1.22.4):
+Yarn
 
-Download yarn from 'https://classic.yarnpkg.com/en/docs/install/#windows-stable' and install
+Download yarn (v1.22.4) from 'https://classic.yarnpkg.com/en/docs/install/#windows-stable' and install
 
 Alternatively use Chocolatey (Package manager for windows)
 
-#### Ruby (2.7.0):
+Ruby (2.7.0)
 
 Download Ruby from 'https://rubyinstaller.org/downloads/' and install
 
@@ -105,9 +91,7 @@ Check version:
 
 C:\ ruby -v
 
-#### Rails (6.0.2.1):
-
-Open CMD to install Rails (windows + R, type "cmd", hit enter)
+Open CMD to install Rails (6.0.2.1) (windows + R, type "cmd", hit enter)
 
 C:\> gem install Rails
 
@@ -120,9 +104,7 @@ Check version:
 
 C:\> rails -v
 
-#### nokogiri (1.10.8)
-
-Some installers include nokogiri, in case of errors due to wrong version or absence try the following commands
+Some installers include nokogiri (1.10.8), in case of errors due to wrong version or absence try the following commands
 
 gem install nokogiri
 gem install nokogiri -v '2.9.10'         (as of this moment the latest version is '2.9.10'
@@ -132,9 +114,9 @@ Check version:
 
 C:\> nokogiri -v
 
-#### PostgreSQL (12.2)
+PostgreSQL
 
-Download PostgreSQL from 'https://www.postgresql.org/download/windows/' and install
+Download PostgreSQL (12.2) from 'https://www.postgresql.org/download/windows/' and install
 
 setup user with permission to create databases
 
