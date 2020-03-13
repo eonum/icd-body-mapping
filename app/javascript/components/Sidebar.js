@@ -1,8 +1,12 @@
 import React from 'react';
 import {Drawer} from "@material-ui/core";
 import {List, ListItem, ListItemText} from '@material-ui/core';
+import {Link} from "react-router-dom";
+import Button from "@material-ui/core/Button";
 
 class Sidebar extends React.Component {
+    selectedIcdID;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -25,12 +29,16 @@ class Sidebar extends React.Component {
 
     render() {
         const { icds } = this.state;
-        const allIcds = icds.map((icd) => {
-            <ListItem>{icd.code}</ListItem>
-        });
+        const allIcds = icds.map((icd, index) => (
+                <ListItem key={index}>
+                    <Button onClick={this.selectIcd(icd.id)}>
+                        {icd.code}
+                    </Button>
+                </ListItem>
+        ));
         const noIcd = (
             <ListItem>
-                Icd's haven't loaded yet
+                Icd catalogue loading...
             </ListItem>
         );
 
@@ -41,6 +49,11 @@ class Sidebar extends React.Component {
                 </List>
             </Drawer>
         )
+    }
+
+    selectIcd(id) {
+        this.selectedIcdID = id;
+        console.log(id);
     }
 }
 

@@ -6,11 +6,13 @@ class DetailsCard extends React.Component {
         // retrieve data to be displayed from backend
     }
 
+    componentDidMount() {
+
+    }
+
     render() {
         return (
-            <div>
-                <p>lorem ipsum bla bla bla... details</p>
-            </div>
+            <p>Render shit...</p>
         )
     }
 }
