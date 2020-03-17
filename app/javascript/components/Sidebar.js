@@ -27,6 +27,10 @@ class Sidebar extends React.Component {
             .catch(() => this.props.history.push("/"));
     }
 
+    selectIcd(icd) {
+        this.selectedIcd = icd;
+    }
+
     render() {
         const { icds } = this.state;
         /*
@@ -69,10 +73,6 @@ class Sidebar extends React.Component {
                 {icds.length > 0 ? allIcds : noIcd}
             </div>
         )
-    }
-
-    selectIcd(icd) {
-        this.selectedIcd = icd;
     }
 }
 

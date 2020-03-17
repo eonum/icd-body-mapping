@@ -2,6 +2,7 @@ import React from 'react';
 import Topbar from "./Topbar";
 import Sidebar from "./Sidebar";
 import DetailsCard from "./DetailsCard";
+import SearchCard from "./SearchCard";
 import Mapping from "./Mapping";
 import './MainUI.css'
 import Grid from "@material-ui/core/Grid";
@@ -12,47 +13,56 @@ import {Link} from "react-router-dom";
 class MainUI extends React.Component {
     constructor(props) {
         super(props);
-
+        this.state = {
+            searchedIcds: ''
+        };
     }
 
     componentDidMount() {
 
     }
 
-    render() {
-        let icd = Sidebar.icd;
-        return (
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-12">
-                        <Topbar />
-                    </div>
-                </div>
+    /**
+     * Gets icds from search in Topbar
+     * @param dataFromTopbar
+     */
+    callbackTopbarSearch = (dataFromTopbar) => {
+        this.setState({ searchedIcds: dataFromTopbar });
+        console.log(this.state.searchedIcds);
+    };
 
-                <div className="row">
-                    <div className="col-2">
-                        <Sidebar />
+    render() {
+        const searchActive = (
+            <SearchCard searchedIcds={this.state.searchedIcds} />
+        );
+
+        const searchInactive = (
+            <DetailsCard />
+        );
+
+        return (
+            <div>
+                <link rel="shortcut icon" href="./images/favicon.ico"/>
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-12">
+                            <Topbar callbackFromMainUI={this.callbackTopbarSearch}/>
+                        </div>
                     </div>
-                    <div className="col-4">
-                        <DetailsCard />
-                    </div>
-                    <div className="col-6">
-                        <Mapping />
+
+                    <div className="row">
+                        <div className="col-2">
+                            <Sidebar />
+                        </div>
+                        <div className="col-4">
+                            {this.state.searchedIcds === '' ? searchInactive : searchActive}
+                        </div>
+                        <div className="col-6">
+                            <Mapping />
+                        </div>
                     </div>
                 </div>
             </div>
-
-            /*
-            <Grid
-                container
-                justify="space-around"
-            >
-                <Grid item><Topbar /></Grid>
-                <Grid item><Sidebar /></Grid>
-                <Grid item><DetailsCard /></Grid>
-                <Grid item><Mapping /></Grid>
-            </Grid>
-            */
         )
     }
 }
