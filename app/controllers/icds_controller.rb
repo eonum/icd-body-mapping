@@ -75,7 +75,7 @@ class IcdsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def icd_params
-      params.require(:icd).permit(:code, :version, :text_de, :text_fr, :text_it, :annotationen)
+      params.require(:icd).permit(:code, :version, :text_de, :text_fr, :text_it, :annotationen, :kapitel)
     end
 
     def icd

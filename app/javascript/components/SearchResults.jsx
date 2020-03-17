@@ -13,17 +13,21 @@ class SearchResults extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            itemSelected: ''
+            itemSelected: '',
+            itemCode: ''
         };
     }
 
-    filter(icd) {
-        if (this.state.itemSelected !== ''){
-            icd = '';
-            this.setState({itemSelected: icd})
+    filter(id, code) {
+        if (this.state.itemSelected === id){
+            id = '';
+            code = '';
+            this.setState({itemSelected: id});
+            this.setState({itemCode: code});
         }
         else{
-            this.setState({itemSelected: icd})
+            this.setState({itemSelected: id});
+            this.setState({itemCode: code});
         }
     }
 
@@ -34,15 +38,29 @@ class SearchResults extends React.Component {
     render(){
         const { icds } = this.props.SearchState;
         let allIcds = icds.map((icd, index) => {
-            if (this.state.itemSelected === icd.id || this.state.itemSelected === ''){
-                return <div key={index} className="col-md-6 col-lg-4" onClick = {this.filter.bind(this, icd.id)}>
-                    <div className="card mb-4">
-                        <div className="card-body">
-                            <h5 className="card-title">{icd.code}</h5>
-                            <h6 className="card-description">{icd.text_de}</h6>
+            if (this.state.itemSelected === '') {
+                if (icd.code.length === 3) {
+                    return <div key={index} className="col-md-6 col-lg-4" onClick={this.filter.bind(this, icd.id, icd.code)}>
+                        <div className="card mb-4">
+                            <div className="card-body">
+                                <h5 className="card-title">{icd.code}</h5>
+                                <h6 className="card-description">{icd.text_de}</h6>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
+            }
+            else{
+                if (icd.code.includes(this.state.itemCode)){
+                    return <div key={index} className="col-md-6 col-lg-4" onClick={this.filter.bind(this, icd.id, icd.code)}>
+                        <div className="card mb-4">
+                            <div className="card-body">
+                                <h5 className="card-title">{icd.code}</h5>
+                                <h6 className="card-description">{icd.text_de}</h6>
+                            </div>
+                        </div>
+                    </div>
+                }
             }
         });
         const noIcd = (

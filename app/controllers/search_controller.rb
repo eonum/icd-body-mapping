@@ -6,13 +6,10 @@ class SearchController < ApplicationController
   def index; end
 
   def search
-    icd = Icd.ransack(code_or_text_de_cont: params[:q]).result(distinct: true)
+    icd = Icd.ransack(code_or_text_de_cont: params[:q]).result(distinct: true).order(code: :asc)
     render json: icd
   end
 
   private
 
-  def set_icd
-    @icd = Icd.find(params[:id])
-  end
 end

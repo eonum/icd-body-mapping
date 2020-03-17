@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  resources :icds
   root 'homepage#index'
+  resources :icds
   get :search, controller: :search
+  get '/chapter/:kapitel', to: 'chapter#show'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
