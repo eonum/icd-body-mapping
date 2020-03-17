@@ -8,10 +8,8 @@ import MainUI from "../components/MainUi";
 export default (
     <Router>
         <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/icdCatalogue" exact component={Icds} />
-            <Route path="/icdDetail/:id" exact component={Icd} />
-            <Route path="/mainUI" exact component={MainUI} />
+
+            <Route path="/" exact component={MainUI} />
         </Switch>
     </Router>
 );

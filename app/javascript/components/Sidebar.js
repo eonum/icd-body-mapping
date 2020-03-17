@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import Button from "@material-ui/core/Button";
 
 class Sidebar extends React.Component {
-    selectedIcdID;
+    selectedIcd;
 
     constructor(props) {
         super(props);
@@ -29,9 +29,10 @@ class Sidebar extends React.Component {
 
     render() {
         const { icds } = this.state;
+        /*
         const allIcds = icds.map((icd, index) => (
                 <ListItem key={index}>
-                    <Button onClick={this.selectIcd(icd.id)}>
+                    <Button onClick={this.selectIcd(icd)}>
                         {icd.code}
                     </Button>
                 </ListItem>
@@ -40,20 +41,38 @@ class Sidebar extends React.Component {
             <ListItem>
                 Icd catalogue loading...
             </ListItem>
+        );*/
+
+        const allIcds = icds.map((icd, index) => (
+            <div className="list-group" key={index}>
+                <a className="list-group-item" href={`#`} onClick={this.selectIcd(icd)}>
+                    {icd.code}
+                </a>
+            </div>
+        ));
+        const noIcd = (
+            <div className="text-uppercase">catalogue loading...</div>
         );
+/*
+        return (
+            <div>
+                <Drawer variant="permanent">
+                    <List disablePadding>
+                        {icds.length > 0 ? allIcds : noIcd}
+                    </List>
+                </Drawer>
+            </div>
+        )*/
 
         return (
-            <Drawer variant="permanent">
-                <List disablePadding>
-                    {icds.length > 0 ? allIcds : noIcd}
-                </List>
-            </Drawer>
+            <div>
+                {icds.length > 0 ? allIcds : noIcd}
+            </div>
         )
     }
 
-    selectIcd(id) {
-        this.selectedIcdID = id;
-        console.log(id);
+    selectIcd(icd) {
+        this.selectedIcd = icd;
     }
 }
 

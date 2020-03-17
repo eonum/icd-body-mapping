@@ -5,7 +5,7 @@ import EditIcon from '@material-ui/icons/Edit';
 class Topbar extends React.Component {
     render() {
         return (
-            <React.Fragment>
+            <div>
                 <AppBar position="fixed">
                     <Toolbar variant="dense">
                         <Grid container spacing={5} alignItems="center" justify="flex-end">
@@ -31,7 +31,7 @@ class Topbar extends React.Component {
                         </Grid>
                     </Toolbar>
                 </AppBar>
-            </React.Fragment>
+            </div>
         )
     }
 

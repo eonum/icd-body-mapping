@@ -20,21 +20,25 @@ class MainUI extends React.Component {
     }
 
     render() {
-
+        let icd = Sidebar.icd;
         return (
-            <div>
-                <CssBaseline />
-                <nav>
-                    <Hidden>
+            <div className="container-fluid">
+                <div className="row">
+                    <div className="col-12">
+                        <Topbar />
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-2">
                         <Sidebar />
-                    </Hidden>
-                </nav>
-                <div>
-                    <Topbar />
-                    <main>
+                    </div>
+                    <div className="col-4">
                         <DetailsCard />
+                    </div>
+                    <div className="col-6">
                         <Mapping />
-                    </main>
+                    </div>
                 </div>
             </div>
 

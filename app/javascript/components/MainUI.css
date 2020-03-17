@@ -1,3 +1,5 @@
-.mainUI {
-    clear: both;
+ .sidebar {
+    width: 20%;
+    min-width: 100px;
+    max-width: 200px;
 }
