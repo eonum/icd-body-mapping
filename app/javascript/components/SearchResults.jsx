@@ -21,8 +21,7 @@ class SearchResults extends React.Component {
         if (this.state.itemSelected !== ''){
             icd = '';
             this.setState({itemSelected: icd})
-        }
-        else{
+        } else {
             this.setState({itemSelected: icd})
         }
     }

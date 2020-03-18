@@ -14,7 +14,9 @@ class MainUI extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            searchedIcds: ''
+            searchedIcds: '',
+            searchTerm: '',
+            selectedIcd: ''
         };
     }
 
@@ -23,21 +25,40 @@ class MainUI extends React.Component {
     }
 
     /**
-     * Gets icds from search in Topbar
-     * @param dataFromTopbar
+     * Gets ICD's and searchterm from search in Topbar
+     * @params searchedIcdsFromTopbar, searchTermFromTopbar
      */
-    callbackTopbarSearch = (dataFromTopbar) => {
-        this.setState({ searchedIcds: dataFromTopbar });
-        console.log(this.state.searchedIcds);
+    callbackTopbarSearch = (searchedIcdsFromTopbar, searchTermFromTopbar) => {
+        this.setState({ searchedIcds: searchedIcdsFromTopbar });
+        this.setState({ searchTerm: searchTermFromTopbar});
+    };
+
+    /**
+     * Gets selected ICD
+     * @params dataFromSidebar
+     */
+    callbackSidebar = (dataFromSidebar) => {
+        this.setState({ selectedIcd: dataFromSidebar });
+    };
+
+    /**
+     * Gets selected ICD
+     * @params dataFromSearchCard
+     */
+    callbackSearchCard = (dataFromSearchCard) => {
+        this.setState({ selectedIcd: dataFromSearchCard });
+        this.setState({ searchTerm: ''});
     };
 
     render() {
-        const searchActive = (
-            <SearchCard searchedIcds={this.state.searchedIcds} />
+        const searchResults = (
+            <SearchCard
+                searchedIcds={this.state.searchedIcds}
+                callbackFromMainUI={this.callbackSearchCard}
+            />
         );
-
-        const searchInactive = (
-            <DetailsCard />
+        const details = (
+            <DetailsCard selectedIcd={this.state.selectedIcd}/>
         );
 
         return (
@@ -52,10 +73,10 @@ class MainUI extends React.Component {
 
                     <div className="row">
                         <div className="col-2">
-                            <Sidebar />
+                            <Sidebar callbackFromMainUI={this.callbackSidebar}/>
                         </div>
                         <div className="col-4">
-                            {this.state.searchedIcds === '' ? searchInactive : searchActive}
+                            {this.state.searchTerm !== '' ? searchResults : details}
                         </div>
                         <div className="col-6">
                             <Mapping />

@@ -3,31 +3,33 @@ import {IconButton, AppBar, Toolbar, Grid, Tooltip} from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import $ from "jquery";
 
+/**
+ * The Topbar contains the searchbar and header and is responsible for the searching.
+ * Possible search results are handed over to parent via callback.
+ * @author Aaron Saegesser
+ */
 class Topbar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            term: '',
-            icds: []
+            term: ''
         };
-
-        $.getJSON('/search?q=' + this.state.term)
-            .then(response => this.setState({ icds: response }))
     }
 
     /**
      * Gets the search results from the link '/search?q=' + this.state.term
      * and saves them into the icds array, this will be later passed on to the search results component
+     * via callbackFromMainUI function
      */
     getAutoCompleteResults(e){
         this.setState({
             term: e.target.value
         }, () => {
             $.getJSON('/search?q=' + this.state.term)
-                .then(response => this.setState({ icds: response }))
+                .then(async response =>
+                    this.props.callbackFromMainUI(await response, this.state.term)
+                )
         });
-        this.props.callbackFromMainUI(this.state.icds);
-        console.log(this.state.term);
     }
 
     render() {

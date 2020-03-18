@@ -5,8 +5,6 @@ import {Link} from "react-router-dom";
 import Button from "@material-ui/core/Button";
 
 class Sidebar extends React.Component {
-    selectedIcd;
-
     constructor(props) {
         super(props);
         this.state = {
@@ -28,45 +26,21 @@ class Sidebar extends React.Component {
     }
 
     selectIcd(icd) {
-        this.selectedIcd = icd;
+        this.props.callbackFromMainUI(icd);
     }
 
     render() {
         const { icds } = this.state;
-        /*
-        const allIcds = icds.map((icd, index) => (
-                <ListItem key={index}>
-                    <Button onClick={this.selectIcd(icd)}>
-                        {icd.code}
-                    </Button>
-                </ListItem>
-        ));
-        const noIcd = (
-            <ListItem>
-                Icd catalogue loading...
-            </ListItem>
-        );*/
-
         const allIcds = icds.map((icd, index) => (
             <div className="list-group" key={index}>
-                <a className="list-group-item" href={`#`} onClick={this.selectIcd(icd)}>
+                <div className="list-group-item" onClick={this.selectIcd.bind(this, icd)}>
                     {icd.code}
-                </a>
+                </div>
             </div>
         ));
         const noIcd = (
             <div className="text-uppercase">catalogue loading...</div>
         );
-/*
-        return (
-            <div>
-                <Drawer variant="permanent">
-                    <List disablePadding>
-                        {icds.length > 0 ? allIcds : noIcd}
-                    </List>
-                </Drawer>
-            </div>
-        )*/
 
         return (
             <div>
