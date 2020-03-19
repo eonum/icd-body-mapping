@@ -1,6 +1,8 @@
 import React from "react";
 import SearchResults from "../components/SearchResults";
 import $ from "jquery";
+import { Link } from "react-router-dom";
+
 
 /**
  * The home component is our main component to which you get linked by default
@@ -46,6 +48,7 @@ class Home extends React.Component {
                         <p className="lead">
                             A curated list of ICD-10 Numbers.
                         </p>
+                        <Link to={`/MainUI`}>Home</Link>
                         <hr className="my-4" />
                         <input ref={ (input) => { this.searchBar = input } }
                                value={ this.state.term }
@@ -58,4 +61,5 @@ class Home extends React.Component {
         );
     }
 }
+
 export default Home;
