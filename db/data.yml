@@ -22,6 +22,7 @@ icds:
   - text_fr
   - text_it
   - annotationen
+  - kapitel
   records: 
   - - 1
     - A40.1
@@ -30,6 +31,7 @@ icds:
     - Septicémie à streptocoques, groupe B
     - Sepsi da streptococco, gruppo B
     - 
+    - 1
   - - 7
     - A00
     - ICD10-GM-2018
@@ -37,6 +39,7 @@ icds:
     - Choléra
     - Colera
     - 
+    - 1
   - - 8
     - A00.0
     - ICD10-GM-2018
@@ -44,6 +47,7 @@ icds:
     - A Vibrio cholerae 01, biovar cholerae
     - Colera da Vibrio cholerae O:1, biotipo del colera
     - 
+    - 1
   - - 9
     - A40.2
     - ICD10-GM-2018
@@ -51,6 +55,7 @@ icds:
     - Septicémie à streptocoques, groupe D, et entérocoques
     - Sepsi da streptococco, gruppo D, e enterococco
     - 
+    - 1
   - - 10
     - A00.1
     - ICD10-GM-2018
@@ -58,6 +63,7 @@ icds:
     - A Vibrio cholerae 01, biovar El Tor
     - Colera da Vibrio cholerae O:1, biotipo El Tor
     - 
+    - 1
   - - 11
     - A00.9
     - ICD10-GM-2018
@@ -65,6 +71,7 @@ icds:
     - Choléra, sans précision
     - Colera non specificato
     - 
+    - 1
   - - 12
     - A01
     - ICD10-GM-2018
@@ -72,6 +79,7 @@ icds:
     - Fièvres typhoïde et paratyphoïde
     - Febbre tifoide e paratifo
     - 
+    - 1
   - - 13
     - A43.0
     - ICD10-GM-2018
@@ -79,6 +87,7 @@ icds:
     - Nocardiose pulmonaire
     - Nocardiosi polmonare
     - 
+    - 1
   - - 14
     - A43.1
     - ICD10-GM-2018
@@ -86,6 +95,7 @@ icds:
     - Nocardiose cutanée
     - Nocardiosi cutanea
     - 
+    - 1
   - - 25
     - A43.8
     - ICD10-GM-2018
@@ -93,6 +103,7 @@ icds:
     - Autres formes de nocardiose
     - Altre forme di nocardiosi
     - 
+    - 1
   - - 26
     - A43.9
     - ICD10-GM-2018
@@ -100,6 +111,7 @@ icds:
     - Nocardiose, sans précision
     - Nocardiosi non specificata
     - 
+    - 1
   - - 27
     - A44
     - ICD10-GM-2018
@@ -107,6 +119,7 @@ icds:
     - Bartonellose
     - Bartonellosi
     - 
+    - 1
   - - 28
     - A51.1
     - ICD10-GM-2018
@@ -114,6 +127,7 @@ icds:
     - Syphilis anale primaire
     - Sifilide anale primaria
     - 
+    - 1
   - - 29
     - A93.2
     - ICD10-GM-2018
@@ -121,6 +135,7 @@ icds:
     - Fièvre à tiques du Colorado
     - Febbre da zecche del Colorado
     - 
+    - 1
   - - 30
     - A98.3
     - ICD10-GM-2018
@@ -128,6 +143,7 @@ icds:
     - Maladie de Marburg
     - Malattia da virus Marburg
     - 
+    - 1
   - - 31
     - A98.4
     - ICD10-GM-2018
@@ -135,6 +151,7 @@ icds:
     - Maladie à virus Ebola
     - Malattia da virus Ebola
     - 
+    - 1
   - - 47
     - A01.0
     - ICD10-GM-2018
@@ -142,6 +159,7 @@ icds:
     - Fièvre typhoïde
     - Febbre tifoide
     - 
+    - 1
   - - 48
     - A01.1
     - ICD10-GM-2018
@@ -149,6 +167,7 @@ icds:
     - Paratyphoïde A
     - Paratifo A
     - 
+    - 1
   - - 49
     - A01.2
     - ICD10-GM-2018
@@ -156,6 +175,7 @@ icds:
     - Paratyphoïde B
     - Paratifo B
     - 
+    - 1
   - - 50
     - A01.3
     - ICD10-GM-2018
@@ -163,6 +183,7 @@ icds:
     - Paratyphoïde C
     - Paratifo C
     - 
+    - 1
   - - 51
     - A01.4
     - ICD10-GM-2018
@@ -170,6 +191,7 @@ icds:
     - Paratyphoïde, sans précision
     - Paratifo non specificato
     - 
+    - 1
   - - 52
     - A02
     - ICD10-GM-2018
@@ -177,6 +199,7 @@ icds:
     - Autres infections à Salmonella
     - Altre infezioni da salmonella
     - 
+    - 1
   - - 53
     - A02.0
     - ICD10-GM-2018
@@ -184,6 +207,7 @@ icds:
     - Entérite à Salmonella
     - Enterite da salmonella
     - 
+    - 1
   - - 54
     - A02.1
     - ICD10-GM-2018
@@ -191,6 +215,7 @@ icds:
     - Septicémie à Salmonella
     - Sepsi da salmonella
     - 
+    - 1
   - - 55
     - A02.2
     - ICD10-GM-2018
@@ -198,6 +223,7 @@ icds:
     - Infection localisée à Salmonella
     - Infezioni localizzate da salmonella
     - 
+    - 1
   - - 56
     - A02.8
     - ICD10-GM-2018
@@ -205,6 +231,7 @@ icds:
     - Autres infections précisées à Salmonella
     - Altre infezioni da salmonella, specificate
     - 
+    - 1
   - - 57
     - A02.9
     - ICD10-GM-2018
@@ -212,6 +239,7 @@ icds:
     - Infection à Salmonella, sans précision
     - Infezione da salmonella, non specificata
     - 
+    - 1
   - - 58
     - A03
     - ICD10-GM-2018
@@ -219,6 +247,7 @@ icds:
     - Shigellose
     - Shigellosi
     - 
+    - 1
   - - 59
     - A40.0
     - ICD10-GM-2018
@@ -226,6 +255,7 @@ icds:
     - Septicémie à streptocoques, groupe A
     - Sepsi da streptococco, gruppo A
     - 
+    - 1
   - - 60
     - A03.0
     - ICD10-GM-2018
@@ -233,6 +263,7 @@ icds:
     - Shigellose à Shigella dysenteriae
     - Shigellosi da Shigella dysenteriae
     - 
+    - 1
   - - 61
     - A03.1
     - ICD10-GM-2018
@@ -240,6 +271,7 @@ icds:
     - Shigellose à Shigella flexneri
     - Shigellosi da Shigella flexneri
     - 
+    - 1
   - - 62
     - A03.2
     - ICD10-GM-2018
@@ -247,6 +279,7 @@ icds:
     - Shigellose à Shigella boydii
     - Shigellosi da Shigella boydii
     - 
+    - 1
   - - 63
     - A03.3
     - ICD10-GM-2018
@@ -254,6 +287,7 @@ icds:
     - Shigellose à Shigella sonnei
     - Shigellosi da Shigella sonnei
     - 
+    - 1
   - - 64
     - A03.8
     - ICD10-GM-2018
@@ -261,6 +295,7 @@ icds:
     - Autres shigelloses
     - Altre shigellosi
     - 
+    - 1
   - - 65
     - A03.9
     - ICD10-GM-2018
@@ -268,6 +303,7 @@ icds:
     - Shigellose, sans précision
     - Shigellosi non specificata
     - 
+    - 1
   - - 66
     - A04
     - ICD10-GM-2018
@@ -275,6 +311,7 @@ icds:
     - Autres infections intestinales bactériennes
     - Altre infezioni batteriche intestinali
     - 
+    - 1
   - - 67
     - A04.0
     - ICD10-GM-2018
@@ -282,6 +319,7 @@ icds:
     - Infection entéropathogène à Escherichia coli
     - Infezione da Escherichia coli enteropatogena
     - 
+    - 1
   - - 68
     - A04.1
     - ICD10-GM-2018
@@ -289,6 +327,7 @@ icds:
     - Infection entérotoxigène à Escherichia coli
     - Infezione da Escherichia coli enterotossigena
     - 
+    - 1
   - - 69
     - A04.2
     - ICD10-GM-2018
@@ -296,6 +335,7 @@ icds:
     - Infection entéro-invasive à Escherichia coli
     - Infezione da Escherichia coli enteroinvasiva
     - 
+    - 1
   - - 70
     - A04.3
     - ICD10-GM-2018
@@ -303,6 +343,7 @@ icds:
     - Infection entéro-hémorragique à Escherichia coli
     - Infezione da Escherichia coli enteroemorragica
     - 
+    - 1
   - - 71
     - A04.4
     - ICD10-GM-2018
@@ -310,6 +351,7 @@ icds:
     - Autres infections intestinales à Escherichia coli
     - Altre infezioni intestinali da Escherichia coli
     - 
+    - 1
   - - 72
     - A04.5
     - ICD10-GM-2018
@@ -317,6 +359,7 @@ icds:
     - Entérite à Campylobacter
     - Enterite da Campylobacter
     - 
+    - 1
   - - 73
     - A04.6
     - ICD10-GM-2018
@@ -324,6 +367,7 @@ icds:
     - Entérite à Yersinia enterocolitica
     - Enterite da Yersinia enterocolitica
     - 
+    - 1
   - - 74
     - A04.7
     - ICD10-GM-2018
@@ -331,6 +375,7 @@ icds:
     - Entérocolite à Clostridium difficile
     - Enterocolite da Clostridium difficile
     - 
+    - 1
   - - 75
     - A04.70
     - ICD10-GM-2018
@@ -340,6 +385,7 @@ icds:
     - Enterocolite da Clostridium difficile senza megacolon, senza altre complicanze
       d’organo
     - 
+    - 1
   - - 76
     - A04.71
     - ICD10-GM-2018
@@ -349,6 +395,7 @@ icds:
     - Enterocolite da Clostridium difficile senza megacolon, con altre complicanze
       d’organo
     - 
+    - 1
   - - 77
     - A04.72
     - ICD10-GM-2018
@@ -358,6 +405,7 @@ icds:
     - Enterocolite da Clostridium difficile con megacolon, senza altre complicanze
       d’organo
     - 
+    - 1
   - - 78
     - A43
     - ICD10-GM-2018
@@ -365,6 +413,7 @@ icds:
     - Nocardiose
     - Nocardiosi
     - 
+    - 1
   - - 79
     - A04.73
     - ICD10-GM-2018
@@ -373,6 +422,7 @@ icds:
       organiques
     - Enterocolite da Clostridium difficile con megacolon, con altre complicanze d’organo
     - 
+    - 1
   - - 80
     - A04.79
     - ICD10-GM-2018
@@ -380,6 +430,7 @@ icds:
     - Entérocolite à Clostridium difficile, sans précision
     - Enterocolite da Clostridium difficile, non specificata
     - 
+    - 1
   - - 81
     - A04.8
     - ICD10-GM-2018
@@ -387,6 +438,7 @@ icds:
     - Autres infections intestinales bactériennes précisées
     - Altre infezioni batteriche intestinali specificate
     - 
+    - 1
   - - 82
     - A04.9
     - ICD10-GM-2018
@@ -394,6 +446,7 @@ icds:
     - Infection intestinale bactérienne, sans précision
     - Infezione batterica intestinale non specificata
     - 
+    - 1
   - - 83
     - A05
     - ICD10-GM-2018
@@ -401,6 +454,7 @@ icds:
     - Autres intoxications bactériennes d'origine alimentaire, non classées ailleurs
     - Altre intossicazioni alimentari batteriche non classificate altrove
     - 
+    - 1
   - - 84
     - A05.0
     - ICD10-GM-2018
@@ -408,6 +462,7 @@ icds:
     - Intoxication alimentaire à staphylocoques
     - Intossicazione alimentare da stafilococco
     - 
+    - 1
   - - 85
     - A05.1
     - ICD10-GM-2018
@@ -415,6 +470,7 @@ icds:
     - Botulisme
     - Botulismo
     - 
+    - 1
   - - 86
     - A05.2
     - ICD10-GM-2018
@@ -422,6 +478,7 @@ icds:
     - Intoxication alimentaire à Clostridium perfringens [Clostridium welchii]
     - Intossicazione alimentare da Clostridium perfringens [Clostridium welchii]
     - 
+    - 1
   - - 87
     - A05.3
     - ICD10-GM-2018
@@ -429,6 +486,7 @@ icds:
     - Intoxication alimentaire à Vibrio parahaemolyticus
     - Intossicazione alimentare da Vibrio parahaemolyticus
     - 
+    - 1
   - - 88
     - A05.4
     - ICD10-GM-2018
@@ -436,6 +494,7 @@ icds:
     - Intoxication alimentaire à Bacillus cereus
     - Intossicazione alimentare da Bacillus cereus
     - 
+    - 1
   - - 89
     - A05.8
     - ICD10-GM-2018
@@ -443,6 +502,7 @@ icds:
     - Autres intoxications bactériennes d'origine alimentaire précisées
     - Altre intossicazioni alimentari batteriche specificate
     - 
+    - 1
   - - 90
     - A05.9
     - ICD10-GM-2018
@@ -450,6 +510,7 @@ icds:
     - Intoxication bactérienne d'origine alimentaire, sans précision
     - Intossicazione alimentare batterica non specificata
     - 
+    - 1
   - - 91
     - A06
     - ICD10-GM-2018
@@ -457,6 +518,7 @@ icds:
     - Amibiase
     - Amebiasi
     - 
+    - 1
   - - 92
     - A06.0
     - ICD10-GM-2018
@@ -464,6 +526,7 @@ icds:
     - Dysenterie amibienne aiguë
     - Dissenteria amebica acuta
     - 
+    - 1
   - - 93
     - A06.1
     - ICD10-GM-2018
@@ -471,6 +534,7 @@ icds:
     - Amibiase intestinale chronique
     - Amebiasi intestinale cronica
     - 
+    - 1
   - - 94
     - A06.2
     - ICD10-GM-2018
@@ -478,6 +542,7 @@ icds:
     - Colite amibienne non dysentérique
     - Colite amebica non dissenterica
     - 
+    - 1
   - - 95
     - A06.3
     - ICD10-GM-2018
@@ -485,6 +550,7 @@ icds:
     - Amœbome de l'intestin
     - Ameboma dell'intestino
     - 
+    - 1
   - - 96
     - A06.4
     - ICD10-GM-2018
@@ -492,6 +558,7 @@ icds:
     - Abcès amibien du foie {K77.0}
     - Ascesso amebico del fegato {K77.0}
     - 
+    - 1
   - - 97
     - A25.9
     - ICD10-GM-2018
@@ -499,6 +566,7 @@ icds:
     - Fièvre causée par morsure de rat, sans précision
     - Febbre da morso di ratto non specificata
     - 
+    - 1
   - - 98
     - A06.5
     - ICD10-GM-2018
@@ -506,6 +574,7 @@ icds:
     - Abcès amibien du poumon
     - Ascesso amebico del polmone
     - 
+    - 1
   - - 99
     - A06.6
     - ICD10-GM-2018
@@ -513,6 +582,7 @@ icds:
     - Abcès amibien du cerveau {G07}
     - Ascesso amebico dell'encefalo {G07}
     - 
+    - 1
   - - 100
     - A06.7
     - ICD10-GM-2018
@@ -520,6 +590,7 @@ icds:
     - Amibiase cutanée
     - Amebiasi cutanea
     - 
+    - 1
   - - 101
     - A06.8
     - ICD10-GM-2018
@@ -527,6 +598,7 @@ icds:
     - Autres localisations d'une infection amibienne
     - Infezione amebica di altre sedi
     - 
+    - 1
   - - 102
     - A06.9
     - ICD10-GM-2018
@@ -534,6 +606,7 @@ icds:
     - Amibiase, sans précision
     - Amebiasi non specificata
     - 
+    - 1
   - - 103
     - A07
     - ICD10-GM-2018
@@ -541,6 +614,7 @@ icds:
     - Autres maladies intestinales à protozoaires
     - Altre malattie intestinali da protozoi
     - 
+    - 1
   - - 104
     - A07.0
     - ICD10-GM-2018
@@ -548,6 +622,7 @@ icds:
     - Balantidiose
     - Balantidiosi
     - 
+    - 1
   - - 105
     - A07.1
     - ICD10-GM-2018
@@ -555,6 +630,7 @@ icds:
     - Giardiase [lambliase]
     - Giardiasi [lambliasi]
     - 
+    - 1
   - - 106
     - A07.2
     - ICD10-GM-2018
@@ -562,6 +638,7 @@ icds:
     - Cryptosporidiose
     - Criptosporidiosi
     - 
+    - 1
   - - 107
     - A07.3
     - ICD10-GM-2018
@@ -569,6 +646,7 @@ icds:
     - Infection à Isospora
     - Isosporiasi
     - 
+    - 1
   - - 108
     - A07.8
     - ICD10-GM-2018
@@ -576,6 +654,7 @@ icds:
     - Autres maladies intestinales précisées, à protozoaires
     - Altre malattie intestinali da protozoi specificate
     - 
+    - 1
   - - 109
     - A07.9
     - ICD10-GM-2018
@@ -583,6 +662,7 @@ icds:
     - Maladie intestinale à protozoaires, sans précision
     - Malattia intestinale da protozoi non specificata
     - 
+    - 1
   - - 110
     - A08
     - ICD10-GM-2018
@@ -590,6 +670,7 @@ icds:
     - Infections virales intestinales et autres infections intestinales précisées
     - Infezioni virali intestinali ed altre infezioni intestinali specificate
     - 
+    - 1
   - - 111
     - A08.0
     - ICD10-GM-2018
@@ -597,6 +678,7 @@ icds:
     - Entérite à rotavirus
     - Enterite da Rotavirus
     - 
+    - 1
   - - 112
     - A08.1
     - ICD10-GM-2018
@@ -604,6 +686,7 @@ icds:
     - Gastroentérite aiguë à norovirus
     - Gastroenterite acuta da Norovirus
     - 
+    - 1
   - - 113
     - A08.2
     - ICD10-GM-2018
@@ -611,6 +694,7 @@ icds:
     - Entérite à adénovirus
     - Enterite da Adenovirus
     - 
+    - 1
   - - 114
     - A08.3
     - ICD10-GM-2018
@@ -618,6 +702,7 @@ icds:
     - Autres entérites virales
     - Altre enteriti virali
     - 
+    - 1
   - - 115
     - A08.4
     - ICD10-GM-2018
@@ -625,6 +710,7 @@ icds:
     - Infections intestinales virales, sans précision
     - Infezione virale intestinale non specificata
     - 
+    - 1
   - - 116
     - A08.5
     - ICD10-GM-2018
@@ -632,6 +718,7 @@ icds:
     - Autres infections intestinales précisées
     - Altre infezioni intestinali specificate
     - 
+    - 1
   - - 117
     - A20.8
     - ICD10-GM-2018
@@ -639,6 +726,7 @@ icds:
     - Autres formes de peste
     - Altre forme di peste
     - 
+    - 1
   - - 118
     - A09
     - ICD10-GM-2018
@@ -647,6 +735,7 @@ icds:
     - Autres gastro-entérites et colites non précisées d'origine infectieuse SAI
     - Altre gastroenteriti e coliti non specificate di origine infettiva non specificata
     - 
+    - 1
   - - 119
     - A09.0
     - ICD10-GM-2018
@@ -655,6 +744,7 @@ icds:
     - Autres gastro-entérites et colites non précisées d'origine infectieuse
     - Altre e non specificate gastroenteriti e coliti di origine infettiva
     - 
+    - 1
   - - 120
     - A09.9
     - ICD10-GM-2018
@@ -663,6 +753,7 @@ icds:
     - Autres gastro-entérites et colites SAI d'origine non précisée
     - Altre e non specificate gastroenteriti e coliti di origine non specificata
     - 
+    - 1
   - - 121
     - A15
     - ICD10-GM-2018
@@ -673,6 +764,7 @@ icds:
     - Tubercolosi respiratoria, confermata batteriologicamente, da esami molecolari
       o istologicamente
     - 
+    - 1
   - - 122
     - A15.0
     - ICD10-GM-2018
@@ -683,6 +775,7 @@ icds:
     - Tubercolosi del polmone, confermata dall'esame microscopico dell'escreato, con
       o senza conferma dall'esame colturale o da esami molecolari
     - 
+    - 1
   - - 123
     - A15.1
     - ICD10-GM-2018
@@ -690,6 +783,7 @@ icds:
     - Tuberculose pulmonaire, confirmée par culture seulement
     - Tubercolosi del polmone, confermata dal solo esame colturale
     - 
+    - 1
   - - 124
     - A15.2
     - ICD10-GM-2018
@@ -697,6 +791,7 @@ icds:
     - Tuberculose pulmonaire, avec confirmation histologique
     - Tubercolosi del polmone, confermata istologicamente
     - 
+    - 1
   - - 125
     - A20.9
     - ICD10-GM-2018
@@ -704,6 +799,7 @@ icds:
     - Peste, sans précision
     - Peste non specificata
     - 
+    - 1
   - - 126
     - A21
     - ICD10-GM-2018
@@ -711,6 +807,7 @@ icds:
     - Tularémie
     - Tularemia
     - 
+    - 1
   - - 127
     - A15.3
     - ICD10-GM-2018
@@ -719,6 +816,7 @@ icds:
     - Tuberculose pulmonaire, avec confirmation, moyen autre et non précisé
     - Tubercolosi del polmone, confermata con altri metodi non specificati
     - 
+    - 1
   - - 128
     - A15.4
     - ICD10-GM-2018
@@ -729,6 +827,7 @@ icds:
     - Tubercolosi dei linfonodi intratoracici, confermata batteriologicamente, istologicamente
       o da esami molecolari
     - 
+    - 1
   - - 129
     - A15.5
     - ICD10-GM-2018
@@ -739,6 +838,7 @@ icds:
     - Tubercolosi della laringe, trachea e bronchi, confermata batteriologicamente,
       istologicamente o da esami molecolari
     - 
+    - 1
   - - 130
     - A15.6
     - ICD10-GM-2018
@@ -749,6 +849,7 @@ icds:
     - Pleurite tubercolare, confermata batteriologicamente, istologicamente o da esami
       molecolari
     - 
+    - 1
   - - 131
     - A15.7
     - ICD10-GM-2018
@@ -759,6 +860,7 @@ icds:
     - Tubercolosi respiratoria primaria, confermata batteriologicamente, istologicamente
       o da esami molecolari
     - 
+    - 1
   - - 132
     - A18.1
     - ICD10-GM-2018
@@ -766,6 +868,7 @@ icds:
     - Tuberculose de l'appareil génito-urinaire
     - Tubercolosi dell'apparato genitourinario
     - 
+    - 1
   - - 133
     - A21.0
     - ICD10-GM-2018
@@ -773,6 +876,7 @@ icds:
     - Tularémie ulcéro-glandulaire
     - Tularemia ulceroghiandolare
     - 
+    - 1
   - - 134
     - A21.1
     - ICD10-GM-2018
@@ -780,6 +884,7 @@ icds:
     - Tularémie oculo-glandulaire
     - Tularemia oculoghiandolare
     - 
+    - 1
   - - 135
     - A15.8
     - ICD10-GM-2018
@@ -790,6 +895,7 @@ icds:
     - Altre forme di tubercolosi respiratoria, confermate batteriologicamente, istologicamente
       o da esami molecolari
     - 
+    - 1
   - - 136
     - A15.9
     - ICD10-GM-2018
@@ -800,6 +906,7 @@ icds:
     - Tubercolosi respiratoria non specificata, confermata batteriologicamente, istologicamente
       o da esami molecolari
     - 
+    - 1
   - - 137
     - A16
     - ICD10-GM-2018
@@ -810,6 +917,7 @@ icds:
     - Tubercolosi respiratoria, non confermata batteriologicamente, istologicamente
       o da esami molecolari
     - 
+    - 1
   - - 138
     - A16.0
     - ICD10-GM-2018
@@ -819,6 +927,7 @@ icds:
       ou histologique
     - Tubercolosi del polmone, con esami batteriologici, istologici e molecolari negativi
     - 
+    - 1
   - - 139
     - A16.1
     - ICD10-GM-2018
@@ -828,6 +937,7 @@ icds:
       et histologique
     - Tubercolosi del polmone, esami batteriologici, istologici e molecolari non effettuati
     - 
+    - 1
   - - 140
     - A16.2
     - ICD10-GM-2018
@@ -837,6 +947,7 @@ icds:
       moléculaire ou histologique
     - Tubercolosi del polmone, senza conferma batteriologica, istologica o molecolare
     - 
+    - 1
   - - 141
     - A21.2
     - ICD10-GM-2018
@@ -844,6 +955,7 @@ icds:
     - Tularémie pulmonaire
     - Tularemia polmonare
     - 
+    - 1
   - - 142
     - A21.3
     - ICD10-GM-2018
@@ -851,6 +963,7 @@ icds:
     - Tularémie gastro-intestinale
     - Tularemia gastrointestinale
     - 
+    - 1
   - - 143
     - A21.7
     - ICD10-GM-2018
@@ -858,6 +971,7 @@ icds:
     - Tularémie généralisée
     - Tularemia generalizzata
     - 
+    - 1
   - - 144
     - A16.3
     - ICD10-GM-2018
@@ -868,6 +982,7 @@ icds:
     - Tubercolosi dei linfonodi intratoracici, senza conferma batteriologica, istologica
       o molecolare
     - 
+    - 1
   - - 145
     - A16.4
     - ICD10-GM-2018
@@ -878,6 +993,7 @@ icds:
     - Tubercolosi della laringe, trachea e bronchi, senza conferma batteriologica,
       istologica o molecolare
     - 
+    - 1
   - - 146
     - A16.5
     - ICD10-GM-2018
@@ -887,6 +1003,7 @@ icds:
       moléculaire ou histologique
     - Pleurite tubercolare, senza conferma batteriologica, istologica o molecolare
     - 
+    - 1
   - - 147
     - A16.7
     - ICD10-GM-2018
@@ -897,6 +1014,7 @@ icds:
     - Tubercolosi respiratoria primaria, senza conferma batteriologica, istologica
       o molecolare
     - 
+    - 1
   - - 148
     - A18.2
     - ICD10-GM-2018
@@ -904,6 +1022,7 @@ icds:
     - Adénopathie tuberculeuse périphérique
     - Linfoadenopatia periferica tubercolare
     - 
+    - 1
   - - 149
     - A21.8
     - ICD10-GM-2018
@@ -911,6 +1030,7 @@ icds:
     - Autres formes de tularémie
     - Altre forme di tularemia
     - 
+    - 1
   - - 150
     - A21.9
     - ICD10-GM-2018
@@ -918,6 +1038,7 @@ icds:
     - Tularémie, sans précision
     - Tularemia non specificata
     - 
+    - 1
   - - 151
     - A16.8
     - ICD10-GM-2018
@@ -927,6 +1048,7 @@ icds:
       bactériologique, par biologie moléculaire ou histologique
     - Altre forme di tubercolosi respiratoria, senza conferma batteriologica o istologica
     - 
+    - 1
   - - 152
     - A16.9
     - ICD10-GM-2018
@@ -937,6 +1059,7 @@ icds:
     - Tubercolosi respiratoria non specificata, senza conferma batteriologica, istologica
       o molecolare
     - 
+    - 1
   - - 153
     - A17
     - ICD10-GM-2018
@@ -944,6 +1067,7 @@ icds:
     - Tuberculose du système nerveux
     - Tubercolosi del sistema nervoso
     - 
+    - 1
   - - 154
     - A17.0
     - ICD10-GM-2018
@@ -951,6 +1075,7 @@ icds:
     - Méningite tuberculeuse {G01}
     - Meningite tubercolare {G01}
     - 
+    - 1
   - - 155
     - A17.1
     - ICD10-GM-2018
@@ -958,6 +1083,7 @@ icds:
     - Tuberculome méningé {G07}
     - Tubercoloma meningeo {G07}
     - 
+    - 1
   - - 156
     - A17.8
     - ICD10-GM-2018
@@ -965,6 +1091,7 @@ icds:
     - Autres formes de tuberculose du système nerveux
     - Altre forme di tubercolosi del sistema nervoso
     - 
+    - 1
   - - 157
     - A17.9
     - ICD10-GM-2018
@@ -972,6 +1099,7 @@ icds:
     - Tuberculose du système nerveux, sans précision {G99.8}
     - Tubercolosi del sistema nervoso non specificata {G99.8}
     - 
+    - 1
   - - 158
     - A18
     - ICD10-GM-2018
@@ -979,6 +1107,7 @@ icds:
     - Tuberculose d'autres organes
     - Tubercolosi di altri organi
     - 
+    - 1
   - - 159
     - A18.0
     - ICD10-GM-2018
@@ -986,6 +1115,7 @@ icds:
     - Tuberculose des os et des articulations
     - Tubercolosi delle ossa e delle articolazioni
     - 
+    - 1
   - - 160
     - A20.2
     - ICD10-GM-2018
@@ -993,6 +1123,7 @@ icds:
     - Peste pulmonaire
     - Peste polmonare
     - 
+    - 1
   - - 161
     - A20.3
     - ICD10-GM-2018
@@ -1000,6 +1131,7 @@ icds:
     - Peste méningée
     - Meningite pestosa
     - 
+    - 1
   - - 162
     - A20.7
     - ICD10-GM-2018
@@ -1007,6 +1139,7 @@ icds:
     - Peste septicémique
     - Peste setticemica
     - 
+    - 1
   - - 163
     - A26
     - ICD10-GM-2018
@@ -1014,6 +1147,7 @@ icds:
     - Erysipéloïde
     - Erisipeloide
     - 
+    - 1
   - - 164
     - A18.3
     - ICD10-GM-2018
@@ -1021,6 +1155,7 @@ icds:
     - Tuberculose de l'intestin, du péritoine et des ganglions mésentériques
     - Tubercolosi dell'intestino, del peritoneo e dei linfonodi mesenterici
     - 
+    - 1
   - - 165
     - A18.4
     - ICD10-GM-2018
@@ -1028,6 +1163,7 @@ icds:
     - Tuberculose de la peau et du tissu cellulaire sous-cutané
     - Tubercolosi della cute e del tessuto sottocutaneo
     - 
+    - 1
   - - 166
     - A18.5
     - ICD10-GM-2018
@@ -1035,6 +1171,7 @@ icds:
     - Tuberculose de l'œil
     - Tubercolosi dell'occhio
     - 
+    - 1
   - - 167
     - A18.6
     - ICD10-GM-2018
@@ -1042,6 +1179,7 @@ icds:
     - Tuberculose de l'oreille
     - Tubercolosi dell'orecchio
     - 
+    - 1
   - - 168
     - A18.7
     - ICD10-GM-2018
@@ -1049,6 +1187,7 @@ icds:
     - Tuberculose des surrénales {E35.1}
     - Tubercolosi delle ghiandole surrenali {E35.1}
     - 
+    - 1
   - - 169
     - A18.8
     - ICD10-GM-2018
@@ -1056,6 +1195,7 @@ icds:
     - Tuberculose d'autres organes précisés
     - Tubercolosi di altri organi specificati
     - 
+    - 1
   - - 170
     - A19
     - ICD10-GM-2018
@@ -1063,6 +1203,7 @@ icds:
     - Tuberculose miliaire
     - Tubercolosi miliare
     - 
+    - 1
   - - 171
     - A19.0
     - ICD10-GM-2018
@@ -1070,6 +1211,7 @@ icds:
     - Tuberculose miliaire aiguë, localisation unique et précisée
     - Tubercolosi miliare acuta limitata ad una singola sede specificata
     - 
+    - 1
   - - 172
     - A19.1
     - ICD10-GM-2018
@@ -1077,6 +1219,7 @@ icds:
     - Tuberculose miliaire aiguë, sièges multiples
     - Tubercolosi miliare acuta interessante sedi multiple
     - 
+    - 1
   - - 173
     - A19.2
     - ICD10-GM-2018
@@ -1084,6 +1227,7 @@ icds:
     - Tuberculose miliaire aiguë, sans précision
     - Tubercolosi miliare acuta non specificata
     - 
+    - 1
   - - 174
     - A19.8
     - ICD10-GM-2018
@@ -1091,6 +1235,7 @@ icds:
     - Autres tuberculoses miliaires
     - Altre tubercolosi miliari
     - 
+    - 1
   - - 175
     - A19.9
     - ICD10-GM-2018
@@ -1098,6 +1243,7 @@ icds:
     - Tuberculose miliaire, sans précision
     - Tubercolosi miliare non specificata
     - 
+    - 1
   - - 176
     - A20
     - ICD10-GM-2018
@@ -1105,6 +1251,7 @@ icds:
     - Peste
     - Peste
     - 
+    - 1
   - - 177
     - A20.0
     - ICD10-GM-2018
@@ -1112,6 +1259,7 @@ icds:
     - Peste bubonique
     - Peste bubbonica
     - 
+    - 1
   - - 178
     - A20.1
     - ICD10-GM-2018
@@ -1119,6 +1267,7 @@ icds:
     - Peste cutanée
     - Peste cellulocutanea
     - 
+    - 1
   - - 179
     - A22
     - ICD10-GM-2018
@@ -1126,6 +1275,7 @@ icds:
     - Charbon
     - Carbonchio [Antrace]
     - 
+    - 1
   - - 180
     - A22.0
     - ICD10-GM-2018
@@ -1133,6 +1283,7 @@ icds:
     - Charbon cutané
     - Carbonchio cutaneo
     - 
+    - 1
   - - 181
     - A22.1
     - ICD10-GM-2018
@@ -1140,6 +1291,7 @@ icds:
     - Charbon pulmonaire
     - Carbonchio polmonare
     - 
+    - 1
   - - 182
     - A22.2
     - ICD10-GM-2018
@@ -1147,6 +1299,7 @@ icds:
     - Charbon gastro-intestinal
     - Carbonchio gastrointestinale
     - 
+    - 1
   - - 183
     - A22.7
     - ICD10-GM-2018
@@ -1154,6 +1307,7 @@ icds:
     - Septicémie charbonneuse
     - Sepsi carbonchiosa
     - 
+    - 1
   - - 184
     - A22.8
     - ICD10-GM-2018
@@ -1161,6 +1315,7 @@ icds:
     - Autres formes de charbon
     - Altre forme di carbonchio
     - 
+    - 1
   - - 185
     - A22.9
     - ICD10-GM-2018
@@ -1168,6 +1323,7 @@ icds:
     - Charbon, sans précision
     - Carbonchio non specificato
     - 
+    - 1
   - - 186
     - A23
     - ICD10-GM-2018
@@ -1175,6 +1331,7 @@ icds:
     - Brucellose
     - Brucellosi
     - 
+    - 1
   - - 187
     - A23.0
     - ICD10-GM-2018
@@ -1182,6 +1339,7 @@ icds:
     - Brucellose à Brucella melitensis
     - Brucellosi da Brucella melitensis
     - 
+    - 1
   - - 188
     - A23.1
     - ICD10-GM-2018
@@ -1189,6 +1347,7 @@ icds:
     - Brucellose à Brucella abortus
     - Brucellosi da Brucella abortus
     - 
+    - 1
   - - 189
     - A23.2
     - ICD10-GM-2018
@@ -1196,6 +1355,7 @@ icds:
     - Brucellose à Brucella suis
     - Brucellosi da Brucella suis
     - 
+    - 1
   - - 190
     - A23.3
     - ICD10-GM-2018
@@ -1203,6 +1363,7 @@ icds:
     - Brucellose à Brucella canis
     - Brucellosi da Brucella canis
     - 
+    - 1
   - - 191
     - A23.8
     - ICD10-GM-2018
@@ -1210,6 +1371,7 @@ icds:
     - Autres brucelloses
     - Altre brucellosi
     - 
+    - 1
   - - 192
     - A23.9
     - ICD10-GM-2018
@@ -1217,6 +1379,7 @@ icds:
     - Brucellose, sans précision
     - Brucellosi non specificata
     - 
+    - 1
   - - 193
     - A24
     - ICD10-GM-2018
@@ -1224,6 +1387,7 @@ icds:
     - Morve et mélioïdose
     - Morva e melioidosi
     - 
+    - 1
   - - 194
     - A24.0
     - ICD10-GM-2018
@@ -1231,6 +1395,7 @@ icds:
     - Morve
     - Morva
     - 
+    - 1
   - - 195
     - A24.1
     - ICD10-GM-2018
@@ -1238,6 +1403,7 @@ icds:
     - Mélioïdose aiguë et galopante
     - Melioidosi acuta e fulminante
     - 
+    - 1
   - - 196
     - A24.2
     - ICD10-GM-2018
@@ -1245,6 +1411,7 @@ icds:
     - Mélioïdose subaiguë et chronique
     - Melioidosi subacuta e cronica
     - 
+    - 1
   - - 197
     - A24.3
     - ICD10-GM-2018
@@ -1252,6 +1419,7 @@ icds:
     - Autres mélioïdoses
     - Altre forme di melioidosi
     - 
+    - 1
   - - 198
     - A24.4
     - ICD10-GM-2018
@@ -1259,6 +1427,7 @@ icds:
     - Mélioïdose, sans précision
     - Melioidosi non specificata
     - 
+    - 1
   - - 199
     - A25
     - ICD10-GM-2018
@@ -1266,6 +1435,7 @@ icds:
     - Fièvres causées par morsure de rat
     - Febbri da morso di ratto
     - 
+    - 1
   - - 200
     - A25.0
     - ICD10-GM-2018
@@ -1273,6 +1443,7 @@ icds:
     - Spirillose
     - Febbre spirillare
     - 
+    - 1
   - - 201
     - A25.1
     - ICD10-GM-2018
@@ -1280,6 +1451,7 @@ icds:
     - Streptobacillose
     - Febbre streptobacillare da morso di ratto
     - 
+    - 1
   - - 202
     - A26.0
     - ICD10-GM-2018
@@ -1287,6 +1459,7 @@ icds:
     - Erysipéloïde cutanée
     - Erisipeloide cutaneo
     - 
+    - 1
   - - 203
     - A26.7
     - ICD10-GM-2018
@@ -1294,6 +1467,7 @@ icds:
     - Septicémie à Erysipelothrix
     - Sepsi da Erysipelothrix
     - 
+    - 1
   - - 204
     - A26.8
     - ICD10-GM-2018
@@ -1301,6 +1475,7 @@ icds:
     - Autres formes d'érysipéloïde
     - Altre forme di erisipeloide
     - 
+    - 1
   - - 205
     - A26.9
     - ICD10-GM-2018
@@ -1308,6 +1483,7 @@ icds:
     - Erysipéloïde, sans précision
     - Erisipeloide non specificato
     - 
+    - 1
   - - 206
     - A27
     - ICD10-GM-2018
@@ -1315,6 +1491,7 @@ icds:
     - Leptospirose
     - Leptospirosi
     - 
+    - 1
   - - 207
     - A27.0
     - ICD10-GM-2018
@@ -1322,6 +1499,7 @@ icds:
     - Leptospirose ictéro-hémorragique [Maladie de Weil]
     - Leptospirosi itteroemorragica [malattia di Weil]
     - 
+    - 1
   - - 208
     - A27.8
     - ICD10-GM-2018
@@ -1329,6 +1507,7 @@ icds:
     - Autres formes de leptospirose
     - Altre forme di leptospirosi
     - 
+    - 1
   - - 209
     - A27.9
     - ICD10-GM-2018
@@ -1336,6 +1515,7 @@ icds:
     - Leptospirose, sans précision
     - Leptospirosi non specificata
     - 
+    - 1
   - - 210
     - A28
     - ICD10-GM-2018
@@ -1343,6 +1523,7 @@ icds:
     - Autres anthropozoonoses bactériennes, non classées ailleurs
     - Altre malattie batteriche trasmesse da animali, non classificate altrove
     - 
+    - 1
   - - 211
     - A28.0
     - ICD10-GM-2018
@@ -1350,6 +1531,7 @@ icds:
     - Pasteurellose
     - Pasteurellosi
     - 
+    - 1
   - - 212
     - A28.1
     - ICD10-GM-2018
@@ -1357,6 +1539,7 @@ icds:
     - Maladie des griffes du chat
     - Malattia da graffio di gatto
     - 
+    - 1
   - - 213
     - A28.2
     - ICD10-GM-2018
@@ -1364,6 +1547,7 @@ icds:
     - Yersiniose extra-intestinale
     - Yersiniosi extraintestinale
     - 
+    - 1
   - - 214
     - A28.8
     - ICD10-GM-2018
@@ -1372,6 +1556,7 @@ icds:
     - Altre malattie batteriche trasmesse da animali specificate, non classificate
       altrove
     - 
+    - 1
   - - 215
     - A28.9
     - ICD10-GM-2018
@@ -1379,6 +1564,7 @@ icds:
     - Anthropozoonose bactérienne, sans précision
     - Malattia batterica trasmessa da animali, non specificata
     - 
+    - 1
   - - 216
     - A30
     - ICD10-GM-2018
@@ -1386,6 +1572,7 @@ icds:
     - Lèpre [maladie de Hansen]
     - Lebbra [malattia di Hansen]
     - 
+    - 1
   - - 217
     - A30.0
     - ICD10-GM-2018
@@ -1393,6 +1580,7 @@ icds:
     - Lèpre indéterminée
     - Lebbra indeterminata
     - 
+    - 1
   - - 218
     - A30.1
     - ICD10-GM-2018
@@ -1400,6 +1588,7 @@ icds:
     - Lèpre tuberculoïde [Forme tuberculoïde (T)]
     - Lebbra tubercoloide
     - 
+    - 1
   - - 219
     - A30.2
     - ICD10-GM-2018
@@ -1407,6 +1596,7 @@ icds:
     - Lèpre tuberculoïde de type intermédiaire atypique
     - Lebbra tubercoloide borderline atipica
     - 
+    - 1
   - - 220
     - A30.3
     - ICD10-GM-2018
@@ -1414,6 +1604,7 @@ icds:
     - Lèpre de type intermédiaire atypique
     - Lebbra borderline atipica
     - 
+    - 1
   - - 221
     - A30.4
     - ICD10-GM-2018
@@ -1421,6 +1612,7 @@ icds:
     - Lèpre lépromateuse de type intermédiaire atypique
     - Lebbra lepromatosa borderline
     - 
+    - 1
   - - 222
     - A30.5
     - ICD10-GM-2018
@@ -1428,6 +1620,7 @@ icds:
     - Lèpre lépromateuse
     - Lebbra lepromatosa
     - 
+    - 1
   - - 223
     - A30.8
     - ICD10-GM-2018
@@ -1435,6 +1628,7 @@ icds:
     - Autres formes de lèpre
     - Altre forme di lebbra
     - 
+    - 1
   - - 224
     - A30.9
     - ICD10-GM-2018
@@ -1442,6 +1636,7 @@ icds:
     - Lèpre, sans précision
     - Lebbra non specificata
     - 
+    - 1
   - - 225
     - A31
     - ICD10-GM-2018
@@ -1449,6 +1644,7 @@ icds:
     - Infections dues à d'autres mycobactéries
     - Infezione da altri micobatteri
     - 
+    - 1
   - - 226
     - A31.0
     - ICD10-GM-2018
@@ -1456,6 +1652,7 @@ icds:
     - Infection pulmonaire à Mycobacterium
     - Infezione polmonare da altri micobatteri
     - 
+    - 1
   - - 227
     - A31.1
     - ICD10-GM-2018
@@ -1463,6 +1660,7 @@ icds:
     - Infection cutanée à Mycobacterium
     - Infezione cutanea da altri micobatteri
     - 
+    - 1
   - - 228
     - A31.8
     - ICD10-GM-2018
@@ -1470,6 +1668,7 @@ icds:
     - Autres infections à Mycobacterium
     - Altre infezioni micobatteriche
     - 
+    - 1
   - - 229
     - A31.80
     - ICD10-GM-2018
@@ -1477,6 +1676,7 @@ icds:
     - Infection mycobactérienne atypique disséminée
     - Micobatteriosi atipica disseminata
     - 
+    - 1
   - - 230
     - A31.88
     - ICD10-GM-2018
@@ -1484,6 +1684,7 @@ icds:
     - Autres infections mycobactériennes
     - Altre infezioni micobatteriche
     - 
+    - 1
   - - 231
     - A31.9
     - ICD10-GM-2018
@@ -1491,6 +1692,7 @@ icds:
     - Infection à Mycobacterium, sans précision
     - Infezione micobatterica non specificata
     - 
+    - 1
   - - 232
     - A32
     - ICD10-GM-2018
@@ -1498,6 +1700,7 @@ icds:
     - Listériose
     - Listeriosi
     - 
+    - 1
   - - 233
     - A32.0
     - ICD10-GM-2018
@@ -1505,6 +1708,7 @@ icds:
     - Listériose cutanée
     - Listeriosi cutanea
     - 
+    - 1
   - - 234
     - A32.1
     - ICD10-GM-2018
@@ -1512,6 +1716,7 @@ icds:
     - Méningite et méningo-encéphalite listériennes
     - Meningite e meningoencefalite da Listeria
     - 
+    - 1
   - - 235
     - A32.7
     - ICD10-GM-2018
@@ -1519,6 +1724,7 @@ icds:
     - Septicémie listérienne
     - Sepsi da Listeria
     - 
+    - 1
   - - 236
     - A32.8
     - ICD10-GM-2018
@@ -1526,6 +1732,7 @@ icds:
     - Autres formes de listériose
     - Altre forme di listeriosi
     - 
+    - 1
   - - 237
     - A32.9
     - ICD10-GM-2018
@@ -1533,6 +1740,7 @@ icds:
     - Listériose, sans précision
     - Listeriosi non specificata
     - 
+    - 1
   - - 238
     - A33
     - ICD10-GM-2018
@@ -1540,6 +1748,7 @@ icds:
     - Tétanos néonatal
     - Tetano del neonato
     - 
+    - 1
   - - 239
     - A34
     - ICD10-GM-2018
@@ -1547,6 +1756,7 @@ icds:
     - Tétanos obstétrical
     - Tetano durante la gravidanza, il parto ed il puerperio
     - 
+    - 1
   - - 240
     - A35
     - ICD10-GM-2018
@@ -1554,6 +1764,7 @@ icds:
     - Autres formes de tétanos
     - Altre forme di tetano
     - 
+    - 1
   - - 241
     - A36
     - ICD10-GM-2018
@@ -1561,6 +1772,7 @@ icds:
     - Diphtérie
     - Difterite
     - 
+    - 1
   - - 242
     - A36.0
     - ICD10-GM-2018
@@ -1568,6 +1780,7 @@ icds:
     - Diphtérie pharyngée
     - Difterite faringea
     - 
+    - 1
   - - 243
     - A36.1
     - ICD10-GM-2018
@@ -1575,6 +1788,7 @@ icds:
     - Diphtérie rhinopharyngée
     - Difterite rinofaringea
     - 
+    - 1
   - - 244
     - A36.2
     - ICD10-GM-2018
@@ -1582,6 +1796,7 @@ icds:
     - Diphtérie laryngée
     - Difterite laringea
     - 
+    - 1
   - - 245
     - A36.3
     - ICD10-GM-2018
@@ -1589,6 +1804,7 @@ icds:
     - Diphtérie cutanée
     - Difterite cutanea
     - 
+    - 1
   - - 246
     - A36.8
     - ICD10-GM-2018
@@ -1596,6 +1812,7 @@ icds:
     - Autres formes de diphtérie
     - Altre forme di difterite
     - 
+    - 1
   - - 247
     - A36.9
     - ICD10-GM-2018
@@ -1603,6 +1820,7 @@ icds:
     - Diphtérie, sans précision
     - Difterite non specificata
     - 
+    - 1
   - - 248
     - A37
     - ICD10-GM-2018
@@ -1610,6 +1828,7 @@ icds:
     - Coqueluche
     - Pertosse
     - 
+    - 1
   - - 249
     - A37.0
     - ICD10-GM-2018
@@ -1617,6 +1836,7 @@ icds:
     - Coqueluche à Bordetella pertussis
     - Pertosse da Bordetella pertussis
     - 
+    - 1
   - - 250
     - A37.1
     - ICD10-GM-2018
@@ -1624,6 +1844,7 @@ icds:
     - Coqueluche à Bordetella parapertussis
     - Pertosse da Bordetella parapertussis
     - 
+    - 1
   - - 251
     - A37.8
     - ICD10-GM-2018
@@ -1631,6 +1852,7 @@ icds:
     - Coqueluche due à d'autres espèces de Bordetella
     - Pertosse da altre specie di Bordetella
     - 
+    - 1
   - - 252
     - A37.9
     - ICD10-GM-2018
@@ -1638,6 +1860,7 @@ icds:
     - Coqueluche, sans précision
     - Pertosse non specificata
     - 
+    - 1
   - - 253
     - A38
     - ICD10-GM-2018
@@ -1645,6 +1868,7 @@ icds:
     - Scarlatine
     - Scarlattina
     - 
+    - 1
   - - 254
     - A39
     - ICD10-GM-2018
@@ -1652,6 +1876,7 @@ icds:
     - Infection à méningocoques
     - Infezione meningococcica
     - 
+    - 1
   - - 255
     - A39.0
     - ICD10-GM-2018
@@ -1659,6 +1884,7 @@ icds:
     - Méningite à méningocoques {G01}
     - Meningite meningococcica {G01}
     - 
+    - 1
   - - 256
     - A39.1
     - ICD10-GM-2018
@@ -1666,6 +1892,7 @@ icds:
     - Syndrome de Waterhouse-Friderichsen {E35.1}
     - Sindrome di Waterhouse-Friderichsen {E35.1}
     - 
+    - 1
   - - 257
     - A39.2
     - ICD10-GM-2018
@@ -1673,6 +1900,7 @@ icds:
     - Méningococcémie aiguë
     - Meningococcemia acuta
     - 
+    - 1
   - - 258
     - A39.3
     - ICD10-GM-2018
@@ -1680,6 +1908,7 @@ icds:
     - Méningococcémie chronique
     - Meningococcemia cronica
     - 
+    - 1
   - - 259
     - A39.4
     - ICD10-GM-2018
@@ -1687,6 +1916,7 @@ icds:
     - Méningococcémie, sans précision
     - Meningococcemia non specificata
     - 
+    - 1
   - - 260
     - A39.5
     - ICD10-GM-2018
@@ -1694,6 +1924,7 @@ icds:
     - Cardite à méningocoques
     - Cardiopatia meningococcica
     - 
+    - 1
   - - 261
     - A39.8
     - ICD10-GM-2018
@@ -1701,6 +1932,7 @@ icds:
     - Autres infections à méningocoques
     - Altre infezioni meningococciche
     - 
+    - 1
   - - 262
     - A39.9
     - ICD10-GM-2018
@@ -1708,6 +1940,7 @@ icds:
     - Infection méningococcique, sans précision
     - Infezione meningococcica non specificata
     - 
+    - 1
   - - 263
     - A40
     - ICD10-GM-2018
@@ -1715,6 +1948,7 @@ icds:
     - Septicémie à streptocoques
     - Sepsi streptococcica
     - 
+    - 1
   - - 264
     - A40.3
     - ICD10-GM-2018
@@ -1722,6 +1956,7 @@ icds:
     - Septicémie à Streptococcus pneumoniae
     - Sepsi da Streptococcus pneumoniae
     - 
+    - 1
   - - 265
     - A40.8
     - ICD10-GM-2018
@@ -1729,6 +1964,7 @@ icds:
     - Autres septicémies à streptocoques
     - Altre forme di sepsi streptococcica
     - 
+    - 1
   - - 266
     - A40.9
     - ICD10-GM-2018
@@ -1736,6 +1972,7 @@ icds:
     - Septicémie à streptocoques, sans précision
     - Sepsi streptococcica non specificata
     - 
+    - 1
   - - 267
     - A41
     - ICD10-GM-2018
@@ -1743,6 +1980,7 @@ icds:
     - Autres septicémies
     - Altre forme di sepsi
     - 
+    - 1
   - - 268
     - A41.0
     - ICD10-GM-2018
@@ -1750,6 +1988,7 @@ icds:
     - Septicémie à staphylocoques dorés
     - Sepsi da Stafilococco aureo
     - 
+    - 1
   - - 269
     - A41.1
     - ICD10-GM-2018
@@ -1757,6 +1996,7 @@ icds:
     - Septicémie à d'autres staphylocoques précisés
     - Sepsi da altro stafilococco specificato
     - 
+    - 1
   - - 270
     - A41.2
     - ICD10-GM-2018
@@ -1764,6 +2004,7 @@ icds:
     - Septicémie à staphylocoques non précisés
     - Sepsi da stafilococco non specificato
     - 
+    - 1
   - - 271
     - A41.3
     - ICD10-GM-2018
@@ -1771,6 +2012,7 @@ icds:
     - Septicémie à Haemophilus influenzae
     - Sepsi da Haemophilus influenzae
     - 
+    - 1
   - - 272
     - A41.4
     - ICD10-GM-2018
@@ -1778,6 +2020,7 @@ icds:
     - Septicémie à micro-organismes anaérobies
     - Sepsi da anaerobi
     - 
+    - 1
   - - 273
     - A41.5
     - ICD10-GM-2018
@@ -1785,6 +2028,7 @@ icds:
     - Septicémie à d'autres micro-organismes Gram négatif
     - Sepsi da altri microorganismi Gram-negativi
     - 
+    - 1
   - - 274
     - A41.51
     - ICD10-GM-2018
@@ -1792,6 +2036,7 @@ icds:
     - 'Septicémie: escherichia coli [E. coli]'
     - Sepsi da Escherichia coli [E. coli]
     - 
+    - 1
   - - 275
     - A41.52
     - ICD10-GM-2018
@@ -1799,6 +2044,7 @@ icds:
     - 'Septicémie: pseudomonas'
     - Sepsi da pseudomonas
     - 
+    - 1
   - - 276
     - A41.58
     - ICD10-GM-2018
@@ -1806,6 +2052,7 @@ icds:
     - 'Septicémie: autres micro-organismes Gram négatif'
     - Sepsi da altri microorganismi Gram-negativi
     - 
+    - 1
   - - 277
     - A41.8
     - ICD10-GM-2018
@@ -1813,6 +2060,7 @@ icds:
     - Autres septicémies précisées
     - Altre forme di sepsi specificata
     - 
+    - 1
   - - 278
     - A41.9
     - ICD10-GM-2018
@@ -1820,6 +2068,7 @@ icds:
     - Septicémie, sans précision
     - Sepsi non specificata
     - 
+    - 1
   - - 279
     - A42
     - ICD10-GM-2018
@@ -1827,6 +2076,7 @@ icds:
     - Actinomycose
     - Actinomicosi
     - 
+    - 1
   - - 280
     - A42.0
     - ICD10-GM-2018
@@ -1834,6 +2084,7 @@ icds:
     - Actinomycose pulmonaire
     - Actinomicosi polmonare
     - 
+    - 1
   - - 281
     - A42.1
     - ICD10-GM-2018
@@ -1841,6 +2092,7 @@ icds:
     - Actinomycose abdominale
     - Actinomicosi addominale
     - 
+    - 1
   - - 282
     - A42.2
     - ICD10-GM-2018
@@ -1848,6 +2100,7 @@ icds:
     - Actinomycose cervico-faciale
     - Actinomicosi cervicofacciale
     - 
+    - 1
   - - 283
     - A42.7
     - ICD10-GM-2018
@@ -1855,6 +2108,7 @@ icds:
     - Septicémie actinomycosique
     - Sepsi actinomicotica
     - 
+    - 1
   - - 284
     - A42.8
     - ICD10-GM-2018
@@ -1862,6 +2116,7 @@ icds:
     - Autres formes d'actinomycose
     - Altre forme di actinomicosi
     - 
+    - 1
   - - 285
     - A42.9
     - ICD10-GM-2018
@@ -1869,6 +2124,7 @@ icds:
     - Actinomycose, sans précision
     - Actinomicosi non specificata
     - 
+    - 1
   - - 286
     - A44.0
     - ICD10-GM-2018
@@ -1876,6 +2132,7 @@ icds:
     - Bartonellose généralisée
     - Bartonellosi sistemica
     - 
+    - 1
   - - 287
     - A44.1
     - ICD10-GM-2018
@@ -1883,6 +2140,7 @@ icds:
     - Bartonellose cutanée et cutanéo-muqueuse
     - Bartonellosi cutanea e mucocutanea
     - 
+    - 1
   - - 288
     - A44.8
     - ICD10-GM-2018
@@ -1890,6 +2148,7 @@ icds:
     - Autres formes de bartonellose
     - Altre forme di bartonellosi
     - 
+    - 1
   - - 289
     - A44.9
     - ICD10-GM-2018
@@ -1897,6 +2156,7 @@ icds:
     - Bartonellose, sans précision
     - Bartonellosi non specificata
     - 
+    - 1
   - - 290
     - A46
     - ICD10-GM-2018
@@ -1904,6 +2164,7 @@ icds:
     - Erysipèle
     - Erisipela
     - 
+    - 1
   - - 291
     - A48
     - ICD10-GM-2018
@@ -1911,6 +2172,7 @@ icds:
     - Autres maladies bactériennes, non classées ailleurs
     - Altre malattie batteriche non classificate altrove
     - 
+    - 1
   - - 292
     - A48.0
     - ICD10-GM-2018
@@ -1918,6 +2180,7 @@ icds:
     - Gangrène gazeuse
     - Gangrena gassosa
     - 
+    - 1
   - - 293
     - A48.1
     - ICD10-GM-2018
@@ -1925,6 +2188,7 @@ icds:
     - Maladie des légionnaires avec pneumonie
     - Malattia dei legionari
     - 
+    - 1
   - - 294
     - A48.2
     - ICD10-GM-2018
@@ -1932,6 +2196,7 @@ icds:
     - Maladie des légionnaires, sans signes pulmonaires [fièvre de Pontiac]
     - Malattia dei legionari non polmonare [febbre di Pontiac]
     - 
+    - 1
   - - 295
     - A48.3
     - ICD10-GM-2018
@@ -1939,6 +2204,7 @@ icds:
     - Syndrome du choc toxique
     - Sindrome da shock tossico
     - 
+    - 1
   - - 296
     - A48.4
     - ICD10-GM-2018
@@ -1946,6 +2212,7 @@ icds:
     - Fièvre purpurique du Brésil
     - Febbre purpurica brasiliana
     - 
+    - 1
   - - 297
     - A48.8
     - ICD10-GM-2018
@@ -1953,6 +2220,7 @@ icds:
     - Autres maladies bactériennes précisées
     - Altre malattie batteriche specificate
     - 
+    - 1
   - - 298
     - A49
     - ICD10-GM-2018
@@ -1960,6 +2228,7 @@ icds:
     - Infection bactérienne, siège non précisé
     - Infezione batterica di sede non specificata
     - 
+    - 1
   - - 299
     - A49.0
     - ICD10-GM-2018
@@ -1967,6 +2236,7 @@ icds:
     - Infection à staphylocoques, siège non précisé
     - Infezione stafilococcica di sede non specificata
     - 
+    - 1
   - - 300
     - A49.1
     - ICD10-GM-2018
@@ -1974,6 +2244,7 @@ icds:
     - Infection à streptocoques et entérocoques, siège non précisé
     - Infezione streptococcica e enterococcica di sede non specificata
     - 
+    - 1
   - - 301
     - A49.2
     - ICD10-GM-2018
@@ -1981,6 +2252,7 @@ icds:
     - Infection à Haemophilus influenzae, siège non précisé
     - Infezione da Haemophilus influenzae di sede non specificata
     - 
+    - 1
   - - 302
     - A49.3
     - ICD10-GM-2018
@@ -1988,6 +2260,7 @@ icds:
     - Infection à Mycoplasma, siège non précisé
     - Infezione da Mycoplasma di sede non specificata
     - 
+    - 1
   - - 303
     - A49.8
     - ICD10-GM-2018
@@ -1995,6 +2268,7 @@ icds:
     - Autres infections bactériennes, siège non précisé
     - Altre infezioni batteriche di sede non specificata
     - 
+    - 1
   - - 304
     - A51.2
     - ICD10-GM-2018
@@ -2002,6 +2276,7 @@ icds:
     - Syphilis primaire d'autres localisations
     - Sifilide primaria di altre sedi
     - 
+    - 1
   - - 305
     - A49.9
     - ICD10-GM-2018
@@ -2009,6 +2284,7 @@ icds:
     - Infection bactérienne, sans précision
     - Infezione batterica non specificata
     - 
+    - 1
   - - 306
     - A50
     - ICD10-GM-2018
@@ -2016,6 +2292,7 @@ icds:
     - Syphilis congénitale
     - Sifilide congenita
     - 
+    - 1
   - - 307
     - A50.0
     - ICD10-GM-2018
@@ -2023,6 +2300,7 @@ icds:
     - Syphilis congénitale précoce, symptomatique
     - Sifilide congenita precoce sintomatica
     - 
+    - 1
   - - 308
     - A50.1
     - ICD10-GM-2018
@@ -2030,6 +2308,7 @@ icds:
     - Syphilis congénitale précoce, latente
     - Sifilide congenita precoce, latente
     - 
+    - 1
   - - 309
     - A50.2
     - ICD10-GM-2018
@@ -2037,6 +2316,7 @@ icds:
     - Syphilis congénitale précoce, sans précision
     - Sifilide congenita precoce non specificata
     - 
+    - 1
   - - 310
     - A50.3
     - ICD10-GM-2018
@@ -2044,6 +2324,7 @@ icds:
     - Oculopathie syphilitique congénitale tardive
     - Oftalmopatia sifilitica congenita tardiva
     - 
+    - 1
   - - 311
     - A50.4
     - ICD10-GM-2018
@@ -2051,6 +2332,7 @@ icds:
     - Syphilis congénitale nerveuse tardive [neuro-syphilis juvénile]
     - Neurosifilide congenita tardiva [neurosifilide giovanile]
     - 
+    - 1
   - - 312
     - A50.5
     - ICD10-GM-2018
@@ -2058,6 +2340,7 @@ icds:
     - Autres formes tardives de syphilis congénitale, symptomatique
     - Altre forme di sifilide congenita tardiva sintomatica
     - 
+    - 1
   - - 313
     - A50.6
     - ICD10-GM-2018
@@ -2065,6 +2348,7 @@ icds:
     - Syphilis congénitale tardive, latente
     - Sifilide congenita tardiva, latente
     - 
+    - 1
   - - 314
     - A50.7
     - ICD10-GM-2018
@@ -2072,6 +2356,7 @@ icds:
     - Syphilis congénitale tardive, sans précision
     - Sifilide congenita tardiva non specificata
     - 
+    - 1
   - - 315
     - A50.9
     - ICD10-GM-2018
@@ -2079,6 +2364,7 @@ icds:
     - Syphilis congénitale, sans précision
     - Sifilide congenita non specificata
     - 
+    - 1
   - - 316
     - A51
     - ICD10-GM-2018
@@ -2086,6 +2372,7 @@ icds:
     - Syphilis précoce
     - Sifilide precoce
     - 
+    - 1
   - - 317
     - A51.0
     - ICD10-GM-2018
@@ -2093,6 +2380,7 @@ icds:
     - Syphilis génitale primaire
     - Sifilide genitale primaria
     - 
+    - 1
   - - 318
     - A51.3
     - ICD10-GM-2018
@@ -2100,6 +2388,7 @@ icds:
     - Syphilis secondaire de la peau et des muqueuses
     - Sifilide secondaria della cute e delle mucose
     - 
+    - 1
   - - 319
     - A51.4
     - ICD10-GM-2018
@@ -2107,6 +2396,7 @@ icds:
     - Autres formes de syphilis secondaire
     - Altre forme di sifilide secondaria
     - 
+    - 1
   - - 320
     - A51.5
     - ICD10-GM-2018
@@ -2114,6 +2404,7 @@ icds:
     - Syphilis précoce, latente
     - Sifilide precoce, latente
     - 
+    - 1
   - - 321
     - A51.9
     - ICD10-GM-2018
@@ -2121,6 +2412,7 @@ icds:
     - Syphilis précoce, sans précision
     - Sifilide precoce non specificata
     - 
+    - 1
   - - 322
     - A52
     - ICD10-GM-2018
@@ -2128,6 +2420,7 @@ icds:
     - Syphilis tardive
     - Sifilide tardiva
     - 
+    - 1
   - - 323
     - A52.0
     - ICD10-GM-2018
@@ -2135,6 +2428,7 @@ icds:
     - Syphilis cardio-vasculaire
     - Sifilide cardiovascolare
     - 
+    - 1
   - - 324
     - A52.1
     - ICD10-GM-2018
@@ -2142,6 +2436,7 @@ icds:
     - Syphilis nerveuse symptomatique
     - Neurosifilide sintomatica
     - 
+    - 1
   - - 325
     - A52.2
     - ICD10-GM-2018
@@ -2149,6 +2444,7 @@ icds:
     - Syphilis nerveuse asymptomatique
     - Neurosifilide asintomatica
     - 
+    - 1
   - - 326
     - A52.3
     - ICD10-GM-2018
@@ -2156,6 +2452,7 @@ icds:
     - Syphilis nerveuse, sans précision
     - Neurosifilide non specificata
     - 
+    - 1
   - - 327
     - A54.4
     - ICD10-GM-2018
@@ -2163,6 +2460,7 @@ icds:
     - Infection gonococcique du système ostéo-articulaire et des muscles
     - Infezione gonococcica del sistema osteomuscolare
     - 
+    - 1
   - - 328
     - A54.5
     - ICD10-GM-2018
@@ -2170,6 +2468,7 @@ icds:
     - Pharyngite gonococcique
     - Faringite gonococcica
     - 
+    - 1
   - - 329
     - A52.7
     - ICD10-GM-2018
@@ -2177,6 +2476,7 @@ icds:
     - Autres formes tardives de syphilis symptomatique
     - Altre forme di sifilide tardiva sintomatica
     - 
+    - 1
   - - 330
     - A52.8
     - ICD10-GM-2018
@@ -2184,6 +2484,7 @@ icds:
     - Syphilis tardive, latente
     - Sifilide tardiva latente
     - 
+    - 1
   - - 331
     - A52.9
     - ICD10-GM-2018
@@ -2191,6 +2492,7 @@ icds:
     - Syphilis tardive, sans précision
     - Sifilide tardiva non specificata
     - 
+    - 1
   - - 332
     - A53
     - ICD10-GM-2018
@@ -2198,6 +2500,7 @@ icds:
     - Syphilis, autres et sans précision
     - Altre e non specificate forme di sifilide
     - 
+    - 1
   - - 333
     - A53.0
     - ICD10-GM-2018
@@ -2205,6 +2508,7 @@ icds:
     - Syphilis latente, non précisée précoce ou tardive
     - Sifilide latente, non specificata come precoce o tardiva
     - 
+    - 1
   - - 334
     - A53.9
     - ICD10-GM-2018
@@ -2212,6 +2516,7 @@ icds:
     - Syphilis, sans précision
     - Sifilide non specificata
     - 
+    - 1
   - - 335
     - A54
     - ICD10-GM-2018
@@ -2219,6 +2524,7 @@ icds:
     - Infection gonococcique
     - Infezione gonococcica
     - 
+    - 1
   - - 336
     - A54.0
     - ICD10-GM-2018
@@ -2229,6 +2535,7 @@ icds:
     - Infezione gonococcica del tratto genitourinario inferiore senza ascesso periuretrale
       o delle ghiandole accessorie
     - 
+    - 1
   - - 337
     - A54.1
     - ICD10-GM-2018
@@ -2239,6 +2546,7 @@ icds:
     - Infezione gonococcica del tratto genitourinario inferiore con ascesso periuretrale
       e delle ghiandole accessorie
     - 
+    - 1
   - - 338
     - A54.2
     - ICD10-GM-2018
@@ -2246,6 +2554,7 @@ icds:
     - Pelvipéritonite gonococcique et autres infections génito-urinaires gonococciques
     - Pelviperitonite gonococcica e altre forme di infezione gonococcica genitourinaria
     - 
+    - 1
   - - 339
     - A54.3
     - ICD10-GM-2018
@@ -2253,6 +2562,7 @@ icds:
     - Infection gonococcique de l'œil
     - Infezione oculare gonococcica
     - 
+    - 1
   - - 340
     - A54.6
     - ICD10-GM-2018
@@ -2260,6 +2570,7 @@ icds:
     - Infection gonococcique de l'anus et du rectum
     - Infezione gonococcica dell'ano e del retto
     - 
+    - 1
   - - 341
     - A54.8
     - ICD10-GM-2018
@@ -2267,6 +2578,7 @@ icds:
     - Autres infections gonococciques
     - Altre infezioni gonococciche
     - 
+    - 1
   - - 342
     - A54.9
     - ICD10-GM-2018
@@ -2274,6 +2586,7 @@ icds:
     - Infection gonococcique, sans précision
     - Infezione gonococcica non specificata
     - 
+    - 1
   - - 343
     - A55
     - ICD10-GM-2018
@@ -2281,6 +2594,7 @@ icds:
     - Lymphogranulomatose vénérienne à Chlamydia
     - Linfogranuloma (venereo) da Chlamydiae
     - 
+    - 1
   - - 344
     - A56
     - ICD10-GM-2018
@@ -2288,6 +2602,7 @@ icds:
     - Autres infections à Chlamydia transmises par voie sexuelle
     - Altre malattie da Chlamydiae, sessualmente trasmesse
     - 
+    - 1
   - - 345
     - A56.0
     - ICD10-GM-2018
@@ -2295,6 +2610,7 @@ icds:
     - Infection à Chlamydia de la partie inférieure de l'appareil génito-urinaire
     - Infezione da Chlamydiae del tratto genitourinario inferiore
     - 
+    - 1
   - - 346
     - A56.1
     - ICD10-GM-2018
@@ -2302,6 +2618,7 @@ icds:
     - Infection à Chlamydia, pelvi-péritonéale et des autres organes génito-urinaires
     - Infezione da Chlamydiae del peritoneo pelvico e di altri organi genitourinari
     - 
+    - 1
   - - 347
     - A56.2
     - ICD10-GM-2018
@@ -2309,6 +2626,7 @@ icds:
     - Infection à Chlamydia de l'appareil génito-urinaire, sans précision
     - Infezione da Chlamydiae del tratto genitourinario non specificata
     - 
+    - 1
   - - 348
     - A56.3
     - ICD10-GM-2018
@@ -2316,6 +2634,7 @@ icds:
     - Infection à Chlamydia de l'anus et du rectum
     - Infezione da Chlamydiae dell'ano e del retto
     - 
+    - 1
   - - 349
     - A56.4
     - ICD10-GM-2018
@@ -2323,6 +2642,7 @@ icds:
     - Infection à Chlamydia du pharynx
     - Infezione da Chlamydiae della faringe
     - 
+    - 1
   - - 350
     - A56.8
     - ICD10-GM-2018
@@ -2330,6 +2650,7 @@ icds:
     - Infection à Chlamydia transmise par voie sexuelle, autres localisations
     - Infezione da Chlamydiae sessualmente trasmessa di altre sedi
     - 
+    - 1
   - - 351
     - A57
     - ICD10-GM-2018
@@ -2337,6 +2658,7 @@ icds:
     - Chancre mou
     - Ulcera (venerea) molle
     - 
+    - 1
   - - 352
     - A58
     - ICD10-GM-2018
@@ -2344,6 +2666,7 @@ icds:
     - Granulome inguinal
     - Granuloma inguinale
     - 
+    - 1
   - - 353
     - A59
     - ICD10-GM-2018
@@ -2351,6 +2674,7 @@ icds:
     - Trichomonase
     - Tricomoniasi
     - 
+    - 1
   - - 354
     - A80
     - ICD10-GM-2018
@@ -2358,6 +2682,7 @@ icds:
     - Poliomyélite aiguë
     - Poliomielite acuta
     - 
+    - 1
   - - 355
     - A59.0
     - ICD10-GM-2018
@@ -2365,6 +2690,7 @@ icds:
     - Trichomonase uro-génitale
     - Tricomoniasi urogenitale
     - 
+    - 1
   - - 356
     - A59.8
     - ICD10-GM-2018
@@ -2372,6 +2698,7 @@ icds:
     - Autres localisations de trichomonase
     - Tricomoniasi di altre sedi
     - 
+    - 1
   - - 357
     - A59.9
     - ICD10-GM-2018
@@ -2379,6 +2706,7 @@ icds:
     - Trichomonase, sans précision
     - Tricomoniasi non specificata
     - 
+    - 1
   - - 358
     - A60
     - ICD10-GM-2018
@@ -2386,6 +2714,7 @@ icds:
     - Infection ano-génitale par le virus de l'herpès [herpes simplex]
     - Infezioni anogenitali da herpes virus [herpes simplex]
     - 
+    - 1
   - - 359
     - A60.0
     - ICD10-GM-2018
@@ -2394,6 +2723,7 @@ icds:
       de l'herpès
     - Infezione da herpes virus dei genitali e del tratto urogenitale
     - 
+    - 1
   - - 360
     - A60.1
     - ICD10-GM-2018
@@ -2401,6 +2731,7 @@ icds:
     - Infection de la marge cutanée de l'anus et du rectum, par le virus de l'herpès
     - Infezione da herpes virus della cute perianale e del retto
     - 
+    - 1
   - - 361
     - A60.9
     - ICD10-GM-2018
@@ -2408,6 +2739,7 @@ icds:
     - Infection ano-génitale par le virus de l'herpès, sans précision
     - Infezione anogenitale da herpes virus non specificata
     - 
+    - 1
   - - 362
     - A63
     - ICD10-GM-2018
@@ -2417,6 +2749,7 @@ icds:
       classées ailleurs
     - Altre malattie a trasmissione prevalentemente sessuale, non classificate altrove
     - 
+    - 1
   - - 363
     - A63.0
     - ICD10-GM-2018
@@ -2424,6 +2757,7 @@ icds:
     - Condylomes ano-génitaux (vénériens)
     - Condilomi anogenitali (venerei)
     - 
+    - 1
   - - 364
     - A63.8
     - ICD10-GM-2018
@@ -2432,6 +2766,7 @@ icds:
     - Autres maladies précisées dont le mode de transmission est essentiellement sexuel
     - Altre malattie specificate a trasmissione prevalentemente sessuale
     - 
+    - 1
   - - 365
     - A64
     - ICD10-GM-2018
@@ -2439,6 +2774,7 @@ icds:
     - Maladie sexuellement transmise, sans précision
     - Malattia sessualmente trasmessa non specificata
     - 
+    - 1
   - - 366
     - A65
     - ICD10-GM-2018
@@ -2446,6 +2782,7 @@ icds:
     - Syphilis non vénérienne
     - Sifilide non venerea
     - 
+    - 1
   - - 367
     - A66
     - ICD10-GM-2018
@@ -2453,6 +2790,7 @@ icds:
     - Pian
     - Framboesia
     - 
+    - 1
   - - 368
     - A66.0
     - ICD10-GM-2018
@@ -2460,6 +2798,7 @@ icds:
     - Lésions initiales du pian
     - Lesioni iniziali da framboesia
     - 
+    - 1
   - - 369
     - A66.1
     - ICD10-GM-2018
@@ -2467,6 +2806,7 @@ icds:
     - Papillomes multiples et pian plantaire humide (pian-crabe)
     - Papillomi multipli e wet crab da framboesia
     - 
+    - 1
   - - 370
     - A66.2
     - ICD10-GM-2018
@@ -2474,6 +2814,7 @@ icds:
     - Autres lésions cutanées précoces du pian
     - Altre lesioni cutanee precoci da framboesia
     - 
+    - 1
   - - 371
     - A80.0
     - ICD10-GM-2018
@@ -2481,6 +2822,7 @@ icds:
     - Poliomyélite paralytique aiguë, associée au virus vaccinal
     - Poliomielite acuta paralitica associata a vaccinazione
     - 
+    - 1
   - - 372
     - A66.3
     - ICD10-GM-2018
@@ -2488,6 +2830,7 @@ icds:
     - Hyperkératose pianique
     - Ipercheratosi da framboesia
     - 
+    - 1
   - - 373
     - A66.4
     - ICD10-GM-2018
@@ -2495,6 +2838,7 @@ icds:
     - Gommes et ulcères pianiques
     - Gomme e ulcere da framboesia
     - 
+    - 1
   - - 374
     - A66.5
     - ICD10-GM-2018
@@ -2502,6 +2846,7 @@ icds:
     - Gangosa
     - Gangosa
     - 
+    - 1
   - - 375
     - A66.6
     - ICD10-GM-2018
@@ -2509,6 +2854,7 @@ icds:
     - Lésions ostéo-articulaires pianiques
     - Lesioni delle ossa e delle articolazioni da framboesia
     - 
+    - 1
   - - 376
     - A66.7
     - ICD10-GM-2018
@@ -2516,6 +2862,7 @@ icds:
     - Autres manifestations du pian
     - Altre manifestazioni da framboesia
     - 
+    - 1
   - - 377
     - A66.8
     - ICD10-GM-2018
@@ -2523,6 +2870,7 @@ icds:
     - Pian latent
     - Framboesia latente
     - 
+    - 1
   - - 378
     - A66.9
     - ICD10-GM-2018
@@ -2530,6 +2878,7 @@ icds:
     - Pian, sans précision
     - Framboesia non specificata
     - 
+    - 1
   - - 379
     - A67
     - ICD10-GM-2018
@@ -2537,6 +2886,7 @@ icds:
     - Pinta [caraté]
     - Pinta [carate]
     - 
+    - 1
   - - 380
     - A67.0
     - ICD10-GM-2018
@@ -2544,6 +2894,7 @@ icds:
     - Lésions initiales de la pinta
     - Lesioni primarie da pinta
     - 
+    - 1
   - - 381
     - A67.1
     - ICD10-GM-2018
@@ -2551,6 +2902,7 @@ icds:
     - Lésions intermédiaires de la pinta
     - Lesioni intermedie da pinta
     - 
+    - 1
   - - 382
     - A67.2
     - ICD10-GM-2018
@@ -2558,6 +2910,7 @@ icds:
     - Lésions tardives de la pinta
     - Lesioni tardive da pinta
     - 
+    - 1
   - - 383
     - A67.3
     - ICD10-GM-2018
@@ -2565,6 +2918,7 @@ icds:
     - Lésions mixtes de la pinta
     - Lesioni miste da pinta
     - 
+    - 1
   - - 384
     - A67.9
     - ICD10-GM-2018
@@ -2572,6 +2926,7 @@ icds:
     - Pinta, sans précision
     - Pinta non specificata
     - 
+    - 1
   - - 385
     - A68
     - ICD10-GM-2018
@@ -2579,6 +2934,7 @@ icds:
     - Fièvres récurrentes [borrélioses]
     - Febbre recidivante [borreliosi]
     - 
+    - 1
   - - 386
     - A68.0
     - ICD10-GM-2018
@@ -2586,6 +2942,7 @@ icds:
     - Fièvre récurrente [borréliose] à poux
     - Febbre ricorrente da pidocchi
     - 
+    - 1
   - - 387
     - A68.1
     - ICD10-GM-2018
@@ -2593,6 +2950,7 @@ icds:
     - Fièvre récurrente [borréliose] à tiques
     - Febbre ricorrente da zecche
     - 
+    - 1
   - - 388
     - A68.9
     - ICD10-GM-2018
@@ -2600,6 +2958,7 @@ icds:
     - Fièvre récurrente [borréliose], sans précision
     - Febbre ricorrente non specificata
     - 
+    - 1
   - - 389
     - A69
     - ICD10-GM-2018
@@ -2607,6 +2966,7 @@ icds:
     - Autres infections à spirochètes
     - Altre infezioni da spirochete
     - 
+    - 1
   - - 390
     - A69.0
     - ICD10-GM-2018
@@ -2614,6 +2974,7 @@ icds:
     - Stomatite ulcéro-nécrotique
     - Stomatite ulcerativa necrotizzante
     - 
+    - 1
   - - 391
     - A69.1
     - ICD10-GM-2018
@@ -2621,6 +2982,7 @@ icds:
     - Autres infections dites de Vincent
     - Altre infezioni da fusospirocheti
     - 
+    - 1
   - - 392
     - A69.2
     - ICD10-GM-2018
@@ -2628,6 +2990,7 @@ icds:
     - Maladie de Lyme
     - Malattia di Lyme
     - 
+    - 1
   - - 393
     - A69.8
     - ICD10-GM-2018
@@ -2635,6 +2998,7 @@ icds:
     - Autres infections à spirochètes précisées
     - Altre Spirochetosi specificate
     - 
+    - 1
   - - 394
     - A69.9
     - ICD10-GM-2018
@@ -2642,6 +3006,7 @@ icds:
     - Infection à spirochètes, sans précision
     - Spirochetosi non specificata
     - 
+    - 1
   - - 395
     - A70
     - ICD10-GM-2018
@@ -2649,6 +3014,7 @@ icds:
     - Infection à Chlamydia psittaci
     - Infezione da Chlamydia psittaci
     - 
+    - 1
   - - 396
     - A71
     - ICD10-GM-2018
@@ -2656,6 +3022,7 @@ icds:
     - Trachome
     - Tracoma
     - 
+    - 1
   - - 397
     - A71.0
     - ICD10-GM-2018
@@ -2663,6 +3030,7 @@ icds:
     - Phase initiale du trachome
     - Stadio iniziale di tracoma
     - 
+    - 1
   - - 398
     - A71.1
     - ICD10-GM-2018
@@ -2670,6 +3038,7 @@ icds:
     - Phase active du trachome
     - Stadio attivo di tracoma
     - 
+    - 1
   - - 399
     - A71.9
     - ICD10-GM-2018
@@ -2677,6 +3046,7 @@ icds:
     - Trachome, sans précision
     - Tracoma non specificato
     - 
+    - 1
   - - 400
     - A74
     - ICD10-GM-2018
@@ -2684,6 +3054,7 @@ icds:
     - Autres infections à Chlamydia
     - Altre malattie da Chlamydiae
     - 
+    - 1
   - - 401
     - A74.0
     - ICD10-GM-2018
@@ -2691,6 +3062,7 @@ icds:
     - Conjonctivite à Chlamydia {H13.1}
     - Congiuntivite da Chlamydiae {H13.1}
     - 
+    - 1
   - - 402
     - A74.8
     - ICD10-GM-2018
@@ -2698,6 +3070,7 @@ icds:
     - Autres infections à Chlamydia précisées
     - Altre malattie da Chlamydiae specificate
     - 
+    - 1
   - - 403
     - A74.9
     - ICD10-GM-2018
@@ -2705,6 +3078,7 @@ icds:
     - Infection à Chlamydia, sans précision
     - Infezione da Chlamydiae non specificata
     - 
+    - 1
   - - 404
     - A75
     - ICD10-GM-2018
@@ -2712,6 +3086,7 @@ icds:
     - Typhus
     - Tifo esantematico
     - 
+    - 1
   - - 405
     - A75.0
     - ICD10-GM-2018
@@ -2719,6 +3094,7 @@ icds:
     - Typhus épidémique à poux dû à Rickettsia prowazekii
     - Tifo esantematico da pidocchi da Rickettsia prowazekii
     - 
+    - 1
   - - 406
     - A75.1
     - ICD10-GM-2018
@@ -2726,6 +3102,7 @@ icds:
     - Typhus résurgent [maladie de Brill]
     - Tifo ricorrente [malattia di Brill]
     - 
+    - 1
   - - 407
     - A75.2
     - ICD10-GM-2018
@@ -2733,6 +3110,7 @@ icds:
     - Typhus à Rickettsia typhi
     - Tifo esantematico da Rickettsia typhi
     - 
+    - 1
   - - 408
     - A75.3
     - ICD10-GM-2018
@@ -2740,6 +3118,7 @@ icds:
     - Typhus à Rickettsia tsutsugamushi
     - Tifo esantematico da Rickettsia tsutsugamushi
     - 
+    - 1
   - - 409
     - A75.9
     - ICD10-GM-2018
@@ -2747,6 +3126,7 @@ icds:
     - Typhus, sans précision
     - Tifo esantematico non specificato
     - 
+    - 1
   - - 410
     - A77
     - ICD10-GM-2018
@@ -2754,6 +3134,7 @@ icds:
     - Fièvre pourprée [rickettsioses à tiques]
     - Febbre maculosa [rickettsiosi da zecche]
     - 
+    - 1
   - - 411
     - A77.0
     - ICD10-GM-2018
@@ -2761,6 +3142,7 @@ icds:
     - Fièvre pourprée à Rickettsia rickettsii
     - Febbre maculosa da Rickettsia rickettsii
     - 
+    - 1
   - - 412
     - A77.1
     - ICD10-GM-2018
@@ -2768,6 +3150,7 @@ icds:
     - Fièvre pourprée à Rickettsia conorii
     - Febbre maculosa da Rickettsia conorii
     - 
+    - 1
   - - 413
     - A77.2
     - ICD10-GM-2018
@@ -2775,6 +3158,7 @@ icds:
     - Fièvre pourprée due à Rickettsia sibirica
     - Febbre maculosa da Rickettsia siberica
     - 
+    - 1
   - - 414
     - A77.3
     - ICD10-GM-2018
@@ -2782,6 +3166,7 @@ icds:
     - Fièvre pourprée due à Rickettsia australis
     - Febbre maculosa da Rickettsia australis
     - 
+    - 1
   - - 415
     - A77.8
     - ICD10-GM-2018
@@ -2789,6 +3174,7 @@ icds:
     - Autres fièvres pourprées
     - Altre febbri maculose
     - 
+    - 1
   - - 416
     - A77.9
     - ICD10-GM-2018
@@ -2796,6 +3182,7 @@ icds:
     - Fièvre pourprée, sans précision
     - Febbre maculosa non specificata
     - 
+    - 1
   - - 417
     - A78
     - ICD10-GM-2018
@@ -2803,6 +3190,7 @@ icds:
     - Fièvre Q
     - Febbre Q
     - 
+    - 1
   - - 418
     - A79
     - ICD10-GM-2018
@@ -2810,6 +3198,7 @@ icds:
     - Autres rickettsioses
     - Altre rickettsiosi
     - 
+    - 1
   - - 419
     - A79.0
     - ICD10-GM-2018
@@ -2817,6 +3206,7 @@ icds:
     - Fièvre des tranchées
     - Febbre delle trincee
     - 
+    - 1
   - - 420
     - A79.1
     - ICD10-GM-2018
@@ -2824,6 +3214,7 @@ icds:
     - Rickettsiose varicelliforme due à Rickettsia akari
     - Rickettsialpox da Rickettsia akari
     - 
+    - 1
   - - 421
     - A79.8
     - ICD10-GM-2018
@@ -2831,6 +3222,7 @@ icds:
     - Autres types précisés de rickettsiose
     - Altre rickettsiosi specificate
     - 
+    - 1
   - - 422
     - A79.9
     - ICD10-GM-2018
@@ -2838,6 +3230,7 @@ icds:
     - Rickettsiose, sans précision
     - Rickettsiosi non specificata
     - 
+    - 1
   - - 423
     - A80.1
     - ICD10-GM-2018
@@ -2845,6 +3238,7 @@ icds:
     - Poliomyélite paralytique aiguë, virus sauvage importé
     - Poliomielite acuta paralitica da virus selvaggio importato
     - 
+    - 1
   - - 424
     - A80.2
     - ICD10-GM-2018
@@ -2852,6 +3246,7 @@ icds:
     - Poliomyélite paralytique aiguë, virus sauvage indigène
     - Poliomielite acuta paralitica da virus selvaggio indigeno
     - 
+    - 1
   - - 425
     - A80.3
     - ICD10-GM-2018
@@ -2859,6 +3254,7 @@ icds:
     - Poliomyélites paralytiques aiguës, autres et sans précision
     - Altra e non specificata poliomielite acuta paralitica
     - 
+    - 1
   - - 426
     - A80.4
     - ICD10-GM-2018
@@ -2866,6 +3262,7 @@ icds:
     - Poliomyélite aiguë non paralytique
     - Poliomielite acuta non paralitica
     - 
+    - 1
   - - 427
     - A80.9
     - ICD10-GM-2018
@@ -2873,6 +3270,7 @@ icds:
     - Poliomyélite aiguë, sans précision
     - Poliomielite acuta non specificata
     - 
+    - 1
   - - 428
     - A81
     - ICD10-GM-2018
@@ -2880,6 +3278,7 @@ icds:
     - Infections atypiques à virus, du système nerveux central
     - Infezioni del sistema nervoso centrale da virus atipici
     - 
+    - 1
   - - 429
     - A81.0
     - ICD10-GM-2018
@@ -2887,6 +3286,7 @@ icds:
     - Maladie de Creutzfeldt-Jakob
     - Malattia di Creutzfeldt-Jakob
     - 
+    - 1
   - - 430
     - A81.1
     - ICD10-GM-2018
@@ -2894,6 +3294,7 @@ icds:
     - Panencéphalite sclérosante subaiguë
     - Panencefalite sclerosante subacuta
     - 
+    - 1
   - - 431
     - A81.2
     - ICD10-GM-2018
@@ -2901,6 +3302,7 @@ icds:
     - Leucoencéphalopathie multifocale progressive
     - Leucoencefalopatia multifocale progressiva
     - 
+    - 1
   - - 432
     - A81.8
     - ICD10-GM-2018
@@ -2908,6 +3310,7 @@ icds:
     - Autres infections atypiques à virus, du système nerveux central
     - Altre infezioni del sistema nervoso centrale da virus atipici
     - 
+    - 1
   - - 433
     - A81.9
     - ICD10-GM-2018
@@ -2915,6 +3318,7 @@ icds:
     - Infection atypiques à virus, du système nerveux central, sans précision
     - Infezione, non specificata, del sistema nervoso centrale da virus non convenzionale
     - 
+    - 1
   - - 434
     - A82
     - ICD10-GM-2018
@@ -2922,6 +3326,7 @@ icds:
     - Rage
     - Rabbia
     - 
+    - 1
   - - 435
     - A82.0
     - ICD10-GM-2018
@@ -2929,6 +3334,7 @@ icds:
     - Rage sylvatique
     - Rabbia silvestre
     - 
+    - 1
   - - 436
     - A82.1
     - ICD10-GM-2018
@@ -2936,6 +3342,7 @@ icds:
     - Rage des rues [rage citadine]
     - Rabbia urbana
     - 
+    - 1
   - - 437
     - A82.9
     - ICD10-GM-2018
@@ -2943,6 +3350,7 @@ icds:
     - Rage, sans précision
     - Rabbia non specificata
     - 
+    - 1
   - - 438
     - A83
     - ICD10-GM-2018
@@ -2950,6 +3358,7 @@ icds:
     - Encéphalite virale transmise par des moustiques
     - Encefalite virale da zanzare
     - 
+    - 1
   - - 439
     - A83.0
     - ICD10-GM-2018
@@ -2957,6 +3366,7 @@ icds:
     - Encéphalite japonaise
     - Encefalite giapponese
     - 
+    - 1
   - - 440
     - A83.1
     - ICD10-GM-2018
@@ -2964,6 +3374,7 @@ icds:
     - Encéphalite équine occidentale
     - Encefalite equina dell’ovest [Encefalite equina occidentale]
     - 
+    - 1
   - - 441
     - A83.2
     - ICD10-GM-2018
@@ -2971,6 +3382,7 @@ icds:
     - Encéphalite équine orientale
     - Encefalite equina dell’est [Encefalite equina orientale]
     - 
+    - 1
   - - 442
     - A83.3
     - ICD10-GM-2018
@@ -2978,6 +3390,7 @@ icds:
     - Encéphalite de Saint-Louis
     - Encefalite di St Louis
     - 
+    - 1
   - - 443
     - A83.4
     - ICD10-GM-2018
@@ -2985,6 +3398,7 @@ icds:
     - Encéphalite australienne
     - Encefalite australiana
     - 
+    - 1
   - - 444
     - A93.0
     - ICD10-GM-2018
@@ -2992,6 +3406,7 @@ icds:
     - Fièvre d'Oropouche
     - Malattia da virus Oropouche
     - 
+    - 1
   - - 445
     - A83.5
     - ICD10-GM-2018
@@ -2999,6 +3414,7 @@ icds:
     - Encéphalite de Californie
     - Encefalite californiana
     - 
+    - 1
   - - 446
     - A83.6
     - ICD10-GM-2018
@@ -3006,6 +3422,7 @@ icds:
     - Maladie à virus de Rocio
     - Encefalite da virus Rocio
     - 
+    - 1
   - - 447
     - A83.8
     - ICD10-GM-2018
@@ -3013,6 +3430,7 @@ icds:
     - Autres encéphalites virales transmises par des moustiques
     - Altre encefaliti virali da zanzare
     - 
+    - 1
   - - 448
     - A83.9
     - ICD10-GM-2018
@@ -3020,6 +3438,7 @@ icds:
     - Encéphalite virale transmise par des moustiques, sans précision
     - Encefalite virale da zanzare non specificata
     - 
+    - 1
   - - 449
     - A84
     - ICD10-GM-2018
@@ -3027,6 +3446,7 @@ icds:
     - Encéphalite virale transmise par des tiques
     - Encefalite virale da zecche
     - 
+    - 1
   - - 450
     - A84.0
     - ICD10-GM-2018
@@ -3034,6 +3454,7 @@ icds:
     - Encéphalite de la taïga [encéphalite verno-estivale russe]
     - Encefalite da zecche dell'estremo Oriente [encefalite russa estivo-primaverile]
     - 
+    - 1
   - - 451
     - A84.1
     - ICD10-GM-2018
@@ -3041,6 +3462,7 @@ icds:
     - Encéphalite d'Europe centrale transmise par des tiques
     - Encefalite da zecche centroeuropea
     - 
+    - 1
   - - 452
     - A84.8
     - ICD10-GM-2018
@@ -3048,6 +3470,7 @@ icds:
     - Autres encéphalites virales transmises par des tiques
     - Altre encefaliti virali da zecche
     - 
+    - 1
   - - 453
     - A84.9
     - ICD10-GM-2018
@@ -3055,6 +3478,7 @@ icds:
     - Encéphalite virale transmise par des tiques, sans précision
     - Encefalite virale da zecche non specificata
     - 
+    - 1
   - - 454
     - A85
     - ICD10-GM-2018
@@ -3062,6 +3486,7 @@ icds:
     - Autres encéphalites virales, non classées ailleurs
     - Altre encefaliti virali non classificate altrove
     - 
+    - 1
   - - 455
     - A85.0
     - ICD10-GM-2018
@@ -3069,6 +3494,7 @@ icds:
     - Encéphalite à entérovirus {G05.1}
     - Encefalite da enterovirus {G05.1}
     - 
+    - 1
   - - 456
     - A85.1
     - ICD10-GM-2018
@@ -3076,6 +3502,7 @@ icds:
     - Encéphalite à adénovirus {G05.1}
     - Encefalite da adenovirus {G05.1}
     - 
+    - 1
   - - 457
     - A85.2
     - ICD10-GM-2018
@@ -3083,6 +3510,7 @@ icds:
     - Encéphalite virale transmise par des arthropodes, sans précision
     - Encefalite virale da artropodi non specificata
     - 
+    - 1
   - - 458
     - A85.8
     - ICD10-GM-2018
@@ -3090,6 +3518,7 @@ icds:
     - Autres encéphalites virales précisées
     - Altre encefaliti virali specificate
     - 
+    - 1
   - - 459
     - A86
     - ICD10-GM-2018
@@ -3097,6 +3526,7 @@ icds:
     - Encéphalite virale, sans précision
     - Encefalite virale non specificata
     - 
+    - 1
   - - 460
     - A93.1
     - ICD10-GM-2018
@@ -3104,6 +3534,7 @@ icds:
     - Fièvre à phlébotome
     - Febbre da mosca della sabbia
     - 
+    - 1
   - - 461
     - A87
     - ICD10-GM-2018
@@ -3111,6 +3542,7 @@ icds:
     - Méningite virale
     - Meningite virale
     - 
+    - 1
   - - 462
     - A87.0
     - ICD10-GM-2018
@@ -3118,6 +3550,7 @@ icds:
     - Méningite à entérovirus {G02.0}
     - Meningite da enterovirus {G02.0}
     - 
+    - 1
   - - 463
     - A87.1
     - ICD10-GM-2018
@@ -3125,6 +3558,7 @@ icds:
     - Méningite à adénovirus {G02.0}
     - Meningite da adenovirus {G02.0}
     - 
+    - 1
   - - 464
     - A87.2
     - ICD10-GM-2018
@@ -3132,6 +3566,7 @@ icds:
     - Chorioméningite lymphocytaire
     - Coriomeningite linfocitaria
     - 
+    - 1
   - - 465
     - A87.8
     - ICD10-GM-2018
@@ -3139,6 +3574,7 @@ icds:
     - Autres méningites virales
     - Altre meningiti virali
     - 
+    - 1
   - - 466
     - A87.9
     - ICD10-GM-2018
@@ -3146,6 +3582,7 @@ icds:
     - Méningite virale, sans précision
     - Meningite virale non specificata
     - 
+    - 1
   - - 467
     - A88
     - ICD10-GM-2018
@@ -3153,6 +3590,7 @@ icds:
     - Autres infections virales du système nerveux central, non classées ailleurs
     - Altre infezioni virali del sistema nervoso centrale non classificate altrove
     - 
+    - 1
   - - 468
     - A88.0
     - ICD10-GM-2018
@@ -3160,6 +3598,7 @@ icds:
     - Fièvre exanthémateuse à entérovirus [exanthème de Boston]
     - Febbre esantematica da enterovirus [esantema di Boston]
     - 
+    - 1
   - - 469
     - A88.1
     - ICD10-GM-2018
@@ -3167,6 +3606,7 @@ icds:
     - Vertige épidémique
     - Vertigine epidemica
     - 
+    - 1
   - - 470
     - A88.8
     - ICD10-GM-2018
@@ -3174,6 +3614,7 @@ icds:
     - Autres infections virales précisées du système nerveux central
     - Altre infezioni virali del sistema nervoso centrale specificate
     - 
+    - 1
   - - 471
     - A89
     - ICD10-GM-2018
@@ -3181,6 +3622,7 @@ icds:
     - Infection virale du système nerveux central, sans précision
     - Infezione virale del sistema nervoso centrale non specificata
     - 
+    - 1
   - - 472
     - A92
     - ICD10-GM-2018
@@ -3188,6 +3630,7 @@ icds:
     - Autres fièvres virales transmises par des moustiques
     - Altre febbri virali trasmesse da zanzare
     - 
+    - 1
   - - 473
     - A92.0
     - ICD10-GM-2018
@@ -3195,6 +3638,7 @@ icds:
     - Fièvre de Chikungunya
     - Malattia da virus Chikungunya
     - 
+    - 1
   - - 474
     - A92.1
     - ICD10-GM-2018
@@ -3202,6 +3646,7 @@ icds:
     - Fièvre due au virus O'nyong-nyong
     - Febbre O'nyong-nyong
     - 
+    - 1
   - - 475
     - A92.2
     - ICD10-GM-2018
@@ -3209,6 +3654,7 @@ icds:
     - Fièvre équine vénézuélienne
     - Febbre equina Venezuelana
     - 
+    - 1
   - - 476
     - A92.3
     - ICD10-GM-2018
@@ -3216,6 +3662,7 @@ icds:
     - Fièvre due au virus West-Nile
     - Infezione da virus West Nile
     - 
+    - 1
   - - 477
     - A92.4
     - ICD10-GM-2018
@@ -3223,6 +3670,7 @@ icds:
     - Fièvre de la vallée du Rift
     - Febbre della valle del Rift
     - 
+    - 1
   - - 478
     - A92.8
     - ICD10-GM-2018
@@ -3230,6 +3678,7 @@ icds:
     - Autres fièvres virales précisées, transmises par des moustiques
     - Altre febbri virali specificate trasmesse da zanzare
     - 
+    - 1
   - - 479
     - A92.9
     - ICD10-GM-2018
@@ -3237,6 +3686,7 @@ icds:
     - Fièvre virale transmise par des moustiques, sans précision
     - Febbre virale non specificata trasmessa da zanzare
     - 
+    - 1
   - - 480
     - A93
     - ICD10-GM-2018
@@ -3244,6 +3694,7 @@ icds:
     - Autres fièvres virales transmises par des arthropodes, non classées ailleurs
     - Altre febbri virali trasmesse da artropodi, non classificate altrove
     - 
+    - 1
   - - 481
     - A93.8
     - ICD10-GM-2018
@@ -3251,6 +3702,7 @@ icds:
     - Autres fièvres virales précisées, transmises par des arthropodes
     - Altre malattie virali specificate trasmesse da artropodi
     - 
+    - 1
   - - 482
     - A94
     - ICD10-GM-2018
@@ -3258,6 +3710,7 @@ icds:
     - Fièvre virale transmise par des arthropodes, sans précision
     - Malattia virale trasmessa da artropodi non specificata
     - 
+    - 1
   - - 483
     - A95
     - ICD10-GM-2018
@@ -3265,6 +3718,7 @@ icds:
     - Fièvre jaune
     - Febbre gialla
     - 
+    - 1
   - - 484
     - A95.0
     - ICD10-GM-2018
@@ -3272,6 +3726,7 @@ icds:
     - Fièvre jaune sylvatique
     - Febbre gialla silvestre
     - 
+    - 1
   - - 485
     - A95.1
     - ICD10-GM-2018
@@ -3279,6 +3734,7 @@ icds:
     - Fièvre jaune citadine
     - Febbre gialla urbana
     - 
+    - 1
   - - 486
     - A95.9
     - ICD10-GM-2018
@@ -3286,6 +3742,7 @@ icds:
     - Fièvre jaune, sans précision
     - Febbre gialla non specificata
     - 
+    - 1
   - - 487
     - A96
     - ICD10-GM-2018
@@ -3293,6 +3750,7 @@ icds:
     - Fièvre hémorragique à arénavirus
     - Febbre emorragica da arenavirus
     - 
+    - 1
   - - 488
     - A96.0
     - ICD10-GM-2018
@@ -3300,6 +3758,7 @@ icds:
     - Fièvre hémorragique de Junin
     - Febbre emorragica da virus Junin
     - 
+    - 1
   - - 489
     - A96.1
     - ICD10-GM-2018
@@ -3307,6 +3766,7 @@ icds:
     - Fièvre hémorragique de Machupo
     - Febbre emorragica da virus Machupo
     - 
+    - 1
   - - 490
     - A96.2
     - ICD10-GM-2018
@@ -3314,6 +3774,7 @@ icds:
     - Fièvre de Lassa
     - Febbre di Lassa
     - 
+    - 1
   - - 491
     - A96.8
     - ICD10-GM-2018
@@ -3321,6 +3782,7 @@ icds:
     - Autres fièvres hémorragiques à arénavirus
     - Altre febbri emorragiche da arenavirus
     - 
+    - 1
   - - 492
     - A96.9
     - ICD10-GM-2018
@@ -3328,6 +3790,7 @@ icds:
     - Fièvre hémorragique à arénavirus, sans précision
     - Febbre emorragica da arenavirus non specificata
     - 
+    - 1
   - - 493
     - A97
     - ICD10-GM-2018
@@ -3335,6 +3798,7 @@ icds:
     - Dengue
     - Dengue
     - 
+    - 1
   - - 494
     - A97.0
     - ICD10-GM-2018
@@ -3342,6 +3806,7 @@ icds:
     - Dengue sans signes d’alerte
     - Dengue senza segni premonitori
     - 
+    - 1
   - - 495
     - A97.1
     - ICD10-GM-2018
@@ -3349,6 +3814,7 @@ icds:
     - Dengue avec signes d’alerte
     - Dengue con segni premonitori
     - 
+    - 1
   - - 496
     - A97.2
     - ICD10-GM-2018
@@ -3356,6 +3822,7 @@ icds:
     - Dengue sévère
     - Dengue grave
     - 
+    - 1
   - - 497
     - A97.9
     - ICD10-GM-2018
@@ -3363,6 +3830,7 @@ icds:
     - Dengue, sans précision
     - Dengue, non specificata
     - 
+    - 1
   - - 498
     - A98
     - ICD10-GM-2018
@@ -3370,6 +3838,7 @@ icds:
     - Autres fièvres hémorragiques virales, non classées ailleurs
     - Altre febbri emorragiche virali, non classificate altrove
     - 
+    - 1
   - - 499
     - A98.0
     - ICD10-GM-2018
@@ -3377,6 +3846,7 @@ icds:
     - Fièvre hémorragique de Crimée [du Congo]
     - Febbre emorragica della Crimea e del Congo
     - 
+    - 1
   - - 500
     - A98.1
     - ICD10-GM-2018
@@ -3384,6 +3854,7 @@ icds:
     - Fièvre hémorragique d'Omsk
     - Febbre emorragica di Omsk
     - 
+    - 1
   - - 501
     - A98.2
     - ICD10-GM-2018
@@ -3391,6 +3862,7 @@ icds:
     - Maladie de la forêt de Kyasanur
     - Malattia della foresta di Kyasanur
     - 
+    - 1
   - - 502
     - A98.5
     - ICD10-GM-2018
@@ -3398,6 +3870,7 @@ icds:
     - Fièvre hémorragique avec syndrome rénal
     - Febbre emorragica con sindrome renale
     - 
+    - 1
   - - 503
     - A98.8
     - ICD10-GM-2018
@@ -3405,6 +3878,7 @@ icds:
     - Autres fièvres hémorragiques virales précisées
     - Altre febbri emorragiche virali specificate
     - 
+    - 1
   - - 504
     - A99
     - ICD10-GM-2018
@@ -3412,3 +3886,4 @@ icds:
     - Fièvre hémorragique virale, sans précision
     - Febbre virale emorragica non specificata
     - 
+    - 1
