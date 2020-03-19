@@ -5,10 +5,6 @@ import DetailsCard from "./DetailsCard";
 import SearchCard from "./SearchCard";
 import Mapping from "./Mapping";
 import './MainUI.css'
-import Grid from "@material-ui/core/Grid";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import {Hidden, ListItem} from "@material-ui/core";
-import {Link} from "react-router-dom";
 
 class MainUI extends React.Component {
     constructor(props) {

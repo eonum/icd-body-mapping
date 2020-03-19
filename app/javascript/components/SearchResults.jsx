@@ -13,17 +13,40 @@ class SearchResults extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            itemSelected: ''
+            savedIcd: {
+                id: '',
+                code: '',
+                kapitel: ''
+            }
         };
     }
 
-    filter(icd) {
-        if (this.state.itemSelected !== ''){
-            icd = '';
-            this.setState({itemSelected: icd})
-        } else {
-            this.setState({itemSelected: icd})
+    filter(icdObject) {
+        if (this.state.savedIcd.id === icdObject.id){
+            icdObject = {
+                id: '',
+                code: '',
+                kapitel: ''
+            }
+            this.setState({savedIcd: icdObject});
         }
+        else{
+            this.setState({savedIcd: icdObject});
+        }
+    }
+
+    icdCards(index, icd) {
+        let color = 'gray';
+        if(icd.code.length === 3) color = 'black';
+        return <div key={index} className="col-md-6 col-lg-4" onClick={this.filter.bind(this, icd)}
+                    style={{color: color}}>
+            <div className="card mb-4">
+                <div className="card-body">
+                    <h5 className="card-title">{icd.code}</h5>
+                    <h6 className="card-description">{icd.text_de}</h6>
+                </div>
+            </div>
+        </div>
     }
 
     /**
@@ -33,15 +56,15 @@ class SearchResults extends React.Component {
     render(){
         const { icds } = this.props.SearchState;
         let allIcds = icds.map((icd, index) => {
-            if (this.state.itemSelected === icd.id || this.state.itemSelected === ''){
-                return <div key={index} className="col-md-6 col-lg-4" onClick = {this.filter.bind(this, icd.id)}>
-                    <div className="card mb-4">
-                        <div className="card-body">
-                            <h5 className="card-title">{icd.code}</h5>
-                            <h6 className="card-description">{icd.text_de}</h6>
-                        </div>
-                    </div>
-                </div>
+            if (this.state.savedIcd.id === '') {
+                if (icd.code.length === 3) {
+                    return this.icdCards(index, icd);
+                }
+            }
+            else{
+                if (icd.code.includes(this.state.savedIcd.code)){
+                    return this.icdCards(index, icd);
+                }
             }
         });
         const noIcd = (
@@ -51,6 +74,12 @@ class SearchResults extends React.Component {
                 </h4>
             </div>
         );
+        let kapitelArray = icds.reduce((chap, icd) => {
+            if(!chap.includes(icd.kapitel)) {
+                chap.push(icd.kapitel);
+            }
+            return chap;
+        }, []);
 
         return (
             <div>
@@ -59,9 +88,6 @@ class SearchResults extends React.Component {
                         <div className="row">
                             {icds.length > 0 ? allIcds : noIcd}
                         </div>
-                        <Link to="/icds" className="btn btn-link">
-                            View all icd's
-                        </Link>
                     </main>
                 </div>
             </div>
