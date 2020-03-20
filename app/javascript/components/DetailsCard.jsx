@@ -31,25 +31,28 @@ class DetailsCard extends React.Component {
                         {icd.code}
                     </h1>
                 </div>
-                <div className="card">
+                <div className="card m-2 mt-4 mr-4 ml-4 border-0">
                     <h5 className="card-subtitle">German</h5>
                     <div
+                        className="border-top"
                         dangerouslySetInnerHTML={{
                             __html: `${icd.text_de}`
                         }}
                     />
                 </div>
-                <div className="card">
+                <div className="card m-2 mr-4 ml-4 border-0">
                     <h5 className="card-subtitle">French</h5>
                     <div
+                        className="border-top"
                         dangerouslySetInnerHTML={{
                             __html: `${icd.text_fr}`
                         }}
                     />
                 </div>
-                <div className="card">
+                <div className="card mt-2 ml-4 mr-4 mb-3 border-0">
                     <h5 className="card-subtitle">Italian</h5>
                     <div
+                        className="border-top"
                         dangerouslySetInnerHTML={{
                             __html: `${icd.text_it}`
                         }}
