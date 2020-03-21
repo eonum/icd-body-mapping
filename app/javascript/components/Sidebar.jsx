@@ -11,6 +11,9 @@ class Sidebar extends React.Component {
         super(props);
         this.state = {
             icds: [],
+            icdTemp: [],
+            hierarchyLevel: 0,
+            backFrom: '',
             term: ''
         };
     }
@@ -28,12 +31,35 @@ class Sidebar extends React.Component {
             .catch(() => this.props.history.push("/"));
     }
 
-    getAllIcds() {
+    /**
+     * Gets ICD's from next superior level in hierarchy via shortening
+     * the search term and calling backend
+     */
+    stepBackHierarchy() {
+        let term = this.state.term;
+        if (term.toString().length === 3) {
+            term = term.toString().substring(0, 1);
+            term = '';
+        } else if (term.toString().length === 5) {
+            term = term.toString().substring(0, 3);
+        } else if (term.toString().length === 6) {
+            term = term.toString().substring(0, 5);
+        }
         this.setState({
-            term: ''
-        })
+            term: term
+        }, () => {
+            $.getJSON('/search?q=' + this.state.term)
+                .then(async response =>
+                    this.setGroup(await response)
+                )
+        });
     }
 
+    /**
+     * Sends selected ICD to parent MainUI
+     * (which itself sends it to DetailsCard)
+     * @param icd
+     */
     selectIcd(icd) {
         this.props.callbackFromMainUI(icd);
     }
@@ -47,9 +73,14 @@ class Sidebar extends React.Component {
                     this.setGroup(await response)
                 )
         });
+
         this.selectIcd(e);
     }
 
+    /**
+     * Sets up current selection of ICD's
+     * @param response
+     */
     setGroup(response) {
         this.setState({
             icds: response
@@ -90,7 +121,7 @@ class Sidebar extends React.Component {
             <></>
         );
         const noBackArrow = (
-            <IconButton onClick={this.getAllIcds.bind(this)}>
+            <IconButton onClick={this.stepBackHierarchy.bind(this, this.state)}>
                 <ArrowBackIcon/>
             </IconButton>
         );
