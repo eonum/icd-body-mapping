@@ -13,6 +13,7 @@ class Sidebar extends React.Component {
             icds: [],
             icdSelection: [],
             filtered: false,
+            icdCodeLength: 3,
             term: ''
         };
     }
@@ -81,18 +82,37 @@ class Sidebar extends React.Component {
     filter(icds, icd) {
         const ICDs = icds.icds;
         const icdCode = icd.code.toString();
+        let codeLength;
+
+        switch (icdCode.length) {
+            case 1:
+                codeLength = 3;
+                break;
+            case 3:
+                codeLength = 5;
+                break;
+            case 5:
+                codeLength = 6;
+                break;
+        };
+
+        this.setState({
+            icdCodeLength: codeLength
+        });
 
         let selection = ICDs.map((icd) => {
-            if (icd.code.toString().includes(icdCode)) {
+            if (icd.code.toString().includes(icdCode)
+                && icd.code.toString().length === codeLength) {
                 return icd;
             } else {
                 return 0;
             }
         });
-        var i;
+
         selection = selection.filter((value) => {
             return value !== 0;
         });
+        selection = selection.sort();
 
         this.setState({
             icdSelection: selection,
@@ -109,6 +129,7 @@ class Sidebar extends React.Component {
      * @param response
      */
     setGroup(response) {
+        response.sort();
         this.setState({
             icds: response,
             icdSelection: response
@@ -119,7 +140,7 @@ class Sidebar extends React.Component {
         const { icds } = this.state;
         console.log(icds);
         const allIcds = icds.map((icd, index) => {
-            if (icd !== null && icd.code.toString().length === 3) {
+            if (icd !== null && icd.code.toString().length === this.state.icdCodeLength) {
                 return <div className="list-group" key={index}>
                     <div
                         className="list-group-item"
