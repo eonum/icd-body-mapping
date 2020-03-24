@@ -85,12 +85,6 @@ If you would like to set a password for the user, you can do the following
 sudo -u postgres psql
 postgres=# \password [passowrd]
 ```
-Create db:
-
-rails db:create
-rails db:migrate
-rake db:data:load
-
 
 ### Windows
 
