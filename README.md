@@ -145,8 +145,33 @@ Download PostgreSQL from 'https://www.postgresql.org/download/windows/' and inst
 
 setup user with permission to create databases
 
-Create db:
+## Application run guide
 
+### Setup Database
+
+Open the project in a Ruby IDE of your choice and open the database.yml file under ~$YOUR_PROJECT_PATH$/ice-body-mapping/config/database.yml
+
+Replace the username and password in lines 26 & 27 aswell as lines 62 & 63 with the credentials previously configured.
+
+Next you will have to migrate the DB, so open a terminal and enter the following:
+```
 rails db:create
 rails db:migrate
 rake db:data:load
+```
+
+### Install dependencies
+
+Open a terminal and enter the following:
+
+```
+bundle install
+```
+
+### Run the project
+
+Open a terminal and enter the following:
+
+```
+rails server
+```
