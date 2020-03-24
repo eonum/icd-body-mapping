@@ -68,7 +68,7 @@ check version
 
 rails -v
 ```
-#### nokogiri (1.10.8) might come preinstalled with rails
+#### nokogiri (2.9.10) might come preinstalled with rails
 
 ```sudo apt-get install build-essential patch ruby-dev zlib1g-dev liblzma-dev
 gem install nokogiri
@@ -121,7 +121,7 @@ Check version:
 ```
 C:\> rails -v
 ```
-#### nokogiri (1.10.8)
+#### nokogiri (2.9.10)
 
 Some installers include nokogiri, in case of errors due to wrong version or absence try the following commands
 ```
