@@ -16,7 +16,8 @@ Always update & upgrade before installing new software
 
 Open Terminal (ctrl+alt+t)
 
-```sudo apt install nodejs
+```
+sudo apt install nodejs
 sudo apt install npm
 ```
 
