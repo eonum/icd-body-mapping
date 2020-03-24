@@ -137,7 +137,7 @@ C:\> nokogiri -v
 
 Download PostgreSQL from 'https://www.postgresql.org/download/windows/' and install
 
-setup user with permission to create databases
+Setup user with permission to create databases
 
 ## Application run guide
 
