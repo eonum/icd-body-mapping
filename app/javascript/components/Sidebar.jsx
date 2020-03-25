@@ -13,7 +13,7 @@ class Sidebar extends React.Component {
             icds: [],
             icdSelection: [],
             filtered: false,
-            icdCodeLength: 3,
+            icdCodelength: 3,
             term: ''
         };
     }
@@ -33,28 +33,89 @@ class Sidebar extends React.Component {
 
     /**
      * Gets ICD's from next superior level in hierarchy via shortening
-     * the search term and calling backend
+     * the search term and searching the ICD's array
      */
     stepBackHierarchy() {
-        let term = this.state.term;
+        const state = this.state;
+        const ICDs = state.icds;
+
+        let term = state.term;
         let filtered = true;
+        let codelength;
+
         if (term.toString().length === 3) {
             term = term.toString().substring(0, 1);
             filtered = false;
+            codelength = 3;
         } else if (term.toString().length === 5) {
             term = term.toString().substring(0, 3);
+            codelength = 5;
         } else if (term.toString().length === 6) {
             term = term.toString().substring(0, 5);
+            codelength = 6;
         }
-        this.setState({
-            filtered: filtered,
-            term: term
-        }, () => {
-            $.getJSON('/search?q=' + this.state.term)
-                .then(async response =>
-                    this.setGroup(await response)
-                )
+
+        let selection = ICDs.map((icd) => {
+            if (icd.code.toString().includes(term)
+                && icd.code.toString().length === codelength) {
+                return icd;
+            } else {
+                return 0;
+            }
         });
+
+        this.setState({
+            icdSelection: selection.sort(),
+            filtered: filtered,
+            icdCodelength: codelength,
+            term: term
+        });
+    }
+
+    /**
+     * Filters ICD's according to the code of a given ICD
+     * and stores the filtered and sorted array in the state
+     * @param icds
+     * @param icd
+     */
+    filter(state, icd) {
+        const ICDs = state.icds;
+        const icdCode = icd.code.toString();
+        let codelength;
+
+        switch (icdCode.length) {
+            case 1:
+                codelength = 3;
+                break;
+            case 3:
+                codelength = 5;
+                break;
+            case 5:
+                codelength = 6;
+                break;
+        };
+
+        let selection = ICDs.map((icd) => {
+            if (icd.code.toString().includes(icdCode)
+                && icd.code.toString().length === codelength) {
+                return icd;
+            } else {
+                return 0;
+            }
+        });
+
+        selection = selection.filter((value) => {
+            return value !== 0;
+        });
+
+        this.setState({
+            icdSelection: selection.sort(),
+            filtered: true,
+            icdCodelength: codelength,
+            term: icdCode
+        });
+
+        this.selectIcd(icd);
     }
 
     /**
@@ -66,81 +127,12 @@ class Sidebar extends React.Component {
         this.props.callbackFromMainUI(icd);
     }
 
-    getAutoCompleteResults(e){
-        this.setState({
-            term: e.code
-        }, () => {
-            $.getJSON('/search?q=' + this.state.term)
-                .then(async response =>
-                    this.setGroup(await response)
-                )
-        });
-
-        this.selectIcd(e);
-    }
-
-    filter(icds, icd) {
-        const ICDs = icds.icds;
-        const icdCode = icd.code.toString();
-        let codeLength;
-
-        switch (icdCode.length) {
-            case 1:
-                codeLength = 3;
-                break;
-            case 3:
-                codeLength = 5;
-                break;
-            case 5:
-                codeLength = 6;
-                break;
-        };
-
-        this.setState({
-            icdCodeLength: codeLength
-        });
-
-        let selection = ICDs.map((icd) => {
-            if (icd.code.toString().includes(icdCode)
-                && icd.code.toString().length === codeLength) {
-                return icd;
-            } else {
-                return 0;
-            }
-        });
-
-        selection = selection.filter((value) => {
-            return value !== 0;
-        });
-        selection = selection.sort();
-
-        this.setState({
-            icdSelection: selection,
-            filtered: true,
-            term: icdCode
-        });
-        console.log(this.state.icdSelection);
-
-        this.selectIcd(icd);
-    }
-
-    /**
-     * Sets up current selection of ICD's
-     * @param response
-     */
-    setGroup(response) {
-        response.sort();
-        this.setState({
-            icds: response,
-            icdSelection: response
-        })
-    }
-
     render() {
         const { icds } = this.state;
-        console.log(icds);
+
         const allIcds = icds.map((icd, index) => {
-            if (icd !== null && icd.code.toString().length === this.state.icdCodeLength) {
+            if (icd !== null
+                && icd.code.toString().length === this.state.icdCodelength) {
                 return <div className="list-group" key={index}>
                     <div
                         className="list-group-item"
@@ -153,7 +145,8 @@ class Sidebar extends React.Component {
         });
         const icdSubGroup = icds.map((icd, index) => {
             if (icd.code.toString().includes(this.state.term)
-                && icd.code.toString() !== this.state.term) {
+                && icd.code.toString() !== this.state.term
+                && icd.code.toString().length === this.state.icdCodelength) {
                 return <div className="list-group" key={index}>
                     <div
                         className="list-group-item"
