@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_04_214411) do
+ActiveRecord::Schema.define(version: 2020_03_26_141012) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2020_03_04_214411) do
     t.string "text_fr", null: false
     t.string "text_it", null: false
     t.text "annotationen"
+    t.integer "kapitel", limit: 2
   end
 
 end
