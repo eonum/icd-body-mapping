@@ -21,7 +21,6 @@ sudo apt install nodejs
 sudo apt install npm
 ```
 
-
 #### Add Webpacker support by yarn (v1.22.4) repositories
 
 Open Terminal (ctrl+alt+t)
@@ -35,6 +34,7 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/source
 sudo apt-get update
 sudo apt-get install git-core zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev software-properties-common libffi-dev nodejs yarn
 ```
+
 #### Install Ruby (2.6.0) via rbenv (rbenv install included)
 
 ```
@@ -52,6 +52,7 @@ rbenv install 2.7.0
 rbenv global 2.7.0
 ruby -v
 ```
+
 #### Install additional bundler
 
 ```
@@ -68,11 +69,13 @@ check version
 
 rails -v
 ```
+
 #### nokogiri (2.9.10) might come preinstalled with rails
 
 ```sudo apt-get install build-essential patch ruby-dev zlib1g-dev liblzma-dev
 gem install nokogiri
 ```
+
 #### Install PostgreSQL (12.2):
 ```
 sudo apt install postgresql-12 libpq-dev
@@ -106,11 +109,12 @@ Check version:
 ```
 C:\ ruby -v
 ```
+
 #### Rails (6.0.2.1):
 
 Open CMD to install Rails (windows + R, type "cmd", hit enter)
 ```
-C:\> gem install Rails
+C:\> gem install rails
 ```
 If you installed Ruby on a drive other than your C:\ (as in not your system drive), change directory to the Ruby drive:
 ```
@@ -121,6 +125,7 @@ Check version:
 ```
 C:\> rails -v
 ```
+
 #### nokogiri (2.9.10)
 
 Some installers include nokogiri, in case of errors due to wrong version or absence try the following commands
@@ -133,6 +138,7 @@ Check version:
 ```
 C:\> nokogiri -v
 ```
+
 #### PostgreSQL (12.2)
 
 Download PostgreSQL from 'https://www.postgresql.org/download/windows/' and install
@@ -140,6 +146,14 @@ Download PostgreSQL from 'https://www.postgresql.org/download/windows/' and inst
 Setup user with permission to create databases
 
 ## Application run guide
+
+### Install dependencies
+
+Open a terminal and enter the following:
+
+```
+bundle install
+```
 
 ### Setup Database
 
@@ -152,14 +166,6 @@ Next you will have to migrate the DB, so open a terminal and enter the following
 rails db:create
 rails db:migrate
 rake db:data:load
-```
-
-### Install dependencies
-
-Open a terminal and enter the following:
-
-```
-bundle install
 ```
 
 ### Run the project
