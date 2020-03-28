@@ -1,14 +1,12 @@
 import React from 'react';
-import {Drawer} from "@material-ui/core";
-import {IconButton, List, ListItem, ListItemText} from '@material-ui/core';
-import {Link} from "react-router-dom";
-import Button from "@material-ui/core/Button";
+import {IconButton} from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import $ from "jquery";
 
 class Sidebar extends React.Component {
     constructor(props) {
         super(props);
+        this.allICDs = [];
+        this.chapterICDs = [];
         this.state = {
             icds: [],
             icdSelection: [],
@@ -27,58 +25,99 @@ class Sidebar extends React.Component {
                 }
                 throw new Error("Network response wasn't ok.");
             })
-            .then(response => this.setState({ icds: response }))
+            .then(async response => this.storeDatabase(await response))
             .catch(() => this.props.history.push("/"));
     }
 
     /**
-     * Gets ICD's from next superior level in hierarchy via shortening
-     * the search term and searching the ICD's array
+     * Takes backend response and calls methods to store the DB
+     * in the frontend for further processing
+     * @param response
      */
-    stepBackHierarchy() {
-        const state = this.state;
-        const ICDs = state.icds;
+    storeDatabase(response) {
+        this.setState({ icds: response.sort() });
+        this.setIcdDatabaseStorage(response);
+        this.readOutChapters(response);
+    }
 
-        let term = state.term;
-        let filtered = true;
-        let codelength;
+    setIcdDatabaseStorage(icds) {
+        this.allICDs = icds;
+    }
 
-        if (term.toString().length === 3) {
-            term = term.toString().substring(0, 1);
-            filtered = false;
-            codelength = 3;
-        } else if (term.toString().length === 5) {
-            term = term.toString().substring(0, 3);
-            codelength = 5;
-        } else if (term.toString().length === 6) {
-            term = term.toString().substring(0, 5);
-            codelength = 6;
-        }
-
-        let selection = ICDs.map((icd) => {
-            if (icd.code.toString().includes(term)
-                && icd.code.toString().length === codelength) {
+    /**
+     * Reads and stores first ICD of every chapter
+     * (which will then be used by renderer to display the chapters)
+     * @param icds
+     */
+    readOutChapters(icds) {
+        let chapterTemp;
+        this.chapterICDs = icds.map((icd) => {
+            if (icd.kapitel !== chapterTemp) {
+                chapterTemp = icd.kapitel;
                 return icd;
             } else {
                 return 0;
             }
         });
 
+        this.chapterICDs = this.chapterICDs.filter((value) => {
+            return value !== 0;
+        });
+
+        this.chapterICDs.sort((icd1, icd2) => {
+            const chap1 = icd1.kapitel;
+            const chap2 = icd2.kapitel;
+
+            let comparison = 0;
+            if (chap1 > chap2) {
+                comparison = 1;
+            } else if (chap1 < chap2) {
+                comparison = -1;
+            }
+            return comparison;
+        });
+
         this.setState({
-            icdSelection: selection.sort(),
-            filtered: filtered,
+            icdSelection: this.chapterICDs
+        });
+    }
+
+    /**
+     * Filters ICD's according to the chapter of a given ICD
+     * and stores the matching cases in a sorted array in the state
+     * @param icd
+     */
+    filterIcdsByChapter(icd) {
+        const ICDs = this.allICDs;
+        const selectedChapter = icd.kapitel;
+        const codelength = 3;
+
+        let selection = ICDs.map((icd) => {
+            if (icd.kapitel === selectedChapter) {
+                return icd;
+            } else {
+                return 0;
+            }
+        });
+
+        selection = selection.filter((value) => {
+            return value !== 0;
+        });
+
+        this.setState({
+            icds: selection.sort(),
+            filtered: true,
             icdCodelength: codelength,
-            term: term
         });
     }
 
     /**
      * Filters ICD's according to the code of a given ICD
      * and stores the filtered and sorted array in the state
-     * @param icds
+     * @param state
      * @param icd
      */
-    filter(state, icd) {
+    filterIcdsByIcdcode(state, icd) {
         const ICDs = state.icds;
         const icdCode = icd.code.toString();
         let codelength;
@@ -93,7 +132,7 @@ class Sidebar extends React.Component {
             case 5:
                 codelength = 6;
                 break;
-        };
+        }
 
         let selection = ICDs.map((icd) => {
             if (icd.code.toString().includes(icdCode)
@@ -115,7 +154,55 @@ class Sidebar extends React.Component {
             term: icdCode
         });
 
-        this.selectIcd(icd);
+        this.sendIcdToMainUI(icd);
+    }
+
+    /**
+     * Gets ICD's from next superior level in hierarchy via shortening
+     * the search term and searching the ICD's array
+     */
+    stepBackHierarchy() {
+        const state = this.state;
+        let ICDs = state.icds;
+
+        let term = state.term;
+        let filtered = true;
+        let codelength;
+
+        if (term.toString().length === 0) {
+            ICDs = this.allICDs;
+            filtered = false;
+            codelength = 3;
+        } else if (term.toString().length === 3) {
+            term = '';
+            codelength = 3;
+        } else if (term.toString().length === 5) {
+            term = term.toString().substring(0, 3);
+            codelength = 5;
+        } else if (term.toString().length === 6) {
+            term = term.toString().substring(0, 5);
+            codelength = 6;
+        }
+
+        let selection = ICDs.map((icd) => {
+            if (icd.code.toString().includes(term)
+                && icd.code.toString().length === codelength) {
+                return icd;
+            } else {
+                return 0;
+            }
+        });
+
+        selection = selection.filter((value) => {
+            return value !== 0;
+        });
+
+        this.setState({
+            icdSelection: selection.sort(),
+            filtered: filtered,
+            icdCodelength: codelength,
+            term: term
+        });
     }
 
     /**
@@ -123,25 +210,22 @@ class Sidebar extends React.Component {
      * (which itself sends it to DetailsCard)
      * @param icd
      */
-    selectIcd(icd) {
+    sendIcdToMainUI(icd) {
         this.props.callbackFromMainUI(icd);
     }
 
     render() {
         const { icds } = this.state;
 
-        const allIcds = icds.map((icd, index) => {
-            if (icd !== null
-                && icd.code.toString().length === this.state.icdCodelength) {
-                return <div className="list-group" key={index}>
-                    <div
-                        className="list-group-item"
-                        onClick={this.filter.bind(this, this.state, icd)}
-                    >
-                        {icd.code}
-                    </div>
+        const icdChapters = this.chapterICDs.map((icd, index) => {
+            return <div className="list-group" key={index}>
+                <div
+                    className="list-group-item"
+                    onClick={this.filterIcdsByChapter.bind(this, icd)}
+                >
+                    {icd.kapitel}
                 </div>
-            }
+            </div>
         });
         const icdSubGroup = icds.map((icd, index) => {
             if (icd.code.toString().includes(this.state.term)
@@ -150,7 +234,7 @@ class Sidebar extends React.Component {
                 return <div className="list-group" key={index}>
                     <div
                         className="list-group-item"
-                        onClick={this.filter.bind(this, this.state, icd)}
+                        onClick={this.filterIcdsByIcdcode.bind(this, this.state, icd)}
                     >
                         {icd.code}
                     </div>
@@ -172,7 +256,8 @@ class Sidebar extends React.Component {
         return (
             <div>
                 {icds.length > 0 ? empty : loading}
-                {icds.length > 0 && this.state.filtered === false ? allIcds : backArrow}
+                {icds.length > 0 && this.state.filtered === false ? icdChapters : empty}
+                {icds.length > 0 && this.state.filtered === true ? backArrow : empty}
                 {icds.length > 0 && this.state.filtered === true ? icdSubGroup : empty}
             </div>
         )
