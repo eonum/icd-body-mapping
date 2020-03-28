@@ -12,10 +12,6 @@ class DetailsCard extends React.Component {
         };
     }
 
-    componentDidMount() {
-
-    }
-
     render() {
         let icd = [];
 

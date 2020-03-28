@@ -2,6 +2,11 @@ import React from 'react';
 import {IconButton} from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
+/**
+ * The Sidebar gets the database from backend and renders
+ * the ICD's according to the hierarchy of the ICD catalogue
+ * @author Aaron Saegesser
+ */
 class Sidebar extends React.Component {
     constructor(props) {
         super(props);

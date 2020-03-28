@@ -5,7 +5,7 @@ import $ from "jquery";
 
 /**
  * The Topbar contains the searchbar and header and is responsible for the searching.
- * Possible search results are handed over to parent via callback.
+ * Possible search results are handed over to parent MainUI via callback.
  * @author Aaron Saegesser
  */
 class Topbar extends React.Component {
@@ -18,12 +18,12 @@ class Topbar extends React.Component {
 
     /**
      * Gets the search results from the link '/search?q=' + this.state.term
-     * and saves them into the icds array, this will be later passed on to the search results component
+     * and saves them into the ICD's array, this will be later passed on to the search results component
      * via callbackFromMainUI function
      */
-    getAutoCompleteResults(e){
+    getSearchResults(searchTerm){
         this.setState({
-            term: e.target.value
+            term: searchTerm.target.value
         }, () => {
             $.getJSON('/search?q=' + this.state.term)
                 .then(async response =>
@@ -44,7 +44,7 @@ class Topbar extends React.Component {
                                     className="input"
                                     placeholder="Search..."
                                     value={this.state.term}
-                                    onChange={this.getAutoCompleteResults.bind(this)}
+                                    onChange={this.getSearchResults.bind(this)}
                                 />
                             </Grid>
                             <Grid item xs />
