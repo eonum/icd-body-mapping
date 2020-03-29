@@ -16,8 +16,8 @@ ActiveRecord::Schema.define(version: 2020_03_28_161548) do
   enable_extension "plpgsql"
 
   create_table "ear_elements", force: :cascade do |t|
-    t.string "name"
-    t.string "img"
+    t.string "name", null: false
+    t.string "img", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

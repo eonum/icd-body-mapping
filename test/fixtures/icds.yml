@@ -1,15 +1,31 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  code: MyString
-  version: MyString
-  text_de: MyString
-  text_fr: MyString
-  text_it: MyString
+  id: 1
+  code: A00
+  version: ICD10-GM-2018
+  text_de: Test1
+  text_fr: Test1
+  text_it: Test1
+  annotationen: MeinText1
+  kapitel: 1
 
 two:
-  code: MyString
-  version: MyString
-  text_de: MyString
-  text_fr: MyString
-  text_it: MyString
+  id: 2
+  code: D00
+  version: ICD10-GM-2018
+  text_de: Test2
+  text_fr: Test2
+  text_it: Test2
+  annotationen: MeinText2
+  kapitel: 4
+
+three:
+  id: 3
+  code: D01
+  version: ICD10-GM-2018
+  text_de: Test3
+  text_fr: Test3
+  text_it: Test3
+  annotationen: MeinText3
+  kapitel: 4

@@ -13,6 +13,41 @@ ar_internal_metadata:
     - 2020-03-02 21:56:30.768428000 Z
 
 ---
+ear_elements:
+  columns:
+  - id
+  - name
+  - img
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - Auditory Tube
+    - "./images/Ohr/AuditoryTube.PNG"
+    - 2020-03-28 16:21:19.485522000 Z
+    - 2020-03-29 12:00:32.751225000 Z
+  - - 2
+    - Cartilage Of Auricula
+    - "./images/Ohr/CartilageOfAuricula.PNG"
+    - 2020-03-28 16:22:09.836690000 Z
+    - 2020-03-29 12:00:44.823394000 Z
+  - - 3
+    - Ohr
+    - "./images/Ohr/Ohr.PNG"
+    - 2020-03-28 16:22:36.069977000 Z
+    - 2020-03-29 12:00:54.532255000 Z
+  - - 4
+    - Styloid Process
+    - "./images/Ohr/StyloidProcess.PNG"
+    - 2020-03-29 11:59:53.770873000 Z
+    - 2020-03-29 11:59:53.770873000 Z
+  - - 5
+    - Tympanic Membrane
+    - "./images/Ohr/TympanicMembrane.PNG"
+    - 2020-03-29 12:00:20.973368000 Z
+    - 2020-03-29 12:00:20.973368000 Z
+
+---
 icds:
   columns:
   - id
