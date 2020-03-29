@@ -1,0 +1,2 @@
+class EarElement < ApplicationRecord
+end
