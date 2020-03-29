@@ -6,6 +6,11 @@ import SearchCard from "./SearchCard";
 import Mapping from "./Mapping";
 import './MainUI.css'
 
+/**
+ * The MainUI collects the child components of which it consists
+ * and handles the communication between these components
+ * @author Aaron Saegesser
+ */
 class MainUI extends React.Component {
     constructor(props) {
         super(props);

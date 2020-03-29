@@ -16,14 +16,16 @@ Always update & upgrade before installing new software
 
 Open Terminal (ctrl+alt+t)
 
+```
 sudo apt install nodejs
 sudo apt install npm
-
+```
 
 #### Add Webpacker support by yarn (v1.22.4) repositories
 
 Open Terminal (ctrl+alt+t)
 
+```
 sudo apt install curl
 curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
@@ -31,9 +33,11 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/source
 
 sudo apt-get update
 sudo apt-get install git-core zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev software-properties-common libffi-dev nodejs yarn
+```
 
 #### Install Ruby (2.6.0) via rbenv (rbenv install included)
 
+```
 cd
 git clone https://github.com/rbenv/rbenv.git ~/.rbenv
 echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
@@ -47,43 +51,43 @@ exec $SHELL
 rbenv install 2.7.0
 rbenv global 2.7.0
 ruby -v
+```
 
 #### Install additional bundler
 
+```
 gem install bundler
+```
 
 #### Install Rails (6.0.2.1)
 
+```
 gem install rails -v 6.0.2.1
 rbenv rehash
 
 check version
 
 rails -v
+```
 
-#### nokogiri (1.10.8) might come preinstalled with rails
+#### nokogiri (2.9.10) might come preinstalled with rails
 
-sudo apt-get install build-essential patch ruby-dev zlib1g-dev liblzma-dev
+```sudo apt-get install build-essential patch ruby-dev zlib1g-dev liblzma-dev
 gem install nokogiri
+```
 
 #### Install PostgreSQL (12.2):
-
+```
 sudo apt install postgresql-12 libpq-dev
-
+```
 You have to setup a user with permission to create databases
-
+```
 sudo -u postgres createuser [username] -s
 
 If you would like to set a password for the user, you can do the following
 sudo -u postgres psql
 postgres=# \password [passowrd]
-
-Create db:
-
-rails db:create
-rails db:migrate
-rake db:data:load
-
+```
 
 ### Windows
 
@@ -102,44 +106,72 @@ Alternatively use Chocolatey (Package manager for windows)
 Download Ruby from 'https://rubyinstaller.org/downloads/' and install
 
 Check version:
-
+```
 C:\ ruby -v
+```
 
 #### Rails (6.0.2.1):
 
 Open CMD to install Rails (windows + R, type "cmd", hit enter)
-
-C:\> gem install Rails
-
+```
+C:\> gem install rails
+```
 If you installed Ruby on a drive other than your C:\ (as in not your system drive), change directory to the Ruby drive:
-
+```
 C:\> cd\
 C:\> d:         (as example for changing to drive D:\
-
+```
 Check version:
-
+```
 C:\> rails -v
+```
 
-#### nokogiri (1.10.8)
+#### nokogiri (2.9.10)
 
 Some installers include nokogiri, in case of errors due to wrong version or absence try the following commands
-
+```
 gem install nokogiri
 gem install nokogiri -v '2.9.10'         (as of this moment the latest version is '2.9.10'
 gem install nokogiri --platform=ruby
-
+```
 Check version:
-
+```
 C:\> nokogiri -v
+```
 
 #### PostgreSQL (12.2)
 
 Download PostgreSQL from 'https://www.postgresql.org/download/windows/' and install
 
-setup user with permission to create databases
+Setup user with permission to create databases
 
-Create db:
+## Application run guide
 
+### Install dependencies
+
+Open a terminal and enter the following:
+
+```
+bundle install
+```
+
+### Setup Database
+
+Open the project in a Ruby IDE of your choice and open the database.yml file under ~$YOUR_PROJECT_PATH$/ice-body-mapping/config/database.yml
+
+Replace the username and password in lines 26 & 27 aswell as lines 62 & 63 with the credentials previously configured.
+
+Next you will have to migrate the DB, so open a terminal and enter the following:
+```
 rails db:create
 rails db:migrate
 rake db:data:load
+```
+
+### Run the project
+
+Open a terminal and enter the following:
+
+```
+rails server
+```
