@@ -1,15 +1,20 @@
-<%= form_with(model: ear_element, local: true) do |form| %>
-  <% if ear_element.errors.any? %>
+<%= form_with(model: layer, local: true) do |form| %>
+  <% if layer.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(ear_element.errors.count, "error") %> prohibited this ear_element from being saved:</h2>
+      <h2><%= pluralize(layer.errors.count, "error") %> prohibited this layer from being saved:</h2>
 
       <ul>
-        <% ear_element.errors.full_messages.each do |message| %>
+        <% layer.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
+
+  <div class="field">
+    <%= form.label :ebene %>
+    <%= form.text_field :ebene %>
+  </div>
 
   <div class="field">
     <%= form.label :name %>

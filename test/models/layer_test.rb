@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class EarElementTest < ActiveSupport::TestCase
+class LayerTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

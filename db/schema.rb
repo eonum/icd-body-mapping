@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_28_161548) do
+ActiveRecord::Schema.define(version: 2020_03_30_123512) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "ear_elements", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "img", null: false
+    t.string "name"
+    t.string "img"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -30,6 +30,14 @@ ActiveRecord::Schema.define(version: 2020_03_28_161548) do
     t.string "text_it", null: false
     t.text "annotationen"
     t.integer "kapitel", limit: 2
+  end
+
+  create_table "layers", force: :cascade do |t|
+    t.string "ebene"
+    t.string "name"
+    t.string "img"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
 end

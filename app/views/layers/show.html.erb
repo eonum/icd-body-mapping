@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Ebene:</strong>
+  <%= @layer.ebene %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @layer.name %>
+</p>
+
+<p>
+  <strong>Img:</strong>
+  <%= @layer.img %>
+</p>
+
+<%= link_to 'Edit', edit_layer_path(@layer) %> |
+<%= link_to 'Back', layers_path %>

@@ -5,17 +5,26 @@ class Mapping extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            OhrElemente: [],
+            imageElements: [],
+            layers: [],
             x: 0, y: 0,
             selectedId: 0
         };
 
-        $.getJSON('/ear_elements')
-            .then(response => this.setState({ OhrElemente: response }));
+        $.getJSON('/layers/Ohr')
+            .then(response => this.setState({ imageElements: response }));
+
+        $.getJSON('/layers')
+            .then(response => this.setState({ layers: response }));
     }
 
     _onMouseMove(e) {
         this.setState({ x: e.screenX, y: e.screenY });
+    }
+
+    selectLayer(elem){
+        $.getJSON('/layers/' + elem.ebene)
+            .then(response => this.setState({ imageElements: response }));
     }
 
     selectPng(x, y, len) {
@@ -40,11 +49,17 @@ class Mapping extends React.Component {
     render() {
         const divStyle = {position: 'absolute'};
         const { x, y } = this.state;
-        const len = this.state.OhrElemente.length;
+        const len = this.state.imageElements.length;
 
-        let alleElemente = this.state.OhrElemente.map((elem,index)=>{
+        let alleElemente = this.state.imageElements.map((elem,index)=>{
             return<div key={index} onClick={this.selectPng.bind(this, x, y, len)}>
                 <img src={elem.img} style={divStyle} id={index}/>
+            </div>
+        });
+
+        let alleLayers = this.state.layers.map((elem,index)=>{
+            return<div key={index} onClick={this.selectLayer.bind(this, elem)}>
+                {elem.ebene}
             </div>
         });
 
@@ -52,6 +67,11 @@ class Mapping extends React.Component {
             <div onMouseMove={this._onMouseMove.bind(this)}>
                 <canvas id='canvas' style={divStyle} width="600" height="530"/>
                 {alleElemente}
+                <div className="dropdown">
+                    <div className="dropdown-content">
+                        {alleLayers}
+                    </div>
+                </div>
             </div>
         )
     }
