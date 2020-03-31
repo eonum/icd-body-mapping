@@ -16,14 +16,47 @@ class Topbar extends React.Component {
         };
     }
 
+    componentDidMount() {
+        const url = "/icds";
+        fetch(url)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error("Network response wasn't ok.");
+            })
+            .then(async response => this.setIcdDatabaseStorage(await response))
+            .catch(() => this.props.history.push("/"));
+    }
+
+    setIcdDatabaseStorage(icds) {
+        this.allICDs = icds;
+    }
+
     /**
      * Gets the search results from the link '/search?q=' + this.state.term
      * and saves them into the ICD's array, this will be later passed on to the search results component
      * via callbackFromMainUI function
      */
-    getSearchResults(searchTerm){
+    getSearchResults(search){
+        /*console.log(this.allICDs);
         this.setState({
-            term: searchTerm.target.value
+            term: search.target.value
+        });
+
+        const searchedICD = this.allICDs.filter((icd) => {
+            if (icd.code.toString().includes(this.state.term)) {
+                return icd;
+            }
+        });
+
+        console.log(searchedICD);
+
+        this.props.callbackFromMainUI(searchedICD, this.state.term);
+        */
+
+        this.setState({
+            term: search.target.value
         }, () => {
             $.getJSON('/search?q=' + this.state.term)
                 .then(async response =>
