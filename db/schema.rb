@@ -15,13 +15,6 @@ ActiveRecord::Schema.define(version: 2020_03_30_123512) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "ear_elements", force: :cascade do |t|
-    t.string "name"
-    t.string "img"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "icds", force: :cascade do |t|
     t.string "code", null: false
     t.string "version", null: false

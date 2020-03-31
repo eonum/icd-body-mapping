@@ -13,41 +13,6 @@ ar_internal_metadata:
     - 2020-03-02 21:56:30.768428000 Z
 
 ---
-ear_elements:
-  columns:
-  - id
-  - name
-  - img
-  - created_at
-  - updated_at
-  records: 
-  - - 1
-    - Auditory Tube
-    - "./images/Ohr/AuditoryTube.PNG"
-    - 2020-03-28 16:21:19.485522000 Z
-    - 2020-03-29 12:00:32.751225000 Z
-  - - 2
-    - Cartilage Of Auricula
-    - "./images/Ohr/CartilageOfAuricula.PNG"
-    - 2020-03-28 16:22:09.836690000 Z
-    - 2020-03-29 12:00:44.823394000 Z
-  - - 3
-    - Ohr
-    - "./images/Ohr/Ohr.PNG"
-    - 2020-03-28 16:22:36.069977000 Z
-    - 2020-03-29 12:00:54.532255000 Z
-  - - 4
-    - Styloid Process
-    - "./images/Ohr/StyloidProcess.PNG"
-    - 2020-03-29 11:59:53.770873000 Z
-    - 2020-03-29 11:59:53.770873000 Z
-  - - 5
-    - Tympanic Membrane
-    - "./images/Ohr/TympanicMembrane.PNG"
-    - 2020-03-29 12:00:20.973368000 Z
-    - 2020-03-29 12:00:20.973368000 Z
-
----
 icds:
   columns:
   - id
@@ -3922,3 +3887,134 @@ icds:
     - Febbre virale emorragica non specificata
     - 
     - 1
+
+---
+layers:
+  columns:
+  - id
+  - ebene
+  - name
+  - img
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - Ohr
+    - Ohr
+    - "./images/Ohr/Ohr.PNG"
+    - 2020-03-30 12:45:18.842280000 Z
+    - 2020-03-30 12:45:18.842280000 Z
+  - - 2
+    - Ohr
+    - Cartilage Of Auricula
+    - "./images/Ohr/CartilageOfAuricula.PNG"
+    - 2020-03-30 12:45:43.251562000 Z
+    - 2020-03-30 12:45:43.251562000 Z
+  - - 3
+    - Ohr
+    - Auditory Tube
+    - "./images/Ohr/AuditoryTube.PNG"
+    - 2020-03-30 12:46:04.078645000 Z
+    - 2020-03-30 12:46:04.078645000 Z
+  - - 4
+    - Ohr
+    - Tympanic Membrane
+    - "./images/Ohr/TympanicMembrane.PNG"
+    - 2020-03-30 12:46:23.849103000 Z
+    - 2020-03-30 12:46:23.849103000 Z
+  - - 5
+    - Ohr
+    - Styloid Process
+    - "./images/Ohr/StyloidProcess.PNG"
+    - 2020-03-30 12:46:41.977030000 Z
+    - 2020-03-30 12:46:41.977030000 Z
+  - - 6
+    - Auge
+    - Auge
+    - "./images/Auge/Auge.PNG"
+    - 2020-03-30 13:48:48.577748000 Z
+    - 2020-03-30 13:48:48.577748000 Z
+  - - 7
+    - Auge
+    - Rectus Superior
+    - "./images/Auge/RectusSuperior.PNG"
+    - 2020-03-30 13:49:44.599102000 Z
+    - 2020-03-30 13:49:44.599102000 Z
+  - - 8
+    - Ohr
+    - Auricula
+    - "./images/Ohr/Auricula.PNG"
+    - 2020-03-31 09:19:31.734184000 Z
+    - 2020-03-31 09:19:31.734184000 Z
+  - - 9
+    - Ohr
+    - Bony Part Of Ext. Acoustic Meatus
+    - "./images/Ohr/BonyPartOfExtAcousticMeatus.PNG"
+    - 2020-03-31 09:20:28.353010000 Z
+    - 2020-03-31 09:20:28.353010000 Z
+  - - 10
+    - Ohr
+    - Cartilaginous Part Of Ext. Accoustic Meatus
+    - "./images/Ohr/CartilaginousPartOfExt.AccousticMeatus.PNG"
+    - 2020-03-31 09:21:12.460584000 Z
+    - 2020-03-31 09:21:12.460584000 Z
+  - - 11
+    - Ohr
+    - External Acoustic Meatus
+    - "./images/Ohr/ExternalAcousticMeatus.PNG"
+    - 2020-03-31 09:21:45.224272000 Z
+    - 2020-03-31 09:21:45.224272000 Z
+  - - 12
+    - Ohr
+    - Incus
+    - "./images/Ohr/Incus.PNG"
+    - 2020-03-31 09:22:13.875636000 Z
+    - 2020-03-31 09:22:13.875636000 Z
+  - - 13
+    - Ohr
+    - Lev. Veli Palat.
+    - "./images/Ohr/Lev.VeliPalat..PNG"
+    - 2020-03-31 09:22:35.078224000 Z
+    - 2020-03-31 09:22:35.078224000 Z
+  - - 14
+    - Ohr
+    - Malleus
+    - "./images/Ohr/Malleus.PNG"
+    - 2020-03-31 09:23:02.194673000 Z
+    - 2020-03-31 09:23:02.194673000 Z
+  - - 15
+    - Ohr
+    - Mastoid Process
+    - "./images/Ohr/MastoidProcess.PNG"
+    - 2020-03-31 09:23:22.595008000 Z
+    - 2020-03-31 09:23:22.595008000 Z
+  - - 16
+    - Ohr
+    - Nasal Part Of Parynx
+    - "./images/Ohr/NasalPartOfParynx.PNG"
+    - 2020-03-31 09:23:41.174823000 Z
+    - 2020-03-31 09:23:41.174823000 Z
+  - - 17
+    - Ohr
+    - Tensor Tympani
+    - "./images/Ohr/TensorTympani.PNG"
+    - 2020-03-31 09:24:11.080889000 Z
+    - 2020-03-31 09:24:11.080889000 Z
+  - - 18
+    - Ohr
+    - Tympanic Cavity
+    - "./images/Ohr/TympanicCavity.PNG"
+    - 2020-03-31 09:24:32.556893000 Z
+    - 2020-03-31 09:24:32.556893000 Z
+  - - 19
+    - Ohr
+    - Tympanic Part Of Temporal
+    - "./images/Ohr/TympanicPartOfTemporal.PNG"
+    - 2020-03-31 09:24:47.674450000 Z
+    - 2020-03-31 09:24:47.674450000 Z
+  - - 20
+    - Ohr
+    - Attic
+    - "./images/Ohr/Attic.PNG"
+    - 2020-03-31 09:28:55.965336000 Z
+    - 2020-03-31 09:28:55.965336000 Z
