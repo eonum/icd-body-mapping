@@ -7,6 +7,7 @@ class Mapping extends React.Component {
         this.state = {
             imageElements: [],
             layers: [],
+            activeLayer: '',
             x: 0, y: 0,
             selectedId: 0
         };
@@ -25,6 +26,9 @@ class Mapping extends React.Component {
     selectLayer(elem){
         $.getJSON('/layers/' + elem.ebene)
             .then(response => this.setState({ imageElements: response }));
+        this.setState({
+            activeLayer: elem.ebene
+        })
     }
 
     selectPng(x, y, len) {
@@ -58,19 +62,40 @@ class Mapping extends React.Component {
         });
 
         let alleLayers = this.state.layers.map((elem,index)=>{
-            return<div key={index} onClick={this.selectLayer.bind(this, elem)}>
+            return<div className="dropdown-item" key={index} onClick={this.selectLayer.bind(this, elem)}>
                 {elem.ebene}
             </div>
         });
 
+        const dropdown = (
+            <div className="col-2 dropdown">
+                <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Layer
+                </button>
+                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    {alleLayers}
+                </div>
+            </div>
+        )
+
+        const activeLayer = (
+            <div className="col-10">
+                <h4>
+                    {this.state.activeLayer}
+                </h4>
+            </div>
+        )
+
         return (
             <div onMouseMove={this._onMouseMove.bind(this)}>
                 <canvas id='canvas' style={divStyle} width="600" height="530"/>
-                {alleElemente}
-                <div className="dropdown">
-                    <div className="dropdown-content">
-                        {alleLayers}
-                    </div>
+                <div className="row">
+                    {dropdown}
+                    {activeLayer}
+                </div>
+                <div className="row pt-2">
+                    {alleElemente}
                 </div>
             </div>
         )
