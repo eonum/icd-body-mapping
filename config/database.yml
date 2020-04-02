@@ -23,7 +23,7 @@ default: &default
 
 development:
   <<: *default
-  username: aaron
+  username: dosif
   password:
   database: icd_body_mapping_development
 
@@ -59,7 +59,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  username: aaron
+  username: dosif
   password:
   database: icd_body_mapping_test
 
