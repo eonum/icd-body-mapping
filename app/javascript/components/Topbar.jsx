@@ -1,6 +1,7 @@
 import React from 'react';
 import {IconButton, AppBar, Toolbar, Grid, Tooltip} from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
+import SearchIcon from '@material-ui/icons/Search';
 import $ from "jquery";
 
 /**
@@ -12,6 +13,7 @@ class Topbar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            query: '',
             term: ''
         };
     }
@@ -21,15 +23,11 @@ class Topbar extends React.Component {
      * and saves them into the ICD's array, this will be later passed on to the search results component
      * via callbackFromMainUI function
      */
-    getSearchResults(searchTerm){
-        this.setState({
-            term: searchTerm.target.value
-        }, () => {
+    getSearchResults(){
             $.getJSON('/search?q=' + this.state.term)
                 .then(async response =>
                     this.props.callbackFromMainUI(await response, this.state.term)
-                )
-        });
+                );
     }
 
     render() {
@@ -39,12 +37,12 @@ class Topbar extends React.Component {
                     <Toolbar variant="dense">
                         <Grid container spacing={5} alignItems="center" justify="flex-end">
                             <Grid item>
-                                <input
+                                <SearchIcon />
+                                <input id="input"
                                     type="text"
-                                    className="input"
                                     placeholder="Search..."
-                                    value={this.state.term}
-                                    onChange={this.getSearchResults.bind(this)}
+                                    onChange={event => {this.setState({term: event.target.value})}}
+                                    onKeyDown={event => {if (event.key === 'Enter') {this.getSearchResults()}}}
                                 />
                             </Grid>
                             <Grid item xs />

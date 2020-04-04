@@ -21,10 +21,6 @@ class MainUI extends React.Component {
         };
     }
 
-    componentDidMount() {
-
-    }
-
     /**
      * Gets ICD's and searchterm from search in Topbar
      * @params searchedIcdsFromTopbar, searchTermFromTopbar
@@ -52,13 +48,13 @@ class MainUI extends React.Component {
     };
 
     render() {
-        const searchResults = (
+        let searchResults = (
             <SearchCard
                 searchedIcds={this.state.searchedIcds}
                 callbackFromMainUI={this.callbackSearchCard}
             />
         );
-        const details = (
+        let details = (
             <DetailsCard selectedIcd={this.state.selectedIcd}/>
         );
 
