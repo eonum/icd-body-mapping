@@ -20,7 +20,7 @@ class DetailsCard extends React.Component {
         }
 
         return (
-            <div className="card">
+            <div className="card mb-5">
                 <div className="card-header">
                     <div className="overlay bg-dark" />
                     <h1 className="card-title text-white">

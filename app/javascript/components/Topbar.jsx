@@ -38,7 +38,7 @@ class Topbar extends React.Component {
      * and saves them into the ICD's array, this will be later passed on to the search results component
      * via callbackFromMainUI function
      */
-    getSearchResults(search){
+    getSearchResults(){
         /*console.log(this.allICDs);
         this.setState({
             term: search.target.value
@@ -55,14 +55,10 @@ class Topbar extends React.Component {
         this.props.callbackFromMainUI(searchedICD, this.state.term);
         */
 
-        this.setState({
-            term: search.target.value
-        }, () => {
-            $.getJSON('/search?q=' + this.state.term)
-                .then(async response =>
-                    this.props.callbackFromMainUI(await response, this.state.term)
-                )
-        });
+        $.getJSON('/search?q=' + this.state.term)
+            .then(async response =>
+                this.props.callbackFromMainUI(await response, this.state.term)
+            );
     }
 
     render() {
@@ -76,8 +72,8 @@ class Topbar extends React.Component {
                                     type="text"
                                     className="input"
                                     placeholder="Search..."
-                                    value={this.state.term}
-                                    onChange={this.getSearchResults.bind(this)}
+                                    onChange={event => {this.setState({term: event.target.value})}}
+                                    onKeyDown={event => {if (event.key === 'Enter') {this.getSearchResults()}}}
                                 />
                             </Grid>
                             <Grid item xs />

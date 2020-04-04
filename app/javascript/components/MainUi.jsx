@@ -30,8 +30,11 @@ class MainUI extends React.Component {
      * @params searchedIcdsFromTopbar, searchTermFromTopbar
      */
     callbackTopbarSearch = (searchedIcdsFromTopbar, searchTermFromTopbar) => {
-        this.setState({ searchedIcds: searchedIcdsFromTopbar });
-        this.setState({ searchTerm: searchTermFromTopbar});
+        this.setState({
+            searchedIcds: searchedIcdsFromTopbar,
+            searchTerm: searchTermFromTopbar,
+            selectedIcd: ''
+        });
     };
 
     /**
@@ -39,7 +42,10 @@ class MainUI extends React.Component {
      * @params dataFromSidebar
      */
     callbackSidebar = (dataFromSidebar) => {
-        this.setState({ selectedIcd: dataFromSidebar });
+        this.setState({
+            selectedIcd: dataFromSidebar,
+            searchTerm: ''
+        });
     };
 
     /**
@@ -48,7 +54,7 @@ class MainUI extends React.Component {
      */
     callbackSearchCard = (dataFromSearchCard) => {
         this.setState({ selectedIcd: dataFromSearchCard });
-        this.setState({ searchTerm: ''});
+        //this.setState({ searchTerm: ''});
     };
 
     render() {
@@ -61,6 +67,9 @@ class MainUI extends React.Component {
         const details = (
             <DetailsCard selectedIcd={this.state.selectedIcd}/>
         );
+        const empty = (
+            <></>
+        )
 
         return (
             <div>
@@ -77,7 +86,8 @@ class MainUI extends React.Component {
                             <Sidebar callbackFromMainUI={this.callbackSidebar}/>
                         </div>
                         <div className="col-4">
-                            {this.state.searchTerm !== '' ? searchResults : details}
+                            {this.state.selectedIcd !== '' ? details : empty}
+                            {this.state.searchTerm !== '' ? searchResults : empty}
                         </div>
                         <div className="col-6">
                             <Mapping />
