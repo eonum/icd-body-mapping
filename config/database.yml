@@ -23,8 +23,8 @@ default: &default
 
 development:
   <<: *default
-  username: dosif
-  password:
+  username: postgres
+  password: 123456
   database: icd_body_mapping_development
 
   # The specified database role being used to connect to postgres.
@@ -59,8 +59,8 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  username: dosif
-  password:
+  username: postgres
+  password: 123456
   database: icd_body_mapping_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
