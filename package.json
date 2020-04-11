@@ -13,6 +13,8 @@
     "popper.js": "^1.16.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.0",
+    "react-bootstrap": "^1.0.0",
+    "react-bootstrap-icons": "^1.0.1-alpha3",
     "react-dom": "^16.13.0",
     "react-router-dom": "^5.1.2",
     "turbolinks": "^5.2.0"
