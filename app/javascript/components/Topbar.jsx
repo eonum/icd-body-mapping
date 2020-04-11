@@ -1,14 +1,20 @@
 import React from 'react';
-import {IconButton, AppBar, Toolbar, Grid, Tooltip} from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
 import $ from "jquery";
+import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
+import * as Icon from 'react-bootstrap-icons';
+
+
 
 /**
  * The Topbar contains the searchbar and header and is responsible for the searching.
  * Possible search results are handed over to parent via callback.
- * @author Aaron Saegesser, Dosif Mahilvathanan
+ * @author Aaron Saegesser
  */
+
+
+
 class Topbar extends React.Component {
+    searchText;
     constructor(props) {
         super(props);
         this.state = {
@@ -37,13 +43,13 @@ class Topbar extends React.Component {
             <div className="navbar navbar-expand-md navbar-light bg-primary">
 
                 <Form className="navbar-form navbar-left">
-                    <FormControl
-                        onChange={this.getSearchResults}
-                        value={this.state.searchText}
-                        type="text"
-                        placeholder="Search"
-                        className="mr-sm-2"
-                    />
+                <FormControl
+                    onChange={this.getSearchResults}
+                    value={this.state.searchText}
+                    type="text"
+                    placeholder="Search"
+                    className="mr-sm-2"
+                />
                 </Form>
                 <a className="navbar-brand mx-auto" href="#">ICD Mapping - EONUM</a>
                 <button type="button" className="btn btn-default" >
@@ -57,11 +63,10 @@ class Topbar extends React.Component {
                               clipRule="evenodd"/>
                     </svg>
                 </button>
-
-                </div>
-
+            </div>
         )
     }
 }
 
 export default Topbar;
+p
