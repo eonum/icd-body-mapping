@@ -21,8 +21,8 @@ class DetailsCard extends React.Component {
 
         return (
             <div className="card">
-                <div className="card-header">
-                    <div className="overlay bg-dark" />
+                <div className="card-header bg-primary">
+                    <div className="overlay bg-primary" />
                     <h1 className="card-title text-white">
                         {icd.code}
                     </h1>
