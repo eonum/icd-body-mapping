@@ -69,4 +69,3 @@ class Topbar extends React.Component {
 }
 
 export default Topbar;
-p
