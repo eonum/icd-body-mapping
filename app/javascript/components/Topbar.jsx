@@ -44,11 +44,13 @@ class Topbar extends React.Component {
 
                 <Form className="navbar-form navbar-left">
                 <FormControl
-                    onChange={this.getSearchResults}
-                    value={this.state.searchText}
+                    value={this.state.term}
+                    onChange={this.getAutoCompleteResults.bind(this)}
                     type="text"
                     placeholder="Search"
                     className="mr-sm-2"
+
+
                 />
                 </Form>
                 <a className="navbar-brand mx-auto" href="#">ICD Mapping - EONUM</a>
@@ -69,4 +71,3 @@ class Topbar extends React.Component {
 }
 
 export default Topbar;
-p
