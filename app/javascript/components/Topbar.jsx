@@ -52,28 +52,7 @@ class Topbar extends React.Component {
         });
     }
 
-    getSearchResults(){
-        /*console.log(this.allICDs);
-        this.setState({
-            term: search.target.value
-        });
 
-        const searchedICD = this.allICDs.filter((icd) => {
-            if (icd.code.toString().includes(this.state.term)) {
-                return icd;
-            }
-        });
-
-        console.log(searchedICD);
-
-        this.props.callbackFromMainUI(searchedICD, this.state.term);
-        */
-
-        $.getJSON('/search?q=' + this.state.term)
-            .then(async response =>
-                this.props.callbackFromMainUI(await response, this.state.term)
-            );
-    }
 
     render() {
         return (
