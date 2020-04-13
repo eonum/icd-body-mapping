@@ -10,9 +10,6 @@ import * as Icon from 'react-bootstrap-icons';
  * Possible search results are handed over to parent via callback.
  * @author Aaron Saegesser
  */
-
-
-
 class Topbar extends React.Component {
     searchText;
     constructor(props) {
@@ -20,6 +17,23 @@ class Topbar extends React.Component {
         this.state = {
             term: ''
         };
+    }
+
+    componentDidMount() {
+        const url = "/icds";
+        fetch(url)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error("Network response wasn't ok.");
+            })
+            .then(async response => this.setIcdDatabaseStorage(await response))
+            .catch(() => this.props.history.push("/"));
+    }
+
+    setIcdDatabaseStorage(icds) {
+        this.allICDs = icds;
     }
 
     /**
@@ -38,10 +52,32 @@ class Topbar extends React.Component {
         });
     }
 
+    getSearchResults(){
+        /*console.log(this.allICDs);
+        this.setState({
+            term: search.target.value
+        });
+
+        const searchedICD = this.allICDs.filter((icd) => {
+            if (icd.code.toString().includes(this.state.term)) {
+                return icd;
+            }
+        });
+
+        console.log(searchedICD);
+
+        this.props.callbackFromMainUI(searchedICD, this.state.term);
+        */
+
+        $.getJSON('/search?q=' + this.state.term)
+            .then(async response =>
+                this.props.callbackFromMainUI(await response, this.state.term)
+            );
+    }
+
     render() {
         return (
             <div className="navbar navbar-expand-md navbar-light bg-primary">
-
                 <Form className="navbar-form navbar-left">
                 <FormControl
                     value={this.state.term}
@@ -53,7 +89,9 @@ class Topbar extends React.Component {
 
                 />
                 </Form>
-                <a className="navbar-brand mx-auto" href="#">ICD Mapping - EONUM</a>
+                <a className="navbar-brand mx-auto" href="#">ICD Mapping -
+                    <img src="../../assets/images/eonum_logo.png" alt="eonum" />
+                </a>
                 <button type="button" className="btn btn-default" >
                     <svg className="bi bi-pencil" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
                          xmlns="http://www.w3.org/2000/svg">

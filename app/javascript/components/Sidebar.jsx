@@ -222,8 +222,17 @@ class Sidebar extends React.Component {
     render() {
         const { icds } = this.state;
 
+        const withBackButtonStyle = {
+            height: '85vh',
+            overflow: 'auto'
+        }
+        const withoutBackButtonStyle = {
+            height: '90vh',
+            overflow: 'auto'
+        }
+
         const icdChapters = this.chapterICDs.map((icd, index) => {
-            return <div className="list-group" key={index}>
+            return <div className="list-group mr-1" key={index}>
                 <div
                     className="list-group-item"
                     onClick={this.filterIcdsByChapter.bind(this, icd)}
@@ -236,7 +245,7 @@ class Sidebar extends React.Component {
             if (icd.code.toString().includes(this.state.term)
                 && icd.code.toString() !== this.state.term
                 && icd.code.toString().length === this.state.icdCodelength) {
-                return <div className="list-group" key={index}>
+                return <div className="list-group mr-1" key={index}>
                     <div
                         className="list-group-item"
                         onClick={this.filterIcdsByIcdcode.bind(this, this.state, icd)}
@@ -253,17 +262,21 @@ class Sidebar extends React.Component {
             <></>
         );
         const backArrow = (
-            <IconButton onClick={this.stepBackHierarchy.bind(this, this.state)}>
+            <a type="button" className="btn btn-light" onClick={this.stepBackHierarchy.bind(this, this.state)}>
                 <ArrowBackIcon/>
-            </IconButton>
+            </a>
         );
 
         return (
             <div>
-                {icds.length > 0 ? empty : loading}
-                {icds.length > 0 && this.state.filtered === false ? icdChapters : empty}
-                {icds.length > 0 && this.state.filtered === true ? backArrow : empty}
-                {icds.length > 0 && this.state.filtered === true ? icdSubGroup : empty}
+                <div>
+                    {icds.length > 0 && this.state.filtered === true ? backArrow : empty}
+                </div>
+                <div style={this.state.filtered ? withBackButtonStyle : withoutBackButtonStyle}>
+                    {icds.length > 0 ? empty : loading}
+                    {icds.length > 0 && this.state.filtered === false ? icdChapters : empty}
+                    {icds.length > 0 && this.state.filtered === true ? icdSubGroup : empty}
+                </div>
             </div>
         )
     }

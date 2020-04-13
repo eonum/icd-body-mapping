@@ -1,4 +1,5 @@
 import React from 'react';
+import CloseIcon from "@material-ui/icons/Close";
 
 /**
  * DetailsCard displays an ICD given via props in a viewable fashion
@@ -10,6 +11,10 @@ class DetailsCard extends React.Component {
         this.state = {
             icd: []
         };
+    }
+
+    closeDetailsCard() {
+        this.props.callbackFromMainUIClose();
     }
 
     render() {
@@ -26,6 +31,9 @@ class DetailsCard extends React.Component {
                     <h1 className="card-title text-white">
                         {icd.code}
                     </h1>
+                    <a type="button" className="btn btn-light" onClick={this.closeDetailsCard.bind(this)}>
+                        <CloseIcon />
+                    </a>
                 </div>
                 <div className="card m-2 mt-4 mr-4 ml-4 border-0">
                     <h5 className="card-subtitle">German</h5>
