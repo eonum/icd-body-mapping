@@ -18,8 +18,7 @@ class DetailsCard extends React.Component {
 
         return (
             <div className="card">
-                {selectedLayer}
-                {(selectedIcd.id !== 0 && selectedLayer !== '') ? <NewMaps icd_id={selectedIcd.id} layer_id={selectedLayer}/> : noIcd}
+                <NewMaps icd_id={selectedIcd.id} layer_id={selectedLayer}/>
                 <div className="card-header">
                     <div className="overlay bg-dark" />
                     <h1 className="card-title text-white">

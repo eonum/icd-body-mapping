@@ -5,8 +5,8 @@ class NewMaps extends React.Component {
         super(props);
         this.state = {
             maps: [],
-            selectedIcd: '',
-            selectedLayer: ''
+            icd_id: this.props.icd_id,
+            layer_id: this.props.layer_id
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -17,21 +17,21 @@ class NewMaps extends React.Component {
             .then((data) => {this.setState({ maps: data }) });
     }
 
-    handleSubmit(event) {
-            let body = JSON.stringify({map: {icd_id: this.state.selectedIcd, layer_id: this.state.selectedLayer}});
+    handleSubmit() {
+        return event =>{
+            let body = JSON.stringify({map: {icd_id: this.state.icd_id, layer_id: this.state.layer_id}});
+            alert(body);
             fetch('http://localhost:3000/api/v1/maps', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: body,
             }).then((response) => {return response.json()})
                 .then((map)=>{this.addNewMap(map)});
-            alert(body);
             event.preventDefault();
+        }
     }
-
-    setIdStates(){
-        this.setState({selectedLayer: this.props.selectedLayer});
-        this.setState({selectedIcd: this.props.selectedIcd});
+    stateIdSet() {
+        this.setState({icd_id: this.props.icd_id, layer_id: this.props.layer_id});
     }
 
     addNewMap(map){
@@ -40,8 +40,8 @@ class NewMaps extends React.Component {
 
     render() {
         return(
-            <form onSubmit={this.handleSubmit}>
-                <input type="submit" value="Submit" onClick={this.setIdStates}/>
+            <form onSubmit={this.handleSubmit()}>
+                <input type="submit" value="Submit" onClick={this.stateIdSet.bind(this)}/>
             </form>
         )
     }
