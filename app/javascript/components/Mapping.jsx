@@ -18,6 +18,10 @@ class Mapping extends React.Component {
             .then(response => this.setState({ layers: response }));
     }
 
+    sendIcdToMainUI(icd) {
+        this.props.callbackFromMainUI(icd);
+    }
+
     _onMouseMove(e) {
         this.setState({ x: e.screenX, y: e.screenY });
     }
@@ -34,14 +38,15 @@ class Mapping extends React.Component {
         let canvas = document.getElementById('canvas');
         let context = canvas.getContext('2d');
         let elem = this.state.imageElements;
-        let rect = canvas.getBoundingClientRect();
         let myImg, data;
         for (let i = 0; i < len; i++) {
             myImg = document.getElementById(elem[i].id);
+            let rect = myImg.getBoundingClientRect();
             context.drawImage(myImg, 0, 0);
             data = context.getImageData(x - rect.left, y - (rect.top + 75), 1, 1).data;
             if (data[0] !== 0 && data[1] !== 0 && data[2] !== 0 && data[3] !== 0) {
                 this.setState({selectedId: elem[i].id});
+                this.sendIcdToMainUI(elem[i].id);
                 myImg.style.opacity = '1';
                 //Since an image was found the rest don't need to be searched.
                 for (i++; i < len; i++) {
@@ -62,7 +67,7 @@ class Mapping extends React.Component {
 
         let alleElemente = this.state.imageElements.map((elem, index) => {
             return <div key={index} onClick={this.selectPng.bind(this, x, y, len)}>
-                <img src={elem.img} style={divStyle} id={elem.id}/>
+                <img src={elem.img} style={divStyle} id={elem.id} alt='missing images'/>
             </div>
         });
 
@@ -101,6 +106,7 @@ class Mapping extends React.Component {
                 </div>
                 <div className="row pt-2">
                     {alleElemente}
+                    {this.state.selectedId}
                 </div>
             </div>
         )

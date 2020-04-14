@@ -1,6 +1,4 @@
 class ChapterController < ApplicationController
-
-
   before_action only: :show
 
   def index

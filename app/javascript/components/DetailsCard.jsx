@@ -1,4 +1,5 @@
 import React from 'react';
+import NewMaps from "./NewMaps";
 
 /**
  * DetailsCard displays an ICD given via props in a viewable fashion
@@ -7,24 +8,22 @@ import React from 'react';
 class DetailsCard extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            icd: []
-        };
     }
 
     render() {
-        let icd = [];
+        let selectedIcd = this.props.selectedIcd;
+        let selectedLayer = this.props.selectedLayer;
 
-        if (this.props.selectedIcd !== null) {
-            icd = this.props.selectedIcd;
-        }
+        const noIcd = (<div/>);
 
         return (
             <div className="card">
+                {selectedLayer}
+                {(selectedIcd.id !== 0 && selectedLayer !== '') ? <NewMaps icd_id={selectedIcd.id} layer_id={selectedLayer}/> : noIcd}
                 <div className="card-header">
                     <div className="overlay bg-dark" />
                     <h1 className="card-title text-white">
-                        {icd.code}
+                        {selectedIcd.code}
                     </h1>
                 </div>
                 <div className="card m-2 mt-4 mr-4 ml-4 border-0">
@@ -32,7 +31,7 @@ class DetailsCard extends React.Component {
                     <div
                         className="border-top"
                         dangerouslySetInnerHTML={{
-                            __html: `${icd.text_de}`
+                            __html: `${selectedIcd.text_de}`
                         }}
                     />
                 </div>
@@ -41,7 +40,7 @@ class DetailsCard extends React.Component {
                     <div
                         className="border-top"
                         dangerouslySetInnerHTML={{
-                            __html: `${icd.text_fr}`
+                            __html: `${selectedIcd.text_fr}`
                         }}
                     />
                 </div>
@@ -50,7 +49,7 @@ class DetailsCard extends React.Component {
                     <div
                         className="border-top"
                         dangerouslySetInnerHTML={{
-                            __html: `${icd.text_it}`
+                            __html: `${selectedIcd.text_it}`
                         }}
                     />
                 </div>

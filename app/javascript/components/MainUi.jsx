@@ -17,7 +17,8 @@ class MainUI extends React.Component {
         this.state = {
             searchedIcds: '',
             searchTerm: '',
-            selectedIcd: ''
+            selectedIcd: '',
+            selectedLayer: ''
         };
     }
 
@@ -28,6 +29,10 @@ class MainUI extends React.Component {
     callbackTopbarSearch = (searchedIcdsFromTopbar, searchTermFromTopbar) => {
         this.setState({ searchedIcds: searchedIcdsFromTopbar });
         this.setState({ searchTerm: searchTermFromTopbar});
+    };
+
+    callbackMapping = (selectedLayerFromMapping) => {
+        this.setState({ selectedLayer: selectedLayerFromMapping });
     };
 
     /**
@@ -55,7 +60,7 @@ class MainUI extends React.Component {
             />
         );
         let details = (
-            <DetailsCard selectedIcd={this.state.selectedIcd}/>
+            <DetailsCard selectedIcd={this.state.selectedIcd} selectedLayer={this.state.selectedLayer}/>
         );
 
         return (
@@ -76,7 +81,7 @@ class MainUI extends React.Component {
                             {this.state.searchTerm !== '' ? searchResults : details}
                         </div>
                         <div className="col-6">
-                            <Mapping />
+                            <Mapping callbackFromMainUI={this.callbackMapping}/>
                         </div>
                     </div>
                 </div>

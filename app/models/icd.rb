@@ -4,4 +4,6 @@ class Icd < ApplicationRecord
   validates :text_de, presence: true
   validates :text_fr, presence: true
   validates :text_it, presence: true
+
+  has_many :maps
 end
