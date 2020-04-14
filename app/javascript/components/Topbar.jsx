@@ -52,21 +52,40 @@ class Topbar extends React.Component {
         });
     }
 
+    getSearchResults(){
+        /*console.log(this.allICDs);
+        this.setState({
+            term: search.target.value
+        });
 
+        const searchedICD = this.allICDs.filter((icd) => {
+            if (icd.code.toString().includes(this.state.term)) {
+                return icd;
+            }
+        });
+
+        console.log(searchedICD);
+
+        this.props.callbackFromMainUI(searchedICD, this.state.term);
+        */
+
+        $.getJSON('/search?q=' + this.state.term)
+            .then(async response =>
+                this.props.callbackFromMainUI(await response, this.state.term)
+            );
+    }
 
     render() {
         return (
             <div className="navbar navbar-expand-md navbar-light bg-primary">
                 <Form className="navbar-form navbar-left">
-                <FormControl
-                    value={this.state.term}
-                    onChange={this.getAutoCompleteResults.bind(this)}
-                    type="text"
-                    placeholder="Search"
-                    className="mr-sm-2"
-
-
-                />
+                    <FormControl
+                        onChange={this.getSearchResults}
+                        value={this.state.searchText}
+                        type="text"
+                        placeholder="Search"
+                        className="mr-sm-2"
+                    />
                 </Form>
                 <a className="navbar-brand mx-auto" href="#">ICD Mapping -
                     <img src="../../assets/images/eonum_logo.png" alt="eonum" />
