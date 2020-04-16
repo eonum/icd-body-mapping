@@ -9,7 +9,7 @@ class Api::V1::MapsController < ApplicationController
   end
 
   def show
-    map = Layer.joins(:maps).select("maps.icd_id, layers.img").where("maps.icd_id = ?", params[:id])
+    map = Layer.joins(:maps).select("layers.*, maps.icd_id").where("maps.icd_id = ?", params[:id])
     render json: map
   end
 

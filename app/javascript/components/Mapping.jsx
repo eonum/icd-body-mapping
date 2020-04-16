@@ -20,10 +20,10 @@ class Mapping extends React.Component {
         };
 
         $.getJSON('/layers/Ohr')
-            .then(response => this.setState({ imageElements: response }));
+            .then(response => this.setState({imageElements: response}));
 
         $.getJSON('/layers')
-            .then(response => this.setState({ layers: response }));
+            .then(response => this.setState({layers: response}));
     }
 
     /**
@@ -41,7 +41,7 @@ class Mapping extends React.Component {
      * as to know at which coordinates a click happens.
      */
     _onMouseMove(e) {
-        this.setState({ x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY});
+        this.setState({x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY});
     }
 
     /**
@@ -50,12 +50,17 @@ class Mapping extends React.Component {
      * It then saves these images into the activeLayer array.
      * @param elem.ebene is the layer variable of the selected element.
      */
-    selectLayer(elem){
+    selectLayer(elem) {
         $.getJSON('/layers/' + elem.ebene)
-            .then(response => this.setState({ imageElements: response }));
+            .then(response => this.setState({imageElements: response}));
         this.setState({
             activeLayer: elem.ebene
         })
+    }
+
+    showIcd(){
+        $.getJSON('/api/v1/maps/' + this.props.showingIcdId)
+            .then(response => this.setState({imageElements: response}));
     }
 
     /**
@@ -78,7 +83,7 @@ class Mapping extends React.Component {
         for (let i = 0; i < len; i++) {
             myImg = document.getElementById(elem[i].id);
             context.drawImage(myImg, 0, 0);
-            data = context.getImageData(x, y , 1, 1).data;
+            data = context.getImageData(x, y, 1, 1).data;
             if (data[0] !== 0 && data[1] !== 0 && data[2] !== 0 && data[3] !== 0) {
                 this.sendIcdToMainUI(elem[i].id);
                 this.setState({selectedId: elem[i].id});
@@ -88,8 +93,7 @@ class Mapping extends React.Component {
                     myImg = document.getElementById(elem[i].id);
                     myImg.style.opacity = '0.5';
                 }
-            }
-            else {
+            } else {
                 myImg.style.opacity = '0.5';
             }
             context.clearRect(0, 0, canvas.width, canvas.height);
@@ -109,8 +113,8 @@ class Mapping extends React.Component {
         });
 
         //gets a list of all layers
-        let alleLayers = this.state.layers.map((elem,index)=>{
-            return<div className="dropdown-item" key={index} onClick={this.selectLayer.bind(this, elem)}>
+        let alleLayers = this.state.layers.map((elem, index) => {
+            return <div className="dropdown-item" key={index} onClick={this.selectLayer.bind(this, elem)}>
                 {elem.ebene}
             </div>
         });
@@ -132,9 +136,11 @@ class Mapping extends React.Component {
             <div>
                 <div className="row">
                     {dropdown}
+                    <input type="submit" value="refresh" onClick={this.showIcd.bind(this)}/>
                 </div>
                 <canvas id='canvas' style={divStyle} width="600" height="530"/>
                 <div onMouseMove={this._onMouseMove.bind(this)} id='mappingComp'>
+                    {this.props.showingIcdId}
                     {alleElemente}
                 </div>
             </div>

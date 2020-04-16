@@ -5,6 +5,7 @@ import DetailsCard from "./DetailsCard";
 import SearchCard from "./SearchCard";
 import Mapping from "./Mapping";
 import './MainUI.css'
+import NewMaps from "./NewMaps";
 
 /**
  * The MainUI collects the child components of which it consists
@@ -18,7 +19,8 @@ class MainUI extends React.Component {
             searchedIcds: '',
             searchTerm: '',
             selectedIcd: '',
-            selectedLayer: ''
+            selectedLayer: '',
+            showingIcdId: 0
         };
     }
 
@@ -33,6 +35,10 @@ class MainUI extends React.Component {
 
     callbackMapping = (selectedLayerFromMapping) => {
         this.setState({ selectedLayer: selectedLayerFromMapping });
+    };
+
+    callbackDetails = (showingIcdIdFromDetails) => {
+        this.setState({ showingIcdId: showingIcdIdFromDetails });
     };
 
     /**
@@ -60,7 +66,10 @@ class MainUI extends React.Component {
             />
         );
         let details = (
-            <DetailsCard selectedIcd={this.state.selectedIcd} selectedLayer={this.state.selectedLayer}/>
+            <DetailsCard
+                selectedIcd={this.state.selectedIcd}
+                callbackFromMainUI={this.callbackDetails}
+            />
         );
 
         return (
@@ -78,10 +87,11 @@ class MainUI extends React.Component {
                             <Sidebar callbackFromMainUI={this.callbackSidebar}/>
                         </div>
                         <div className="col-4">
+                            <NewMaps icd_id={this.state.selectedIcd.id} layer_id={this.state.selectedLayer}/>
                             {this.state.searchTerm !== '' ? searchResults : details}
                         </div>
                         <div className="col-6">
-                            <Mapping callbackFromMainUI={this.callbackMapping}/>
+                            <Mapping callbackFromMainUI={this.callbackMapping} showingIcdId={this.state.showingIcdId}/>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,4 @@
 import React from 'react';
-import NewMaps from "./NewMaps";
 
 /**
  * DetailsCard displays an ICD given via props in a viewable fashion
@@ -8,22 +7,34 @@ import NewMaps from "./NewMaps";
 class DetailsCard extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            showingIcdId: 0
+        };
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    stateIdSet() {
+        this.setState({showingIcdId: this.props.selectedIcd.id});
+    }
+
+    handleSubmit(event) {
+        this.props.callbackFromMainUI(this.state.showingIcdId);
+        event.preventDefault();
     }
 
     render() {
         let selectedIcd = this.props.selectedIcd;
-        let selectedLayer = this.props.selectedLayer;
-
-        const noIcd = (<div/>);
 
         return (
             <div className="card">
-                <NewMaps icd_id={selectedIcd.id} layer_id={selectedLayer}/>
                 <div className="card-header">
                     <div className="overlay bg-dark" />
                     <h1 className="card-title text-white">
                         {selectedIcd.code}
                     </h1>
+                    <form onSubmit={this.handleSubmit}>
+                        <input type="submit" value="Show" onClick={this.stateIdSet.bind(this)}/>
+                    </form>
                 </div>
                 <div className="card m-2 mt-4 mr-4 ml-4 border-0">
                     <h5 className="card-subtitle">German</h5>

@@ -44,6 +44,10 @@ class NewMaps extends React.Component {
             .then((map)=>{this.addNewMap(map)});
         event.preventDefault();
     }
+
+    /**
+     * This Method receives the props from the main ui and the sets them into the state of newMaps.
+     */
     stateIdSet() {
         this.setState({icd_id: this.props.icd_id, layer_id: this.props.layer_id});
     }
@@ -57,12 +61,20 @@ class NewMaps extends React.Component {
     }
 
     render() {
-        return(
-            <form onSubmit={this.handleSubmit}>
-                <input type="submit" value="Submit" onClick={this.stateIdSet.bind(this)}/>
-                {this.props.icd_id + ' ' + this.props.layer_id}
-            </form>
-        )
+        let icd_id = this.props.icd_id;
+        let layer_id = this.props.layer_id;
+
+        if (icd_id === '' || layer_id === ''){
+            return(
+                <div/>
+            );
+        } else {
+            return(
+                <form onSubmit={this.handleSubmit}>
+                    <input type="submit" value={icd_id + ' + ' + layer_id} onClick={this.stateIdSet.bind(this)}/>
+                </form>
+            );
+        }
     }
 }
 export default NewMaps
