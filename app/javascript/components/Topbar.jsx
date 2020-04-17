@@ -2,6 +2,7 @@ import React from 'react';
 import $ from "jquery";
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
 import * as Icon from 'react-bootstrap-icons';
+import logo from '../../assets/images/eonum_logo.png'
 
 
 
@@ -68,11 +69,12 @@ class Topbar extends React.Component {
 
                 />
                 </Form>
-                <a className="navbar-brand mx-auto" href="#">ICD Mapping -
-                    <img src="../../assets/images/eonum_logo.png" alt="eonum" />
-                </a>
+                <h2 className="navbar-brand mx-auto text-white">
+                    ICD Mapping -
+                    <img className="mr-2" src={logo} alt="eonum" height="16px" />
+                </h2>
                 <button type="button" className="btn btn-default" >
-                    <svg className="bi bi-pencil" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                    <svg className="bi bi-pencil" width="1em" height="1em" viewBox="0 0 16 16" fill="white"
                          xmlns="http://www.w3.org/2000/svg">
                         <path fillRule="evenodd"
                               d="M11.293 1.293a1 1 0 011.414 0l2 2a1 1 0 010 1.414l-9 9a1 1 0 01-.39.242l-3 1a1 1 0 01-1.266-1.265l1-3a1 1 0 01.242-.391l9-9zM12 2l2 2-9 9-3 1 1-3 9-9z"

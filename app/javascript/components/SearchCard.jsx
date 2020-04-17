@@ -19,6 +19,15 @@ class SearchCard extends React.Component {
         this.props.callbackFromMainUI(icd);
     }
 
+    checkAllIcds() {
+        var checkAllBox = document.getElementById('checkAll');
+        var checkboxes = document.getElementsByName('checkIcd');
+
+        for (var i=0; i<checkboxes.length; i++) {
+            checkboxes[i].checked = checkAllBox.checked;
+        }
+    }
+
     closeSearchCard() {
         this.props.callbackFromMainUIClose();
     }
@@ -35,14 +44,26 @@ class SearchCard extends React.Component {
             height: '40vh',
             overflow: 'auto'
         }
+        const checkboxStyle = {
+            float: 'right'
+        }
 
         const allIcds = icds.map((icd, index) => (
             <div key={index} className="card mb-4 mr-1">
                 <div className="card-body">
+                    <div className="checkbox" style={checkboxStyle}>
+                        <label>
+                            select<input type="checkbox" value="" name="checkIcd" id={icd.code}/>
+                        </label>
+                    </div>
                     <h5 className="card-title">{icd.code}</h5>
                     <h6 className="card-description">{icd.text_de}</h6>
                 </div>
-                <a type="button" className="btn btn-light" onClick={this.selectIcd.bind(this, icd)}>view details</a>
+                <a type="button"
+                   className="btn btn-light"
+                   onClick={this.selectIcd.bind(this, icd)}>
+                    view details
+                </a>
             </div>
         ));
         const noIcd = (
@@ -51,10 +72,18 @@ class SearchCard extends React.Component {
 
         return (
             <div>
-                <div>
-                    <a type="button" className="btn btn-light" onClick={this.closeSearchCard.bind(this)}>
+
+                <div className="mb-1">
+                    <a type="button"
+                       className="btn btn-light"
+                       onClick={this.closeSearchCard.bind(this)}>
                         <CloseIcon />
                     </a>
+                    <div className="checkbox mr-3" style={checkboxStyle}>
+                        <label>
+                            select all<input type="checkbox" value="" id="checkAll" onClick={this.checkAllIcds.bind(this)}/>
+                        </label>
+                    </div>
                 </div>
                 <div style={detailsVisible ? searchNextToDetailsStyle : searchOnlyStyle}>
                     {icds.length > 0 ? allIcds : noIcd}

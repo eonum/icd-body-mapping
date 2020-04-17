@@ -96,7 +96,8 @@ class MainUI extends React.Component {
 
         const visibleStyle = {
             height: '45vh',
-            overflow: 'auto'
+            overflow: 'auto',
+            marginBottom: '2vh'
         }
         const notVisibleStyle = {
             height: '0vh',
@@ -117,7 +118,7 @@ class MainUI extends React.Component {
                             <Sidebar callbackFromMainUI={this.callbackSidebar}/>
                         </div>
                         <div className="col-4">
-                            <div style={this.state.detailsDisplayed ? visibleStyle : notVisibleStyle} className="mb-2">
+                            <div style={this.state.detailsDisplayed ? visibleStyle : notVisibleStyle}>
                                 {this.state.detailsDisplayed ? details : empty}
                             </div>
                             {this.state.searchDisplayed ? searchResults : empty}

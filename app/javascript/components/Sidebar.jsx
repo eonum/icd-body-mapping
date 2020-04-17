@@ -261,16 +261,19 @@ class Sidebar extends React.Component {
         const empty = (
             <></>
         );
-        const backArrow = (
-            <a type="button" className="btn btn-light" onClick={this.stepBackHierarchy.bind(this, this.state)}>
+        const backButton = (
+            <a type="button"
+               className="btn btn-light"
+               onClick={this.stepBackHierarchy.bind(this, this.state)}
+            >
                 <ArrowBackIcon/>
             </a>
         );
 
         return (
             <div>
-                <div>
-                    {icds.length > 0 && this.state.filtered === true ? backArrow : empty}
+                <div className="mb-1">
+                    {icds.length > 0 && this.state.filtered === true ? backButton : empty}
                 </div>
                 <div style={this.state.filtered ? withBackButtonStyle : withoutBackButtonStyle}>
                     {icds.length > 0 ? empty : loading}
