@@ -48,7 +48,8 @@ class Topbar extends React.Component {
             $.getJSON('/search?q=' + this.state.term)
                 .then(async response =>
                     this.props.callbackFromMainUI(await response, this.state.term)
-                );
+                )
+        });
     }
 
     getSearchResults() {
