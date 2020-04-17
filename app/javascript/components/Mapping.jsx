@@ -16,9 +16,16 @@ class Mapping extends React.Component {
             layers: [],
             x: 0, y: 0,
             selectedId: 0,
-            activeLayer: 'Layers'
+            showAll: false,
+            activeLayer: 'Ohr'
         };
+    }
 
+    /**
+     * Receives all the images and layers from the backend and
+     * puts them into their respective array.
+     */
+    componentDidMount(){
         $.getJSON('/layers/Ohr')
             .then(response => this.setState({imageElements: response}));
 
@@ -27,18 +34,29 @@ class Mapping extends React.Component {
     }
 
     /**
-     * A method, which sends the chosen image back to the Main Ui, so that other components,
-     * like the details card can access it.
-     * @param bild holds the layer_id of an image
+     * Updates the image array with the images of an icd,
+     * once the prop showingIcdId changes.
      */
-    sendIcdToMainUI(bild) {
-        this.props.callbackFromMainUI(bild);
+    componentDidUpdate(prevProps) {
+        if(this.props.showingIcdId !== prevProps.showingIcdId)
+        {
+            $.getJSON('/api/v1/maps/' + this.props.showingIcdId + '/' + this.state.activeLayer)
+                .then(response => this.setState({imageElements: response}));
+        }
     }
 
     /**
-     * The _onMouseMove Method tracks the mouse movements of a User
-     * within the details card. This is needed later on in the selectPng,
-     * as to know at which coordinates a click happens.
+     * A method, which sends the chosen image back to the Main Ui, so that other components,
+     * like the details card can access it.
+     * @param image holds the layer_id of an image
+     */
+    sendIcdToMainUI(image) {
+        this.props.callbackFromMainUI(image);
+    }
+
+    /**
+     * The _onMouseMove Method tracks the mouse movements of a User within the details card.
+     * This is later needed in selectPng, as to know at which coordinates a click happens.
      */
     _onMouseMove(e) {
         this.setState({x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY});
@@ -51,26 +69,28 @@ class Mapping extends React.Component {
      * @param elem.ebene is the layer variable of the selected element.
      */
     selectLayer(elem) {
-        $.getJSON('/layers/' + elem.ebene)
-            .then(response => this.setState({imageElements: response}));
-        this.setState({
-            activeLayer: elem.ebene
-        })
-    }
-
-    showIcd(){
-        $.getJSON('/api/v1/maps/' + this.props.showingIcdId)
-            .then(response => this.setState({imageElements: response}));
+        if (this.props.showingIcdId === 0 || this.state.showAll === true){
+            $.getJSON('/layers/' + elem.ebene)
+                .then(response => this.setState({imageElements: response}));
+            this.setState({
+                activeLayer: elem.ebene
+            })
+        }
+        else {
+            $.getJSON('/api/v1/maps/' + this.props.showingIcdId + '/' + elem.ebene)
+                .then(response => this.setState({imageElements: response}));
+            this.setState({
+                activeLayer: elem.ebene
+            })
+        }
     }
 
     /**
-     * The selectPng Method is the main Method of the Mapping component.
-     * It receives the x, y coordinates and the amount of images inside a layer as an input.
-     * Then it traverses all the different images and checks, which color an image has at the specific coordinates.
+     * The selectPng Method receives the x, y coordinates and the length of the imageElements array.
+     * Then it goes through all the different images and checks, which color an image has at the specific coordinates.
      * If the color is transparent, then the user didn't click on that image and otherwise he did.
+     * To do this it paints a 1x1 pixel cut of an image onto a canvas and then checks its colour.
      * Afterwards the id of said image is saved to the selectedId state.
-     * The selected image has an opacity of 1, while all others have one of 0.5,
-     * this is so that the user can see the selected image.
      * @param x is the X coordinate, at which a click happens
      * @param y is the Y coordinate, at which a click happens
      * @param len The size of the selectedLayers array, the amount of images.
@@ -93,11 +113,21 @@ class Mapping extends React.Component {
                     myImg = document.getElementById(elem[i].id);
                     myImg.style.opacity = '0.5';
                 }
-            } else {
-                myImg.style.opacity = '0.5';
-            }
+            } else {myImg.style.opacity = '0.5';}
             context.clearRect(0, 0, canvas.width, canvas.height);
         }
+    }
+
+    stateIdSet(){
+        this.setState({showAll: !this.state.showAll});
+        let myButtonColor = document.getElementById('showAll');
+        if (this.state.showAll === true){
+            myButtonColor.style.opacity = 1;
+        } else {
+            myButtonColor.style.opacity = 0.5;
+        }
+        $.getJSON('/layers/' + this.state.activeLayer)
+            .then(response => this.setState({imageElements: response}));
     }
 
     render() {
@@ -105,21 +135,18 @@ class Mapping extends React.Component {
         const {x, y} = this.state;
         const len = this.state.imageElements.length;
 
-        //Displays all the images from the selectedLayer array
         let alleElemente = this.state.imageElements.map((elem, index) => {
             return <div key={index} onClick={this.selectPng.bind(this, x, y, len)}>
                 <img src={elem.img} style={divStyle} id={elem.id} alt='missing images'/>
             </div>
         });
 
-        //gets a list of all layers
         let alleLayers = this.state.layers.map((elem, index) => {
             return <div className="dropdown-item" key={index} onClick={this.selectLayer.bind(this, elem)}>
                 {elem.ebene}
             </div>
         });
 
-        //Puts all the Layers into a dropdown Menu, from which a user can select them
         const dropdown = (
             <div className="col-2 dropdown">
                 <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
@@ -136,11 +163,10 @@ class Mapping extends React.Component {
             <div>
                 <div className="row">
                     {dropdown}
-                    <input type="submit" value="refresh" onClick={this.showIcd.bind(this)}/>
+                    <input type="submit" value='show all' id='showAll' onClick={this.stateIdSet.bind(this)}/>
                 </div>
                 <canvas id='canvas' style={divStyle} width="600" height="530"/>
                 <div onMouseMove={this._onMouseMove.bind(this)} id='mappingComp'>
-                    {this.props.showingIcdId}
                     {alleElemente}
                 </div>
             </div>

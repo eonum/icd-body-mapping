@@ -14,7 +14,7 @@ class ChapterController < ApplicationController
   end
 
   def show
-    icd = Icd.select('id, kapitel').where("kapitel = ?", params[:kapitel])
+    icd = Icd.select('id, kapitel').where("kapitel = ?", params[:id])
     render :json => icd
   end
 
