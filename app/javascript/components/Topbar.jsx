@@ -2,7 +2,8 @@ import React from 'react';
 import $ from "jquery";
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
 import * as Icon from 'react-bootstrap-icons';
-import logo from '../../assets/images/eonum_logo.png'
+import logo from '../../assets/images/eonum_logo.png';
+import SearchIcon from '@material-ui/icons/Search';
 
 /**
  * The Topbar contains the searchbar and header and is responsible for the searching.
@@ -76,21 +77,32 @@ class Topbar extends React.Component {
     }
 
     render() {
+        const headerStyle = {
+            fontSize: '24px'
+        }
+
         return (
             <div className="navbar navbar-expand-md navbar-light bg-primary">
-                <Form className="navbar-form navbar-left">
+                <Form>
                     <FormControl
-                        onChange={this.getSearchResults}
-                        value={this.searchText}
+                        onChange={event => {this.setState({term: event.target.value})}}
+                        onKeyDown={event => {if (event.key === 'Enter') {this.getSearchResults()}}}
                         type="text"
-                        placeholder="Search"
+                        placeholder="Search..."
                         className="mr-sm-2"
                     />
                 </Form>
-                <h2 className="navbar-brand mx-auto text-white">
+                <button
+                    type="button"
+                    className="btn btn-default text-white ml-2"
+                    onClick={event => {if (this.state.term !== '') {this.getSearchResults()}}}
+                >
+                    <SearchIcon/>
+                </button>
+                <h1 className="navbar-brand mx-auto text-white" style={headerStyle}>
                     ICD Mapping -
-                    <img className="mr-2" src={logo} alt="eonum" height="16px" />
-                </h2>
+                    <img className="ml-2" src={logo} alt="eonum" height="16px" />
+                </h1>
                 <button type="button" className="btn btn-default">
                     <svg className="bi bi-pencil" width="1em" height="1em" viewBox="0 0 16 16" fill="white"
                          xmlns="http://www.w3.org/2000/svg">

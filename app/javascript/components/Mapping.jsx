@@ -30,8 +30,9 @@ class Mapping extends React.Component {
         $.getJSON('/layers/' + elem.ebene)
             .then(response => this.setState({ imageElements: response }));
         this.setState({
-            activeLayer: elem.ebene
-        })
+            activeLayer: elem.ebene,
+            activeLayerName: elem.name
+        });
     }
 
     selectPng(x, y, len) {
@@ -93,6 +94,7 @@ class Mapping extends React.Component {
             <div className="col-10">
                 <h4>
                     {this.state.activeLayer}
+                    {this.state.activeLayerName}
                 </h4>
             </div>
         )
