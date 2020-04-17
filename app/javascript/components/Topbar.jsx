@@ -4,8 +4,6 @@ import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
 import * as Icon from 'react-bootstrap-icons';
 import logo from '../../assets/images/eonum_logo.png'
 
-
-
 /**
  * The Topbar contains the searchbar and header and is responsible for the searching.
  * Possible search results are handed over to parent via callback.
@@ -16,6 +14,7 @@ class Topbar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            query: '',
             term: ''
         };
     }
@@ -42,18 +41,17 @@ class Topbar extends React.Component {
      * and saves them into the icds array, this will be later passed on to the search results component
      * via callbackFromMainUI function
      */
-    getAutoCompleteResults(e){
+    getAutoCompleteResults(e) {
         this.setState({
             term: e.target.value
         }, () => {
             $.getJSON('/search?q=' + this.state.term)
                 .then(async response =>
                     this.props.callbackFromMainUI(await response, this.state.term)
-                )
-        });
+                );
     }
 
-    getSearchResults(){
+    getSearchResults() {
         /*console.log(this.allICDs);
         this.setState({
             term: search.target.value
@@ -82,7 +80,7 @@ class Topbar extends React.Component {
                 <Form className="navbar-form navbar-left">
                     <FormControl
                         onChange={this.getSearchResults}
-                        value={this.state.searchText}
+                        value={this.searchText}
                         type="text"
                         placeholder="Search"
                         className="mr-sm-2"
@@ -92,7 +90,7 @@ class Topbar extends React.Component {
                     ICD Mapping -
                     <img className="mr-2" src={logo} alt="eonum" height="16px" />
                 </h2>
-                <button type="button" className="btn btn-default" >
+                <button type="button" className="btn btn-default">
                     <svg className="bi bi-pencil" width="1em" height="1em" viewBox="0 0 16 16" fill="white"
                          xmlns="http://www.w3.org/2000/svg">
                         <path fillRule="evenodd"

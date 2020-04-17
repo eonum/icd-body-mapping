@@ -4,18 +4,13 @@ class IcdsController < ApplicationController
   # GET /icds
   # GET /icds.json
   def index
-    icd = Icd.all.order(code: :asc)
-    render json: icd
+    render json: Icd.all.order(code: :asc)
   end
 
   # GET /icds/1
   # GET /icds/1.json
   def show
-    if icd
-      render json: icd
-    else
-      render json: icd.errors
-    end
+    render json: icd
   end
 
   # GET /icds/new

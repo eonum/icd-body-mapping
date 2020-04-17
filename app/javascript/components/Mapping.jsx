@@ -7,7 +7,6 @@ class Mapping extends React.Component {
         this.state = {
             imageElements: [],
             layers: [],
-            activeLayer: '',
             x: 0, y: 0,
             selectedId: 0
         };
@@ -17,6 +16,10 @@ class Mapping extends React.Component {
 
         $.getJSON('/layers')
             .then(response => this.setState({ layers: response }));
+    }
+
+    sendIcdToMainUI(icd) {
+        this.props.callbackFromMainUI(icd);
     }
 
     _onMouseMove(e) {
@@ -34,30 +37,37 @@ class Mapping extends React.Component {
     selectPng(x, y, len) {
         let canvas = document.getElementById('canvas');
         let context = canvas.getContext('2d');
-        for (let i = 0; i < len; i++){
-            let myImg = document.getElementById(i);
-            context.drawImage(myImg, 0, 0);
+        let elem = this.state.imageElements;
+        let myImg, data;
+        for (let i = 0; i < len; i++) {
+            myImg = document.getElementById(elem[i].id);
             let rect = myImg.getBoundingClientRect();
-            let data = context.getImageData(x - rect.left, y - (rect.top+75), 1, 1).data;
-            if(data[0] !== 0) {
-                this.setState({selectedId: i});
+            context.drawImage(myImg, 0, 0);
+            data = context.getImageData(x - rect.left, y - (rect.top + 75), 1, 1).data;
+            if (data[0] !== 0 && data[1] !== 0 && data[2] !== 0 && data[3] !== 0) {
+                this.setState({selectedId: elem[i].id});
+                this.sendIcdToMainUI(elem[i].id);
                 myImg.style.opacity = '1';
-                for (i++; i < len; i++){
-                    document.getElementById(i).style.opacity = 0.5;
+                //Since an image was found the rest don't need to be searched.
+                for (i++; i < len; i++) {
+                    myImg = document.getElementById(elem[i].id);
+                    myImg.style.opacity = '0.5';
                 }
-            } else {myImg.style.opacity = '0.5';}
+            } else {
+                myImg.style.opacity = '0.5';
+            }
             context.clearRect(0, 0, canvas.width, canvas.height);
         }
     }
 
     render() {
         const divStyle = {position: 'absolute'};
-        const { x, y } = this.state;
+        const {x, y} = this.state;
         const len = this.state.imageElements.length;
 
-        let alleElemente = this.state.imageElements.map((elem,index)=>{
-            return<div key={index} onClick={this.selectPng.bind(this, x, y, len)}>
-                <img src={elem.img} style={divStyle} id={index}/>
+        let alleElemente = this.state.imageElements.map((elem, index) => {
+            return <div key={index} onClick={this.selectPng.bind(this, x, y, len)}>
+                <img src={elem.img} style={divStyle} id={elem.id} alt='missing images'/>
             </div>
         });
 
@@ -96,6 +106,7 @@ class Mapping extends React.Component {
                 </div>
                 <div className="row pt-2">
                     {alleElemente}
+                    {this.state.selectedId}
                 </div>
             </div>
         )

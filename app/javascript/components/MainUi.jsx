@@ -19,12 +19,9 @@ class MainUI extends React.Component {
             searchTerm: '',
             selectedIcd: '',
             detailsDisplayed: false,
-            searchDisplayed: false
+            searchDisplayed: false,
+            selectedLayer: ''
         };
-    }
-
-    componentDidMount() {
-
     }
 
     /**
@@ -37,6 +34,10 @@ class MainUI extends React.Component {
             searchTerm: searchTermFromTopbar,
             searchDisplayed: true
         });
+    };
+
+    callbackMapping = (selectedLayerFromMapping) => {
+        this.setState({ selectedLayer: selectedLayerFromMapping });
     };
 
     /**
@@ -88,6 +89,7 @@ class MainUI extends React.Component {
             <DetailsCard
                 selectedIcd={this.state.selectedIcd}
                 callbackFromMainUIClose={this.callbackDetailsCardClose}
+                selectedLayer={this.state.selectedLayer}
             />
         );
         const empty = (
@@ -124,7 +126,7 @@ class MainUI extends React.Component {
                             {this.state.searchDisplayed ? searchResults : empty}
                         </div>
                         <div className="col-6">
-                            <Mapping />
+                            <Mapping callbackFromMainUI={this.callbackMapping}/>
                         </div>
                     </div>
                 </div>
