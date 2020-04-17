@@ -8,6 +8,11 @@ class Api::V1::MapsController < ApplicationController
     render json: map
   end
 
+  def show
+    map = Layer.joins(:maps).select("layers.*, maps.icd_id").where("maps.icd_id = ? AND layers.ebene = ?", params[:id], params[:ebene])
+    render json: map
+  end
+
   def destroy
     Map.destroy(params[:id])
   end

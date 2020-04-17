@@ -9,6 +9,19 @@ import NewMaps from "./NewMaps";
 class DetailsCard extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            showingIcdId: 0
+        };
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    stateIdSet() {
+        this.setState({showingIcdId: this.props.selectedIcd.id});
+    }
+
+    handleSubmit(event) {
+        this.props.callbackFromMainUI(this.state.showingIcdId);
+        event.preventDefault();
     }
 
     closeDetailsCard() {
@@ -40,6 +53,9 @@ class DetailsCard extends React.Component {
                     <h1 className="card-title text-white">
                         {selectedIcd.code}
                     </h1>
+                    <form onSubmit={this.handleSubmit}>
+                        <input type="submit" value="Show" onClick={this.stateIdSet.bind(this)}/>
+                    </form>
                 </div>
                 <div className="card m-2 mt-4 mr-4 ml-4 border-0">
                     <h5 className="card-subtitle">German</h5>
