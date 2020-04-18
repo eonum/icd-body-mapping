@@ -111,7 +111,7 @@ class MainUI extends React.Component {
         const newMaps = (
             <NewMaps
                 icd_id={this.state.selectedIcd.id}
-                layer_id={this.state.selectedLayer}
+                layer_id={this.state.selectedLayer.id}
             />
         )
         const empty = (

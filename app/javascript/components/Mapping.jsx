@@ -17,7 +17,8 @@ class Mapping extends React.Component {
             x: 0, y: 0,
             selectedId: 0,
             showAll: false,
-            activeLayer: 'Ohr'
+            activeLayer: 'Ohr',
+            activeSelectionName: '',
         };
     }
 
@@ -74,14 +75,13 @@ class Mapping extends React.Component {
                 .then(response => this.setState({imageElements: response}));
             this.setState({
                 activeLayer: elem.ebene,
-                activeLayerName: elem.name
             })
         }
         else {
             $.getJSON('/api/v1/maps/' + this.props.showingIcdId + '/' + elem.ebene)
                 .then(response => this.setState({imageElements: response}));
             this.setState({
-                activeLayer: elem.ebene
+                activeLayer: elem.ebene,
             })
         }
     }
@@ -106,8 +106,11 @@ class Mapping extends React.Component {
             context.drawImage(myImg, 0, 0);
             data = context.getImageData(x, y, 1, 1).data;
             if (data[0] !== 0 && data[1] !== 0 && data[2] !== 0 && data[3] !== 0) {
-                this.sendIcdToMainUI(elem[i].id);
-                this.setState({selectedId: elem[i].id});
+                this.sendIcdToMainUI(elem[i]);
+                this.setState({
+                    selectedId: elem[i].id,
+                    activeSelectionName: elem[i].name
+                });
                 myImg.style.opacity = '1';
                 //Since an image was found the rest don't need to be searched.
                 for (i++; i < len; i++) {
@@ -164,7 +167,8 @@ class Mapping extends React.Component {
             <div>
                 <div className="row">
                     {dropdown}
-                    <input type="submit" value='show all' id='showAll' onClick={this.stateIdSet.bind(this)}/>
+                    <input className="col-2" type="submit" value='show all' id='showAll' onClick={this.stateIdSet.bind(this)}/>
+                    <h4 className="col-8 text-right text-primary">{this.state.activeSelectionName}</h4>
                 </div>
                 <canvas id='canvas' style={divStyle} width="600" height="530"/>
                 <div onMouseMove={this._onMouseMove.bind(this)} id='mappingComp'>

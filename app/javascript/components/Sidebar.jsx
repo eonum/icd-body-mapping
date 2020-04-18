@@ -17,7 +17,8 @@ class Sidebar extends React.Component {
             icdSelection: [],
             filtered: false,
             icdCodelength: 3,
-            term: ''
+            term: '',
+            hierarchyEnd: false
         };
     }
 
@@ -152,12 +153,20 @@ class Sidebar extends React.Component {
             return value !== 0;
         });
 
-        this.setState({
-            icdSelection: selection.sort(),
-            filtered: true,
-            icdCodelength: codelength,
-            term: icdCode
-        });
+        if (selection.length !== 0) {
+            this.setState({
+                icdSelection: selection.sort(),
+                filtered: true,
+                icdCodelength: codelength,
+                term: icdCode,
+                hierarchyEnd: false
+            });
+        } else {
+            this.setState({
+                filtered: true,
+                hierarchyEnd: true
+            });
+        }
 
         this.sendIcdToMainUI(icd);
     }
@@ -233,25 +242,41 @@ class Sidebar extends React.Component {
 
         const icdChapters = this.chapterICDs.map((icd, index) => {
             return <div className="list-group mr-1" key={index}>
-                <div
-                    className="list-group-item"
+                <button
+                    type="button"
+                    className="list-group-item list-group-item-action"
                     onClick={this.filterIcdsByChapter.bind(this, icd)}
                 >
                     {icd.kapitel}
-                </div>
+                </button>
             </div>
         });
         const icdSubGroup = icds.map((icd, index) => {
             if (icd.code.toString().includes(this.state.term)
                 && icd.code.toString() !== this.state.term
-                && icd.code.toString().length === this.state.icdCodelength) {
+                && icd.code.toString().length === this.state.icdCodelength
+                && this.state.hierarchyEnd === false) {
                 return <div className="list-group mr-1" key={index}>
-                    <div
-                        className="list-group-item"
+                    <button
+                        type="button"
+                        className="list-group-item list-group-item-action"
                         onClick={this.filterIcdsByIcdcode.bind(this, this.state, icd)}
                     >
                         {icd.code}
-                    </div>
+                    </button>
+                </div>
+            } else if (icd.code.toString().includes(this.state.term)
+                && icd.code.toString() !== this.state.term
+                && icd.code.toString().length === this.state.icdCodelength
+                && this.state.hierarchyEnd === true) {
+                return <div className="list-group mr-1" key={index}>
+                    <button
+                        type="button"
+                        className="list-group-item list-group-item-action"
+                        onClick={this.filterIcdsByIcdcode.bind(this, this.state, icd)}
+                    >
+                        {icd.code}
+                    </button>
                 </div>
             }
         });
