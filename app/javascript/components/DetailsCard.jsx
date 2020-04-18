@@ -1,6 +1,5 @@
 import React from 'react';
 import CloseIcon from "@material-ui/icons/Close";
-import NewMaps from "./NewMaps";
 
 /**
  * DetailsCard displays an ICD given via props in a viewable fashion
@@ -10,7 +9,8 @@ class DetailsCard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showingIcdId: 0
+            showingIcdId: 0,
+            selectedIcd: this.props.selectedIcd
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -24,15 +24,41 @@ class DetailsCard extends React.Component {
         event.preventDefault();
     }
 
+    saveChanges(event) {
+        let body = JSON.stringify({
+            icd: {
+                id: this.state.selectedIcd.id,
+                code: this.state.selectedIcd.code,
+                version: this.state.selectedIcd.version,
+                text_de: this.state.selectedIcd.text_de,
+                text_fr: this.state.selectedIcd.text_fr,
+                text_it: this.state.selectedIcd.text_it,
+                annotationen: this.state.selectedIcd.annotationen,
+                kapitel: this.state.selectedIcd.kapitel
+            }
+        });
+        console.log(body);
+        event.preventDefault();
+        /*
+        fetch('http://localhost:3000/api/v1/maps', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: body,
+        }).then((response) => {return response.json()})
+            .then((map)=>{this.addNewMap(map)});
+        event.preventDefault();
+         */
+    }
+
     closeDetailsCard() {
         this.props.callbackFromMainUIClose();
     }
 
     render() {
         let selectedIcd = this.props.selectedIcd;
-        let selectedLayer = this.props.selectedLayer;
+        const editable = this.props.editable;
 
-        const noIcd = (<></>);
+        const empty = (<></>);
 
         const buttonStyle = {
             float: 'right'
@@ -40,8 +66,6 @@ class DetailsCard extends React.Component {
 
         return (
             <div className="card">
-                {selectedLayer}
-                {(selectedIcd.id !== 0 && selectedLayer !== '') ? <NewMaps icd_id={selectedIcd.id} layer_id={selectedLayer}/> : noIcd}
                 <div className="card-header bg-primary">
                     <div className="overlay bg-primary" />
                     <a type="button"
@@ -84,6 +108,12 @@ class DetailsCard extends React.Component {
                         }}
                     />
                 </div>
+                {editable ?
+                    <form>
+                        <input type="submit" value="save changes" onClick={this.saveChanges.bind(this)}/>
+                    </form>
+                    : empty
+                }
             </div>
         )
     }

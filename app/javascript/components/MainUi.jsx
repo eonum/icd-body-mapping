@@ -22,7 +22,8 @@ class MainUI extends React.Component {
             detailsDisplayed: false,
             searchDisplayed: false,
             selectedLayer: '',
-            showingIcdId: 0
+            showingIcdId: 0,
+            editMode: false
         };
     }
 
@@ -35,6 +36,12 @@ class MainUI extends React.Component {
             searchedIcds: searchedIcdsFromTopbar,
             searchTerm: searchTermFromTopbar,
             searchDisplayed: true
+        });
+    };
+
+    callbackTopbarEdit = (editable) => {
+        this.setState({
+            editMode: editable
         });
     };
 
@@ -87,6 +94,7 @@ class MainUI extends React.Component {
             <SearchCard
                 searchedIcds={this.state.searchedIcds}
                 detailsDisplayed={this.state.detailsDisplayed}
+                editable={this.state.editMode}
                 callbackFromMainUI={this.callbackSearchCard}
                 callbackFromMainUIClose={this.callbackSearchCardClose}
             />
@@ -94,10 +102,18 @@ class MainUI extends React.Component {
         const details = (
             <DetailsCard
                 selectedIcd={this.state.selectedIcd}
+                callbackFromMainUI={this.callbackDetails}
                 callbackFromMainUIClose={this.callbackDetailsCardClose}
                 selectedLayer={this.state.selectedLayer}
+                editable={this.state.editMode}
             />
         );
+        const newMaps = (
+            <NewMaps
+                icd_id={this.state.selectedIcd.id}
+                layer_id={this.state.selectedLayer}
+            />
+        )
         const empty = (
             <></>
         )
@@ -117,24 +133,32 @@ class MainUI extends React.Component {
                 <div className="container-fluid">
                     <div className="row mb-2">
                         <div className="col-12">
-                            <Topbar callbackFromMainUI={this.callbackTopbarSearch}/>
+                            <Topbar
+                                editable={this.state.editMode}
+                                callbackFromMainUISearch={this.callbackTopbarSearch}
+                                callbackFromMainUIEdit={this.callbackTopbarEdit}
+                            />
                         </div>
                     </div>
-
                     <div className="row">
                         <div className="col-2">
-                            <Sidebar callbackFromMainUI={this.callbackSidebar}/>
+                            <Sidebar
+                                callbackFromMainUI={this.callbackSidebar}
+                                editable={this.state.editMode}
+                            />
                         </div>
                         <div className="col-4">
                             <div style={this.state.detailsDisplayed ? visibleStyle : notVisibleStyle}>
                                 {this.state.detailsDisplayed ? details : empty}
                             </div>
+                            {this.state.editMode ? newMaps : empty}
                             {this.state.searchDisplayed ? searchResults : empty}
-                            <NewMaps icd_id={this.state.selectedIcd.id} layer_id={this.state.selectedLayer}/>
-                            {this.state.searchTerm !== '' ? searchResults : details}
                         </div>
                         <div className="col-6">
-                            <Mapping callbackFromMainUI={this.callbackMapping} showingIcdId={this.state.showingIcdId}/>
+                            <Mapping
+                                callbackFromMainUI={this.callbackMapping}
+                                showingIcdId={this.state.showingIcdId}
+                            />
                         </div>
                     </div>
                 </div>

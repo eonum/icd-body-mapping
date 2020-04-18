@@ -4,6 +4,7 @@ import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
 import * as Icon from 'react-bootstrap-icons';
 import logo from '../../assets/images/eonum_logo.png';
 import SearchIcon from '@material-ui/icons/Search';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 /**
  * The Topbar contains the searchbar and header and is responsible for the searching.
@@ -72,14 +73,41 @@ class Topbar extends React.Component {
 
         $.getJSON('/search?q=' + this.state.term)
             .then(async response =>
-                this.props.callbackFromMainUI(await response, this.state.term)
+                this.props.callbackFromMainUISearch(await response, this.state.term)
             );
+    }
+
+    setEditMode(edit) {
+        this.props.callbackFromMainUIEdit(edit);
     }
 
     render() {
         const headerStyle = {
             fontSize: '24px'
         }
+
+        const editButton = (
+            <button type="button" className="btn btn-default" onClick={this.setEditMode.bind(this, true)}>
+                <svg className="bi bi-pencil" width="1em" height="1em" viewBox="0 0 16 16" fill="white"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path fillRule="evenodd"
+                          d="M11.293 1.293a1 1 0 011.414 0l2 2a1 1 0 010 1.414l-9 9a1 1 0 01-.39.242l-3 1a1 1 0 01-1.266-1.265l1-3a1 1 0 01.242-.391l9-9zM12 2l2 2-9 9-3 1 1-3 9-9z"
+                          clipRule="evenodd"/>
+                    <path fillRule="evenodd"
+                          d="M12.146 6.354l-2.5-2.5.708-.708 2.5 2.5-.707.708zM3 10v.5a.5.5 0 00.5.5H4v.5a.5.5 0 00.5.5H5v.5a.5.5 0 00.5.5H6v-1.5a.5.5 0 00-.5-.5H5v-.5a.5.5 0 00-.5-.5H3z"
+                          clipRule="evenodd"/>
+                </svg>
+            </button>
+        )
+        const exitEditButton = (
+            <button
+                type="button"
+                className="btn btn-default text-white ml-2"
+                onClick={this.setEditMode.bind(this, false)}
+            >
+                <ExitToAppIcon/>
+            </button>
+        )
 
         return (
             <div className="navbar navbar-expand-md navbar-light bg-primary">
@@ -103,17 +131,7 @@ class Topbar extends React.Component {
                     ICD Mapping -
                     <img className="ml-2" src={logo} alt="eonum" height="16px" />
                 </h1>
-                <button type="button" className="btn btn-default">
-                    <svg className="bi bi-pencil" width="1em" height="1em" viewBox="0 0 16 16" fill="white"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path fillRule="evenodd"
-                              d="M11.293 1.293a1 1 0 011.414 0l2 2a1 1 0 010 1.414l-9 9a1 1 0 01-.39.242l-3 1a1 1 0 01-1.266-1.265l1-3a1 1 0 01.242-.391l9-9zM12 2l2 2-9 9-3 1 1-3 9-9z"
-                              clipRule="evenodd"/>
-                        <path fillRule="evenodd"
-                              d="M12.146 6.354l-2.5-2.5.708-.708 2.5 2.5-.707.708zM3 10v.5a.5.5 0 00.5.5H4v.5a.5.5 0 00.5.5H5v.5a.5.5 0 00.5.5H6v-1.5a.5.5 0 00-.5-.5H5v-.5a.5.5 0 00-.5-.5H3z"
-                              clipRule="evenodd"/>
-                    </svg>
-                </button>
+                {this.props.editable ? exitEditButton : editButton}
             </div>
         )
     }
