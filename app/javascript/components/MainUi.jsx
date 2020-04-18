@@ -102,6 +102,7 @@ class MainUI extends React.Component {
         const details = (
             <DetailsCard
                 selectedIcd={this.state.selectedIcd}
+                searchDisplayed={this.state.searchDisplayed}
                 callbackFromMainUI={this.callbackDetails}
                 callbackFromMainUIClose={this.callbackDetailsCardClose}
                 selectedLayer={this.state.selectedLayer}
@@ -119,7 +120,7 @@ class MainUI extends React.Component {
         )
 
         const visibleStyle = {
-            height: '45vh',
+            height: '41vh',
             overflow: 'auto',
             marginBottom: '2vh'
         }
@@ -148,9 +149,7 @@ class MainUI extends React.Component {
                             />
                         </div>
                         <div className="col-4">
-                            <div style={this.state.detailsDisplayed ? visibleStyle : notVisibleStyle}>
-                                {this.state.detailsDisplayed ? details : empty}
-                            </div>
+                            {this.state.detailsDisplayed ? details : empty}
                             {this.state.editMode ? newMaps : empty}
                             {this.state.searchDisplayed ? searchResults : empty}
                         </div>

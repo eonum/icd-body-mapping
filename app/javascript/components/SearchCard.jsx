@@ -38,11 +38,11 @@ class SearchCard extends React.Component {
         const editable = this.props.editable;
 
         const searchOnlyStyle = {
-            height: '85vh',
+            height: '84vh',
             overflow: 'auto'
         }
         const searchNextToDetailsStyle = {
-            height: '40vh',
+            height: '41vh',
             overflow: 'auto'
         }
         const checkboxStyle = {
