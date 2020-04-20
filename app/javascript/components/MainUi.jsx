@@ -23,7 +23,8 @@ class MainUI extends React.Component {
             searchDisplayed: false,
             selectedLayer: '',
             showingIcdId: 0,
-            editMode: false
+            editMode: false,
+            checkedIcdIds: []
         };
     }
 
@@ -76,9 +77,9 @@ class MainUI extends React.Component {
         });
     };
 
-    callbackSearchCardMapping = (checkedIcds) => {
+    callbackSearchCardMapping = (checkedIcdIds) => {
         this.setState({
-            checkedIcds: checkedIcds
+            checkedIcdIds: checkedIcdIds
         });
     };
 
@@ -118,6 +119,7 @@ class MainUI extends React.Component {
         const newMaps = (
             <NewMaps
                 icd_id={this.state.selectedIcd.id}
+                icd_ids={this.state.checkedIcdIds}
                 layer_id={this.state.selectedLayer.id}
             />
         )

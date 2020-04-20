@@ -20,45 +20,45 @@ class SearchCard extends React.Component {
     }
 
     checkAllIcds() {
+        let i;
         let checkAllBox = document.getElementById('checkAll');
         let checkboxes = document.getElementsByName('checkIcd');
+        let selection = [];
 
-        for (var i=0; i<checkboxes.length; i++) {
+        for (i = 0; i<checkboxes.length; i++) {
             checkboxes[i].checked = checkAllBox.checked;
+            if (checkboxes[i].checked === true) {
+                selection.push(parseInt(checkboxes[i].id, 10));
+            }
         }
 
         this.setState({
-            checkedIcds: this.props.searchedIcds
+            checkedIcds: selection
         });
 
-        // --> send all searched icds to mainUI (callback) to map them
-        this.props.callbackFromMainUIMapping(this.props.searchedIcds);
+        this.props.callbackFromMainUIMapping(selection);
     }
 
-    checkSelectedIcd(icd) {
-        let checkbox = document.getElementById(icd.code);
+    checkSelectedIcd(icdId) {
+        let checkbox = document.getElementById(icdId);
         let selection = this.state.checkedIcds;
 
         if (checkbox.checked === true) {
-            this.state.checkedIcds.push(icd);
+            selection.push(icdId);
         } else {
-            for (let i=0; i<this.state.checkedIcds.length; i++) {
-
-                if (this.state.checkedIcds[i].id === icd.id) {
-
-                    console.log(this.state.checkedIcds[i]);
-                    this.state.checkedIcds.splice(i, 1);
-
+            for (let i=0; i<selection.length; i++) {
+                if (selection[i] === icdId) {
+                    console.log(selection[i]);
+                    selection.splice(i, 1);
                 }
             }
         }
-        /*this.setState({
+        this.setState({
             checkedIcds: selection
-        });*/
-        console.log(this.state.checkedIcds);
+        });
 
         if (this.state.checkedIcds.length > 0) {
-            this.props.callbackFromMainUIMapping(this.state.checkedIcds);
+            this.props.callbackFromMainUIMapping(selection);
         }
     }
 
@@ -98,7 +98,7 @@ class SearchCard extends React.Component {
                     {editable ?
                         <div className="checkbox" style={checkboxStyle}>
                             <label>
-                                select<input type="checkbox" value="" name="checkIcd" id={icd.code} onClick={this.checkSelectedIcd.bind(this, icd)}/>
+                                select<input type="checkbox" value="" name="checkIcd" id={icd.id} onClick={this.checkSelectedIcd.bind(this, icd.id)}/>
                             </label>
                         </div>
                         : empty
