@@ -11,20 +11,54 @@ class SearchCard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            itemSelected: '',
+            checkedIcds: [],
         }
     }
 
     selectIcd(icd) {
-        this.props.callbackFromMainUI(icd);
+        this.props.callbackFromMainUIDetails(icd);
     }
 
     checkAllIcds() {
-        var checkAllBox = document.getElementById('checkAll');
-        var checkboxes = document.getElementsByName('checkIcd');
+        let checkAllBox = document.getElementById('checkAll');
+        let checkboxes = document.getElementsByName('checkIcd');
 
         for (var i=0; i<checkboxes.length; i++) {
             checkboxes[i].checked = checkAllBox.checked;
+        }
+
+        this.setState({
+            checkedIcds: this.props.searchedIcds
+        });
+
+        // --> send all searched icds to mainUI (callback) to map them
+        this.props.callbackFromMainUIMapping(this.props.searchedIcds);
+    }
+
+    checkSelectedIcd(icd) {
+        let checkbox = document.getElementById(icd.code);
+        let selection = this.state.checkedIcds;
+
+        if (checkbox.checked === true) {
+            this.state.checkedIcds.push(icd);
+        } else {
+            for (let i=0; i<this.state.checkedIcds.length; i++) {
+
+                if (this.state.checkedIcds[i].id === icd.id) {
+
+                    console.log(this.state.checkedIcds[i]);
+                    this.state.checkedIcds.splice(i, 1);
+
+                }
+            }
+        }
+        /*this.setState({
+            checkedIcds: selection
+        });*/
+        console.log(this.state.checkedIcds);
+
+        if (this.state.checkedIcds.length > 0) {
+            this.props.callbackFromMainUIMapping(this.state.checkedIcds);
         }
     }
 
@@ -64,7 +98,7 @@ class SearchCard extends React.Component {
                     {editable ?
                         <div className="checkbox" style={checkboxStyle}>
                             <label>
-                                select<input type="checkbox" value="" name="checkIcd" id={icd.code}/>
+                                select<input type="checkbox" value="" name="checkIcd" id={icd.code} onClick={this.checkSelectedIcd.bind(this, icd)}/>
                             </label>
                         </div>
                         : empty

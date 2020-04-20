@@ -69,12 +69,17 @@ class MainUI extends React.Component {
      * Gets selected ICD
      * @params dataFromSearchCard
      */
-    callbackSearchCard = (dataFromSearchCard) => {
+    callbackSearchCardDetails = (dataFromSearchCard) => {
         this.setState({
             selectedIcd: dataFromSearchCard,
             detailsDisplayed: true
         });
-        //this.setState({ searchTerm: ''});
+    };
+
+    callbackSearchCardMapping = (checkedIcds) => {
+        this.setState({
+            checkedIcds: checkedIcds
+        });
     };
 
     callbackSearchCardClose = () => {
@@ -95,7 +100,8 @@ class MainUI extends React.Component {
                 searchedIcds={this.state.searchedIcds}
                 detailsDisplayed={this.state.detailsDisplayed}
                 editable={this.state.editMode}
-                callbackFromMainUI={this.callbackSearchCard}
+                callbackFromMainUIDetails={this.callbackSearchCardDetails}
+                callbackFromMainUIMapping={this.callbackSearchCardMapping}
                 callbackFromMainUIClose={this.callbackSearchCardClose}
             />
         );
