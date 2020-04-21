@@ -44,6 +44,7 @@ class Topbar extends React.Component {
      * via callbackFromMainUI function
      */
     getAutoCompleteResults(e) {
+        event.preventDefault();
         this.setState({
             term: e.target.value
         }, () => {
@@ -55,6 +56,7 @@ class Topbar extends React.Component {
     }
 
     getSearchResults() {
+        event.preventDefault();
         /*console.log(this.allICDs);
         this.setState({
             term: search.target.value
