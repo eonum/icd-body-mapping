@@ -14,12 +14,7 @@ class LayersController < ApplicationController
   # GET /layers/1
   # GET /layers/1.json
   def show
-    layers = Layer.all.where("id = ?", params[:id])
-    render :json => layers
-  end
-
-  def showEbene
-    layers = Layer.all.where("ebene = ?", params[:ebene])
+    layers = Layer.all.where("ebene = ?", params[:id])
     render :json => layers
   end
 

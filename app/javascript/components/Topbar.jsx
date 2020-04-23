@@ -1,19 +1,41 @@
 import React from 'react';
-import {IconButton, AppBar, Toolbar, Grid, Tooltip} from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
 import $ from "jquery";
+import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
+import * as Icon from 'react-bootstrap-icons';
+import logo from '../../assets/images/eonum_logo.png';
+import SearchIcon from '@material-ui/icons/Search';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 /**
  * The Topbar contains the searchbar and header and is responsible for the searching.
  * Possible search results are handed over to parent via callback.
- * @author Aaron Saegesser, Dosif Mahilvathanan
+ * @author Aaron Saegesser
  */
 class Topbar extends React.Component {
+    searchText;
     constructor(props) {
         super(props);
         this.state = {
+            query: '',
             term: ''
         };
+    }
+
+    componentDidMount() {
+        const url = "/icds";
+        fetch(url)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error("Network response wasn't ok.");
+            })
+            .then(async response => this.setIcdDatabaseStorage(await response))
+            .catch(() => this.props.history.push("/"));
+    }
+
+    setIcdDatabaseStorage(icds) {
+        this.allICDs = icds;
     }
 
     /**
@@ -21,7 +43,8 @@ class Topbar extends React.Component {
      * and saves them into the icds array, this will be later passed on to the search results component
      * via callbackFromMainUI function
      */
-    getAutoCompleteResults(e){
+    getAutoCompleteResults(e) {
+        event.preventDefault();
         this.setState({
             term: e.target.value
         }, () => {
@@ -32,54 +55,87 @@ class Topbar extends React.Component {
         });
     }
 
+    getSearchResults() {
+        event.preventDefault();
+        /*console.log(this.allICDs);
+        this.setState({
+            term: search.target.value
+        });
+        const searchedICD = this.allICDs.filter((icd) => {
+            if (icd.code.toString().includes(this.state.term)) {
+                return icd;
+            }
+        });
+        console.log(searchedICD);
+        this.props.callbackFromMainUI(searchedICD, this.state.term);
+        */
+
+        $.getJSON('/search?q=' + this.state.term)
+            .then(async response =>
+                this.props.callbackFromMainUISearch(await response, this.state.term)
+            );
+    }
+
+    setEditMode(edit) {
+        this.props.callbackFromMainUIEdit(edit);
+    }
+
     render() {
+        const headerStyle = {
+            fontSize: '24px'
+        };
+
+        const editButton = (
+            <button
+                type="button"
+                className="btn btn-default"
+                onClick={this.setEditMode.bind(this, true)}
+            >
+                <svg className="bi bi-pencil" width="1em" height="1em" viewBox="0 0 16 16" fill="white"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path fillRule="evenodd"
+                          d="M11.293 1.293a1 1 0 011.414 0l2 2a1 1 0 010 1.414l-9 9a1 1 0 01-.39.242l-3 1a1 1 0 01-1.266-1.265l1-3a1 1 0 01.242-.391l9-9zM12 2l2 2-9 9-3 1 1-3 9-9z"
+                          clipRule="evenodd"/>
+                    <path fillRule="evenodd"
+                          d="M12.146 6.354l-2.5-2.5.708-.708 2.5 2.5-.707.708zM3 10v.5a.5.5 0 00.5.5H4v.5a.5.5 0 00.5.5H5v.5a.5.5 0 00.5.5H6v-1.5a.5.5 0 00-.5-.5H5v-.5a.5.5 0 00-.5-.5H3z"
+                          clipRule="evenodd"/>
+                </svg>
+            </button>
+        )
+        const exitEditButton = (
+            <button
+                type="button"
+                className="btn btn-default text-white"
+                onClick={this.setEditMode.bind(this, false)}
+            >
+                <ExitToAppIcon/>
+            </button>
+        )
+
         return (
-            <div className="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar bg-primary">
-                <a className="navbar-brand" href="#">ICD Mapping - EONUM</a>
-                <button className="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
+            <div className="navbar navbar-expand-md navbar-light bg-primary">
+                <Form>
+                    <FormControl
+                        onChange={event => {this.setState({term: event.target.value})}}
+                        onKeyDown={event => {if (event.key === 'Enter') {this.getSearchResults()}}}
+                        type="text"
+                        placeholder="Search..."
+                        className="mr-sm-2"
+                    />
+                </Form>
+                <button
+                    type="button"
+                    className="btn btn-default text-white ml-2"
+                    onClick={event => {if (this.state.term !== '') {this.getSearchResults()}}}
+                >
+                    <SearchIcon/>
                 </button>
-
-                {/* <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav mr-auto">
-                        <li className="nav-item active">
-                            <a className="nav-link" href="#">Ho <span className="sr-only">(current)</span></a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Link</a>
-                        </li>
-                        <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Dropdown
-                            </a>
-                            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a className="dropdown-item" href="#">Action</a>
-                                <a className="dropdown-item" href="#">Another action</a>
-                                <div className="dropdown-divider"></div>
-                                <a className="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link disabled" href="#" tabIndex="-1" aria-disabled="true">Disabled</a>
-                        </li>
-                    </ul>
-                    <Grid container spacing={5} alignItems="center" justify="flex-end">
-                        <Grid item>
-                            <input
-                                type="text"
-                                className="input"
-                                placeholder="Search..."
-                                value={this.state.term}
-                                onChange={this.getSearchResults.bind(this)}
-                            />
-                        </Grid>
-                    </Grid>*/}
-
-                </div>
-
+                <h1 className="navbar-brand mx-auto text-white" style={headerStyle}>
+                    ICD Mapping -
+                    <img className="ml-2" src={logo} alt="eonum" height="16px" />
+                </h1>
+                {this.props.editable ? exitEditButton : editButton}
+            </div>
         )
     }
 }

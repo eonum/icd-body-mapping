@@ -17,7 +17,8 @@ class Sidebar extends React.Component {
             icdSelection: [],
             filtered: false,
             icdCodelength: 3,
-            term: ''
+            term: '',
+            hierarchyEnd: false
         };
     }
 
@@ -152,12 +153,20 @@ class Sidebar extends React.Component {
             return value !== 0;
         });
 
-        this.setState({
-            icdSelection: selection.sort(),
-            filtered: true,
-            icdCodelength: codelength,
-            term: icdCode
-        });
+        if (selection.length !== 0) {
+            this.setState({
+                icdSelection: selection.sort(),
+                filtered: true,
+                icdCodelength: codelength,
+                term: icdCode,
+                hierarchyEnd: false
+            });
+        } else {
+            this.setState({
+                filtered: true,
+                hierarchyEnd: true
+            });
+        }
 
         this.sendIcdToMainUI(icd);
     }
@@ -222,27 +231,52 @@ class Sidebar extends React.Component {
     render() {
         const { icds } = this.state;
 
+        const withBackButtonStyle = {
+            height: '84vh',
+            overflow: 'auto'
+        }
+        const withoutBackButtonStyle = {
+            height: '88vh',
+            overflow: 'auto'
+        }
+
         const icdChapters = this.chapterICDs.map((icd, index) => {
-            return <div className="list-group" key={index}>
-                <div
-                    className="list-group-item"
+            return <div className="list-group mr-1" key={index}>
+                <button
+                    type="button"
+                    className="list-group-item list-group-item-action"
                     onClick={this.filterIcdsByChapter.bind(this, icd)}
                 >
                     {icd.kapitel}
-                </div>
+                </button>
             </div>
         });
         const icdSubGroup = icds.map((icd, index) => {
             if (icd.code.toString().includes(this.state.term)
                 && icd.code.toString() !== this.state.term
-                && icd.code.toString().length === this.state.icdCodelength) {
-                return <div className="list-group" key={index}>
-                    <div
-                        className="list-group-item"
+                && icd.code.toString().length === this.state.icdCodelength
+                && this.state.hierarchyEnd === false) {
+                return <div className="list-group mr-1" key={index}>
+                    <button
+                        type="button"
+                        className="list-group-item list-group-item-action"
                         onClick={this.filterIcdsByIcdcode.bind(this, this.state, icd)}
                     >
                         {icd.code}
-                    </div>
+                    </button>
+                </div>
+            } else if (icd.code.toString().includes(this.state.term)
+                && icd.code.toString() !== this.state.term
+                && icd.code.toString().length === this.state.icdCodelength
+                && this.state.hierarchyEnd === true) {
+                return <div className="list-group mr-1" key={index}>
+                    <button
+                        type="button"
+                        className="list-group-item list-group-item-action"
+                        onClick={this.filterIcdsByIcdcode.bind(this, this.state, icd)}
+                    >
+                        {icd.code}
+                    </button>
                 </div>
             }
         });
@@ -252,18 +286,25 @@ class Sidebar extends React.Component {
         const empty = (
             <></>
         );
-        const backArrow = (
-            <IconButton onClick={this.stepBackHierarchy.bind(this, this.state)}>
+        const backButton = (
+            <a type="button"
+               className="btn btn-light"
+               onClick={this.stepBackHierarchy.bind(this, this.state)}
+            >
                 <ArrowBackIcon/>
-            </IconButton>
+            </a>
         );
 
         return (
             <div>
-                {icds.length > 0 ? empty : loading}
-                {icds.length > 0 && this.state.filtered === false ? icdChapters : empty}
-                {icds.length > 0 && this.state.filtered === true ? backArrow : empty}
-                {icds.length > 0 && this.state.filtered === true ? icdSubGroup : empty}
+                <div className="mb-1">
+                    {icds.length > 0 && this.state.filtered === true ? backButton : empty}
+                </div>
+                <div style={this.state.filtered ? withBackButtonStyle : withoutBackButtonStyle}>
+                    {icds.length > 0 ? empty : loading}
+                    {icds.length > 0 && this.state.filtered === false ? icdChapters : empty}
+                    {icds.length > 0 && this.state.filtered === true ? icdSubGroup : empty}
+                </div>
             </div>
         )
     }
