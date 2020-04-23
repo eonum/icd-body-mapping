@@ -101,6 +101,7 @@ class MainUI extends React.Component {
                 searchedIcds={this.state.searchedIcds}
                 detailsDisplayed={this.state.detailsDisplayed}
                 editable={this.state.editMode}
+                selectedLayerId={this.state.selectedLayer.id}
                 callbackFromMainUIDetails={this.callbackSearchCardDetails}
                 callbackFromMainUIMapping={this.callbackSearchCardMapping}
                 callbackFromMainUIClose={this.callbackSearchCardClose}
@@ -110,31 +111,24 @@ class MainUI extends React.Component {
             <DetailsCard
                 selectedIcd={this.state.selectedIcd}
                 searchDisplayed={this.state.searchDisplayed}
+                selectedLayerId={this.state.selectedLayer.id}
+                editable={this.state.editMode}
                 callbackFromMainUI={this.callbackDetails}
                 callbackFromMainUIClose={this.callbackDetailsCardClose}
-                selectedLayer={this.state.selectedLayer}
-                editable={this.state.editMode}
             />
         );
-        const newMaps = (
-            <NewMaps
-                icd_id={this.state.selectedIcd.id}
-                icd_ids={this.state.checkedIcdIds}
-                layer_id={this.state.selectedLayer.id}
-            />
-        )
         const empty = (
             <></>
-        )
+        );
 
         const visibleStyle = {
             height: '41vh',
             overflow: 'auto',
             marginBottom: '2vh'
-        }
+        };
         const notVisibleStyle = {
             height: '0vh',
-        }
+        };
 
         return (
             <div>
@@ -158,7 +152,6 @@ class MainUI extends React.Component {
                         </div>
                         <div className="col-4">
                             {this.state.detailsDisplayed ? details : empty}
-                            {this.state.editMode ? newMaps : empty}
                             {this.state.searchDisplayed ? searchResults : empty}
                         </div>
                         <div className="col-6">

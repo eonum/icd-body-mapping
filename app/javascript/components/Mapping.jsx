@@ -167,7 +167,7 @@ class Mapping extends React.Component {
             <div>
                 <div className="row">
                     {dropdown}
-                    <input className="col-2" type="submit" value='show all' id='showAll' onClick={this.stateIdSet.bind(this)}/>
+                    <input className="col-2 btn btn-primary" type="submit" value='show all' id='showAll' onClick={this.stateIdSet.bind(this)}/>
                     <h4 className="col-8 text-right text-primary">{this.state.activeSelectionName}</h4>
                 </div>
                 <canvas id='canvas' style={divStyle} width="600" height="530"/>

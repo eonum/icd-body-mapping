@@ -44,6 +44,7 @@ class Topbar extends React.Component {
      * via callbackFromMainUI function
      */
     getAutoCompleteResults(e) {
+        event.preventDefault();
         this.setState({
             term: e.target.value
         }, () => {
@@ -55,19 +56,17 @@ class Topbar extends React.Component {
     }
 
     getSearchResults() {
+        event.preventDefault();
         /*console.log(this.allICDs);
         this.setState({
             term: search.target.value
         });
-
         const searchedICD = this.allICDs.filter((icd) => {
             if (icd.code.toString().includes(this.state.term)) {
                 return icd;
             }
         });
-
         console.log(searchedICD);
-
         this.props.callbackFromMainUI(searchedICD, this.state.term);
         */
 
@@ -84,10 +83,14 @@ class Topbar extends React.Component {
     render() {
         const headerStyle = {
             fontSize: '24px'
-        }
+        };
 
         const editButton = (
-            <button type="button" className="btn btn-default" onClick={this.setEditMode.bind(this, true)}>
+            <button
+                type="button"
+                className="btn btn-default"
+                onClick={this.setEditMode.bind(this, true)}
+            >
                 <svg className="bi bi-pencil" width="1em" height="1em" viewBox="0 0 16 16" fill="white"
                      xmlns="http://www.w3.org/2000/svg">
                     <path fillRule="evenodd"
@@ -102,7 +105,7 @@ class Topbar extends React.Component {
         const exitEditButton = (
             <button
                 type="button"
-                className="btn btn-default text-white ml-2"
+                className="btn btn-default text-white"
                 onClick={this.setEditMode.bind(this, false)}
             >
                 <ExitToAppIcon/>

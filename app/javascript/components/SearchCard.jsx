@@ -1,6 +1,8 @@
 import React from 'react';
 import Button from "@material-ui/core/Button";
 import CloseIcon from '@material-ui/icons/Close';
+import {Form} from "react-bootstrap";
+import NewMaps from "./NewMaps";
 
 /**
  * SearchCard displays possible search results, but doesn't do the searching itself.
@@ -48,7 +50,6 @@ class SearchCard extends React.Component {
         } else {
             for (let i=0; i<selection.length; i++) {
                 if (selection[i] === icdId) {
-                    console.log(selection[i]);
                     selection.splice(i, 1);
                 }
             }
@@ -70,6 +71,8 @@ class SearchCard extends React.Component {
         const icds = this.props.searchedIcds;
         const detailsVisible = this.props.detailsDisplayed;
         const editable = this.props.editable;
+        const selection = this.state.checkedIcds;
+        const layer_id = this.props.selectedLayerId;
 
         const searchOnlyStyle = {
             height: '84vh',
@@ -85,12 +88,21 @@ class SearchCard extends React.Component {
 
         const empty = (<></>)
         const checkboxAll = (
-            <div className="checkbox mr-3" style={checkboxStyle}>
+            <div className="checkbox mr-4 mt-2" style={checkboxStyle}>
                 <label>
-                    select all<input type="checkbox" value="" id="checkAll" onClick={this.checkAllIcds.bind(this)}/>
+                    select all<input type="checkbox"
+                                     value="" id="checkAll"
+                                     onClick={this.checkAllIcds.bind(this)}/>
                 </label>
             </div>
-        )
+        );
+        const mapButton = (
+            <NewMaps
+                icd_id={undefined}
+                icd_ids={selection}
+                layer_id={layer_id}
+            />
+        );
 
         const resultIcds = icds.map((icd, index) => (
             <div key={index} className="card mb-4 mr-1">
@@ -98,7 +110,10 @@ class SearchCard extends React.Component {
                     {editable ?
                         <div className="checkbox" style={checkboxStyle}>
                             <label>
-                                select<input type="checkbox" value="" name="checkIcd" id={icd.id} onClick={this.checkSelectedIcd.bind(this, icd.id)}/>
+                                select<input type="checkbox"
+                                             value="" name="checkIcd"
+                                             id={icd.id}
+                                             onClick={this.checkSelectedIcd.bind(this, icd.id)}/>
                             </label>
                         </div>
                         : empty
@@ -119,13 +134,20 @@ class SearchCard extends React.Component {
 
         return (
             <div>
-                <div className="mb-1">
-                    <a type="button"
-                       className="btn btn-light"
-                       onClick={this.closeSearchCard.bind(this)}>
-                        <CloseIcon />
-                    </a>
-                    {editable ? checkboxAll : empty}
+                <div className="row mb-1">
+                    <div className="col-2">
+                        <button type="button"
+                                className="btn btn-default"
+                                onClick={this.closeSearchCard.bind(this)}>
+                            <CloseIcon />
+                        </button>
+                    </div>
+                    <div className="col-6">
+                        {editable ? mapButton : empty}
+                    </div>
+                    <div className="col-4">
+                        {editable ? checkboxAll : empty}
+                    </div>
                 </div>
                 <div style={detailsVisible ? searchNextToDetailsStyle : searchOnlyStyle}>
                     {icds.length > 0 ? resultIcds : noIcd}

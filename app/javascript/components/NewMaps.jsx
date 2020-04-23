@@ -13,7 +13,7 @@ class NewMaps extends React.Component {
         this.state = {
             maps: [],
             icd_id: '',
-            icd_ids: '',
+            icd_ids: [],
             layer_id: ''
         };
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -35,15 +35,24 @@ class NewMaps extends React.Component {
      * which should be posted.
      * event.preventDefault(); is needed as to not reload the site every time.
      */
-    handleSubmit(event) {
-        let body = JSON.stringify({map: {icd_id: this.state.icd_id, layer_id: this.state.layer_id}});
-        fetch('http://localhost:3000/api/v1/maps', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: body,
-        }).then((response) => {return response.json()})
-            .then((map)=>{this.addNewMap(map)});
-        event.preventDefault();
+    handleSubmit(multiMapping, event) {
+        let icd_ids = [];
+        if (multiMapping) {
+            icd_ids = this.props.icd_ids;
+        } else {
+            icd_ids.push(this.props.icd_id);
+        }
+
+        for (let i=0; i<icd_ids.length; i++) {
+            let body = JSON.stringify({map: {icd_id: icd_ids[i], layer_id: this.state.layer_id}});
+            fetch('http://localhost:3000/api/v1/maps', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: body,
+            }).then((response) => {return response.json()})
+                .then((map)=>{this.addNewMap(map)});
+            event.preventDefault();
+        }
     }
 
     /**
@@ -55,29 +64,6 @@ class NewMaps extends React.Component {
             icd_ids: this.props.icd_ids,
             layer_id: this.props.layer_id
         });
-    }
-
-    loopHandleSubmit(event) {
-        let i;
-        let icd_ids = this.props.icd_ids;
-        console.log(icd_ids);
-
-        for (i=0; i<icd_ids.length; i++) {
-            this.setState({
-                icd_id: icd_ids[i]
-            });
-            this.handleSubmit(event);
-
-            /*let body = JSON.stringify({map: {icd_id: icd_ids[i], layer_id: this.state.layer_id}});
-            fetch('http://localhost:3000/api/v1/maps', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: body,
-            }).then((response) => {return response.json()})
-                .then((map)=>{this.addNewMap(map)});
-            event.preventDefault();*/
-        }
-        event.preventDefault();
     }
 
     /**
@@ -93,44 +79,31 @@ class NewMaps extends React.Component {
         let layer_id = this.props.layer_id;
         let icd_ids = this.props.icd_ids;
 
-        console.log(icd_id);
-        console.log(icd_ids);
-        console.log(layer_id);
-
         if (icd_id === undefined && icd_ids.length !== 0 && layer_id !== undefined) {
             return(
-                <form onSubmit={this.loopHandleSubmit}>
+                <form
+                    onSubmit={this.handleSubmit.bind(this, true)}
+                    className="text-center"
+                >
                     <input type="submit"
-                           value={'map selected icds to ' + layer_id}
+                           className="btn btn-outline-primary ml-4"
+                           value="map selected"
                            onClick={this.stateIdSet.bind(this)}
                     />
                 </form>
             );
         } else if (icd_id !== undefined && icd_ids.length === 0 && layer_id !== undefined) {
             return(
-                <form onSubmit={this.handleSubmit}>
+                <form
+                    className="text-center"
+                    onSubmit={this.handleSubmit.bind(this, false)}
+                >
                     <input type="submit"
-                           value={'map ' + icd_id + ' to ' + layer_id}
+                           className="btn btn-outline-primary"
+                           value="map"
                            onClick={this.stateIdSet.bind(this)}
                     />
                 </form>
-            );
-        } else if (icd_id !== undefined && icd_ids.length !== 0 && layer_id !== undefined) {
-            return (
-                <>
-                    <form onSubmit={this.handleSubmit}>
-                        <input type="submit"
-                               value={'map ' + icd_id + ' to ' + layer_id}
-                               onClick={this.stateIdSet.bind(this)}
-                        />
-                    </form>
-                    <form onSubmit={this.loopHandleSubmit}>
-                        <input type="submit"
-                               value={'map selected icds to ' + layer_id}
-                               onClick={this.stateIdSet.bind(this)}
-                        />
-                    </form>
-                </>
             );
         } else {
             return(
