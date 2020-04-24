@@ -23,7 +23,7 @@ class Sidebar extends React.Component {
     }
 
     componentDidMount() {
-        const url = "/icds";
+        const url = "/api/v1/icds";
         fetch(url)
             .then(response => {
                 if (response.ok) {

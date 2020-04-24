@@ -19,10 +19,10 @@ class Mapping extends React.Component {
             showAll: false,
             activeLayer: 'Ohr'
         };
-        $.getJSON('/layers/Ohr')
+        $.getJSON('/api/v1/layers/Ohr')
             .then(response => this.setState({imageElements: response}));
 
-        $.getJSON('/layers')
+        $.getJSON('/api/v1/layers')
             .then(response => this.setState({layers: response}));
     }
 
@@ -65,7 +65,7 @@ class Mapping extends React.Component {
      */
     selectLayer(ebene) {
         if (this.props.showingIcdId === 0){
-            $.getJSON('/layers/' + ebene)
+            $.getJSON('/api/v1/layers/' + ebene)
                 .then(response => this.setState({imageElements: response}));
             this.setState({
                 activeLayer: ebene,
@@ -95,7 +95,7 @@ class Mapping extends React.Component {
         this.setState({showAll: !this.state.showAll, selectedImg: ''});
         this.sendIcdToMainUI(this.state.showAll);
         this.resetSelected();
-        $.getJSON('/layers/' + this.state.activeLayer)
+        $.getJSON('/api/v1/layers/' + this.state.activeLayer)
             .then(response => this.setState({imageElements: response}));
     }
 
@@ -140,7 +140,7 @@ class Mapping extends React.Component {
         } else {
             myButtonColor.style.opacity = 0.5;
         }
-        $.getJSON('/layers/' + this.state.activeLayer)
+        $.getJSON('/api/v1/layers/' + this.state.activeLayer)
             .then(response => this.setState({imageElements: response}));
     }
 
