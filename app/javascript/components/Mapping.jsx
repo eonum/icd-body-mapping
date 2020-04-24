@@ -15,18 +15,10 @@ class Mapping extends React.Component {
             imageElements: [],
             layers: [],
             x: 0, y: 0,
-            selectedId: 0,
+            selectedImg: '',
             showAll: false,
-            activeLayer: 'Ohr',
-            activeSelectionName: '',
+            activeLayer: 'Ohr'
         };
-    }
-
-    /**
-     * Receives all the images and layers from the backend and
-     * puts them into their respective array.
-     */
-    componentDidMount(){
         $.getJSON('/layers/Ohr')
             .then(response => this.setState({imageElements: response}));
 
@@ -41,8 +33,10 @@ class Mapping extends React.Component {
     componentDidUpdate(prevProps) {
         if(this.props.showingIcdId !== prevProps.showingIcdId)
         {
-            $.getJSON('/api/v1/maps/' + this.props.showingIcdId + '/' + this.state.activeLayer)
-                .then(response => this.setState({imageElements: response}));
+            if (this.props.showingIcdId !== 0){
+                $.getJSON('/api/v1/maps/' + this.props.showingIcdId + '/' + this.state.activeLayer)
+                    .then(response => this.setState({imageElements: response}));
+            }
         }
     }
 
@@ -69,21 +63,40 @@ class Mapping extends React.Component {
      * It then saves these images into the activeLayer array.
      * @param elem.ebene is the layer variable of the selected element.
      */
-    selectLayer(elem) {
-        if (this.props.showingIcdId === 0 || this.state.showAll === true){
-            $.getJSON('/layers/' + elem.ebene)
+    selectLayer(ebene) {
+        if (this.props.showingIcdId === 0){
+            $.getJSON('/layers/' + ebene)
                 .then(response => this.setState({imageElements: response}));
             this.setState({
-                activeLayer: elem.ebene,
+                activeLayer: ebene,
             })
         }
         else {
-            $.getJSON('/api/v1/maps/' + this.props.showingIcdId + '/' + elem.ebene)
+            $.getJSON('/api/v1/maps/' + this.props.showingIcdId + '/' + ebene)
                 .then(response => this.setState({imageElements: response}));
             this.setState({
-                activeLayer: elem.ebene,
+                activeLayer: ebene,
             })
+        } if(this.state.selectedId !== 0) {
+            this.resetSelected();
         }
+    }
+
+    resetSelected(){
+        let myImg;
+        let elem = this.state.imageElements;
+        for (let i = 0; i < elem.length; i++) {
+            myImg = document.getElementById(elem[i].id);
+            myImg.style.opacity = '1';
+        }
+    }
+
+    showAll() {
+        this.setState({showAll: !this.state.showAll, selectedImg: ''});
+        this.sendIcdToMainUI(this.state.showAll);
+        this.resetSelected();
+        $.getJSON('/layers/' + this.state.activeLayer)
+            .then(response => this.setState({imageElements: response}));
     }
 
     /**
@@ -107,10 +120,7 @@ class Mapping extends React.Component {
             data = context.getImageData(x, y, 1, 1).data;
             if (data[0] !== 0 && data[1] !== 0 && data[2] !== 0 && data[3] !== 0) {
                 this.sendIcdToMainUI(elem[i]);
-                this.setState({
-                    selectedId: elem[i].id,
-                    activeSelectionName: elem[i].name
-                });
+                this.setState({selectedImg: elem[i]});
                 myImg.style.opacity = '1';
                 //Since an image was found the rest don't need to be searched.
                 for (i++; i < len; i++) {
@@ -146,7 +156,7 @@ class Mapping extends React.Component {
         });
 
         let alleLayers = this.state.layers.map((elem, index) => {
-            return <div className="dropdown-item" key={index} onClick={this.selectLayer.bind(this, elem)}>
+            return <div className="dropdown-item" key={index} onClick={this.selectLayer.bind(this, elem.ebene)}>
                 {elem.ebene}
             </div>
         });
@@ -167,8 +177,8 @@ class Mapping extends React.Component {
             <div>
                 <div className="row">
                     {dropdown}
-                    <input className="col-2 btn btn-primary" type="submit" value='show all' id='showAll' onClick={this.stateIdSet.bind(this)}/>
-                    <h4 className="col-8 text-right text-primary">{this.state.activeSelectionName}</h4>
+                    <input className="col-2" type="submit" value='showAll' onClick={this.showAll.bind(this)}/>
+                    <h4 className="col-8 text-right text-primary">{this.state.selectedImg.name}</h4>
                 </div>
                 <canvas id='canvas' style={divStyle} width="600" height="530"/>
                 <div onMouseMove={this._onMouseMove.bind(this)} id='mappingComp'>

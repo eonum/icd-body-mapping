@@ -111,7 +111,7 @@ class MainUI extends React.Component {
             <DetailsCard
                 selectedIcd={this.state.selectedIcd}
                 searchDisplayed={this.state.searchDisplayed}
-                selectedLayerId={this.state.selectedLayer.id}
+                selectedLayer={this.state.selectedLayer}
                 editable={this.state.editMode}
                 callbackFromMainUI={this.callbackDetails}
                 callbackFromMainUIClose={this.callbackDetailsCardClose}

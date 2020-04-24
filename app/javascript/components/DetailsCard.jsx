@@ -18,6 +18,16 @@ class DetailsCard extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentDidUpdate(prevProps) {
+        if(this.props.selectedLayer !== prevProps.selectedLayer)
+        {
+            if (this.props.selectedLayer === true || this.props.selectedLayer === false){
+                this.setState({showingIcdId: 0});
+                this.props.callbackFromMainUI(0);
+            }
+        }
+    }
+
     stateIdSet() {
         this.setState({showingIcdId: this.props.selectedIcd.id});
     }
@@ -61,9 +71,9 @@ class DetailsCard extends React.Component {
         let selectedIcd = this.props.selectedIcd;
         const editable = this.props.editable;
         const searchVisible = this.props.searchDisplayed;
-        const layer_id = this.props.selectedLayerId;
+        const layer_id = this.props.selectedLayer.id;
 
-        const empty = (<></>);
+        const empty = (<div/>);
 
         const buttonStyle = {
             float: 'right'
