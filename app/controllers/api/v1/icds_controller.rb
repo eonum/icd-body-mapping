@@ -1,4 +1,4 @@
-class IcdsController < ApplicationController
+class Api::V1::IcdsController < ApplicationController
   before_action :set_icd, only: [:show, :edit, :update, :destroy]
 
   # GET /icds

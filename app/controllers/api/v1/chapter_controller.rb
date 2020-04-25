@@ -1,4 +1,4 @@
-class ChapterController < ApplicationController
+class Api::V1::ChapterController < ApplicationController
   before_action only: :show
 
   def index

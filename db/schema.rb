@@ -26,16 +26,16 @@ ActiveRecord::Schema.define(version: 2020_04_08_143803) do
   end
 
   create_table "layers", force: :cascade do |t|
-    t.string "ebene"
-    t.string "name"
-    t.string "img"
+    t.string "ebene", null: false
+    t.string "name", null: false
+    t.string "img", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "maps", force: :cascade do |t|
-    t.integer "icd_id"
-    t.integer "layer_id"
+    t.integer "icd_id", null: false
+    t.integer "layer_id", null: false
   end
 
 end

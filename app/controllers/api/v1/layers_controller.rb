@@ -1,4 +1,4 @@
-class LayersController < ApplicationController
+class Api::V1::LayersController < ApplicationController
   before_action only: [:show, :edit, :update, :destroy, :showEbene]
 
   # GET /layers
