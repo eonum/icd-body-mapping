@@ -9,7 +9,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 /**
  * The Topbar contains the searchbar and header and is responsible for the searching.
  * Possible search results are handed over to parent via callback.
- * @author Aaron Saegesser
+ * @author Aaron Saegesser, Linn Haeffner
  */
 class Topbar extends React.Component {
     searchText;
@@ -84,11 +84,15 @@ class Topbar extends React.Component {
         const headerStyle = {
             fontSize: '24px'
         };
+        const buttonStyle = {
+            width: '50px'
+        };
 
         const editButton = (
             <button
                 type="button"
                 className="btn btn-default"
+                style={buttonStyle}
                 onClick={this.setEditMode.bind(this, true)}
             >
                 <svg className="bi bi-pencil" width="1em" height="1em" viewBox="0 0 16 16" fill="white"
@@ -106,6 +110,7 @@ class Topbar extends React.Component {
             <button
                 type="button"
                 className="btn btn-default text-white"
+                style={buttonStyle}
                 onClick={this.setEditMode.bind(this, false)}
             >
                 <ExitToAppIcon/>

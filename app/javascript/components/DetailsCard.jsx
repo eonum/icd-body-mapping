@@ -23,7 +23,7 @@ class DetailsCard extends React.Component {
     }
 
     handleSubmit(event) {
-        this.props.callbackFromMainUI(this.state.showingIcdId);
+        this.props.callbackFromMainUI(this.props.selectedIcd.id);
         event.preventDefault();
     }
 
@@ -41,6 +41,7 @@ class DetailsCard extends React.Component {
             }
         });
         console.log(body);
+        alert('Annotation saved to:' + body[0].annotations);
         event.preventDefault();
         /*
         fetch('http://localhost:3000/api/v1/maps', {
