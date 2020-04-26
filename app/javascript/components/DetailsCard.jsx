@@ -82,7 +82,7 @@ class DetailsCard extends React.Component {
             float: 'right'
         };
         const detailsWithSearchStyle = {
-            height: '41vh',
+            height: '40vh',
             overflow: 'auto',
             marginBottom: '2vh'
         };

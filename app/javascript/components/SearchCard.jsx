@@ -3,6 +3,7 @@ import Button from "@material-ui/core/Button";
 import CloseIcon from '@material-ui/icons/Close';
 import {Form} from "react-bootstrap";
 import NewMaps from "./NewMaps";
+import $ from "jquery";
 
 /**
  * SearchCard displays possible search results, but doesn't do the searching itself.
@@ -13,9 +14,64 @@ class SearchCard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            checkedIcds: [],
+            icds: [],
+			checkedIcds: [],
+			viewAll: this.props.viewAll,
+			term: this.props.searchTerm
         }
     }
+	
+	componentDidMount() {
+		this.getSearchResults(this.props.searchTerm, this.props.viewAll);
+	}
+	
+	componentDidUpdate(prevProps) {
+		if (prevProps.viewAll !== this.props.viewAll) {
+			this.setState({
+				viewAll: this.props.viewAll
+			});
+			this.getSearchResults(this.props.searchTerm, this.props.viewAll);
+		}
+		if (prevProps.searchTerm !== this.props.searchTerm) {
+			this.setState({
+				term: this.props.searchTerm
+			});
+			this.getSearchResults(this.props.searchTerm, this.props.viewAll);
+		}
+	}
+	
+	/**
+     * Gets the search results from the link '/search?q=' + this.state.term
+     * and saves them into the icds array, this will be later passed on to the search results component
+     * via callbackFromMainUI function
+     */
+    getSearchResults(term, viewAll) {
+		if (viewAll) {
+			$.getJSON('/api/v1/searchAll?q=' + term)
+				.then(async response =>
+					this.setState({
+						term: term,
+						icds: await response
+					})
+				);
+		} else {
+			$.getJSON('/api/v1/search?q=' + term)
+				.then(async response =>
+					this.setState({
+						term: term,
+						icds: await response
+					})
+				);
+		}
+    }
+	
+	viewAllSearchResults() {
+		this.setState({
+			viewAll: true
+		});
+		this.getSearchResults(this.state.term, true);
+		this.props.callbackFromMainUIViewAll(true);
+	}
 
     selectIcd(icd) {
         this.props.callbackFromMainUIDetails(icd);
@@ -68,23 +124,27 @@ class SearchCard extends React.Component {
     }
 
     render() {
-        const icds = this.props.searchedIcds;
+        const icds = this.state.icds;
         const detailsVisible = this.props.detailsDisplayed;
         const editable = this.props.editable;
         const selection = this.state.checkedIcds;
         const layer_id = this.props.selectedLayerId;
+		const viewAll = this.state.viewAll;
 
         const searchOnlyStyle = {
-            height: '84vh',
+            height: '82vh',
             overflow: 'auto'
         }
         const searchNextToDetailsStyle = {
-            height: '41vh',
+            height: '40vh',
             overflow: 'auto'
         }
         const checkboxStyle = {
             float: 'right'
         }
+		const viewAllButtonStyle = {
+			float: 'center'
+		}
 
         const empty = (<></>)
         const checkboxAll = (
@@ -103,7 +163,6 @@ class SearchCard extends React.Component {
                 layer_id={layer_id}
             />
         );
-
         const resultIcds = icds.map((icd, index) => (
             <div key={index} className="card mb-4 mr-1">
                 <div className="card-body">
@@ -131,6 +190,14 @@ class SearchCard extends React.Component {
         const noIcd = (
             <div className="text-uppercase">no match found...</div>
         );
+		const viewAllButton = (
+			<button type="button"
+			   className="btn btn-default text-primary"
+			   style={viewAllButtonStyle}
+			   onClick={this.viewAllSearchResults.bind(this)}>
+				view all
+			</button>
+		)
 
         return (
             <div>
@@ -151,6 +218,9 @@ class SearchCard extends React.Component {
                 </div>
                 <div style={detailsVisible ? searchNextToDetailsStyle : searchOnlyStyle}>
                     {icds.length > 0 ? resultIcds : noIcd}
+					<div className="text-center">
+						{(viewAll || icds.length < 20) ? empty : viewAllButton}
+					</div>
                 </div>
             </div>
         )

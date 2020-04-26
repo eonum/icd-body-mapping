@@ -24,7 +24,8 @@ class MainUI extends React.Component {
             selectedLayer: '',
             showingIcdId: 0,
             editMode: false,
-            checkedIcdIds: []
+            checkedIcdIds: [],
+			viewAll: false
         };
     }
 
@@ -32,9 +33,8 @@ class MainUI extends React.Component {
      * Gets ICD's and searchterm from search in Topbar
      * @params searchedIcdsFromTopbar, searchTermFromTopbar
      */
-    callbackTopbarSearch = (searchedIcdsFromTopbar, searchTermFromTopbar) => {
+    callbackTopbarSearch = (searchTermFromTopbar) => {
         this.setState({
-            searchedIcds: searchedIcdsFromTopbar,
             searchTerm: searchTermFromTopbar,
             searchDisplayed: true
         });
@@ -45,6 +45,12 @@ class MainUI extends React.Component {
             editMode: editable
         });
     };
+	
+	callbackViewAll = (viewAll) => {
+		this.setState({
+			viewAll: viewAll
+		});
+	};
 
     callbackMapping = (selectedLayerFromMapping) => {
         this.setState({ selectedLayer: selectedLayerFromMapping });
@@ -62,7 +68,6 @@ class MainUI extends React.Component {
         this.setState({
             selectedIcd: dataFromSidebar,
             detailsDisplayed: true
-            //searchTerm: ''
         });
     };
 
@@ -85,7 +90,8 @@ class MainUI extends React.Component {
 
     callbackSearchCardClose = () => {
         this.setState({
-            searchDisplayed: false
+            searchDisplayed: false,
+			viewAll: false
         });
     };
 
@@ -98,13 +104,15 @@ class MainUI extends React.Component {
     render() {
         const searchResults = (
             <SearchCard
-                searchedIcds={this.state.searchedIcds}
+                searchTerm={this.state.searchTerm}
                 detailsDisplayed={this.state.detailsDisplayed}
                 editable={this.state.editMode}
                 selectedLayerId={this.state.selectedLayer.id}
+				viewAll={this.state.viewAll}
                 callbackFromMainUIDetails={this.callbackSearchCardDetails}
                 callbackFromMainUIMapping={this.callbackSearchCardMapping}
                 callbackFromMainUIClose={this.callbackSearchCardClose}
+				callbackFromMainUIViewAll={this.callbackViewAll}
             />
         );
         const details = (
@@ -121,11 +129,6 @@ class MainUI extends React.Component {
             <></>
         );
 
-        const visibleStyle = {
-            height: '41vh',
-            overflow: 'auto',
-            marginBottom: '2vh'
-        };
         const notVisibleStyle = {
             height: '0vh',
         };
@@ -138,8 +141,10 @@ class MainUI extends React.Component {
                         <div className="col-12">
                             <Topbar
                                 editable={this.state.editMode}
+								viewAll={this.state.viewAll}
                                 callbackFromMainUISearch={this.callbackTopbarSearch}
                                 callbackFromMainUIEdit={this.callbackTopbarEdit}
+								callbackFromMainUIViewAll={this.callbackViewAll}
                             />
                         </div>
                     </div>

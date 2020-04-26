@@ -232,11 +232,11 @@ class Sidebar extends React.Component {
         const { icds } = this.state;
 
         const withBackButtonStyle = {
-            height: '84vh',
+            height: '82vh',
             overflow: 'auto'
         }
         const withoutBackButtonStyle = {
-            height: '88vh',
+            height: '86vh',
             overflow: 'auto'
         }
 

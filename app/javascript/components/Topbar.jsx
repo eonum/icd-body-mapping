@@ -17,32 +17,37 @@ class Topbar extends React.Component {
         super(props);
         this.state = {
             query: '',
-            term: ''
+            term: '',
+			viewAll: this.props.viewAll
         };
     }
+	
+	componentDidUpdate(prevProps) {
+		if (this.props.viewAll !== prevProps.viewAll) {
+			this.setViewAll(this.props.viewAll);
+		}
+	}
 
     /**
-     * Gets the search results from the link '/search?q=' + this.state.term
-     * and saves them into the icds array, this will be later passed on to the search results component
-     * via callbackFromMainUI function
+     * Gets the search term and sends it to MainUI
+     * via callback function
      */
-    getSearchResults() {
-        event.preventDefault();
-        this.setState({term: event.target.value})
-
-        $.getJSON('/api/v1/search?q=' + this.state.term)
-            .then(async response =>
-                this.props.callbackFromMainUISearch(await response, this.state.term)
-            );
+    setSearchTerm(term) {
+        this.setState({
+			term: term
+		});
+		
+		this.setViewAll(false);
+        this.props.callbackFromMainUISearch(term);
     }
-
-    getSearchResultsAll() {
-        event.preventDefault();
-        $.getJSON('/api/v1/searchAll?q=' + this.state.term)
-            .then(async response =>
-                this.props.callbackFromMainUISearch(await response, this.state.term)
-            );
-    }
+	
+	setViewAll(viewAll) {
+		this.setState({
+			viewAll: viewAll
+		});
+		event.preventDefault();
+		this.props.callbackFromMainUIViewAll(viewAll);
+	}
 
     setEditMode(edit) {
         this.props.callbackFromMainUIEdit(edit);
@@ -89,8 +94,8 @@ class Topbar extends React.Component {
             <div className="navbar navbar-expand-md navbar-light bg-primary">
                 <Form>
                     <FormControl
-                        onChange={event => {this.getSearchResults()}}
-                        onKeyDown={event => {if (event.key === 'Enter') {this.getSearchResultsAll()}}}
+                        onChange={event => {this.setSearchTerm(event.target.value)}}
+                        onKeyDown={event => {if (event.key === 'Enter') {this.setViewAll(true)}}}
                         type="text"
                         placeholder="Search..."
                         className="mr-sm-2"
@@ -99,7 +104,7 @@ class Topbar extends React.Component {
                 <button
                     type="button"
                     className="btn btn-default text-white ml-2"
-                    onClick={event => {if (this.state.term !== '') {this.getSearchResultsAll()}}}
+                    onClick={event => {if (this.state.term !== '') {this.setViewAll(true)}}}
                 >
                     <SearchIcon/>
                 </button>
