@@ -12,7 +12,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
  * @author Aaron Saegesser, Linn Haeffner
  */
 class Topbar extends React.Component {
-    searchText;
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -21,55 +21,14 @@ class Topbar extends React.Component {
         };
     }
 
-    componentDidMount() {
-        const url = "/api/v1/icds";
-        fetch(url)
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-                throw new Error("Network response wasn't ok.");
-            })
-            .then(async response => this.setIcdDatabaseStorage(await response))
-            .catch(() => this.props.history.push("/"));
-    }
-
-    setIcdDatabaseStorage(icds) {
-        this.allICDs = icds;
-    }
-
     /**
      * Gets the search results from the link '/search?q=' + this.state.term
      * and saves them into the icds array, this will be later passed on to the search results component
      * via callbackFromMainUI function
      */
-    getAutoCompleteResults(e) {
-        event.preventDefault();
-        this.setState({
-            term: e.target.value
-        }, () => {
-            $.getJSON('/api/v1/search?q=' + this.state.term)
-                .then(async response =>
-                    this.props.callbackFromMainUI(await response, this.state.term)
-                )
-        });
-    }
-
     getSearchResults() {
         event.preventDefault();
         this.setState({term: event.target.value})
-        /*console.log(this.allICDs);
-        this.setState({
-            term: search.target.value
-        });
-        const searchedICD = this.allICDs.filter((icd) => {
-            if (icd.code.toString().includes(this.state.term)) {
-                return icd;
-            }
-        });
-        console.log(searchedICD);
-        this.props.callbackFromMainUI(searchedICD, this.state.term);
-        */
 
         $.getJSON('/api/v1/search?q=' + this.state.term)
             .then(async response =>

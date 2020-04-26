@@ -38,6 +38,7 @@ class DetailsCard extends React.Component {
     }
 
     saveChanges(event) {
+		event.preventDefault();
         let body = JSON.stringify({
             icd: {
                 id: this.state.selectedIcd.id,
@@ -50,18 +51,19 @@ class DetailsCard extends React.Component {
                 kapitel: this.state.selectedIcd.kapitel
             }
         });
-        console.log(body);
-        alert('Annotation saved to:' + body[0].annotations);
-        event.preventDefault();
-        /*
-        fetch('http://localhost:3000/api/v1/maps', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+
+        fetch('http://localhost:3000/api/v1/icds/' + this.state.selectedIcd.id, {
+            method: 'PUT',
+            headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
             body: body,
-        }).then((response) => {return response.json()})
-            .then((map)=>{this.addNewMap(map)});
-        event.preventDefault();
-         */
+        }).then((response) => {
+			return response.json()
+		});
+
+        alert('saved following annotations: ' + this.state.annotationen);
     }
 
     closeDetailsCard() {
@@ -95,8 +97,10 @@ class DetailsCard extends React.Component {
                 <Form>
                     <FormControl
                         onChange={event => {this.setState({annotationen: event.target.value})}}
+						onKeyDown={event => {if (event.key === 'Enter') {this.saveChanges.bind(this)}}}
                         type="text"
-                        placeholder={selectedIcd.annotationen}
+						key={this.props.selectedIcd.annotationen}
+                        defaultValue={this.props.selectedIcd.annotationen}
                         className="mr-sm-2"
                     />
                 </Form>

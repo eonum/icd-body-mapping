@@ -64,6 +64,7 @@ class NewMaps extends React.Component {
             icd_ids: this.props.icd_ids,
             layer_id: this.props.layer_id
         });
+		alert('Selected ICD(s) mapped with layer')
     }
 
     /**

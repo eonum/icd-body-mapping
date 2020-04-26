@@ -162,7 +162,7 @@ class Mapping extends React.Component {
         });
 
         const dropdown = (
-            <div className="col-2 dropdown">
+            <div className="col-3 dropdown">
                 <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {this.state.activeLayer}
@@ -173,12 +173,25 @@ class Mapping extends React.Component {
             </div>
         );
 
+        const rowStyle = {
+            height: '8vh'
+        }
+
         return (
             <div>
-                <div className="row">
+                <div className="row" style={rowStyle}>
                     {dropdown}
-                    <input className="col-2" type="submit" value='showAll' onClick={this.showAll.bind(this)}/>
-                    <h4 className="col-8 text-right text-primary">{this.state.selectedImg.name}</h4>
+                    <div className="col-2">
+                        <input
+                            className="btn btn-primary"
+                            type="submit"
+                            value='show all'
+                            onClick={this.showAll.bind(this)}
+                        />
+                    </div>
+                    <div className="col-7">
+                        <h4 className="text-right text-primary">{this.state.selectedImg.name}</h4>
+                    </div>
                 </div>
                 <canvas id='canvas' style={divStyle} width="600" height="530"/>
                 <div onMouseMove={this._onMouseMove.bind(this)} id='mappingComp'>
