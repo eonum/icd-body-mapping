@@ -86,7 +86,7 @@ class Mapping extends React.Component {
         let myImg;
         let elem = this.state.imageElements;
         for (let i = 0; i < elem.length; i++) {
-            myImg = document.getElementById(elem[i].id);
+            myImg = document.getElementById(elem[i].name);
             myImg.style.opacity = '1';
         }
     }
@@ -115,7 +115,7 @@ class Mapping extends React.Component {
         let elem = this.state.imageElements;
         let myImg, data;
         for (let i = 0; i < len; i++) {
-            myImg = document.getElementById(elem[i].id);
+            myImg = document.getElementById(elem[i].name);
             context.drawImage(myImg, 0, 0);
             data = context.getImageData(x, y, 1, 1).data;
             if (data[0] !== 0 && data[1] !== 0 && data[2] !== 0 && data[3] !== 0) {
@@ -124,24 +124,12 @@ class Mapping extends React.Component {
                 myImg.style.opacity = '1';
                 //Since an image was found the rest don't need to be searched.
                 for (i++; i < len; i++) {
-                    myImg = document.getElementById(elem[i].id);
+                    myImg = document.getElementById(elem[i].name);
                     myImg.style.opacity = '0.5';
                 }
             } else {myImg.style.opacity = '0.5';}
             context.clearRect(0, 0, canvas.width, canvas.height);
         }
-    }
-
-    stateIdSet(){
-        this.setState({showAll: !this.state.showAll});
-        let myButtonColor = document.getElementById('showAll');
-        if (this.state.showAll === true){
-            myButtonColor.style.opacity = 1;
-        } else {
-            myButtonColor.style.opacity = 0.5;
-        }
-        $.getJSON('/api/v1/layers/' + this.state.activeLayer)
-            .then(response => this.setState({imageElements: response}));
     }
 
     render() {
@@ -151,7 +139,7 @@ class Mapping extends React.Component {
 
         let alleElemente = this.state.imageElements.map((elem, index) => {
             return <div key={index} onClick={this.selectPng.bind(this, x, y, len)}>
-                <img src={elem.img} style={divStyle} id={elem.id} alt='missing images'/>
+                <img src={elem.img} style={divStyle} id={elem.name} alt='missing images'/>
             </div>
         });
 

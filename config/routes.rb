@@ -4,7 +4,7 @@ Rails.application.routes.draw do
       resources :maps, only: [:index, :create, :destroy, :update]
       get '/maps/:id/:ebene', to: 'maps#show'
       resources :layers
-      resources :icds
+      resources :icds, only: [:index, :create, :show, :destroy, :update]
       get :search, controller: :search
       get :searchAll, controller: :search
       resources :chapter, only: [ :index, :show]
