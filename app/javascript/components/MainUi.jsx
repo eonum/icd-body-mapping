@@ -5,7 +5,7 @@ import DetailsCard from "./DetailsCard";
 import SearchCard from "./SearchCard";
 import Mapping from "./Mapping";
 import './MainUI.css'
-import NewMaps from "./NewMaps";
+import Logo from "../../assets/images/favicon.ico";
 
 /**
  * The MainUI collects the child components of which it consists
@@ -126,16 +126,12 @@ class MainUI extends React.Component {
             />
         );
         const empty = (
-            <></>
+            <div/>
         );
-
-        const notVisibleStyle = {
-            height: '0vh',
-        };
 
         return (
             <div>
-                <link rel="shortcut icon" href="./images/favicon.ico"/>
+                <link rel="shortcut icon" href={Logo}/>
                 <div className="container-fluid">
                     <div className="row mb-2">
                         <div className="w-100">
