@@ -130499,68 +130499,68 @@ layers:
     - 2020-03-31 09:28:55.965336000 Z
   - - 21
     - Gehirn Längsschnitt
-    - Anterior comissure
-    - "./images/Gehirn_Längsschnitt/AnteriorCommisure.png"
+    - Anterior Comissure
+    - "./images/Gehirn_Laengsschnitt/AnteriorCommissure.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 22
     - Gehirn Längsschnitt
     - Cerebellar Peduncles
-    - "./images/Gehirn_Längsschnitt/CerebellarPeduncles.png"
+    - "./images/Gehirn_Laengsschnitt/CerebellarPeduncles.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 124
     - Gehirn Längsschnitt
     - Cerebellum
-    - "./images/Gehirn_Längsschnitt/Cerebellum.png"
+    - "./images/Gehirn_Laengsschnitt/Cerebellum.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 23
     - Gehirn Längsschnitt
     - Corpora Quadrigemina
-    - "./images/Gehirn_Längsschnitt/CorporaQuadrigemina.png"
+    - "./images/Gehirn_Laengsschnitt/CorporaQuadrigemina.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 24
     - Gehirn Längsschnitt
     - Corpus Callosum
-    - "./images/Gehirn_Längsschnitt/CorpusCallosum.png"
+    - "./images/Gehirn_Laengsschnitt/CorpusCallosum.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 25
     - Gehirn Längsschnitt
     - Intermediate Mass
-    - "./images/Gehirn_Längsschnitt/IntermediateMass.png"
+    - "./images/Gehirn_Laengsschnitt/IntermediateMass.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 26
     - Gehirn Längsschnitt
     - Optic Chiasma
-    - "./images/Gehirn_Längsschnitt/OpticChiasma.png"
+    - "./images/Gehirn_Laengsschnitt/OpticChiasma.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 27
     - Gehirn Längsschnitt
     - Pons
-    - "./images/Gehirn_Längsschnitt/Pons.png"
+    - "./images/Gehirn_Laengsschnitt/Pons.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 28
     - Gehirn Längsschnitt
     - Septum & Ventricle
-    - "./images/Gehirn_Längsschnitt/Septum&Ventricle_rework.png"
+    - "./images/Gehirn_Laengsschnitt/Septum&Ventricle_rework.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 125
     - Gehirn Längsschnitt
     - Telencephalon
-    - "./images/Gehirn_Längsschnitt/Telencephalon.png"
+    - "./images/Gehirn_Laengsschnitt/Telencephalon.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 126
     - Gehirn Längsschnitt
     - Termporal Lobe
-    - "./images/Gehirn_Längsschnitt/TermporalLobe_rework.png"
+    - "./images/Gehirn_Laengsschnitt/TermporalLobe_rework.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 127
@@ -130572,7 +130572,7 @@ layers:
   - - 128
     - Herz-, Lunge-dorsal
     - Lobar Bronchus
-    - "./images/Herz_Lunge_dorsal/LobarBronchus.png"
+    - "./images/Herz_Lunge_dorsal/LobarBronchus_rework.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 129
@@ -130638,7 +130638,7 @@ layers:
   - - 34
     - Herz-, Lunge-ventral
     - Left Subclavian Artery
-    - "./images/Herz_Lunge_ventral/LeftSublavianArtery.png"
+    - "./images/Herz_Lunge_ventral/LeftSubclavianArtery.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 35
@@ -130680,79 +130680,79 @@ layers:
   - - 41
     - Männliches Geschlechtsorgan
     - Bladder
-    - "./images/männlichesGeschlechtsorgan/Bladder.png"
+    - "./images/MaennlichesGeschlechtsorgan/Bladder.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 42
     - Männliches Geschlechtsorgan
     - Bulb
-    - "./images/männlichesGeschlechtsorgan/Bulb.png"
+    - "./images/MaennlichesGeschlechtsorgan/Bulb.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 43
     - Männliches Geschlechtsorgan
     - Corpus Cavernosum
-    - "./images/männlichesGeschlechtsorgan/CorpusCavernosum.png"
+    - "./images/MaennlichesGeschlechtsorgan/CorpusCavernosum.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 44
     - Männliches Geschlechtsorgan
     - Cowper's Gland
-    - "./images/männlichesGeschlechtsorgan/Cowper'sGland.png"
+    - "./images/MaennlichesGeschlechtsorgan/Cowper'sGland.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 45
     - Männliches Geschlechtsorgan
     - Integument
-    - "./images/männlichesGeschlechtsorgan/Integument.png"
+    - "./images/MaennlichesGeschlechtsorgan/Integument.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 46
     - Männliches Geschlechtsorgan
     - notNamed
-    - "./images/männlichesGeschlechtsorgan/notNamed.png"
+    - "./images/MaennlichesGeschlechtsorgan/notNamed.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 47
     - Männliches Geschlechtsorgan
     - Orifice Of Ureter
-    - "./images/männlichesGeschlechtsorgan/OrificeOfUreter.png"
+    - "./images/MaennlichesGeschlechtsorgan/OrificeOfUreter.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 48
     - Männliches Geschlechtsorgan
     - Prostate Gland
-    - "./images/männlichesGeschlechtsorgan/ProstateGland.png"
+    - "./images/MaennlichesGeschlechtsorgan/ProstateGland.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 49
     - Männliches Geschlechtsorgan
     - Scrotum
-    - "./images/männlichesGeschlechtsorgan/Scrotum.png"
+    - "./images/MaennlichesGeschlechtsorgan/Scrotum.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 50
     - Männliches Geschlechtsorgan
     - Symphysis Pubis
-    - "./images/männlichesGeschlechtsorgan/SymphysisPubis.png"
+    - "./images/MaennlichesGeschlechtsorgan/SymphysisPubis.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 51
     - Männliches Geschlechtsorgan
     - Urachus
-    - "./images/männlichesGeschlechtsorgan/Urachus.png"
+    - "./images/MaennlichesGeschlechtsorgan/Urachus.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 52
     - Männliches Geschlechtsorgan
     - Vas Deferens
-    - "./images/männlichesGeschlechtsorgan/VasDeferens.png"
+    - "./images/MaennlichesGeschlechtsorgan/VasDeferens.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 53
     - Mund
     - Fungiform Papillae
-    - "./images/Mund/FungiformPapillase.png"
+    - "./images/Mund/FungiformPapillae.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 54
@@ -130794,7 +130794,7 @@ layers:
   - - 60
     - Mund
     - Madibula
-    - "./images/Mund/Mandibula?.png"
+    - "./images/Mund/Mandibula_maybe.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 61
@@ -130872,7 +130872,7 @@ layers:
   - - 73
     - Muscle Anterior
     - Left Knee
-    - "./images/Muscle-anterior/Left Knee.png"
+    - "./images/Muscle-anterior/LeftKnee.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 74
@@ -130896,7 +130896,7 @@ layers:
   - - 77
     - Muscle Anterior
     - Rectus Abdominis
-    - "./images/Muscle-anterior/Rectus Abdominis.png"
+    - "./images/Muscle-anterior/RectusAbdominis.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 78
@@ -130914,7 +130914,7 @@ layers:
   - - 80
     - Muscle Anterior
     - Right Forearm
-    - "./images/Muscle-anterior/Right_Forearm_rework.png"
+    - "./images/Muscle-anterior/RightForearm_rework.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 81
@@ -131064,7 +131064,7 @@ layers:
   - - 139
     - Organe
     - Trachea
-    - "./images/Organe/Trachea?.png"
+    - "./images/Organe/Trachea_maybe.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 140
@@ -131094,7 +131094,7 @@ layers:
   - - 101
     - Weibliche Geschlechtsorgane
     - Left Round Ligament
-    - "./images/weiblichesGeschlechtsorgan/Left Round Ligament.png"
+    - "./images/weiblichesGeschlechtsorgan/LeftRoundLigament.png"
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 102
@@ -131182,50 +131182,8 @@ layers:
     - 2020-04-28 01:28:55.965336000 Z
     - 2020-04-28 01:28:55.965336000 Z
   - - 116
-    - Gehirn Längsschnitt
-    - Gehirn Längsschnitt
-    - "./images/Gehirn_Längsschnitt/GehirnLängsschnitt.png"
-    - 2020-04-28 01:28:55.965336000 Z
-    - 2020-04-28 01:28:55.965336000 Z
-  - - 117
-    - Herz-, Lunge-dorsal
-    - Herz-, Lunge-dorsal
-    - "./images/Herz_Lunge_dorsal/Herz_Lunge_dorsal.png"
-    - 2020-04-28 01:28:55.965336000 Z
-    - 2020-04-28 01:28:55.965336000 Z
-  - - 118
-    - Herz-, Lunge-ventral
-    - Herz-, Lunge-ventral
-    - "./images/Herz_Lunge_ventral/Herz_Lunge_ventral.png"
-    - 2020-04-28 01:28:55.965336000 Z
-    - 2020-04-28 01:28:55.965336000 Z
-  - - 119
-    - Männliches Geschlechtsorgan
-    - Männliches Geschlechtsorgan
-    - "./images/männlichesGeschlechtsorgan/männlichesGeschlechtsorgan.png"
-    - 2020-04-28 01:28:55.965336000 Z
-    - 2020-04-28 01:28:55.965336000 Z
-  - - 120
-    - Mund
-    - Mund
-    - "./images/Mund/Mund.png"
-    - 2020-04-28 01:28:55.965336000 Z
-    - 2020-04-28 01:28:55.965336000 Z
-  - - 121
-    - Muscle Anterior
-    - Muscle Anterior
-    - "./images/Muscle-anterior/Muscles_anterior.png"
-    - 2020-04-28 01:28:55.965336000 Z
-    - 2020-04-28 01:28:55.965336000 Z
-  - - 122
-    - Organe
-    - Organe
-    - "./images/Organe/Organe.png"
-    - 2020-04-28 01:28:55.965336000 Z
-    - 2020-04-28 01:28:55.965336000 Z
-  - - 123
-    - Weibliche Geschlechtsorgane
-    - Weibliche Geschlechtsorgane
-    - "./images/weiblichesGeschlechtsorgan/weiblGeschlechtsorgan.png"
-    - 2020-04-28 01:28:55.965336000 Z
-    - 2020-04-28 01:28:55.965336000 Z
+    - Nicht Klassifizierbar
+    - Ganz Körper
+    - "./images/komplett2.png"
+    - 2020-04-30 16:28:55.965336000 Z
+    - 2020-04-30 16:28:55.965336000 Z
