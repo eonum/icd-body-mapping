@@ -125,9 +125,9 @@ class Mapping extends React.Component {
                 //Since an image was found the rest don't need to be searched.
                 for (i++; i < len; i++) {
                     myImg = document.getElementById(elem[i].name);
-                    myImg.style.opacity = '0.5';
+                    myImg.style.opacity = '0.4';
                 }
-            } else {myImg.style.opacity = '0.5';}
+            } else {myImg.style.opacity = '0.4';}
             context.clearRect(0, 0, canvas.width, canvas.height);
         }
     }
@@ -138,7 +138,7 @@ class Mapping extends React.Component {
         const len = this.state.imageElements.length;
 
         let alleElemente = this.state.imageElements.map((elem, index) => {
-            return <div key={index} onClick={this.selectPng.bind(this, x, y, len)}>
+            return <div key={index}>
                 <img src={elem.img} style={divStyle} id={elem.name} alt='missing images'/>
             </div>
         });
@@ -182,7 +182,7 @@ class Mapping extends React.Component {
                     </div>
                 </div>
                 <canvas id='canvas' style={divStyle} width="600" height="530"/>
-                <div onMouseMove={this._onMouseMove.bind(this)} id='mappingComp'>
+                <div onMouseMove={this._onMouseMove.bind(this)} id='mappingComp' onClick={this.selectPng.bind(this, x, y, len)}>
                     {alleElemente}
                 </div>
             </div>

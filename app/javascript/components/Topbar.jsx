@@ -91,7 +91,7 @@ class Topbar extends React.Component {
         )
 
         return (
-            <div className="navbar navbar-expand-md navbar-light bg-primary">
+            <div className="navbar navbar-light bg-primary">
                 <Form>
                     <FormControl
                         onChange={event => {this.setSearchTerm(event.target.value)}}

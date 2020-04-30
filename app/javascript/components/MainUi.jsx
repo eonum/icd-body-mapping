@@ -138,7 +138,7 @@ class MainUI extends React.Component {
                 <link rel="shortcut icon" href="./images/favicon.ico"/>
                 <div className="container-fluid">
                     <div className="row mb-2">
-                        <div className="col-12">
+                        <div className="w-100">
                             <Topbar
                                 editable={this.state.editMode}
 								viewAll={this.state.viewAll}
