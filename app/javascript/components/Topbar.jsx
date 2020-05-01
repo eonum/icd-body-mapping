@@ -17,8 +17,9 @@ class Topbar extends React.Component {
         this.state = {
             query: '',
             term: '',
+            buttonTerm: '',
 			viewAll: this.props.viewAll,
-            activeLanguage: 'de'
+            activeLanguage: 'de',
         };
     }
 	
@@ -28,13 +29,26 @@ class Topbar extends React.Component {
 		}
 	}
 
+    setUIDefault() {
+        this.props.callbackFromMainUIresetUI();
+        this.setState( {
+            query: '',
+            term: '',
+            viewAll: this.props.viewAll,
+            activeLanguage: 'de',
+        });
+    }
+
+
     /**
      * Gets the search term and sends it to MainUI
      * via callback function
      */
+
     setSearchTerm(term) {
         this.setState({
-			term: term
+			term: term,
+            buttonTerm: term
 		});
 		
 		this.setViewAll(false);
@@ -127,21 +141,27 @@ class Topbar extends React.Component {
                         onChange={event => {this.setSearchTerm(event.target.value)}}
                         onKeyDown={event => {if (event.key === 'Enter') {this.setViewAll(true)}}}
                         type="text"
-                        placeholder="Search..."
+                        placeholder='Search...'
                         className="mr-sm-2"
                     />
                 </Form>
                 <button
                     type="button"
                     className="btn btn-default text-white ml-2"
-                    onClick={event => {if (this.state.term !== '') {this.setViewAll(true)}}}
+                    onClick={event => {
+                        if (this.state.buttonTerm !== '') {
+                        this.setViewAll(true);
+                        this.setSearchTerm(this.state.buttonTerm)}}}
                 >
                     <SearchIcon/>
                 </button>
-                <h1 className="navbar-brand mx-auto text-white" style={headerStyle}>
+                <button
+                    type = "button"
+                    className="btn btn-default text-white ml-2 navbar-brand mx-auto" style={headerStyle}
+                    onClick={this.setUIDefault.bind(this)}>
                     ICD Mapping -
-                    <img className="ml-2" src={logo} alt="eonum" height="16px" />
-                </h1>
+                    <img className="ml-2" src={logo} alt="eonum" height="16px"/>
+                </button>
                 {dropdown}
                 {this.props.editable ? exitEditButton : editButton}
             </div>

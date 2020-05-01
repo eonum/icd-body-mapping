@@ -35,6 +35,21 @@ class Sidebar extends React.Component {
             .catch(() => this.props.history.push("/"));
     }
 
+    /** Reset UI
+     *
+     */
+
+    componentDidUpdate(prevProps) {
+        if (this.props.needUpdate !== prevProps.needUpdate) {
+            this.setState( {
+                filtered: false,
+                icdCodeLength: 3,
+                term: '',
+                hierarchyEnd: false
+            });
+        }
+    }
+
     /**
      * Takes backend response and calls methods to store the DB
      * in the frontend for further processing

@@ -38,7 +38,23 @@ class Mapping extends React.Component {
                     .then(response => this.setState({imageElements: response}));
             }
         }
+        if (this.props.needUpdate !== prevProps.needUpdate) {
+            this.resetSelected();
+            this.setState( {
+                x: 0, y: 0,
+                selectedImg: '',
+                showAll: false,
+                activeLayer: 'Ohr'
+            });
+            $.getJSON('/api/v1/layers/Ohr')
+                .then(response => this.setState({imageElements: response}));
+
+            $.getJSON('/api/v1/layers')
+                .then(response => this.setState({layers: response}));
+        }
     }
+
+
 
     /**
      * A method, which sends the chosen image back to the Main Ui, so that other components,
