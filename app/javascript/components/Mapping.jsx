@@ -15,15 +15,19 @@ class Mapping extends React.Component {
             imageElements: [],
             imageElementsBackup: [],
             layers: [],
+            layersBackup: [],
             x: 0, y: 0,
             selectedImg: '',
             showAll: false,
             activeLayer: 'Ohr'
         };
+    }
+
+    componentDidMount() {
         $.getJSON('/api/v1/all/layers')
             .then(response => this.setState({imageElements: response, imageElementsBackup: response}));
         $.getJSON('/api/v1/layers')
-            .then(response => this.setState({layers: response}));
+            .then(response => this.setState({layers: response, layersBackup: response}));
     }
 
     /**
@@ -35,8 +39,10 @@ class Mapping extends React.Component {
             if (this.props.showingIcdId !== 0){
                 $.getJSON('/api/v1/map/' + this.props.showingIcdId)
                     .then(response => this.setState({imageElements: response}));
+                $.getJSON('/api/v1/map_layers/' + this.props.showingIcdId)
+                    .then(response => this.setState({layers: response, activeLayer: response[0].ebene}));
             } else {
-                this.setState({imageElements: this.state.imageElementsBackup});
+                this.setState({imageElements: this.state.imageElementsBackup, layers: this.state.layersBackup});
             }
         }
     }
@@ -69,8 +75,8 @@ class Mapping extends React.Component {
     }
 
     resetSelected(){
-        let elem = this.state.imageElements;
-        let activeLayer = this.state.activeLayer;
+        const elem = this.state.imageElements;
+        const activeLayer = this.state.activeLayer;
         for (let i = 0; i < elem.length; i++) {
             if (elem[i].ebene === activeLayer){
                 let myImg = document.getElementById(elem[i].name);

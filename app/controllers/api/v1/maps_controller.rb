@@ -23,6 +23,11 @@ class Api::V1::MapsController < ApplicationController
     render json: map
   end
 
+  def show_layers
+    map = Layer.joins(:maps).select("layers.ebene, count(layers.ebene)").where("maps.icd_id = ?", params[:id]).group('layers.ebene').order(count: :desc)
+    render json: map
+  end
+
   def destroy
     Map.destroy(params[:id])
   end
