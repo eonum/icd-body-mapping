@@ -139,7 +139,8 @@ class Mapping extends React.Component {
 
         let alleElemente = this.state.imageElements.map((elem, index) => {
             return <div key={index}>
-                <img src={elem.img} style={divStyle} id={elem.name} alt='missing images'/>
+                <img src={elem.img} style={divStyle} id={elem.name} alt='missing images'
+                     onError={(e)=>{e.target.onerror = null; e.target.src="./images/error.png"}}/>
             </div>
         });
 

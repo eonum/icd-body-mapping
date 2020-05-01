@@ -56,7 +56,7 @@ class NewMaps extends React.Component {
     }
 
     /**
-     * This Method receives the props from the main ui and the sets them into the state of newMaps.
+     * This Method receives the props from the main ui and the sets them into the state of newMaps
      */
     stateIdSet() {
         this.setState({
