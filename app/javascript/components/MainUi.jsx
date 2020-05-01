@@ -6,6 +6,7 @@ import SearchCard from "./SearchCard";
 import Mapping from "./Mapping";
 import './MainUI.css'
 import Logo from "../../assets/images/favicon.ico";
+import AllMaps from "./AllMaps";
 
 /**
  * The MainUI collects the child components of which it consists
@@ -109,7 +110,7 @@ class MainUI extends React.Component {
     };
 
     render() {
-        const searchResults = (
+        let searchResults = (
             <SearchCard
                 searchTerm={this.state.searchTerm}
                 detailsDisplayed={this.state.detailsDisplayed}
@@ -122,7 +123,7 @@ class MainUI extends React.Component {
 				callbackFromMainUIViewAll={this.callbackViewAll}
             />
         );
-        const details = (
+        let details = (
             <DetailsCard
                 selectedIcd={this.state.selectedIcd}
                 searchDisplayed={this.state.searchDisplayed}
@@ -131,6 +132,11 @@ class MainUI extends React.Component {
                 language={this.state.activeLanguage}
                 callbackFromMainUI={this.callbackDetails}
                 callbackFromMainUIClose={this.callbackDetailsCardClose}
+            />
+        );
+        let allMaps = (
+            <AllMaps
+                showingIcdId={this.state.showingIcdId}
             />
         );
         const empty = (
@@ -162,6 +168,7 @@ class MainUI extends React.Component {
                         </div>
                         <div className="col-4">
                             {this.state.detailsDisplayed ? details : empty}
+                            {allMaps}
                             {this.state.searchDisplayed ? searchResults : empty}
                         </div>
                         <div className="col-6">

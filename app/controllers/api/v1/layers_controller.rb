@@ -1,7 +1,12 @@
 class Api::V1::LayersController < ApplicationController
 
   def index
-    render json: Layer.all.select('distinct(ebene)').order(ebene: :asc)
+    render json: Layer.all.select('distinct(ebene),
+                      first_value(id) over (partition by ebene order by id Asc) as id').order(ebene: :asc)
+  end
+
+  def index_images
+    render json: Layer.all
   end
 
   def show

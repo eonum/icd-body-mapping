@@ -13,15 +13,15 @@ class Mapping extends React.Component {
         super(props);
         this.state = {
             imageElements: [],
+            imageElementsBackup: [],
             layers: [],
             x: 0, y: 0,
             selectedImg: '',
             showAll: false,
             activeLayer: 'Ohr'
         };
-        $.getJSON('/api/v1/layers/Ohr')
-            .then(response => this.setState({imageElements: response}));
-
+        $.getJSON('/api/v1/all/layers')
+            .then(response => this.setState({imageElements: response, imageElementsBackup: response}));
         $.getJSON('/api/v1/layers')
             .then(response => this.setState({layers: response}));
     }
@@ -31,11 +31,12 @@ class Mapping extends React.Component {
      * once the prop showingIcdId changes.
      */
     componentDidUpdate(prevProps) {
-        if(this.props.showingIcdId !== prevProps.showingIcdId)
-        {
+        if(this.props.showingIcdId !== prevProps.showingIcdId) {
             if (this.props.showingIcdId !== 0){
-                $.getJSON('/api/v1/maps/' + this.props.showingIcdId + '/' + this.state.activeLayer)
+                $.getJSON('/api/v1/map/' + this.props.showingIcdId)
                     .then(response => this.setState({imageElements: response}));
+            } else {
+                this.setState({imageElements: this.state.imageElementsBackup});
             }
         }
     }
@@ -64,30 +65,17 @@ class Mapping extends React.Component {
      * @param elem.ebene is the layer variable of the selected element.
      */
     selectLayer(ebene) {
-        if (this.props.showingIcdId === 0){
-            $.getJSON('/api/v1/layers/' + ebene)
-                .then(response => this.setState({imageElements: response}));
-            this.setState({
-                activeLayer: ebene,
-            })
-        }
-        else {
-            $.getJSON('/api/v1/maps/' + this.props.showingIcdId + '/' + ebene)
-                .then(response => this.setState({imageElements: response}));
-            this.setState({
-                activeLayer: ebene,
-            })
-        } if(this.state.selectedId !== 0) {
-            this.resetSelected();
-        }
+        this.setState({activeLayer: ebene})
     }
 
     resetSelected(){
-        let myImg;
         let elem = this.state.imageElements;
+        let activeLayer = this.state.activeLayer;
         for (let i = 0; i < elem.length; i++) {
-            myImg = document.getElementById(elem[i].name);
-            myImg.style.opacity = '1';
+            if (elem[i].ebene === activeLayer){
+                let myImg = document.getElementById(elem[i].name);
+                myImg.style.opacity = '1';
+            }
         }
     }
 
@@ -95,8 +83,6 @@ class Mapping extends React.Component {
         this.setState({showAll: !this.state.showAll, selectedImg: ''});
         this.sendIcdToMainUI(this.state.showAll);
         this.resetSelected();
-        $.getJSON('/api/v1/layers/' + this.state.activeLayer)
-            .then(response => this.setState({imageElements: response}));
     }
 
     /**
@@ -110,38 +96,45 @@ class Mapping extends React.Component {
      * @param len The size of the selectedLayers array, the amount of images.
      */
     selectPng(x, y, len) {
-        let canvas = document.getElementById('canvas');
-        let context = canvas.getContext('2d');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
         let elem = this.state.imageElements;
-        let myImg, data;
+        let activeLayer = this.state.activeLayer;
         for (let i = 0; i < len; i++) {
-            myImg = document.getElementById(elem[i].name);
-            context.drawImage(myImg, 0, 0);
-            data = context.getImageData(x, y, 1, 1).data;
-            if (data[0] !== 0 && data[1] !== 0 && data[2] !== 0 && data[3] !== 0) {
-                this.sendIcdToMainUI(elem[i]);
-                this.setState({selectedImg: elem[i]});
-                myImg.style.opacity = '1';
-                //Since an image was found the rest don't need to be searched.
-                for (i++; i < len; i++) {
-                    myImg = document.getElementById(elem[i].name);
-                    myImg.style.opacity = '0.4';
-                }
-            } else {myImg.style.opacity = '0.4';}
-            context.clearRect(0, 0, canvas.width, canvas.height);
+            if (elem[i].ebene === activeLayer){
+                let myImg = document.getElementById(elem[i].name);
+                context.drawImage(myImg, 0, 0);
+                let data = context.getImageData(x, y, 1, 1).data;
+                if (data[0] !== 0 && data[1] !== 0 && data[2] !== 0 && data[3] !== 0) {
+                    this.sendIcdToMainUI(elem[i]);
+                    this.setState({selectedImg: elem[i]});
+                    myImg.style.opacity = '1';
+                    //Since an image was found the rest don't need to be searched.
+                    for (i++; i < len; i++) {
+                        if(elem[i].ebene === activeLayer){
+                            myImg = document.getElementById(elem[i].name);
+                            myImg.style.opacity = '0.4';
+                        }
+                    }
+                } else {myImg.style.opacity = '0.4';}
+                context.clearRect(0, 0, canvas.width, canvas.height);
+            }
         }
     }
 
     render() {
         const divStyle = {position: 'absolute'};
-        const {x, y} = this.state;
+        let {x, y} = this.state;
         const len = this.state.imageElements.length;
+        let activeLayer = this.state.activeLayer;
 
         let alleElemente = this.state.imageElements.map((elem, index) => {
-            return <div key={index}>
-                <img src={elem.img} style={divStyle} id={elem.name} alt='missing images'
-                     onError={(e)=>{e.target.onerror = null; e.target.src="./images/error.png"}}/>
-            </div>
+            if (elem.ebene === activeLayer){
+                return <div key={index}>
+                    <img src={elem.img} style={divStyle} id={elem.name} alt='missing images'
+                         onError={(e)=>{e.target.onerror = null; e.target.src="./images/error.png"}}/>
+                </div>
+            }
         });
 
         let alleLayers = this.state.layers.map((elem, index) => {
@@ -162,9 +155,7 @@ class Mapping extends React.Component {
             </div>
         );
 
-        const rowStyle = {
-            height: '8vh'
-        }
+        const rowStyle = {height: '8vh'};
 
         return (
             <div>
