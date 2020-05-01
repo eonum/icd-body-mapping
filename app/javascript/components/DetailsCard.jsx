@@ -75,6 +75,7 @@ class DetailsCard extends React.Component {
         const editable = this.props.editable;
         const searchVisible = this.props.searchDisplayed;
         const layer_id = this.props.selectedLayer.id;
+        let lang = this.props.language;
 
         const empty = (<div/>);
 
@@ -91,7 +92,7 @@ class DetailsCard extends React.Component {
             marginBottom: '2vh'
         };
 
-        const withAnnotations = (
+        const editView = (
             <div className="card mt-2 ml-4 mr-4 mb-3 border-0">
                 <h5 className="card-subtitle text-primary">Annotations</h5>
                 <Form>
@@ -136,18 +137,65 @@ class DetailsCard extends React.Component {
                 </div>
             </div>
         );
-        const withoutAnnotations = (
-            <div className="mt-2 ml-4 mr-4 mb-3 border-top border-primary">
-                <Form className="mt-2 mb-4 float-right" onSubmit={this.handleSubmit}>
-                    <input
-                        type="submit"
-                        className="btn btn-primary"
-                        value="show"
-                        onClick={this.stateIdSet.bind(this)}
-                    />
-                </Form>
+        const annotations = (
+            <div className="card mb-3 mt-2 mr-4 ml-4 border-0">
+                <h5 className="card-subtitle">Annotations</h5>
+                <div
+                    className="border-top"
+                    dangerouslySetInnerHTML={{
+                        __html: `${selectedIcd.annotationen}`
+                    }}
+                />
             </div>
-        )
+        );
+        const uneditableView = (
+            <div>
+                {selectedIcd.annotationen !== null ? annotations : empty}
+                <div className="mt-2 ml-4 mr-4 mb-3 border-top border-primary">
+                    <Form className="mt-2 mb-4 float-right" onSubmit={this.handleSubmit}>
+                        <input
+                            type="submit"
+                            className="btn btn-primary"
+                            value="show"
+                            onClick={this.stateIdSet.bind(this)}
+                        />
+                    </Form>
+                </div>
+            </div>
+        );
+        const ger = (
+            <div className="card m-2 mt-4 mr-4 ml-4 border-0">
+                <h5 className="card-subtitle">German</h5>
+                <div
+                    className="border-top"
+                    dangerouslySetInnerHTML={{
+                        __html: `${selectedIcd.text_de}`
+                    }}
+                />
+            </div>
+        );
+        const fr = (
+            <div className="card m-2 mt-4 mr-4 ml-4 border-0">
+                <h5 className="card-subtitle">French</h5>
+                <div
+                    className="border-top"
+                    dangerouslySetInnerHTML={{
+                        __html: `${selectedIcd.text_fr}`
+                    }}
+                />
+            </div>
+        );
+        const it = (
+            <div className="card m-2 mt-4 mr-4 ml-4 border-0">
+                <h5 className="card-subtitle">Italian</h5>
+                <div
+                    className="border-top"
+                    dangerouslySetInnerHTML={{
+                        __html: `${selectedIcd.text_it}`
+                    }}
+                />
+            </div>
+        );
 
         return (
             <div style={searchVisible ? detailsWithSearchStyle : detailsWithoutSearchStyle}>
@@ -164,37 +212,12 @@ class DetailsCard extends React.Component {
                             {selectedIcd.code}
                         </h1>
                     </div>
-                    <div className="card m-2 mt-4 mr-4 ml-4 border-0">
-                        <h5 className="card-subtitle">German</h5>
-                        <div
-                            className="border-top"
-                            dangerouslySetInnerHTML={{
-                                __html: `${selectedIcd.text_de}`
-                            }}
-                        />
-                    </div>
-                    <div className="card m-2 mr-4 ml-4 border-0">
-                        <h5 className="card-subtitle">French</h5>
-                        <div
-                            className="border-top"
-                            dangerouslySetInnerHTML={{
-                                __html: `${selectedIcd.text_fr}`
-                            }}
-                        />
-                    </div>
-                    <div className="card mt-2 ml-4 mr-4 mb-3 border-0">
-                        <h5 className="card-subtitle">Italian</h5>
-                        <div
-                            className="border-top"
-                            dangerouslySetInnerHTML={{
-                                __html: `${selectedIcd.text_it}`
-                            }}
-                        />
-                    </div>
+                    {lang === 'de' ? ger : empty}
+                    {lang === 'fr' ? fr : empty}
+                    {lang === 'it' ? it : empty}
                     <div>
-                        {editable ? withAnnotations : withoutAnnotations}
+                        {editable ? editView : uneditableView}
                     </div>
-
                 </div>
             </div>
         )

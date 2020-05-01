@@ -25,7 +25,8 @@ class MainUI extends React.Component {
             showingIcdId: 0,
             editMode: false,
             checkedIcdIds: [],
-			viewAll: false
+			viewAll: false,
+            activeLanguage: 'de'
         };
     }
 
@@ -43,6 +44,12 @@ class MainUI extends React.Component {
     callbackTopbarEdit = (editable) => {
         this.setState({
             editMode: editable
+        });
+    };
+
+    callbackTopbarSetLang = (lang) => {
+        this.setState({
+            activeLanguage: lang
         });
     };
 	
@@ -121,6 +128,7 @@ class MainUI extends React.Component {
                 searchDisplayed={this.state.searchDisplayed}
                 selectedLayer={this.state.selectedLayer}
                 editable={this.state.editMode}
+                language={this.state.activeLanguage}
                 callbackFromMainUI={this.callbackDetails}
                 callbackFromMainUIClose={this.callbackDetailsCardClose}
             />
@@ -141,6 +149,7 @@ class MainUI extends React.Component {
                                 callbackFromMainUISearch={this.callbackTopbarSearch}
                                 callbackFromMainUIEdit={this.callbackTopbarEdit}
 								callbackFromMainUIViewAll={this.callbackViewAll}
+                                callbackFromMainUISetLanguage={this.callbackTopbarSetLang}
                             />
                         </div>
                     </div>
