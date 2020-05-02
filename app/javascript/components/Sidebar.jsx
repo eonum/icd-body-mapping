@@ -18,11 +18,20 @@ class Sidebar extends React.Component {
             filtered: false,
             icdCodelength: 3,
             term: '',
-            hierarchyEnd: false
+            hierarchyEnd: false,
+            chapterArray: []
         };
     }
 
     componentDidMount() {
+        let chapterArray = [];
+        for (var i=1; i<23; i++) {
+            chapterArray.push({index: i});
+        }
+        this.setState({
+            chapterArray: chapterArray
+        });
+
         const url = "/api/v1/icds";
         fetch(url)
             .then(response => {
@@ -237,7 +246,7 @@ class Sidebar extends React.Component {
     /**
      * Sends selected ICD to parent MainUI
      * (which itself sends it to DetailsCard)
-     * @param icd
+     * @param icd_id
      */
     sendIcdToMainUI(icd) {
         this.props.callbackFromMainUI(icd);
@@ -255,6 +264,18 @@ class Sidebar extends React.Component {
             overflow: 'auto'
         }
 
+        const chapterArray = this.state.chapterArray;
+        const whileLoading = chapterArray.map((chapter) => {
+            return <div className="list-group mr-1" key={chapter.index}>
+                <button
+                    type="button"
+                    className="list-group-item list-group-item-action"
+                    disabled
+                >
+                    {chapter.index}
+                </button>
+            </div>
+        });
         const icdChapters = this.chapterICDs.map((icd, index) => {
             return <div className="list-group mr-1" key={index}>
                 <button
@@ -295,9 +316,6 @@ class Sidebar extends React.Component {
                 </div>
             }
         });
-        const loading = (
-            <div className="text-uppercase">catalogue loading...</div>
-        );
         const empty = (
             <></>
         );
@@ -316,7 +334,7 @@ class Sidebar extends React.Component {
                     {icds.length > 0 && this.state.filtered === true ? backButton : empty}
                 </div>
                 <div style={this.state.filtered ? withBackButtonStyle : withoutBackButtonStyle}>
-                    {icds.length > 0 ? empty : loading}
+                    {icds.length > 0 ? empty : whileLoading}
                     {icds.length > 0 && this.state.filtered === false ? icdChapters : empty}
                     {icds.length > 0 && this.state.filtered === true ? icdSubGroup : empty}
                 </div>
