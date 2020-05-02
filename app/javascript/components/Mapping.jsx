@@ -48,7 +48,7 @@ class Mapping extends React.Component {
     getLayers() {
         $.getJSON('/api/v1/layers/Ohr')
             .then(response => this.setState({imageElements: response}));
-        
+
         $.getJSON('/api/v1/layers')
             .then(response => this.setState({layers: response}));
     }
@@ -82,6 +82,7 @@ class Mapping extends React.Component {
                 .then(response => this.setState({imageElements: response}));
             this.setState({
                 activeLayer: ebene,
+                selectedImg: ''
             })
         }
         else {
@@ -89,6 +90,7 @@ class Mapping extends React.Component {
                 .then(response => this.setState({imageElements: response}));
             this.setState({
                 activeLayer: ebene,
+                selectedImg: ''
             })
         } if(this.state.selectedId !== 0) {
             this.resetSelected();
@@ -164,7 +166,7 @@ class Mapping extends React.Component {
         });
 
         const dropdown = (
-            <div className="col-3 dropdown">
+            <div className="col-md-auto dropdown">
                 <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {this.state.activeLayer}
@@ -183,7 +185,7 @@ class Mapping extends React.Component {
             <div>
                 <div className="row" style={rowStyle}>
                     {dropdown}
-                    <div className="col-2">
+                    <div className="col-sm-2">
                         <input
                             className="btn btn-primary"
                             type="submit"
@@ -191,7 +193,7 @@ class Mapping extends React.Component {
                             onClick={this.showAll.bind(this)}
                         />
                     </div>
-                    <div className="col-7">
+                    <div className="col mt-1 mb-1 mr-3">
                         <h4 className="text-right text-primary">{this.state.selectedImg.name}</h4>
                     </div>
                 </div>
