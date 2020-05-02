@@ -11,32 +11,32 @@ import EditIcon from '@material-ui/icons/Edit';
  * @author Aaron Saegesser, Linn Haeffner
  */
 class Topbar extends React.Component {
-    
+
     constructor(props) {
         super(props);
         this.state = {
             query: '',
             term: '',
-            buttonTerm: '',
-			viewAll: this.props.viewAll,
+            viewAll: this.props.viewAll,
             activeLanguage: 'de',
         };
     }
-	
-	componentDidUpdate(prevProps) {
-		if (this.props.viewAll !== prevProps.viewAll) {
-			this.setViewAll(this.props.viewAll);
-		}
-	}
+
+  	componentDidUpdate(prevProps) {
+    		if (this.props.viewAll !== prevProps.viewAll) {
+    			   this.setViewAll(this.props.viewAll);
+    		}
+  	}
 
     setUIDefault() {
         this.props.callbackFromMainUIresetUI();
-        this.setState( {
+        this.setState({
             query: '',
             term: '',
             viewAll: this.props.viewAll,
             activeLanguage: 'de',
         });
+        this.searchForm.reset();
     }
 
 
@@ -47,21 +47,20 @@ class Topbar extends React.Component {
 
     setSearchTerm(term) {
         this.setState({
-			term: term,
-            buttonTerm: term
-		});
-		
-		this.setViewAll(false);
+			      term: term
+		    });
+
+		    this.setViewAll(false);
         this.props.callbackFromMainUISearch(term);
     }
-	
-	setViewAll(viewAll) {
-		this.setState({
-			viewAll: viewAll
-		});
-		event.preventDefault();
-		this.props.callbackFromMainUIViewAll(viewAll);
-	}
+
+  	setViewAll(viewAll) {
+    		this.setState({
+    			   viewAll: viewAll
+    		});
+    		event.preventDefault();
+    		this.props.callbackFromMainUIViewAll(viewAll);
+  	}
 
     setEditMode(edit) {
         this.props.callbackFromMainUIEdit(edit);
@@ -136,7 +135,7 @@ class Topbar extends React.Component {
 
         return (
             <div className="navbar navbar-light bg-primary">
-                <Form>
+                <form ref={ form => this.searchForm = form }>
                     <FormControl
                         onChange={event => {this.setSearchTerm(event.target.value)}}
                         onKeyDown={event => {if (event.key === 'Enter') {this.setViewAll(true)}}}
@@ -144,14 +143,11 @@ class Topbar extends React.Component {
                         placeholder='Search...'
                         className="mr-sm-2"
                     />
-                </Form>
+                </form>
                 <button
                     type="button"
                     className="btn btn-default text-white ml-2"
-                    onClick={event => {
-                        if (this.state.buttonTerm !== '') {
-                        this.setViewAll(true);
-                        this.setSearchTerm(this.state.buttonTerm)}}}
+                    onClick={event => {this.setViewAll(true)}}
                 >
                     <SearchIcon/>
                 </button>

@@ -54,10 +54,11 @@ class MainUI extends React.Component {
                 needUpdate: false
             });
 
-        }
-        else { this.setState( {
-            needUpdate: true
-        })};
+        } else {
+            this.setState({
+                needUpdate: true
+            });
+        };
     };
 
     /**
@@ -88,12 +89,12 @@ class MainUI extends React.Component {
             activeLanguage: lang
         });
     };
-	
-	callbackViewAll = (viewAll) => {
-		this.setState({
-			viewAll: viewAll
-		});
-	};
+
+  	callbackViewAll = (viewAll) => {
+    		this.setState({
+    			   viewAll: viewAll
+    		});
+  	};
 
     callbackMapping = (selectedLayerFromMapping) => {
         this.setState({ selectedLayer: selectedLayerFromMapping });
@@ -134,7 +135,7 @@ class MainUI extends React.Component {
     callbackSearchCardClose = () => {
         this.setState({
             searchDisplayed: false,
-			viewAll: false
+			      viewAll: false
         });
     };
 
@@ -152,11 +153,11 @@ class MainUI extends React.Component {
                 detailsDisplayed={this.state.detailsDisplayed}
                 editable={this.state.editMode}
                 selectedLayerId={this.state.selectedLayer.id}
-				viewAll={this.state.viewAll}
+				        viewAll={this.state.viewAll}
                 callbackFromMainUIDetails={this.callbackSearchCardDetails}
                 callbackFromMainUIMapping={this.callbackSearchCardMapping}
                 callbackFromMainUIClose={this.callbackSearchCardClose}
-				callbackFromMainUIViewAll={this.callbackViewAll}
+				        callbackFromMainUIViewAll={this.callbackViewAll}
             />
         );
         const details = (
@@ -186,11 +187,11 @@ class MainUI extends React.Component {
                         <div className="w-100">
                             <Topbar
                                 editable={this.state.editMode}
-								viewAll={this.state.viewAll}
+								                viewAll={this.state.viewAll}
                                 callbackFromMainUISearch={this.callbackTopbarSearch}
                                 callbackFromMainUIButton={this.callbackTopbarButtonTerm}
                                 callbackFromMainUIEdit={this.callbackTopbarEdit}
-								callbackFromMainUIViewAll={this.callbackViewAll}
+								                callbackFromMainUIViewAll={this.callbackViewAll}
                                 callbackFromMainUISetLanguage={this.callbackTopbarSetLang}
                                 callbackFromMainUIresetUI={this.resetUI}
                             />

@@ -19,11 +19,7 @@ class Mapping extends React.Component {
             showAll: false,
             activeLayer: 'Ohr'
         };
-        $.getJSON('/api/v1/layers/Ohr')
-            .then(response => this.setState({imageElements: response}));
-
-        $.getJSON('/api/v1/layers')
-            .then(response => this.setState({layers: response}));
+        this.getLayers();
     }
 
     /**
@@ -31,9 +27,8 @@ class Mapping extends React.Component {
      * once the prop showingIcdId changes.
      */
     componentDidUpdate(prevProps) {
-        if(this.props.showingIcdId !== prevProps.showingIcdId)
-        {
-            if (this.props.showingIcdId !== 0){
+        if(this.props.showingIcdId !== prevProps.showingIcdId) {
+            if (this.props.showingIcdId !== 0) {
                 $.getJSON('/api/v1/maps/' + this.props.showingIcdId + '/' + this.state.activeLayer)
                     .then(response => this.setState({imageElements: response}));
             }
@@ -46,15 +41,17 @@ class Mapping extends React.Component {
                 showAll: false,
                 activeLayer: 'Ohr'
             });
-            $.getJSON('/api/v1/layers/Ohr')
-                .then(response => this.setState({imageElements: response}));
-
-            $.getJSON('/api/v1/layers')
-                .then(response => this.setState({layers: response}));
+            this.getLayers();
         }
     }
 
-
+    getLayers() {
+        $.getJSON('/api/v1/layers/Ohr')
+            .then(response => this.setState({imageElements: response}));
+        
+        $.getJSON('/api/v1/layers')
+            .then(response => this.setState({layers: response}));
+    }
 
     /**
      * A method, which sends the chosen image back to the Main Ui, so that other components,
