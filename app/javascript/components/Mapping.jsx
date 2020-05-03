@@ -41,6 +41,7 @@ class Mapping extends React.Component {
                     .then(response => this.setState({layers: response, activeLayer: response[0].ebene}));
             } else {
                 this.setState({allImages: this.state.allImagesBackup, layers: this.state.layersBackup});
+                this.selectAll(true);
             }
         }
     }
@@ -178,14 +179,6 @@ class Mapping extends React.Component {
             <div>
                 <div className="row" style={rowStyle}>
                     {dropdown}
-                    <div className="col-2">
-                        <input
-                            className="btn btn-primary"
-                            type="submit"
-                            value='show all'
-                            onClick={this.showAll.bind(this)}
-                        />
-                    </div>
                 </div>
                 <canvas id='canvas' style={divStyle} width="600" height="530"/>
                 <div onMouseMove={this._onMouseMove.bind(this)} id='mappingComp' onClick={this.selectPng.bind(this, x, y, len)}>
