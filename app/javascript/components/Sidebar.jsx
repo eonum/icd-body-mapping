@@ -51,7 +51,7 @@ class Sidebar extends React.Component {
         if (this.props.reloadIcds !== prevProps.reloadIcds) {
             this.loadIcds();
         }
-        if (this.props.selectedIcd !== prevProps.selectedIcd) {
+        if (this.props.selectedIcd !== prevProps.selectedIcd && this.props.selectedIcd !== '') {
             this.setState({
                 icds: this.allICDs,
                 term: this.props.selectedIcd.code,
@@ -163,54 +163,51 @@ class Sidebar extends React.Component {
      * @param icd
      */
     filterIcdsByIcdcode(state, icd) {
-        const ICDs = state.icds;
-        const icdCode = icd.code.toString();
-        let codelength;
-        console.log(icdCode);
+      const ICDs = state.icds;
+      const icdCode = icd.code.toString();
+      let codelength;
 
-        switch (icdCode.length) {
-            case 1:
-                codelength = 3;
-                break;
-            case 3:
-                codelength = 5;
-                break;
-            case 5:
-                codelength = 6;
-                break;
-        }
+      switch (icdCode.length) {
+          case 1:
+              codelength = 3;
+              break;
+          case 3:
+              codelength = 5;
+              break;
+          case 5:
+              codelength = 6;
+              break;
+      }
 
-        let selection = ICDs.map((icd) => {
-            if (icd.code.toString().includes(icdCode)
-                && icd.code.toString().length === codelength) {
-                return icd;
-            } else {
-                return 0;
-            }
-        });
+      let selection = ICDs.map((icd) => {
+          if (icd.code.toString().includes(icdCode)
+              && icd.code.toString().length === codelength) {
+              return icd;
+          } else {
+              return 0;
+          }
+      });
 
-        selection = selection.filter((value) => {
-            return value !== 0;
-        });
+      selection = selection.filter((value) => {
+          return value !== 0;
+      });
 
-        console.log(selection);
+      if (selection.length !== 0) {
+          this.setState({
+              icdSelection: selection.sort(),
+              filtered: true,
+              icdCodelength: codelength,
+              term: icdCode,
+              hierarchyEnd: false
+          });
+      } else {
+          this.setState({
+              filtered: true,
+              hierarchyEnd: true
+          });
+      }
 
-        if (selection.length !== 0) {
-            this.setState({
-                icdSelection: selection.sort(),
-                filtered: true,
-                icdCodelength: codelength,
-                term: icdCode,
-                hierarchyEnd: false
-            });
-        } else {
-            this.setState({
-                filtered: true,
-                hierarchyEnd: true
-            });
-        }
-
-        this.sendIcdToMainUI(icd);
+      this.sendIcdToMainUI(icd);
     }
 
     /**
