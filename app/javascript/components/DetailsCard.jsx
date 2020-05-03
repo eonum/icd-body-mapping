@@ -12,6 +12,7 @@ class DetailsCard extends React.Component {
         super(props);
         this.state = {
             showingIcdId: 0,
+            showingIcd: 'show',
             selectedIcd: this.props.selectedIcd,
             annotationen: ''
         };
@@ -33,7 +34,14 @@ class DetailsCard extends React.Component {
     }
 
     handleSubmit(event) {
-        this.props.callbackFromMainUI(this.props.selectedIcd.id);
+        let showingIcd = this.state.showingIcd;
+        if (showingIcd === 'show'){
+            this.props.callbackFromMainUI(this.props.selectedIcd.id);
+            this.setState({showingIcd: 'unshow'});
+        } else {
+            this.props.callbackFromMainUI(0);
+            this.setState({showingIcd: 'show'});
+        }
         event.preventDefault();
     }
 
@@ -74,7 +82,7 @@ class DetailsCard extends React.Component {
         let selectedIcd = this.props.selectedIcd;
         const editable = this.props.editable;
         const searchVisible = this.props.searchDisplayed;
-        const layer_id = this.props.selectedLayer.id;
+        const selectedLayer = this.props.selectedLayer;
         let lang = this.props.language;
 
         const empty = (<div/>);
@@ -108,20 +116,13 @@ class DetailsCard extends React.Component {
                 <div className="mt-4 border-top border-primary" />
                 <div className="row">
                     <div className="col-4 mt-2">
-                        <Form className="float-left">
-                            <input
-                                type="submit"
-                                className="btn btn-light btn-outline-primary"
-                                value="save"
-                                onClick={this.saveChanges.bind(this)}
-                            />
-                        </Form>
+
                     </div>
                     <div className="col-4 mt-2">
                         <NewMaps
                             icd_id={selectedIcd.id}
                             icd_ids={[]}
-                            layer_id={layer_id}
+                            selectedLayer={selectedLayer}
                         />
                     </div>
                     <div className="col-4 mt-2">
@@ -129,7 +130,7 @@ class DetailsCard extends React.Component {
                             <input
                                 type="submit"
                                 className="btn btn-primary"
-                                value="show"
+                                value={this.state.showingIcd}
                                 onClick={this.stateIdSet.bind(this)}
                             />
                         </Form>

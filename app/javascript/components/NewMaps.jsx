@@ -14,7 +14,7 @@ class NewMaps extends React.Component {
             maps: [],
             icd_id: '',
             icd_ids: [],
-            layer_id: ''
+            selectedLayer: []
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -37,6 +37,7 @@ class NewMaps extends React.Component {
      */
     handleSubmit(multiMapping, event) {
         let icd_ids = [];
+        let layers = this.state.selectedLayer;
         if (multiMapping) {
             icd_ids = this.props.icd_ids;
         } else {
@@ -44,14 +45,16 @@ class NewMaps extends React.Component {
         }
 
         for (let i=0; i<icd_ids.length; i++) {
-            let body = JSON.stringify({map: {icd_id: icd_ids[i], layer_id: this.state.layer_id}});
-            fetch('http://localhost:3000/api/v1/maps', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: body,
-            }).then((response) => {return response.json()})
-                .then((map)=>{this.addNewMap(map)});
-            event.preventDefault();
+            for (let lay=0; lay < layers.length; lay++) {
+                let body = JSON.stringify({map: {icd_id: icd_ids[i], layer_id: layers[lay].id}});
+                fetch('http://localhost:3000/api/v1/maps', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: body,
+                }).then((response) => {return response.json()})
+                    .then((map)=>{this.addNewMap(map)});
+                event.preventDefault();
+            }
         }
     }
 
@@ -62,7 +65,7 @@ class NewMaps extends React.Component {
         this.setState({
             icd_id: this.props.icd_id,
             icd_ids: this.props.icd_ids,
-            layer_id: this.props.layer_id
+            selectedLayer: this.props.selectedLayer
         });
 		alert('Selected ICD(s) mapped with layer')
     }
@@ -77,10 +80,10 @@ class NewMaps extends React.Component {
 
     render() {
         let icd_id = this.props.icd_id;
-        let layer_id = this.props.layer_id;
+        let selectedLayer = this.props.selectedLayer;
         let icd_ids = this.props.icd_ids;
 
-        if (icd_id === undefined && icd_ids.length !== 0 && layer_id !== undefined) {
+        if (icd_id === undefined && icd_ids.length !== 0 && selectedLayer.length !== 0) {
             return(
                 <form
                     onSubmit={this.handleSubmit.bind(this, true)}
@@ -93,7 +96,7 @@ class NewMaps extends React.Component {
                     />
                 </form>
             );
-        } else if (icd_id !== undefined && icd_ids.length === 0 && layer_id !== undefined) {
+        } else if (icd_id !== undefined && icd_ids.length === 0 && selectedLayer.length !== 0) {
             return(
                 <form
                     className="text-center"
