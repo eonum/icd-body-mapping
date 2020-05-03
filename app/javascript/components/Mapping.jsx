@@ -12,14 +12,20 @@ class Mapping extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            imageElements: [],
-            layers: [],
+            allImages: [], allImagesBackup: [],
+            layers: [], layersBackup: [],
+            selectedImages:[],
             x: 0, y: 0,
-            selectedImg: '',
             showAll: false,
             activeLayer: 'Ohr'
         };
-        this.getLayers();
+    }
+
+    componentDidMount() {
+        $.getJSON('/api/v1/all/layers')
+            .then(response => this.setState({allImages: response, allImagesBackup: response}));
+        $.getJSON('/api/v1/layers')
+            .then(response => this.setState({layers: response, layersBackup: response}));
     }
 
     /**
@@ -28,29 +34,16 @@ class Mapping extends React.Component {
      */
     componentDidUpdate(prevProps) {
         if(this.props.showingIcdId !== prevProps.showingIcdId) {
-            if (this.props.showingIcdId !== 0) {
-                $.getJSON('/api/v1/maps/' + this.props.showingIcdId + '/' + this.state.activeLayer)
-                    .then(response => this.setState({imageElements: response}));
+            if (this.props.showingIcdId !== 0){
+                $.getJSON('/api/v1/map/' + this.props.showingIcdId)
+                    .then(response => this.setState({allImages: response}));
+                $.getJSON('/api/v1/map_layers/' + this.props.showingIcdId)
+                    .then(response => this.setState({layers: response, activeLayer: response[0].ebene}));
+            } else {
+                this.setState({allImages: this.state.allImagesBackup, layers: this.state.layersBackup});
+                this.selectAll(true);
             }
         }
-        if (this.props.needUpdate !== prevProps.needUpdate) {
-            this.resetSelected();
-            this.setState( {
-                x: 0, y: 0,
-                selectedImg: '',
-                showAll: false,
-                activeLayer: 'Ohr'
-            });
-            this.getLayers();
-        }
-    }
-
-    getLayers() {
-        $.getJSON('/api/v1/layers/Ohr')
-            .then(response => this.setState({imageElements: response}));
-
-        $.getJSON('/api/v1/layers')
-            .then(response => this.setState({layers: response}));
     }
 
     /**
@@ -77,41 +70,27 @@ class Mapping extends React.Component {
      * @param elem.ebene is the layer variable of the selected element.
      */
     selectLayer(ebene) {
-        if (this.props.showingIcdId === 0){
-            $.getJSON('/api/v1/layers/' + ebene)
-                .then(response => this.setState({imageElements: response}));
-            this.setState({
-                activeLayer: ebene,
-                selectedImg: ''
-            })
-        }
-        else {
-            $.getJSON('/api/v1/maps/' + this.props.showingIcdId + '/' + ebene)
-                .then(response => this.setState({imageElements: response}));
-            this.setState({
-                activeLayer: ebene,
-                selectedImg: ''
-            })
-        } if(this.state.selectedId !== 0) {
-            this.resetSelected();
-        }
+        this.setState({activeLayer: ebene})
     }
 
-    resetSelected(){
-        let myImg;
-        let elem = this.state.imageElements;
+    selectAll(x) {
+        let elem = this.state.allImages;
+        let activeLayer = this.state.activeLayer;
         for (let i = 0; i < elem.length; i++) {
-            myImg = document.getElementById(elem[i].name);
-            myImg.style.opacity = '1';
+            if (elem[i].ebene === activeLayer){
+                let myImg = document.getElementById(elem[i].name);
+                if (x===true){
+                    myImg.style.opacity = '1';
+                } else {myImg.style.opacity = '0.4';}
+            }
         }
     }
 
     showAll() {
-        this.setState({showAll: !this.state.showAll, selectedImg: ''});
+        this.setState({showAll: !this.state.showAll, selectedImages: []});
+        this.setState({allImages: this.state.allImagesBackup, layers: this.state.layersBackup});
+        this.selectAll(true);
         this.sendIcdToMainUI(this.state.showAll);
-        this.resetSelected();
-        $.getJSON('/api/v1/layers/' + this.state.activeLayer)
-            .then(response => this.setState({imageElements: response}));
     }
 
     /**
@@ -127,36 +106,53 @@ class Mapping extends React.Component {
     selectPng(x, y, len) {
         let canvas = document.getElementById('canvas');
         let context = canvas.getContext('2d');
-        let elem = this.state.imageElements;
-        let myImg, data;
+        let elem = this.state.allImages;
+        let activeLayer = this.state.activeLayer;
+        let selectedImages = this.state.selectedImages;
+        if (selectedImages.length === 0){
+            this.selectAll(false);
+        }
         for (let i = 0; i < len; i++) {
-            myImg = document.getElementById(elem[i].name);
-            context.drawImage(myImg, 0, 0);
-            data = context.getImageData(x, y, 1, 1).data;
-            if (data[0] !== 0 && data[1] !== 0 && data[2] !== 0 && data[3] !== 0) {
-                this.sendIcdToMainUI(elem[i]);
-                this.setState({selectedImg: elem[i]});
-                myImg.style.opacity = '1';
-                //Since an image was found the rest don't need to be searched.
-                for (i++; i < len; i++) {
-                    myImg = document.getElementById(elem[i].name);
-                    myImg.style.opacity = '0.4';
+            if (elem[i].ebene === activeLayer) {
+                let myImg = document.getElementById(elem[i].name);
+                context.drawImage(myImg, 0, 0);
+                let data = context.getImageData(x, y, 1, 1).data;
+                if (data[0] !== 0 && data[1] !== 0 && data[2] !== 0 && data[3] !== 0) {
+                    let contains = false
+                    for (let tra = 0; tra < selectedImages.length; tra++) {
+                        if (selectedImages[tra] === elem[i]) {
+                            selectedImages.splice(tra,1);
+                            myImg.style.opacity = '0.4';
+                            x = selectedImages.length;
+                            contains = true;
+                        }
+                    }
+                    if (contains === false){
+                        myImg.style.opacity = '1';
+                        selectedImages[selectedImages.length] = elem[i];
+                    }
+                    i = len;
+                    this.setState({selectedImages: selectedImages});
+                    this.sendIcdToMainUI(selectedImages);
                 }
-            } else {myImg.style.opacity = '0.4';}
+            }
             context.clearRect(0, 0, canvas.width, canvas.height);
         }
     }
 
     render() {
         const divStyle = {position: 'absolute'};
-        const {x, y} = this.state;
-        const len = this.state.imageElements.length;
+        let {x, y} = this.state;
+        const len = this.state.allImages.length;
+        let activeLayer = this.state.activeLayer;
 
-        let alleElemente = this.state.imageElements.map((elem, index) => {
-            return <div key={index}>
-                <img src={elem.img} style={divStyle} id={elem.name} alt='missing images'
-                     onError={(e)=>{e.target.onerror = null; e.target.src="./images/error.png"}}/>
-            </div>
+        let alleElemente = this.state.allImages.map((elem, index) => {
+            if (elem.ebene === activeLayer){
+                return <div key={index}>
+                    <img src={elem.img} style={divStyle} id={elem.name} alt='missing images'
+                         onError={(e)=>{e.target.onerror = null; e.target.src="./images/error.png"}}/>
+                </div>
+            }
         });
 
         let alleLayers = this.state.layers.map((elem, index) => {
@@ -166,7 +162,7 @@ class Mapping extends React.Component {
         });
 
         const dropdown = (
-            <div className="col-md-auto dropdown">
+            <div className="col-3 dropdown">
                 <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {this.state.activeLayer}
@@ -177,25 +173,12 @@ class Mapping extends React.Component {
             </div>
         );
 
-        const rowStyle = {
-            height: '8vh'
-        }
+        const rowStyle = {height: '8vh'};
 
         return (
             <div>
                 <div className="row" style={rowStyle}>
                     {dropdown}
-                    <div className="col-sm-2">
-                        <input
-                            className="btn btn-primary"
-                            type="submit"
-                            value='show all'
-                            onClick={this.showAll.bind(this)}
-                        />
-                    </div>
-                    <div className="col mt-1 mb-1 mr-3">
-                        <h4 className="text-right text-primary">{this.state.selectedImg.name}</h4>
-                    </div>
                 </div>
                 <canvas id='canvas' style={divStyle} width="600" height="530"/>
                 <div onMouseMove={this._onMouseMove.bind(this)} id='mappingComp' onClick={this.selectPng.bind(this, x, y, len)}>
