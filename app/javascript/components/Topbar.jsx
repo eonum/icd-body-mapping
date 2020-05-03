@@ -4,6 +4,7 @@ import logo from '../../assets/images/eonum_logo.png';
 import SearchIcon from '@material-ui/icons/Search';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import EditIcon from '@material-ui/icons/Edit';
+import HomeIcon from '@material-ui/icons/Home';
 
 /**
  * The Topbar contains the searchbar and header and is responsible for the searching.
@@ -82,7 +83,7 @@ class Topbar extends React.Component {
         };
         const dropdownMenuStyle = {
             maxWidth: '3rem'
-        }
+        };
 
         const editButton = (
             <button
@@ -143,34 +144,45 @@ class Topbar extends React.Component {
         );
 
         return (
-            <div className="navbar navbar-light bg-primary">
-                <form ref={ form => this.searchForm = form }>
-                    <FormControl
-                        onChange={event => {this.setSearchTerm(event.target.value)}}
-                        onKeyDown={event => {if (event.key === 'Enter') {this.setViewAll(true)}}}
-                        type="text"
-                        placeholder='Search...'
-                        className="mr-sm-2"
-                    />
-                </form>
-                <button
-                    type="button"
-                    className="btn btn-default text-white ml-2"
-                    onClick={event => {this.setViewAll(true)}}
-                >
-                    <SearchIcon/>
-                </button>
-                <button
-                    type = "button"
-                    className="btn btn-default text-white navbar-brand mx-auto"
-                    style={headerStyle}
-                    onClick={this.setUIDefault.bind(this)}
-                >
-                    ICD Mapping -
-                    <img className="ml-2" src={logo} alt="eonum" height="16px"/>
-                </button>
-                {dropdown}
-                {this.props.editable ? exitEditButton : editButton}
+            <div className="row">
+                <div className="col-2 navbar navbar-light bg-dark text-center">
+                    <button
+                        type="button"
+                        className="btn btn-default shadow-none text-white ml-3"
+                        onClick={this.setUIDefault.bind(this)}
+                    >
+                        <HomeIcon/>
+                        <img className="ml-4" src={logo} alt="eonum" height="20px"/>
+                    </button>
+                </div>
+                <div className="col-10 navbar navbar-light bg-primary">
+                    <form ref={ form => this.searchForm = form }>
+                        <FormControl
+                            onChange={event => {this.setSearchTerm(event.target.value)}}
+                            onKeyDown={event => {if (event.key === 'Enter') {this.setViewAll(true)}}}
+                            type="text"
+                            placeholder='Search...'
+                            className="mr-sm-2"
+                        />
+                    </form>
+                    <button
+                        type="button"
+                        className="btn btn-default text-white ml-2"
+                        onClick={event => {this.setViewAll(true)}}
+                    >
+                        <SearchIcon/>
+                    </button>
+                    <button
+                        type = "button"
+                        className="btn btn-default text-white navbar-brand mx-auto"
+                        style={headerStyle}
+                        onClick={this.setUIDefault.bind(this)}
+                    >
+                        ICD Mapping
+                    </button>
+                    {dropdown}
+                    {this.props.editable ? exitEditButton : editButton}
+                </div>
             </div>
         )
     }

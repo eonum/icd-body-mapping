@@ -38,7 +38,7 @@ class DetailsCard extends React.Component {
     }
 
     saveChanges(event) {
-		event.preventDefault();
+		    event.preventDefault();
         let body = JSON.stringify({
             icd: {
                 id: this.state.selectedIcd.id,
@@ -55,13 +55,15 @@ class DetailsCard extends React.Component {
         fetch('http://localhost:3000/api/v1/icds/' + this.state.selectedIcd.id, {
             method: 'PUT',
             headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			},
+      				'Accept': 'application/json',
+      				'Content-Type': 'application/json'
+      			},
             body: body,
         }).then((response) => {
-			return response.json()
-		});
+			       return response.json()
+		    });
+
+        this.props.callbackFromMainUIReloadIcds();
 
         alert('saved following annotations: ' + this.state.annotationen);
     }
@@ -111,7 +113,7 @@ class DetailsCard extends React.Component {
                         <Form className="float-left">
                             <input
                                 type="submit"
-                                className="btn btn-light btn-outline-primary"
+                                className="btn btn-primary"
                                 value="save"
                                 onClick={this.saveChanges.bind(this)}
                             />
@@ -128,7 +130,7 @@ class DetailsCard extends React.Component {
                         <Form className="float-right" onSubmit={this.handleSubmit}>
                             <input
                                 type="submit"
-                                className="btn btn-primary"
+                                className="btn btn-outline-primary"
                                 value="show"
                                 onClick={this.stateIdSet.bind(this)}
                             />
@@ -150,7 +152,7 @@ class DetailsCard extends React.Component {
         );
         const uneditableView = (
             <div>
-                {selectedIcd.annotationen !== null ? annotations : empty}
+                {(selectedIcd.annotationen !== null && selectedIcd.annotationen !== '') ? annotations : empty}
                 <div className="mt-2 ml-4 mr-4 mb-3 border-top border-primary">
                     <Form className="mt-2 mb-4 float-right" onSubmit={this.handleSubmit}>
                         <input
@@ -164,37 +166,28 @@ class DetailsCard extends React.Component {
             </div>
         );
         const ger = (
-            <div className="card m-2 mt-4 mr-4 ml-4 border-0">
-                <h5 className="card-subtitle">German</h5>
-                <div
-                    className="border-top"
-                    dangerouslySetInnerHTML={{
-                        __html: `${selectedIcd.text_de}`
-                    }}
-                />
-            </div>
+            <div
+                className="border-top"
+                dangerouslySetInnerHTML={{
+                    __html: `${selectedIcd.text_de}`
+                }}
+            />
         );
         const fr = (
-            <div className="card m-2 mt-4 mr-4 ml-4 border-0">
-                <h5 className="card-subtitle">French</h5>
-                <div
-                    className="border-top"
-                    dangerouslySetInnerHTML={{
-                        __html: `${selectedIcd.text_fr}`
-                    }}
-                />
-            </div>
+            <div
+                className="border-top"
+                dangerouslySetInnerHTML={{
+                    __html: `${selectedIcd.text_fr}`
+                }}
+            />
         );
         const it = (
-            <div className="card m-2 mt-4 mr-4 ml-4 border-0">
-                <h5 className="card-subtitle">Italian</h5>
-                <div
-                    className="border-top"
-                    dangerouslySetInnerHTML={{
-                        __html: `${selectedIcd.text_it}`
-                    }}
-                />
-            </div>
+            <div
+                className="border-top"
+                dangerouslySetInnerHTML={{
+                    __html: `${selectedIcd.text_it}`
+                }}
+            />
         );
 
         return (
@@ -203,7 +196,7 @@ class DetailsCard extends React.Component {
                     <div className="card-header bg-primary">
                         <div className="overlay bg-primary" />
                         <button type="button"
-                           className="btn btn-default btn-sm text-right text-white"
+                           className="btn btn-default btn-sm text-right text-white ml-4"
                            style={buttonStyle}
                            onClick={this.closeDetailsCard.bind(this)}>
                             <CloseIcon />
@@ -212,9 +205,12 @@ class DetailsCard extends React.Component {
                             {selectedIcd.code}
                         </h1>
                     </div>
-                    {lang === 'de' ? ger : empty}
-                    {lang === 'fr' ? fr : empty}
-                    {lang === 'it' ? it : empty}
+                    <div className="card m-2 mt-4 mr-4 ml-4 border-0">
+                        <h5 className="card-subtitle">Description</h5>
+                        {lang === 'de' ? ger : empty}
+                        {lang === 'fr' ? fr : empty}
+                        {lang === 'it' ? it : empty}
+                    </div>
                     <div>
                         {editable ? editView : uneditableView}
                     </div>

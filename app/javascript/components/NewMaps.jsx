@@ -87,7 +87,7 @@ class NewMaps extends React.Component {
                     className="text-center"
                 >
                     <input type="submit"
-                           className="btn btn-outline-primary ml-4"
+                           className="btn btn-primary"
                            value="map selected"
                            onClick={this.stateIdSet.bind(this)}
                     />
@@ -100,7 +100,7 @@ class NewMaps extends React.Component {
                     onSubmit={this.handleSubmit.bind(this, false)}
                 >
                     <input type="submit"
-                           className="btn btn-outline-primary"
+                           className="btn btn-primary"
                            value="map"
                            onClick={this.stateIdSet.bind(this)}
                     />

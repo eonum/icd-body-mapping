@@ -6,6 +6,7 @@ import SearchCard from "./SearchCard";
 import Mapping from "./Mapping";
 import './MainUI.css'
 import NewMaps from "./NewMaps";
+import LayerList from "./LayerList";
 
 /**
  * The MainUI collects the child components of which it consists
@@ -68,8 +69,13 @@ class MainUI extends React.Component {
     callbackTopbarSearch = (searchTermFromTopbar) => {
         this.setState({
             searchTerm: searchTermFromTopbar,
-            searchDisplayed: true
+            searchDisplayed: true,
         });
+        if (searchTermFromTopbar === '' || searchTermFromTopbar === null) {
+            this.setState({
+                searchDisplayed: false,
+            });
+        }
     };
 
     callbackTopbarButtonTerm = (buttonTermFromTopbar) => {
@@ -103,6 +109,14 @@ class MainUI extends React.Component {
     callbackDetails = (showingIcdIdFromDetails) => {
         this.setState({ showingIcdId: showingIcdIdFromDetails });
     };
+
+    callbackReloadIcds = () => {
+        if (this.state.reloadIcds === true) {
+          this.setState({ reloadIcds: false});
+        } else {
+          this.setState({ reloadIcds: true});
+        }
+    }
 
     /**
      * Gets selected ICD
@@ -154,6 +168,7 @@ class MainUI extends React.Component {
                 editable={this.state.editMode}
                 selectedLayerId={this.state.selectedLayer.id}
 				        viewAll={this.state.viewAll}
+                language={this.state.activeLanguage}
                 callbackFromMainUIDetails={this.callbackSearchCardDetails}
                 callbackFromMainUIMapping={this.callbackSearchCardMapping}
                 callbackFromMainUIClose={this.callbackSearchCardClose}
@@ -169,8 +184,10 @@ class MainUI extends React.Component {
                 language={this.state.activeLanguage}
                 callbackFromMainUI={this.callbackDetails}
                 callbackFromMainUIClose={this.callbackDetailsCardClose}
+                callbackFromMainUIReloadIcds={this.callbackReloadIcds}
             />
         );
+
         const empty = (
             <></>
         );
@@ -203,6 +220,7 @@ class MainUI extends React.Component {
                                 callbackFromMainUI={this.callbackSidebar}
                                 editable={this.state.editMode}
                                 needUpdate={this.state.needUpdate}
+                                reloadIcds={this.state.reloadIcds}
                             />
                         </div>
                         <div className="col-4">

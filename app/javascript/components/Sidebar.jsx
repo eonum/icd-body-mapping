@@ -32,16 +32,7 @@ class Sidebar extends React.Component {
             chapterArray: chapterArray
         });
 
-        const url = "/api/v1/icds";
-        fetch(url)
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-                throw new Error("Network response wasn't ok.");
-            })
-            .then(async response => this.storeDatabase(await response))
-            .catch(() => this.props.history.push("/"));
+        this.loadIcds();
     }
 
     /** Reset UI
@@ -57,6 +48,22 @@ class Sidebar extends React.Component {
                 hierarchyEnd: false
             });
         }
+        if (this.props.reloadIcds !== prevProps.reloadIcds) {
+            this.loadIcds();
+        }
+    }
+
+    loadIcds() {
+      const url = "/api/v1/icds";
+      fetch(url)
+          .then(response => {
+              if (response.ok) {
+                  return response.json();
+              }
+              throw new Error("Network response wasn't ok.");
+          })
+          .then(async response => this.storeDatabase(await response))
+          .catch(() => this.props.history.push("/"));
     }
 
     /**
@@ -283,7 +290,7 @@ class Sidebar extends React.Component {
                     className="list-group-item list-group-item-action"
                     onClick={this.filterIcdsByChapter.bind(this, icd)}
                 >
-                    {icd.kapitel}
+                    {icd.code_kapitel}
                 </button>
             </div>
         });
