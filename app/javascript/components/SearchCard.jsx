@@ -74,7 +74,7 @@ class SearchCard extends React.Component {
     		this.props.callbackFromMainUIViewAll(true);
   	}
 
-    selectIcd(icd) {
+    viewIcd(icd) {
         this.props.callbackFromMainUIDetails(icd);
     }
 
@@ -101,6 +101,8 @@ class SearchCard extends React.Component {
                 checkedAll: false,
             });
         }
+
+        console.log(selection);
 
         this.setState({
             checkedIcds: selection
@@ -140,7 +142,7 @@ class SearchCard extends React.Component {
         const detailsVisible = this.props.detailsDisplayed;
         const editable = this.props.editable;
         const selection = this.state.checkedIcds;
-        const layer_id = this.props.selectedLayerId;
+        const selectedLayer = this.props.selectedLayer;
 		    const viewAll = this.state.viewAll;
         const lang = this.props.language;
 
@@ -176,7 +178,7 @@ class SearchCard extends React.Component {
             <NewMaps
                 icd_id={undefined}
                 icd_ids={selection}
-                layer_id={layer_id}
+                selectedLayer={selectedLayer}
             />
         );
 
@@ -201,7 +203,7 @@ class SearchCard extends React.Component {
                 </div>
                 <a type="button"
                    className="btn btn-light text-primary"
-                   onClick={this.selectIcd.bind(this, icd)}>
+                   onClick={this.viewIcd.bind(this, icd)}>
                     view details
                 </a>
             </div>
@@ -229,7 +231,7 @@ class SearchCard extends React.Component {
                         {editable ? checkboxAll : empty}
                     </div>
                     <div className="col-4 text-center">
-                        {editable ? mapButton : empty}
+                        {(editable && selectedLayer !== undefined) ? mapButton : empty}
                     </div>
                     <div className="col-4 text-right">
                         <button type="button"

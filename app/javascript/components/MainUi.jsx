@@ -7,6 +7,8 @@ import Mapping from "./Mapping";
 import './MainUI.css'
 import NewMaps from "./NewMaps";
 import LayerList from "./LayerList";
+import Logo from "../../assets/images/favicon.ico";
+import AllMaps from "./AllMaps";
 
 /**
  * The MainUI collects the child components of which it consists
@@ -166,7 +168,7 @@ class MainUI extends React.Component {
                 buttonTerm={this.state.buttonTerm}
                 detailsDisplayed={this.state.detailsDisplayed}
                 editable={this.state.editMode}
-                selectedLayerId={this.state.selectedLayer.id}
+                selectedLayer={this.state.selectedLayer}
 				        viewAll={this.state.viewAll}
                 language={this.state.activeLanguage}
                 callbackFromMainUIDetails={this.callbackSearchCardDetails}
@@ -221,6 +223,7 @@ class MainUI extends React.Component {
                                 editable={this.state.editMode}
                                 needUpdate={this.state.needUpdate}
                                 reloadIcds={this.state.reloadIcds}
+                                selectedIcd={this.state.selectedIcd}
                             />
                         </div>
                         <div className="col-4">

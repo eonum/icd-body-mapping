@@ -51,6 +51,14 @@ class Sidebar extends React.Component {
         if (this.props.reloadIcds !== prevProps.reloadIcds) {
             this.loadIcds();
         }
+        if (this.props.selectedIcd !== prevProps.selectedIcd) {
+            this.setState({
+                icds: this.allICDs,
+                term: this.props.selectedIcd.code,
+            });
+            this.filterIcdsByChapter(this.props.selectedIcd);
+            this.filterIcdsByIcdcode(this.state, this.props.selectedIcd);
+        }
     }
 
     loadIcds() {
@@ -158,6 +166,7 @@ class Sidebar extends React.Component {
         const ICDs = state.icds;
         const icdCode = icd.code.toString();
         let codelength;
+        console.log(icdCode);
 
         switch (icdCode.length) {
             case 1:
@@ -183,6 +192,8 @@ class Sidebar extends React.Component {
         selection = selection.filter((value) => {
             return value !== 0;
         });
+
+        console.log(selection);
 
         if (selection.length !== 0) {
             this.setState({
