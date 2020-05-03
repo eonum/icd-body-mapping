@@ -11,43 +11,56 @@ import EditIcon from '@material-ui/icons/Edit';
  * @author Aaron Saegesser, Linn Haeffner
  */
 class Topbar extends React.Component {
-    
+
     constructor(props) {
         super(props);
         this.state = {
             query: '',
             term: '',
-			viewAll: this.props.viewAll,
-            activeLanguage: 'de'
+            viewAll: this.props.viewAll,
+            activeLanguage: 'de',
         };
     }
-	
-	componentDidUpdate(prevProps) {
-		if (this.props.viewAll !== prevProps.viewAll) {
-			this.setViewAll(this.props.viewAll);
-		}
-	}
+
+  	componentDidUpdate(prevProps) {
+    		if (this.props.viewAll !== prevProps.viewAll) {
+    			   this.setViewAll(this.props.viewAll);
+    		}
+  	}
+
+    setUIDefault() {
+        this.props.callbackFromMainUIresetUI();
+        this.setState({
+            query: '',
+            term: '',
+            viewAll: this.props.viewAll,
+            activeLanguage: 'de',
+        });
+        this.searchForm.reset();
+    }
+
 
     /**
      * Gets the search term and sends it to MainUI
      * via callback function
      */
+
     setSearchTerm(term) {
         this.setState({
-			term: term
-		});
-		
-		this.setViewAll(false);
+			      term: term
+		    });
+
+		    this.setViewAll(false);
         this.props.callbackFromMainUISearch(term);
     }
-	
-	setViewAll(viewAll) {
-		this.setState({
-			viewAll: viewAll
-		});
-		event.preventDefault();
-		this.props.callbackFromMainUIViewAll(viewAll);
-	}
+
+  	setViewAll(viewAll) {
+    		this.setState({
+    			   viewAll: viewAll
+    		});
+    		event.preventDefault();
+    		this.props.callbackFromMainUIViewAll(viewAll);
+  	}
 
     setEditMode(edit) {
         this.props.callbackFromMainUIEdit(edit);
@@ -67,6 +80,9 @@ class Topbar extends React.Component {
         const buttonStyle = {
             width: '60px'
         };
+        const dropdownMenuStyle = {
+            maxWidth: '3rem'
+        }
 
         const editButton = (
             <button
@@ -100,7 +116,7 @@ class Topbar extends React.Component {
             italian: 'it'
         };
         const dropdown = (
-            <div className="dropdown mr-1">
+            <div className="btn-group dropleft mr-1">
                 <button
                     className="btn btn-default dropdown-toggle text-white"
                     type="button"
@@ -112,36 +128,47 @@ class Topbar extends React.Component {
                 >
                     {this.state.activeLanguage}
                 </button>
-                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <div className="dropdown-item" onClick={this.setLanguage.bind(this, languages.german)}>{languages.german}</div>
-                    <div className="dropdown-item" onClick={this.setLanguage.bind(this, languages.french)}>{languages.french}</div>
-                    <div className="dropdown-item" onClick={this.setLanguage.bind(this, languages.italian)}>{languages.italian}</div>
+                <div className="dropdown-menu" style={dropdownMenuStyle} aria-labelledby="dropdownMenuButton">
+                    <div className="dropdown-item" onClick={this.setLanguage.bind(this, languages.german)}>
+                        {languages.german}
+                    </div>
+                    <div className="dropdown-item" onClick={this.setLanguage.bind(this, languages.french)}>
+                        {languages.french}
+                    </div>
+                    <div className="dropdown-item" onClick={this.setLanguage.bind(this, languages.italian)}>
+                        {languages.italian}
+                    </div>
                 </div>
             </div>
         );
 
         return (
             <div className="navbar navbar-light bg-primary">
-                <Form>
+                <form ref={ form => this.searchForm = form }>
                     <FormControl
                         onChange={event => {this.setSearchTerm(event.target.value)}}
                         onKeyDown={event => {if (event.key === 'Enter') {this.setViewAll(true)}}}
                         type="text"
-                        placeholder="Search..."
+                        placeholder='Search...'
                         className="mr-sm-2"
                     />
-                </Form>
+                </form>
                 <button
                     type="button"
                     className="btn btn-default text-white ml-2"
-                    onClick={event => {if (this.state.term !== '') {this.setViewAll(true)}}}
+                    onClick={event => {this.setViewAll(true)}}
                 >
                     <SearchIcon/>
                 </button>
-                <h1 className="navbar-brand mx-auto text-white" style={headerStyle}>
+                <button
+                    type = "button"
+                    className="btn btn-default text-white navbar-brand mx-auto"
+                    style={headerStyle}
+                    onClick={this.setUIDefault.bind(this)}
+                >
                     ICD Mapping -
-                    <img className="ml-2" src={logo} alt="eonum" height="16px" />
-                </h1>
+                    <img className="ml-2" src={logo} alt="eonum" height="16px"/>
+                </button>
                 {dropdown}
                 {this.props.editable ? exitEditButton : editButton}
             </div>

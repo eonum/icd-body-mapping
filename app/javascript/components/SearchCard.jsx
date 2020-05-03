@@ -20,11 +20,11 @@ class SearchCard extends React.Component {
 			term: this.props.searchTerm
         }
     }
-	
+
 	componentDidMount() {
 		this.getSearchResults(this.props.searchTerm, this.props.viewAll);
 	}
-	
+
 	componentDidUpdate(prevProps) {
 		if (prevProps.viewAll !== this.props.viewAll) {
 			this.setState({
@@ -39,7 +39,7 @@ class SearchCard extends React.Component {
 			this.getSearchResults(this.props.searchTerm, this.props.viewAll);
 		}
 	}
-	
+
 	/**
      * Gets the search results from the link '/search?q=' + this.state.term
      * and saves them into the icds array, this will be later passed on to the search results component
@@ -64,7 +64,7 @@ class SearchCard extends React.Component {
 				);
 		}
     }
-	
+
 	viewAllSearchResults() {
 		this.setState({
 			viewAll: true
@@ -136,7 +136,7 @@ class SearchCard extends React.Component {
             overflow: 'auto'
         }
         const searchNextToDetailsStyle = {
-            height: '40vh',
+            height: '46vh',
             overflow: 'auto'
         }
         const checkboxStyle = {
