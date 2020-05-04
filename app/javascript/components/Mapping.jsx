@@ -76,7 +76,8 @@ class Mapping extends React.Component {
      * @param elem.ebene is the layer variable of the selected element.
      */
     selectLayer(ebene) {
-        this.setState({activeLayer: ebene})
+        this.setState({activeLayer: ebene});
+        this.props.callbackFromMainUIActiveLayer(ebene);
     }
 
     selectAll(x) {
@@ -144,6 +145,7 @@ class Mapping extends React.Component {
             }
             context.clearRect(0, 0, canvas.width, canvas.height);
         }
+        console.log(selectedImages);
     }
 
     /**

@@ -34,6 +34,7 @@ class MainUI extends React.Component {
             needUpdate: false,
             hightlightedPng: '',
             selectedLayerFromList: '',
+            activeLayer: 'Ohr',
         };
     }
 
@@ -108,6 +109,10 @@ class MainUI extends React.Component {
 
     callbackMapping = (selectedLayerFromMapping) => {
         this.setState({ selectedLayer: selectedLayerFromMapping });
+    };
+
+    callbackMappingActiveLayer = (activeLayer) => {
+        this.setState({ activeLayer: activeLayer});
     };
 
     callbackDetails = (showingIcdIdFromDetails) => {
@@ -207,6 +212,7 @@ class MainUI extends React.Component {
             <LayerList
                 callbackFromMainUISelect={this.callbackLayerListSelectLayer}
                 callbackFromMainUIHighlight={this.callbackLayerListHighlightPng}
+                activeLayer={this.state.activeLayer}
             />
         )
 
@@ -254,6 +260,7 @@ class MainUI extends React.Component {
                         <div className="col-6">
                             <Mapping
                                 callbackFromMainUI={this.callbackMapping}
+                                callbackFromMainUIActiveLayer={this.callbackMappingActiveLayer}
                                 showingIcdId={this.state.showingIcdId}
                                 needUpdate={this.state.needUpdate}
                                 selectedLayerFromList={this.state.selectedLayerFromList}

@@ -12,6 +12,7 @@ class LayerList extends React.Component {
         this.state = {
             layers: [],
             fragments: [],
+            maps: [],
             mappedFragments: [],
         };
     }
@@ -21,6 +22,8 @@ class LayerList extends React.Component {
             .then(response => this.setState({fragments: response}));
         $.getJSON('/api/v1/layers')
             .then(response => this.setState({layers: response}));
+        $.getJSON('/api/v1/maps')
+            .then(response => this.setState({maps: response}));
     }
 
     selectLayer(layer) {
@@ -34,6 +37,12 @@ class LayerList extends React.Component {
     render() {
         const layers = this.state.layers;
         const frags = this.state.fragments;
+        const activeLayer = this.props.activeLayer;
+
+        const style = {
+            height: '86vh',
+            overflow: 'auto'
+        }
 
         const empty = (<></>);
         let showFrags;
@@ -42,34 +51,47 @@ class LayerList extends React.Component {
         });
 
         const showLayers = layers.map((layer, index) => {
-            return <div>
-                <button
-                    type="button"
-                    className="list-group-item list-group-item-action font-weight-bold"
-                    key={index}
-                    onClick={this.selectLayer.bind(this, layer.ebene)}
-                >
-                    {layer.ebene}
-                </button>
-                <ul>
-                    {frags.map((frag, index) => {
-                        if (frag.ebene === layer.ebene) {
-                            return <li
-                                        type="button"
-                                        className="list-group-item list-group-item-action"
-                                        key={frag.id}
-                                        onMouseMove={this.highlightFragment.bind(this, frag)}
-                                    >
-                                        {frag.name}
-                                    </li>
-                        }
-                    })}
-                </ul>
-            </div>
+          if (layer.ebene === activeLayer) {
+              return <div>
+                          <button
+                              type="button"
+                              className="list-group-item list-group-item-action font-weight-bold text-primary"
+                              key={index}
+                              onClick={this.selectLayer.bind(this, layer.ebene)}
+                          >
+                              {layer.ebene}
+                          </button>
+                          <ul>
+                              {frags.map((frag, index) => {
+                                  if (frag.ebene === layer.ebene) {
+                                      return <li
+                                                  type="button"
+                                                  className="list-group-item list-group-item-action"
+                                                  key={frag.id}
+                                                  onMouseMove={this.highlightFragment.bind(this, frag)}
+                                              >
+                                                  {frag.name}
+                                              </li>
+                                  }
+                              })}
+                          </ul>
+                      </div>
+          } else {
+              return <div>
+                          <button
+                              type="button"
+                              className="list-group-item list-group-item-action font-weight-bold"
+                              key={index}
+                              onClick={this.selectLayer.bind(this, layer.ebene)}
+                          >
+                              {layer.ebene}
+                          </button>
+                      </div>
+            }
         });
 
         return (
-            <div>
+            <div style={style}>
                 {layers.length > 0 ? showLayers : empty}
             </div>
         )
