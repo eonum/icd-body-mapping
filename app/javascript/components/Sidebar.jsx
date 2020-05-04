@@ -298,7 +298,7 @@ class Sidebar extends React.Component {
                     className="list-group-item list-group-item-action"
                     onClick={this.filterIcdsByChapter.bind(this, icd)}
                 >
-                    {icd.code_kapitel}
+                    {icd.kapitel}
                 </button>
             </div>
         });

@@ -44,6 +44,12 @@ class Mapping extends React.Component {
                 this.selectAll(true);
             }
         }
+        if (this.props.selectedLayerFromList !== prevProps.selectedLayerFromList && this.props.selectedLayerFromList !== '') {
+            this.selectLayer(this.props.selectedLayerFromList);
+        }
+        if (this.props.hightlightedPng !== prevProps.hightlightedPng && this.props.hightlightedPng !== '') {
+            this.highlightPng(this.props.hightlightedPng);
+        }
     }
 
     /**
@@ -137,6 +143,37 @@ class Mapping extends React.Component {
                 }
             }
             context.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    }
+
+    /**
+     * The selectPngFromList method receives a fragment (png) from backend and highlights it
+     * @param fragment is the selected png from external source
+     */
+    highlightPng(fragment) {
+        if (fragment.ebene === this.state.activeLayer) {
+            let elem = this.state.allImages;
+            let selectedImage = [];
+
+            elem = elem.filter((img) => {
+                if (img.ebene === fragment.ebene) {
+                    return img;
+                }
+            });
+
+            this.selectAll(false);
+
+            for (let i = 0; i < elem.length; i++) {
+                let myImg = document.getElementById(elem[i].name);
+                if (elem[i].name === fragment.name) {
+                    myImg.style.opacity = '1';
+                    selectedImage.push(fragment);
+                } else {
+                    myImg.style.opacity = '0.4';
+                }
+            }
+            this.setState({selectedImages: selectedImage});
+            this.sendIcdToMainUI(selectedImage);
         }
     }
 

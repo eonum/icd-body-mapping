@@ -31,7 +31,9 @@ class MainUI extends React.Component {
             checkedIcdIds: [],
 			viewAll: false,
             activeLanguage: 'de',
-            needUpdate: false
+            needUpdate: false,
+            hightlightedPng: '',
+            selectedLayerFromList: '',
         };
     }
 
@@ -148,6 +150,18 @@ class MainUI extends React.Component {
         });
     };
 
+    callbackLayerListSelectLayer = (layer) => {
+        this.setState({
+            selectedLayerFromList: layer,
+        });
+    }
+
+    callbackLayerListHighlightPng = (fragment) => {
+        this.setState({
+            hightlightedPng: fragment,
+        });
+    }
+
     callbackSearchCardClose = () => {
         this.setState({
             searchDisplayed: false,
@@ -189,6 +203,12 @@ class MainUI extends React.Component {
                 callbackFromMainUIReloadIcds={this.callbackReloadIcds}
             />
         );
+        const layerList = (
+            <LayerList
+                callbackFromMainUISelect={this.callbackLayerListSelectLayer}
+                callbackFromMainUIHighlight={this.callbackLayerListHighlightPng}
+            />
+        )
 
         const empty = (
             <></>
@@ -229,12 +249,15 @@ class MainUI extends React.Component {
                         <div className="col-4">
                             {this.state.detailsDisplayed ? details : empty}
                             {this.state.searchDisplayed ? searchResults : empty}
+                            {!(this.state.detailsDisplayed || this.state.searchDisplayed) ? layerList : empty}
                         </div>
                         <div className="col-6">
                             <Mapping
                                 callbackFromMainUI={this.callbackMapping}
                                 showingIcdId={this.state.showingIcdId}
                                 needUpdate={this.state.needUpdate}
+                                selectedLayerFromList={this.state.selectedLayerFromList}
+                                hightlightedPng={this.state.hightlightedPng}
                             />
                         </div>
                     </div>

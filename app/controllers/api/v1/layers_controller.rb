@@ -1,7 +1,7 @@
 class Api::V1::LayersController < ApplicationController
 
   def index
-    render json: Layer.all.select('ebene, count(ebene)').group('ebene').order(count: :desc)
+    render json: Layer.all.select('ROW_NUMBER() OVER (ORDER BY ebene) as id, ebene, count(ebene)').group('ebene').order(ebene: :asc)
   end
 
   def index_images

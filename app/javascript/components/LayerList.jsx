@@ -1,4 +1,5 @@
 import React from 'react';
+import $ from "jquery";
 
 /**
  * The MappingList gets the Mappings corresponding to either, chosen Layers
@@ -8,8 +9,6 @@ import React from 'react';
 class LayerList extends React.Component {
     constructor(props) {
         super(props);
-        this.allICDs = [];
-        this.chapterICDs = [];
         this.state = {
             layers: [],
             fragments: [],
@@ -18,67 +17,60 @@ class LayerList extends React.Component {
     }
 
     componentDidMount() {
-        const url = "/api/v1/layers";
-        fetch(url)
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-                throw new Error("Network response wasn't ok.");
-            })
-            .then(async response => this.storeDatabase(await response));
+        $.getJSON('/api/v1/all/layers')
+            .then(response => this.setState({fragments: response}));
+        $.getJSON('/api/v1/layers')
+            .then(response => this.setState({layers: response}));
     }
 
-    componentDidUpdate(prevProps) {
-
+    selectLayer(layer) {
+        this.props.callbackFromMainUISelect(layer);
     }
 
-    /**
-     * Takes backend response and calls methods to store the DB
-     * in the frontend for further processing
-     * @param layerFrags
-     */
-     storeDatabase(layers) {
-         this.setState({
-             layers: layers
-         })
-
-         let frags = [];
-         for (var i=0; i<layers.length; i++) {
-             const url = "/api/v1/layers/" + this.layers.ebene;
-             fetch(url)
-                 .then(response => {
-                     if (response.ok) {
-                         return response.json();
-                     }
-                     throw new Error("Network response wasn't ok.");
-                 })
-                 .then(async response => {frags.push(await response)})
-                 .catch(() => this.props.history.push("/"));
-         }
-         this.setState({
-              fragments: frags,
-         });
-     }
-
-
+    highlightFragment(fragment) {
+        this.props.callbackFromMainUIHighlight(fragment);
+    }
 
     render() {
         const layers = this.state.layers;
         const frags = this.state.fragments;
 
-        const empty = (<></>)
+        const empty = (<></>);
         let showFrags;
-        const showLayers = layers.map((layers, index) => (
-            <li key={index} className="list-item">{layers.name}</li>
+        const show = layers.map((layer, index) => {
+            return <div key={layer.id}>{layer.ebene}</div>
+        });
 
-        ));
+        const showLayers = layers.map((layer, index) => {
+            return <div>
+                <button
+                    type="button"
+                    className="list-group-item list-group-item-action font-weight-bold"
+                    key={index}
+                    onClick={this.selectLayer.bind(this, layer.ebene)}
+                >
+                    {layer.ebene}
+                </button>
+                <ul>
+                    {frags.map((frag, index) => {
+                        if (frag.ebene === layer.ebene) {
+                            return <li
+                                        type="button"
+                                        className="list-group-item list-group-item-action"
+                                        key={frag.id}
+                                        onMouseMove={this.highlightFragment.bind(this, frag)}
+                                    >
+                                        {frag.name}
+                                    </li>
+                        }
+                    })}
+                </ul>
+            </div>
+        });
 
         return (
             <div>
-                <ul className="list-group">
-                    {layers.length > 0 ? showLayers : empty}
-                </ul>
+                {layers.length > 0 ? showLayers : empty}
             </div>
         )
     }
