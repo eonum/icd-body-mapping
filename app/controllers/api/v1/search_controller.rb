@@ -6,12 +6,12 @@ class Api::V1::SearchController < ApplicationController
   def index; end
 
   def search
-    icd = Icd.ransack(code_or_text_de_cont: params[:q]).result(distinct: true).order(code: :asc).limit(20)
+    icd = Icd.ransack(code_or_text_de_i_cont: params[:q]).result(distinct: true).order(code: :asc).limit(20)
     render json: icd
   end
 
   def searchAll
-    icd = Icd.ransack(code_or_text_de_cont: params[:q]).result(distinct: true).order(code: :asc)
+    icd = Icd.ransack(code_or_text_de_i_cont: params[:q]).result(distinct: true).order(code: :asc)
     render json: icd
   end
 

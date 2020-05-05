@@ -13,10 +13,9 @@ class Mapping extends React.Component {
         super(props);
         this.state = {
             allImages: [], allImagesBackup: [],
-            layers: [], layersBackup: [],
+            layers: [],
             selectedImages:[],
             x: 0, y: 0,
-            showAll: false,
             activeLayer: 'Ohr'
         };
     }
@@ -25,7 +24,7 @@ class Mapping extends React.Component {
         $.getJSON('/api/v1/all/layers')
             .then(response => this.setState({allImages: response, allImagesBackup: response}));
         $.getJSON('/api/v1/layers')
-            .then(response => this.setState({layers: response, layersBackup: response}));
+            .then(response => this.setState({layers: response}));
     }
 
     /**
@@ -36,13 +35,13 @@ class Mapping extends React.Component {
         if(this.props.showingIcdId !== prevProps.showingIcdId) {
             if (this.props.showingIcdId !== 0){
                 $.getJSON('/api/v1/map/' + this.props.showingIcdId)
-                    .then(response => this.setState({allImages: response}));
+                    .then(response => this.setState({allImages: response, selectedImages: []}));
                 $.getJSON('/api/v1/map_layers/' + this.props.showingIcdId)
-                    .then(response => this.setState({layers: response, activeLayer: response[0].ebene}));
+                    .then(response => this.setState({activeLayer: response[0].ebene}));
             } else {
-                this.setState({allImages: this.state.allImagesBackup, layers: this.state.layersBackup});
-                this.selectAll(true);
+                this.setState({allImages: this.state.allImagesBackup, selectedImages: []});
             }
+            this.selectAll(true);
         }
     }
 
@@ -86,13 +85,6 @@ class Mapping extends React.Component {
         }
     }
 
-    showAll() {
-        this.setState({showAll: !this.state.showAll, selectedImages: []});
-        this.setState({allImages: this.state.allImagesBackup, layers: this.state.layersBackup});
-        this.selectAll(true);
-        this.sendIcdToMainUI(this.state.showAll);
-    }
-
     /**
      * The selectPng Method receives the x, y coordinates and the length of the imageElements array.
      * Then it goes through all the different images and checks, which color an image has at the specific coordinates.
@@ -119,9 +111,10 @@ class Mapping extends React.Component {
                 let data = context.getImageData(x, y, 1, 1).data;
                 if (data[0] !== 0 && data[1] !== 0 && data[2] !== 0 && data[3] !== 0) {
                     let contains = false
-                    for (let tra = 0; tra < selectedImages.length; tra++) {
-                        if (selectedImages[tra] === elem[i]) {
-                            selectedImages.splice(tra,1);
+                    let travers;
+                    for (travers = 0; travers < selectedImages.length; travers++) {
+                        if (selectedImages[travers] === elem[i]) {
+                            selectedImages.splice(travers,1);
                             myImg.style.opacity = '0.4';
                             x = selectedImages.length;
                             contains = true;
@@ -129,7 +122,7 @@ class Mapping extends React.Component {
                     }
                     if (contains === false){
                         myImg.style.opacity = '1';
-                        selectedImages[selectedImages.length] = elem[i];
+                        selectedImages[travers] = elem[i];
                     }
                     i = len;
                     this.setState({selectedImages: selectedImages});
