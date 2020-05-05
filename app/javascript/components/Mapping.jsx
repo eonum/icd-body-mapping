@@ -78,7 +78,10 @@ class Mapping extends React.Component {
      * @param elem.ebene is the layer variable of the selected element.
      */
     selectLayer(ebene) {
-        this.setState({activeLayer: ebene});
+        this.setState({
+            activeLayer: ebene,
+            selectedImages: [],
+        });
         this.props.callbackFromMainUIActiveLayer(ebene);
     }
 
@@ -150,6 +153,9 @@ class Mapping extends React.Component {
             }
             context.clearRect(0, 0, canvas.width, canvas.height);
         }
+        if (selectedImages.length === 0){
+            this.selectAll(true);
+        }
         console.log(selectedImages);
     }
 
@@ -160,7 +166,6 @@ class Mapping extends React.Component {
     highlightPng(fragment) {
         if (fragment.ebene === this.state.activeLayer) {
             let elem = this.state.allImages;
-            let selectedImages = [];
 
             elem = elem.filter((img) => {
                 if (img.ebene === fragment.ebene) {
@@ -174,13 +179,10 @@ class Mapping extends React.Component {
                 let myImg = document.getElementById(elem[i].name);
                 if (elem[i].name === fragment.name) {
                     myImg.style.opacity = '1';
-                    selectedImages.push(fragment);
                 } else {
                     myImg.style.opacity = '0.4';
                 }
             }
-            this.setState({selectedImages: selectedImages});
-            this.sendIcdToMainUI(selectedImages);
         }
     }
 

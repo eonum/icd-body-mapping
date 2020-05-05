@@ -65,7 +65,7 @@ class SearchCard extends React.Component {
             load: false,
         });
         if (viewAll) {
-      			$.getJSON('/api/v1/searchAll_de?q=' + await term)
+      			$.getJSON('/api/v1/searchAll_' + this.props.language + '?q=' + await term)
         				.then(async response =>
           					this.setState({
             						icds: await response,

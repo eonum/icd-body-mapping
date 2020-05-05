@@ -69,13 +69,13 @@ class LayerList extends React.Component {
 
 
         const dropdownMenu = layers.map((layer, index) => {
-            return <div className="dropdown-item" onClick={this.selectLayer.bind(this, layer.ebene)}>
+            return <div className="dropdown-item" key={index} onClick={this.selectLayer.bind(this, layer.ebene)}>
                 {layer.ebene}
             </div>
         });
         const showLayers = layers.map((layer, index) => {
             if (layer.ebene === activeLayer) {
-                return <div>
+                return <div key={index}>
                             <button
                                 type="button"
                                 className="list-group-item list-group-item-action p-0 font-weight-bold text-primary"
