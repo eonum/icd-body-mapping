@@ -1,6 +1,5 @@
 class Api::V1::SearchController < ApplicationController
 
-
   before_action only: :search
 
   def index; end
