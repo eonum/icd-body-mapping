@@ -103,7 +103,7 @@ class LayerList extends React.Component {
                                         if (mappedFragments.length > 0 && mappedFragments[0].name === frag.name) {
                                             return <li
                                                         type="button"
-                                                        className="list-group-item list-group-item-action p-0 text-primary"
+                                                        className="list-group-item list-group-item-action p-0 text-primary font-weight-bold"
                                                         key={frag.id}
                                                         onMouseEnter={this.highlightFragment.bind(this, frag)}
                                                         onMouseLeave={this.setBackToPreviousSelection.bind(this)}

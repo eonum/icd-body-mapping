@@ -5,7 +5,7 @@ class Api::V1::LayersController < ApplicationController
   end
 
   def index_images
-    render json: Layer.all
+    render json: Layer.all.order(name: :asc)
   end
 
   def show
