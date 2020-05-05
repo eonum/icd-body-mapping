@@ -21,6 +21,7 @@ class Topbar extends React.Component {
             viewAll: this.props.viewAll,
             activeLanguage: 'de',
         };
+        this.timeout = 0;
     }
 
   	componentDidUpdate(prevProps) {
@@ -47,12 +48,12 @@ class Topbar extends React.Component {
      */
 
     setSearchTerm(term) {
-        this.setState({
-			      term: term
-		    });
-
-		    this.setViewAll(false);
-        this.props.callbackFromMainUISearch(term);
+        this.setState({term: term});
+        this.setViewAll(false);
+        if(this.timeout) clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+            this.props.callbackFromMainUISearch(term);
+        }, 300);
     }
 
   	setViewAll(viewAll) {
