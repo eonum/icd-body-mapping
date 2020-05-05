@@ -67,17 +67,30 @@ class LayerList extends React.Component {
             return <div key={layer.id}>{layer.ebene}</div>
         });
 
+
+        const dropdownMenu = layers.map((layer, index) => {
+            return <div className="dropdown-item" onClick={this.selectLayer.bind(this, layer.ebene)}>
+                {layer.ebene}
+            </div>
+        });
         const showLayers = layers.map((layer, index) => {
             if (layer.ebene === activeLayer) {
                 return <div>
                             <button
                                 type="button"
                                 className="list-group-item list-group-item-action p-0 font-weight-bold text-primary"
+                                id="dropdownMenuButton"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
                                 key={index}
                                 onClick={this.selectLayer.bind(this, layer.ebene)}
                             >
                                 {layer.ebene}
                             </button>
+                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                {dropdownMenu}
+                            </div>
                             <ul>
                                 {frags.map((frag, index) => {
                                     mappedFragments = maps.filter((map) => {
@@ -111,17 +124,6 @@ class LayerList extends React.Component {
                                     }
                                 })}
                             </ul>
-                        </div>
-            } else {
-                return <div>
-                            <button
-                                type="button"
-                                className="list-group-item list-group-item-action p-0 font-weight-bold"
-                                key={index}
-                                onClick={this.selectLayer.bind(this, layer.ebene)}
-                            >
-                                {layer.ebene}
-                            </button>
                         </div>
             }
         });

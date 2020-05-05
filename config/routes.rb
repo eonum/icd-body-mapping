@@ -11,8 +11,12 @@ Rails.application.routes.draw do
 
       resources :icds, only: [:index, :create, :show, :destroy, :update]
 
-      get :search, controller: :search
-      get :searchAll, controller: :search
+      get :search_de, controller: :search
+      get :search_fr, controller: :search
+      get :search_it, controller: :search
+      get :searchAll_de, controller: :search
+      get :searchAll_fr, controller: :search
+      get :searchAll_it, controller: :search
 
       resources :chapter, only: [ :index, :show]
     end

@@ -187,28 +187,39 @@ class Mapping extends React.Component {
     setBackToPreviousSelection() {
         let elem = this.state.allImages;
         let selectedImages = this.state.selectedImagesBackup;
+        let selectedImgsInActiveLayer;
         let found;
 
-        elem = elem.filter((img) => {
+        selectedImgsInActiveLayer = selectedImages.filter((img) => {
             if (img.ebene === this.state.activeLayer) {
                 return img;
             }
         });
 
-        for (let i = 0; i < elem.length; i++) {
-            let myImg = document.getElementById(elem[i].name);
+        if (selectedImgsInActiveLayer.length > 0) {
+            elem = elem.filter((img) => {
+                if (img.ebene === this.state.activeLayer) {
+                    return img;
+                }
+            });
 
-            found = selectedImages.find((img) => {return img.name === elem[i].name});
+            for (let i = 0; i < elem.length; i++) {
+                let myImg = document.getElementById(elem[i].name);
 
-            if (found !== undefined) {
-                myImg.style.opacity = '1';
-            } else {
-                myImg.style.opacity = '0.4';
+                found = selectedImages.find((img) => {return img.name === elem[i].name});
+
+                if (found !== undefined) {
+                    myImg.style.opacity = '1';
+                } else {
+                    myImg.style.opacity = '0.4';
+                }
             }
-        }
 
-        this.setState({selectedImages: selectedImages});
-        this.sendIcdToMainUI(selectedImages);
+            this.setState({selectedImages: selectedImages});
+            this.sendIcdToMainUI(selectedImages);
+        } else {
+            this.selectAll(true);
+        }
     }
 
     render() {

@@ -18,6 +18,7 @@ import AllMaps from "./AllMaps";
 class MainUI extends React.Component {
     constructor(props) {
         super(props);
+        this.term = '';
         this.state = {
             searchedIcds: '',
             searchTerm: '',
@@ -72,6 +73,7 @@ class MainUI extends React.Component {
      * @params searchedIcdsFromTopbar, searchTermFromTopbar
      */
     callbackTopbarSearch = (searchTermFromTopbar) => {
+        this.term = searchTermFromTopbar;
         this.setState({
             searchTerm: searchTermFromTopbar,
             searchDisplayed: true,
@@ -190,7 +192,7 @@ class MainUI extends React.Component {
     render() {
         const searchResults = (
             <SearchCard
-                searchTerm={this.state.searchTerm}
+                searchTerm={this.term}
                 buttonTerm={this.state.buttonTerm}
                 detailsDisplayed={this.state.detailsDisplayed}
                 editable={this.state.editMode}
@@ -264,12 +266,12 @@ class MainUI extends React.Component {
                                 selectedIcd={this.state.selectedIcd}
                             />
                         </div>
-                        <div className="col-4" style={style}>
+                        <div className="col-5" style={style}>
                             {this.state.detailsDisplayed ? details : empty}
                             {this.state.searchDisplayed ? searchResults : empty}
                             {!(this.state.searchDisplayed) ? layerList : empty}
                         </div>
-                        <div className="col-6">
+                        <div className="col-5">
                             <Mapping
                                 callbackFromMainUI={this.callbackMapping}
                                 callbackFromMainUIActiveLayer={this.callbackMappingActiveLayer}

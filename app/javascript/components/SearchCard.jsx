@@ -58,23 +58,24 @@ class SearchCard extends React.Component {
        * and saves them into the icds array, this will be later passed on to the search results component
        * via callbackFromMainUI function
        */
-    getSearchResults(term, viewAll) {
-    		if (viewAll) {
-      			$.getJSON('/api/v1/searchAll?q=' + term)
+    getSearchResults = async (term, viewAll) => {
+        console.log(term);
+        this.setState({
+            term: term,
+            load: false,
+        });
+        if (viewAll) {
+      			$.getJSON('/api/v1/searchAll_de?q=' + await term)
         				.then(async response =>
           					this.setState({
-            						term: term,
             						icds: await response,
-                        load: false,
           					})
         				);
     		} else {
-      			$.getJSON('/api/v1/search?q=' + term)
+      			$.getJSON('/api/v1/search_de?q=' + term)
         				.then(async response =>
           					this.setState({
-            						term: term,
             						icds: await response,
-                        load: false,
           					})
         				);
     		}

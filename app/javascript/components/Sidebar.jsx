@@ -192,6 +192,7 @@ class Sidebar extends React.Component {
       selection = selection.filter((value) => {
           return value !== 0;
       });
+      console.log(selection);
 
       if (selection.length !== 0) {
           this.setState({
