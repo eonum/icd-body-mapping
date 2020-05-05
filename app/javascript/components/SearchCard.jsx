@@ -4,6 +4,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import {Form} from "react-bootstrap";
 import NewMaps from "./NewMaps";
 import $ from "jquery";
+import loadingGif from '../../assets/images/Preloader_2.gif'
+
 
 /**
  * SearchCard displays possible search results, but doesn't do the searching itself.
@@ -19,11 +21,15 @@ class SearchCard extends React.Component {
       			viewAll: this.props.viewAll,
       			term: this.props.searchTerm,
             checkedAll: false,
+            load: false,
         }
     }
 
   	componentDidMount() {
-    		this.getSearchResults(this.props.searchTerm, this.props.viewAll);
+        this.setState({
+            load: true,
+        });
+        this.getSearchResults(this.props.searchTerm, this.props.viewAll);
   	}
 
   	componentDidUpdate(prevProps) {
@@ -31,11 +37,17 @@ class SearchCard extends React.Component {
       			this.setState({
         				viewAll: this.props.viewAll
       			});
+            if (this.props.viewAll === true) {
+                this.setState({
+                    load: true,
+                });
+            }
       			this.getSearchResults(this.props.searchTerm, this.props.viewAll);
     		}
     		if (prevProps.searchTerm !== this.props.searchTerm) {
       			this.setState({
-        				term: this.props.searchTerm
+        				term: this.props.searchTerm,
+                load: true,
       			});
       			this.getSearchResults(this.props.searchTerm, this.props.viewAll);
     		}
@@ -52,7 +64,8 @@ class SearchCard extends React.Component {
         				.then(async response =>
           					this.setState({
             						term: term,
-            						icds: await response
+            						icds: await response,
+                        load: false,
           					})
         				);
     		} else {
@@ -60,7 +73,8 @@ class SearchCard extends React.Component {
         				.then(async response =>
           					this.setState({
             						term: term,
-            						icds: await response
+            						icds: await response,
+                        load: false,
           					})
         				);
     		}
@@ -68,7 +82,8 @@ class SearchCard extends React.Component {
 
   	viewAllSearchResults() {
     		this.setState({
-      			viewAll: true
+      			viewAll: true,
+            load: true,
     		});
     		this.getSearchResults(this.state.term, true);
     		this.props.callbackFromMainUIViewAll(true);
@@ -145,6 +160,7 @@ class SearchCard extends React.Component {
         const selectedLayer = this.props.selectedLayer;
 		    const viewAll = this.state.viewAll;
         const lang = this.props.language;
+        const loading = this.state.load;
 
         const searchOnlyStyle = {
             height: '80vh',
@@ -224,6 +240,32 @@ class SearchCard extends React.Component {
         const cardBorder = "border-top border-primary";
         const cardNoBorder = "";
 
+        const loadingImgStyle = {
+            zIndex: 100,
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            width: '50px',
+            height: '50px',
+            marginTop: '-25px',
+            marginLeft: '-25px',
+        }
+        const loadingDivStyle = {
+            zIndex: 99,
+            top: '0%',
+            left: '0%',
+            height: '100%',
+            width: '100%',
+            position: 'absolute',
+            height: '88vh',
+            backgroundColor: 'rgba(255,255,255,0.7)',
+        }
+        const loadingImg = (
+            <div style={loadingDivStyle}>
+                <img src={loadingGif} style={loadingImgStyle}/>
+            </div>
+        )
+
         return (
             <div className={detailsVisible ? cardBorder : cardNoBorder}>
                 <div className="row mt-2 mb-1">
@@ -243,6 +285,7 @@ class SearchCard extends React.Component {
                     </div>
                 </div>
                 <div style={detailsVisible ? searchNextToDetailsStyle : searchOnlyStyle}>
+                    {loading ? loadingImg : empty}
                     {icds.length > 0 ? resultIcds : noIcd}
           					<div className="text-center">
           						{(viewAll || icds.length < 20) ? empty : viewAllButton}

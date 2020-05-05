@@ -1,6 +1,7 @@
 import React from 'react';
 import {IconButton} from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import loadingGif from '../../assets/images/Preloader_2.gif'
 
 /**
  * The Sidebar gets the database from backend and renders
@@ -284,7 +285,7 @@ class Sidebar extends React.Component {
             return <div className="list-group mr-1" key={chapter.index}>
                 <button
                     type="button"
-                    className="list-group-item list-group-item-action"
+                    className="list-group-item list-group-item-action p-0 pl-2"
                     disabled
                 >
                     {chapter.index}
@@ -295,7 +296,7 @@ class Sidebar extends React.Component {
             return <div className="list-group mr-1" key={index}>
                 <button
                     type="button"
-                    className="list-group-item list-group-item-action"
+                    className="list-group-item list-group-item-action p-0 pl-2"
                     onClick={this.filterIcdsByChapter.bind(this, icd)}
                 >
                     {icd.kapitel}
@@ -310,7 +311,7 @@ class Sidebar extends React.Component {
                 return <div className="list-group mr-1" key={index}>
                     <button
                         type="button"
-                        className="list-group-item list-group-item-action"
+                        className="list-group-item list-group-item-action p-0 pl-2"
                         onClick={this.filterIcdsByIcdcode.bind(this, this.state, icd)}
                     >
                         {icd.code}
@@ -323,7 +324,7 @@ class Sidebar extends React.Component {
                 return <div className="list-group mr-1" key={index}>
                     <button
                         type="button"
-                        className="list-group-item list-group-item-action"
+                        className="list-group-item list-group-item-action p-0 pl-2"
                         onClick={this.filterIcdsByIcdcode.bind(this, this.state, icd)}
                     >
                         {icd.code}
@@ -342,9 +343,35 @@ class Sidebar extends React.Component {
                 <ArrowBackIcon/>
             </a>
         );
+        const loadingImgStyle = {
+            zIndex: 100,
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            width: '50px',
+            height: '50px',
+            marginTop: '-25px',
+            marginLeft: '-25px',
+        }
+        const loadingDivStyle = {
+            zIndex: 99,
+            top: '0%',
+            left: '0%',
+            height: '100%',
+            width: '100%',
+            position: 'absolute',
+            height: '88vh',
+            backgroundColor: 'rgba(255,255,255,0.7)',
+        }
+        const loadingImg = (
+            <div style={loadingDivStyle}>
+                <img src={loadingGif} style={loadingImgStyle}/>
+            </div>
+        )
 
         return (
             <div>
+                {icds.length > 0 ? empty : loadingImg}
                 <div className="mb-1">
                     {icds.length > 0 && this.state.filtered === true ? backButton : empty}
                 </div>

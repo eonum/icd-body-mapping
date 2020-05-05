@@ -14,7 +14,7 @@ class Mapping extends React.Component {
         this.state = {
             allImages: [], allImagesBackup: [],
             layers: [], layersBackup: [],
-            selectedImages:[],
+            selectedImages:[], selectedImagesBackup: [],
             x: 0, y: 0,
             showAll: false,
             activeLayer: 'Ohr'
@@ -49,6 +49,8 @@ class Mapping extends React.Component {
         }
         if (this.props.hightlightedPng !== prevProps.hightlightedPng && this.props.hightlightedPng !== '') {
             this.highlightPng(this.props.hightlightedPng);
+        } else if (this.props.hightlightedPng !== prevProps.hightlightedPng && this.props.hightlightedPng === '') {
+            this.setBackToPreviousSelection();
         }
     }
 
@@ -139,7 +141,10 @@ class Mapping extends React.Component {
                         selectedImages[selectedImages.length] = elem[i];
                     }
                     i = len;
-                    this.setState({selectedImages: selectedImages});
+                    this.setState({
+                        selectedImages: selectedImages,
+                        selectedImagesBackup: selectedImages,
+                    });
                     this.sendIcdToMainUI(selectedImages);
                 }
             }
@@ -155,7 +160,7 @@ class Mapping extends React.Component {
     highlightPng(fragment) {
         if (fragment.ebene === this.state.activeLayer) {
             let elem = this.state.allImages;
-            let selectedImage = [];
+            let selectedImages = [];
 
             elem = elem.filter((img) => {
                 if (img.ebene === fragment.ebene) {
@@ -169,14 +174,41 @@ class Mapping extends React.Component {
                 let myImg = document.getElementById(elem[i].name);
                 if (elem[i].name === fragment.name) {
                     myImg.style.opacity = '1';
-                    selectedImage.push(fragment);
+                    selectedImages.push(fragment);
                 } else {
                     myImg.style.opacity = '0.4';
                 }
             }
-            this.setState({selectedImages: selectedImage});
-            this.sendIcdToMainUI(selectedImage);
+            this.setState({selectedImages: selectedImages});
+            this.sendIcdToMainUI(selectedImages);
         }
+    }
+
+    setBackToPreviousSelection() {
+        let elem = this.state.allImages;
+        let selectedImages = this.state.selectedImagesBackup;
+        let found;
+
+        elem = elem.filter((img) => {
+            if (img.ebene === this.state.activeLayer) {
+                return img;
+            }
+        });
+
+        for (let i = 0; i < elem.length; i++) {
+            let myImg = document.getElementById(elem[i].name);
+
+            found = selectedImages.find((img) => {return img.name === elem[i].name});
+
+            if (found !== undefined) {
+                myImg.style.opacity = '1';
+            } else {
+                myImg.style.opacity = '0.4';
+            }
+        }
+
+        this.setState({selectedImages: selectedImages});
+        this.sendIcdToMainUI(selectedImages);
     }
 
     render() {

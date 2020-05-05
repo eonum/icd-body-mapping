@@ -22,7 +22,19 @@ class LayerList extends React.Component {
             .then(response => this.setState({fragments: response}));
         $.getJSON('/api/v1/layers')
             .then(response => this.setState({layers: response}));
-        $.getJSON('/api/v1/maps')
+        if (this.props.selectedIcd !== '') {
+            this.getMapsOfIcd(this.props.selectedIcd);
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        if(this.props.selectedIcd !== prevProps.selectedIcd && this.props.selectedIcd !== '') {
+            this.getMapsOfIcd(this.props.selectedIcd);
+        }
+    }
+
+    getMapsOfIcd(showedIcd) {
+        $.getJSON('/api/v1/map/' + this.props.selectedIcd.id)
             .then(response => this.setState({maps: response}));
     }
 
@@ -34,13 +46,18 @@ class LayerList extends React.Component {
         this.props.callbackFromMainUIHighlight(fragment);
     }
 
+    setBackToPreviousSelection() {
+        this.props.callbackFromMainUIResetToSelection();
+    }
+
     render() {
         const layers = this.state.layers;
         const frags = this.state.fragments;
         const activeLayer = this.props.activeLayer;
+        const maps = this.state.maps;
+        let mappedFragments = [];
 
         const style = {
-            height: '86vh',
             overflow: 'auto'
         }
 
@@ -51,42 +68,61 @@ class LayerList extends React.Component {
         });
 
         const showLayers = layers.map((layer, index) => {
-          if (layer.ebene === activeLayer) {
-              return <div>
-                          <button
-                              type="button"
-                              className="list-group-item list-group-item-action font-weight-bold text-primary"
-                              key={index}
-                              onClick={this.selectLayer.bind(this, layer.ebene)}
-                          >
-                              {layer.ebene}
-                          </button>
-                          <ul>
-                              {frags.map((frag, index) => {
-                                  if (frag.ebene === layer.ebene) {
-                                      return <li
-                                                  type="button"
-                                                  className="list-group-item list-group-item-action"
-                                                  key={frag.id}
-                                                  onMouseMove={this.highlightFragment.bind(this, frag)}
-                                              >
-                                                  {frag.name}
-                                              </li>
-                                  }
-                              })}
-                          </ul>
-                      </div>
-          } else {
-              return <div>
-                          <button
-                              type="button"
-                              className="list-group-item list-group-item-action font-weight-bold"
-                              key={index}
-                              onClick={this.selectLayer.bind(this, layer.ebene)}
-                          >
-                              {layer.ebene}
-                          </button>
-                      </div>
+            if (layer.ebene === activeLayer) {
+                return <div>
+                            <button
+                                type="button"
+                                className="list-group-item list-group-item-action p-0 font-weight-bold text-primary"
+                                key={index}
+                                onClick={this.selectLayer.bind(this, layer.ebene)}
+                            >
+                                {layer.ebene}
+                            </button>
+                            <ul>
+                                {frags.map((frag, index) => {
+                                    mappedFragments = maps.filter((map) => {
+                                        if (frag.name === map.name) {
+                                            return map;
+                                        }
+                                    });
+
+                                    if (frag.ebene === layer.ebene) {
+                                        if (mappedFragments.length > 0 && mappedFragments[0].name === frag.name) {
+                                            return <li
+                                                        type="button"
+                                                        className="list-group-item list-group-item-action p-0 text-primary"
+                                                        key={frag.id}
+                                                        onMouseEnter={this.highlightFragment.bind(this, frag)}
+                                                        onMouseLeave={this.setBackToPreviousSelection.bind(this)}
+                                                    >
+                                                        {frag.name}
+                                                    </li>
+                                        } else {
+                                            return <li
+                                                        type="button"
+                                                        className="list-group-item list-group-item-action p-0"
+                                                        key={frag.id}
+                                                        onMouseEnter={this.highlightFragment.bind(this, frag)}
+                                                        onMouseLeave={this.setBackToPreviousSelection.bind(this)}
+                                                    >
+                                                        {frag.name}
+                                                    </li>
+                                        }
+                                    }
+                                })}
+                            </ul>
+                        </div>
+            } else {
+                return <div>
+                            <button
+                                type="button"
+                                className="list-group-item list-group-item-action p-0 font-weight-bold"
+                                key={index}
+                                onClick={this.selectLayer.bind(this, layer.ebene)}
+                            >
+                                {layer.ebene}
+                            </button>
+                        </div>
             }
         });
 

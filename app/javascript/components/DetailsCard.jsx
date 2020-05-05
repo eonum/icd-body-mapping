@@ -103,11 +103,9 @@ class DetailsCard extends React.Component {
         const detailsWithSearchStyle = {
             height: '34vh',
             overflow: 'auto',
-            marginBottom: '2vh'
         };
         const detailsWithoutSearchStyle = {
             overflow: 'auto',
-            marginBottom: '2vh'
         };
 
         const editView = (
@@ -208,7 +206,7 @@ class DetailsCard extends React.Component {
 
         return (
             <div style={searchVisible ? detailsWithSearchStyle : detailsWithoutSearchStyle}>
-                <div className="card">
+                <div className="card mb-2">
                     <div className="card-header bg-primary">
                         <div className="overlay bg-primary" />
                         <button type="button"

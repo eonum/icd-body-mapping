@@ -159,13 +159,19 @@ class MainUI extends React.Component {
         this.setState({
             selectedLayerFromList: layer,
         });
-    }
+    };
 
     callbackLayerListHighlightPng = (fragment) => {
         this.setState({
             hightlightedPng: fragment,
         });
-    }
+    };
+
+    callbackLayerlistResetSelection = () => {
+        this.setState({
+            hightlightedPng: '',
+        });
+    };
 
     callbackSearchCardClose = () => {
         this.setState({
@@ -176,7 +182,8 @@ class MainUI extends React.Component {
 
     callbackDetailsCardClose = () => {
         this.setState({
-            detailsDisplayed: false
+            detailsDisplayed: false,
+            selectedIcd: '',
         });
     };
 
@@ -212,7 +219,9 @@ class MainUI extends React.Component {
             <LayerList
                 callbackFromMainUISelect={this.callbackLayerListSelectLayer}
                 callbackFromMainUIHighlight={this.callbackLayerListHighlightPng}
+                callbackFromMainUIResetToSelection={this.callbackLayerlistResetSelection}
                 activeLayer={this.state.activeLayer}
+                selectedIcd={this.state.selectedIcd}
             />
         )
 
@@ -223,6 +232,9 @@ class MainUI extends React.Component {
         const notVisibleStyle = {
             height: '0vh',
         };
+        const style = {
+            height: '86vh',
+        }
 
         return (
             <div>
@@ -252,10 +264,10 @@ class MainUI extends React.Component {
                                 selectedIcd={this.state.selectedIcd}
                             />
                         </div>
-                        <div className="col-4">
+                        <div className="col-4" style={style}>
                             {this.state.detailsDisplayed ? details : empty}
                             {this.state.searchDisplayed ? searchResults : empty}
-                            {!(this.state.detailsDisplayed || this.state.searchDisplayed) ? layerList : empty}
+                            {!(this.state.searchDisplayed) ? layerList : empty}
                         </div>
                         <div className="col-6">
                             <Mapping
