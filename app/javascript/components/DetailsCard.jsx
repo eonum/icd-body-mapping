@@ -3,6 +3,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import {Form, FormControl} from "react-bootstrap";
 import NewMaps from "./NewMaps";
 import AllMaps from "./AllMaps";
+import $ from "jquery";
 
 /**
  * DetailsCard displays an ICD given via props in a viewable fashion
@@ -21,12 +22,9 @@ class DetailsCard extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if(this.props.selectedLayer !== prevProps.selectedLayer)
-        {
-            if (this.props.selectedLayer === true || this.props.selectedLayer === false){
-                this.setState({showingIcdId: 0});
-                this.props.callbackFromMainUI(0);
-            }
+        if(this.props.selectedIcd !== prevProps.selectedIcd) {
+            this.props.callbackFromMainUI(0);
+            this.setState({showingIcd: 'show'});
         }
     }
 
