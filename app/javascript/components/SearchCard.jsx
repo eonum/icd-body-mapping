@@ -59,23 +59,22 @@ class SearchCard extends React.Component {
        * via callbackFromMainUI function
        */
     getSearchResults = async (term, viewAll) => {
-        console.log(term);
-        this.setState({
-            term: term,
-            load: false,
-        });
         if (viewAll) {
       			$.getJSON('/api/v1/searchAll_' + this.props.language + '?q=' + await term)
         				.then(async response =>
           					this.setState({
             						icds: await response,
+                        term: term,
+                        load: false,
           					})
         				);
     		} else {
-      			$.getJSON('/api/v1/search_de?q=' + term)
+      			$.getJSON('/api/v1/search_' + this.props.language + '?q=' + term)
         				.then(async response =>
           					this.setState({
             						icds: await response,
+                        term: term,
+                        load: false,
           					})
         				);
     		}
@@ -164,7 +163,7 @@ class SearchCard extends React.Component {
         const loading = this.state.load;
 
         const searchOnlyStyle = {
-            height: '80vh',
+            height: '78vh',
             overflow: 'auto'
         }
         const searchNextToDetailsStyle = {
@@ -258,7 +257,7 @@ class SearchCard extends React.Component {
             height: '100%',
             width: '100%',
             position: 'absolute',
-            height: '88vh',
+            height: '86vh',
             backgroundColor: 'rgba(255,255,255,0.7)',
         }
         const loadingImg = (

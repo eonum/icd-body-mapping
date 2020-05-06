@@ -77,6 +77,7 @@ class MainUI extends React.Component {
         this.setState({
             searchTerm: searchTermFromTopbar,
             searchDisplayed: true,
+            detailsDisplayed: false,
         });
         if (searchTermFromTopbar === '' || searchTermFromTopbar === null) {
             this.setState({
@@ -236,6 +237,7 @@ class MainUI extends React.Component {
         };
         const style = {
             height: '86vh',
+            overflow: 'auto'
         }
 
         return (
@@ -266,12 +268,12 @@ class MainUI extends React.Component {
                                 selectedIcd={this.state.selectedIcd}
                             />
                         </div>
-                        <div className="col-5" style={style}>
+                        <div className="col-4" style={style}>
                             {this.state.detailsDisplayed ? details : empty}
                             {this.state.searchDisplayed ? searchResults : empty}
                             {!(this.state.searchDisplayed) ? layerList : empty}
                         </div>
-                        <div className="col-5">
+                        <div className="col-6" style={style}>
                             <Mapping
                                 callbackFromMainUI={this.callbackMapping}
                                 callbackFromMainUIActiveLayer={this.callbackMappingActiveLayer}
