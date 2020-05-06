@@ -9,6 +9,7 @@
     "@rails/webpacker": "4.2.2",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "bootstrap": "^4.4.1",
+    "channels": "^0.0.4",
     "jquery": "^3.4.1",
     "popper.js": "^1.16.1",
     "prop-types": "^15.7.2",

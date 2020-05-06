@@ -5,10 +5,8 @@ import DetailsCard from "./DetailsCard";
 import SearchCard from "./SearchCard";
 import Mapping from "./Mapping";
 import './MainUI.css'
-import NewMaps from "./NewMaps";
 import LayerList from "./LayerList";
 import Logo from "../../assets/images/favicon.ico";
-import AllMaps from "./AllMaps";
 
 /**
  * The MainUI collects the child components of which it consists
@@ -240,7 +238,7 @@ class MainUI extends React.Component {
 
         return (
             <div>
-                <link rel="shortcut icon" href="./images/favicon.ico"/>
+                <link rel="shortcut icon" href={Logo}/>
                 <div className="container-fluid">
                     <div className="row mb-2">
                         <div className="w-100">
