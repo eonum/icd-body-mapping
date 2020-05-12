@@ -252,12 +252,12 @@ class Mapping extends React.Component {
             </div>
         );
 
-        const rowStyle = {height: '8vh'};
+        const rowStyle = {height: '3vh'};
 
         return (
             <div>
                 <div className="row" style={rowStyle}>
-                    {dropdown}
+
                 </div>
                 <canvas id='canvas' style={divStyle} width="600" height="530"/>
                 <div onMouseMove={this._onMouseMove.bind(this)} id='mappingComp' onClick={this.selectPng.bind(this, x, y, len)}>

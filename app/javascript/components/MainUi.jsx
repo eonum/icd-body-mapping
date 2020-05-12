@@ -30,12 +30,13 @@ class MainUI extends React.Component {
             showingIcdId: 0,
             editMode: false,
             checkedIcdIds: [],
-			viewAll: false,
+			      viewAll: false,
             activeLanguage: 'de',
             needUpdate: false,
             hightlightedPng: '',
             selectedLayerFromList: '',
             activeLayer: 'Ohr',
+            icdSelectionFromSearch: false,
         };
     }
 
@@ -137,7 +138,8 @@ class MainUI extends React.Component {
     callbackSidebar = (dataFromSidebar) => {
         this.setState({
             selectedIcd: dataFromSidebar,
-            detailsDisplayed: true
+            detailsDisplayed: true,
+            icdSelectionFromSearch: false,
         });
     };
 
@@ -148,7 +150,8 @@ class MainUI extends React.Component {
     callbackSearchCardDetails = (dataFromSearchCard) => {
         this.setState({
             selectedIcd: dataFromSearchCard,
-            detailsDisplayed: true
+            detailsDisplayed: true,
+            icdSelectionFromSearch: true,
         });
     };
 
@@ -266,6 +269,7 @@ class MainUI extends React.Component {
                                 needUpdate={this.state.needUpdate}
                                 reloadIcds={this.state.reloadIcds}
                                 selectedIcd={this.state.selectedIcd}
+                                icdSelectionFromSearch={this.state.icdSelectionFromSearch}
                             />
                         </div>
                         <div className="col-4" style={style}>
