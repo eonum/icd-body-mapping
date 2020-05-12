@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SearchControllerTest < ActionDispatch::IntegrationTest
+class Api::V1::SearchControllerTest < ActionDispatch::IntegrationTest
 
   test "should get index" do
     get search_url

@@ -61,7 +61,6 @@
     <orderEntry type="library" scope="PROVIDED" name="haml (v5.1.2, ruby-2.6.5-p114) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="i18n (v1.8.2, ruby-2.6.5-p114) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="jbuilder (v2.10.0, ruby-2.6.5-p114) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="jquery-rails (v4.3.5, ruby-2.6.5-p114) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="loofah (v2.5.0, ruby-2.6.5-p114) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mail (v2.7.1, ruby-2.6.5-p114) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="marcel (v0.3.3, ruby-2.6.5-p114) [gem]" level="application" />
@@ -106,7 +105,6 @@
     <orderEntry type="library" scope="PROVIDED" name="turbolinks-source (v5.2.0, ruby-2.6.5-p114) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="tzinfo (v1.2.7, ruby-2.6.5-p114) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="tzinfo-data (v1.2020.1, ruby-2.6.5-p114) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="uglifier (v4.2.0, ruby-2.6.5-p114) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="web-console (v4.0.2, ruby-2.6.5-p114) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="webdrivers (v4.3.0, ruby-2.6.5-p114) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="webpacker (v5.1.1, ruby-2.6.5-p114) [gem]" level="application" />

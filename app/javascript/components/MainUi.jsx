@@ -4,7 +4,6 @@ import Sidebar from "./Sidebar";
 import DetailsCard from "./DetailsCard";
 import SearchCard from "./SearchCard";
 import Mapping from "./Mapping";
-import './MainUI.css'
 import LayerList from "./LayerList";
 import Logo from "../../assets/images/favicon.ico";
 
@@ -236,6 +235,10 @@ class MainUI extends React.Component {
             height: '86vh',
         }
 
+        const sidebarStyle ={
+            width: '20%'
+        }
+
         return (
             <div>
                 <link rel="shortcut icon" href={Logo}/>
@@ -262,6 +265,7 @@ class MainUI extends React.Component {
                                 needUpdate={this.state.needUpdate}
                                 reloadIcds={this.state.reloadIcds}
                                 selectedIcd={this.state.selectedIcd}
+                                style={sidebarStyle}
                             />
                         </div>
                         <div className="col-5" style={style}>

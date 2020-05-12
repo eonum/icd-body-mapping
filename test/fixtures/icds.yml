@@ -1,1 +1,19 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+one:
+  id: 1
+  code: 'A00'
+  version: 'ICD10-GM-2018'
+  text_de: 'Test 1'
+  text_fr: 'Test 2'
+  text_it: 'Test 3'
+  annotationen: ''
+  kapitel: '1'
+two:
+  id: 2
+  code: 'B00'
+  version: 'ICD10-GM-2018'
+  text_de: 'Test 4'
+  text_fr: 'Test 5'
+  text_it: 'Test 6'
+  annotationen: ''
+  kapitel: '2'

@@ -28,9 +28,6 @@ gem 'ransack'
 gem 'react-rails'
 gem 'react_on_rails'
 
-gem 'uglifier'
-gem 'jquery-rails'
-
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

@@ -18,9 +18,9 @@ class LayerList extends React.Component {
     }
 
     componentDidMount() {
-        $.getJSON('/api/v1/all/layers')
-            .then(response => this.setState({fragments: response}));
         $.getJSON('/api/v1/layers')
+            .then(response => this.setState({fragments: response}));
+        $.getJSON('/api/v1/all/layers')
             .then(response => this.setState({layers: response}));
         if (this.props.selectedIcd !== '') {
             this.getMapsOfIcd(this.props.selectedIcd);
@@ -61,18 +61,18 @@ class LayerList extends React.Component {
             overflow: 'auto'
         }
 
-        const empty = (<></>);
+        const empty = (<div/>);
         let showFrags;
         const show = layers.map((layer, index) => {
             return <div key={layer.id}>{layer.ebene}</div>
         });
-
 
         const dropdownMenu = layers.map((layer, index) => {
             return <div className="dropdown-item" key={index} onClick={this.selectLayer.bind(this, layer.ebene)}>
                 {layer.ebene}
             </div>
         });
+
         const showLayers = layers.map((layer, index) => {
             if (layer.ebene === activeLayer) {
                 return <div key={index}>

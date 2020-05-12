@@ -2,7 +2,7 @@ require 'test_helper'
 
 class IcdTest < ActiveSupport::TestCase
   test 'valid icd' do
-    icd = Icd.new(id: 0, code: 'A00', version: 'ICD10-GM-2018', text_de: 'Test 1', text_fr: 'le Tèst', text_it: 'test 1', annotationen: '', kapitel: '')
+    icd = Icd.new(id: 3, code: 'A00', version: 'ICD10-GM-2018', text_de: 'Test 1', text_fr: 'Test2', text_it: 'test 3', annotationen: '', kapitel: '')
     assert icd.valid?
   end
 
