@@ -13,7 +13,8 @@ class Mapping extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            allImages: [], allImagesBackup: [],
+            allImages: [],
+            maps: [],
             layers: [],
             selectedImages:[], selectedImagesBackup: [],
             x: 0, y: 0,
@@ -23,11 +24,19 @@ class Mapping extends React.Component {
         this.selectFromSelected = this.selectFromSelected.bind(this);
     }
 
+    makeArrayIdLayerId() {
+        let allImages = this.state.allImages;
+        for(let i=0; i < allImages.length; i++) {
+        }
+    }
+
     componentDidMount() {
         $.getJSON('/api/v1/layers')
-            .then(response => this.setState({allImages: response, allImagesBackup: response}));
+            .then(response => this.setState({allImages: response}));
         $.getJSON('/api/v1/all/layers')
             .then(response => this.setState({layers: response}));
+        $.getJSON('api/v1/maps')
+            .then(response => this.setState({maps: response}))
     }
 
     /**
@@ -37,13 +46,13 @@ class Mapping extends React.Component {
     componentDidUpdate(prevProps) {
         if(this.props.showingIcdId !== prevProps.showingIcdId) {
             if (this.props.showingIcdId !== 0){
-                $.getJSON('/api/v1/map/' + this.props.showingIcdId)
-                    .then(response => this.selectFromSelected(response));
+                this.selectFromSelected(this.props.showingIcdId);
             } else {
-                this.setState({selectedImages: []});
+                this.setState({selectedImages: [], selectedImagesBackup: []});
                 this.selectAll(true);
             }
         }
+
         let selectedLayerFromList = this.props.selectedLayerFromList;
         let hightlightedPng = this.props.hightlightedPng;
         if (selectedLayerFromList !== prevProps.selectedLayerFromList && selectedLayerFromList !== '') {
@@ -59,7 +68,7 @@ class Mapping extends React.Component {
     callbackallImages = (layer) => {
         this.setState({allImages: this.state.allImages.concat(layer)});
         $.getJSON('/api/v1/layers')
-            .then(response => this.setState({allImages: response, allImagesBackup: response}));
+            .then(response => this.setState({allImages: response}));
         $.getJSON('/api/v1/all/layers')
             .then(response => this.setState({layers: response}));
     };
@@ -93,6 +102,9 @@ class Mapping extends React.Component {
             selectedImages: [],
         });
         this.props.callbackFromMainUIActiveLayer(ebene);
+        setTimeout(() => {
+            this.selectFromSelected(this.props.showingIcdId)
+        });
     }
 
     selectAll(x) {
@@ -110,16 +122,32 @@ class Mapping extends React.Component {
         }
     }
 
-    selectFromSelected(response) {
-        let selectedImages = response;
-        let activeLayer = this.state.activeLayer;
-        this.setState({selectedImages: selectedImages});
+    selectFromSelected(icdId) {
         this.selectAll(false);
-        for (let i = 0; i < selectedImages.length; i++) {
-            if (selectedImages[i].ebene === activeLayer) {
-                document.getElementById(selectedImages[i].name).style.opacity = '1';
+
+        let selectedImages = [];
+        let allImages = this.state.allImages;
+        let maps = this.state.maps;
+        let activeLayer = this.state.activeLayer;
+        for (let i = 0; i < maps.length; i++) {
+            if (maps[i].icd_id === icdId) {
+                let id = maps[i].layer_id;
+                for (let x = 0; x < allImages.length; x++) {
+                    if (allImages[x].id === id){
+                        let myImg = allImages[x];
+                        if (myImg.ebene === activeLayer){
+                            document.getElementById(myImg.name).style.opacity = '1';
+                            selectedImages = selectedImages.concat(myImg);
+                            x = allImages.length;
+                        }
+                    }
+                }
             }
         }
+        if(selectedImages.length === 0) {
+            this.selectAll(true);
+        }
+        this.setState({selectedImages: selectedImages, selectedImagesBackup: selectedImages});
     }
 
     /**
