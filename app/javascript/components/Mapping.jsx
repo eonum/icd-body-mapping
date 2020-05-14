@@ -1,6 +1,6 @@
 import React from 'react';
 import $ from "jquery";
-import Layer from "./Layer";
+import LayerOptions from './ManageLayers/LayerOptions'
 
 /**
  * The Mapping component is one that displays the individual layers,
@@ -20,6 +20,7 @@ class Mapping extends React.Component {
             activeLayer: 'Ohr'
         };
         this.callbackallImages = this.callbackallImages.bind(this);
+        this.selectFromSelected = this.selectFromSelected.bind(this);
     }
 
     componentDidMount() {
@@ -37,13 +38,11 @@ class Mapping extends React.Component {
         if(this.props.showingIcdId !== prevProps.showingIcdId) {
             if (this.props.showingIcdId !== 0){
                 $.getJSON('/api/v1/map/' + this.props.showingIcdId)
-                    .then(response => this.setState({allImages: response, selectedImages: []}));
-                $.getJSON('/api/v1/map_layers/' + this.props.showingIcdId)
-                    .then(response => this.setState({activeLayer: response[0].ebene}));
+                    .then(response => this.selectFromSelected(response));
             } else {
-                this.setState({allImages: this.state.allImagesBackup, selectedImages: []});
+                this.setState({selectedImages: []});
+                this.selectAll(true);
             }
-            this.selectAll(true);
         }
         let selectedLayerFromList = this.props.selectedLayerFromList;
         let hightlightedPng = this.props.hightlightedPng;
@@ -111,6 +110,18 @@ class Mapping extends React.Component {
         }
     }
 
+    selectFromSelected(response) {
+        let selectedImages = response;
+        let activeLayer = this.state.activeLayer;
+        this.setState({selectedImages: selectedImages});
+        this.selectAll(false);
+        for (let i = 0; i < selectedImages.length; i++) {
+            if (selectedImages[i].ebene === activeLayer) {
+                document.getElementById(selectedImages[i].name).style.opacity = '1';
+            }
+        }
+    }
+
     /**
      * The selectPng Method receives the x, y coordinates and the length of the imageElements array.
      * Then it goes through all the different images and checks, which color an image has at the specific coordinates.
@@ -127,6 +138,7 @@ class Mapping extends React.Component {
         let elem = this.state.allImages;
         let activeLayer = this.state.activeLayer;
         let selectedImages = this.state.selectedImages;
+
         if (selectedImages.length === 0){
             this.selectAll(false);
         }
@@ -136,25 +148,22 @@ class Mapping extends React.Component {
                 context.drawImage(myImg, 0, 0);
                 let data = context.getImageData(x, y, 1, 1).data;
                 if (data[0] !== 0 && data[1] !== 0 && data[2] !== 0 && data[3] !== 0) {
-                    let contains = false
-                    let travers;
-                    for (travers = 0; travers < selectedImages.length; travers++) {
-                        if (selectedImages[travers] === elem[i]) {
-                            selectedImages.splice(travers,1);
-                            myImg.style.opacity = '0.4';
-                            x = selectedImages.length;
+                    let contains = false;
+                    let tra;
+                    for (tra = 0; tra < selectedImages.length; tra++) {
+                        if (selectedImages[tra].id === elem[i].id) {
                             contains = true;
+                            selectedImages.splice(tra,1);
+                            myImg.style.opacity = '0.4';
+                            tra = selectedImages.length;
                         }
                     }
                     if (contains === false){
                         myImg.style.opacity = '1';
-                        selectedImages[travers] = elem[i];
+                        selectedImages[tra] = elem[i];
                     }
                     i = len;
-                    this.setState({
-                        selectedImages: selectedImages,
-                        selectedImagesBackup: selectedImages,
-                    });
+                    this.setState({selectedImages: selectedImages, selectedImagesBackup: selectedImages});
                     this.sendIcdToMainUI(selectedImages);
                 }
             }
@@ -238,35 +247,16 @@ class Mapping extends React.Component {
             }
         });
 
-        let alleLayers = this.state.layers.map((elem, index) => {
-            return <div className="dropdown-item" key={index} onClick={this.selectLayer.bind(this, elem.ebene)}>
-                {elem.ebene}
-            </div>
-        });
-
-        const dropdown = (
-            <div className="col-3 dropdown">
-                <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {this.state.activeLayer}
-                </button>
-                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    {alleLayers}
-                </div>
-            </div>
-        );
-
-        const rowStyle = {height: '8vh'};
+        const rowStyle = {height: '8vh', float: 'right'};
 
         return (
             <div>
-                <div className="row" style={rowStyle}>
-                    {dropdown}
-                    <Layer callbackFromMapping={this.callbackallImages} allImages={this.state.allImages}/>
-                </div>
                 <canvas id='canvas' style={divStyle} width="600" height="530"/>
                 <div onMouseMove={this._onMouseMove.bind(this)} id='mappingComp' onClick={this.selectPng.bind(this, x, y, this.state.allImages.length)}>
                     {alleElemente}
+                </div>
+                <div className="row" style={rowStyle}>
+                    <LayerOptions callbackFromMapping={this.callbackallImages} style={divStyle}/>
                 </div>
             </div>
         )

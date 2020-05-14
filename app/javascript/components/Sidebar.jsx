@@ -13,14 +13,14 @@ class Sidebar extends React.Component {
         super(props);
         this.allICDs = [];
         this.chapterICDs = [];
+        this.ICDsInCurrentChapter = [];
         this.state = {
-            icds: [],
             icdSelection: [],
             filtered: false,
             icdCodelength: 3,
             term: '',
             hierarchyEnd: false,
-            chapterArray: []
+            chapterArray: [],
         };
     }
 
@@ -52,9 +52,12 @@ class Sidebar extends React.Component {
         if (this.props.reloadIcds !== prevProps.reloadIcds) {
             this.loadIcds();
         }
-        if (this.props.selectedIcd !== prevProps.selectedIcd && this.props.selectedIcd !== '') {
+        if (this.props.selectedIcd !== prevProps.selectedIcd
+          && this.props.selectedIcd !== ''
+          && this.props.icdSelectionFromSearch === true) {
+            console.log('selection from SEARCH')
             this.setState({
-                icds: this.allICDs,
+                icdSelection: this.allICDs,
                 term: this.props.selectedIcd.code,
             });
             this.filterIcdsByChapter(this.props.selectedIcd);
@@ -81,7 +84,6 @@ class Sidebar extends React.Component {
      * @param response
      */
     storeDatabase(response) {
-        this.setState({ icds: response.sort() });
         this.setIcdDatabaseStorage(response);
         this.readOutChapters(response);
     }
@@ -145,13 +147,29 @@ class Sidebar extends React.Component {
                 return 0;
             }
         });
-
         selection = selection.filter((value) => {
             return value !== 0;
         });
+        selection = selection.sort();
+        console.log(selection);
+
+        this.ICDsInCurrentChapter = selection;
+
+        selection = this.ICDsInCurrentChapter.map((icd) => {
+            if (icd.code.toString().length === codelength) {
+                return icd;
+            } else {
+                return 0;
+            }
+        });
+        selection = selection.filter((value) => {
+            return value !== 0;
+        });
+        selection = selection.sort();
+        console.log(selection);
 
         this.setState({
-            icds: selection.sort(),
+            icdSelection: selection,
             filtered: true,
             icdCodelength: codelength,
         });
@@ -164,19 +182,24 @@ class Sidebar extends React.Component {
      * @param icd
      */
     filterIcdsByIcdcode(state, icd) {
-      const ICDs = state.icds;
-      const icdCode = icd.code.toString();
+      const ICDs = this.ICDsInCurrentChapter;
+      let icdCode = icd.code.toString();
       let codelength;
+      console.log(icdCode);
+      console.log(ICDs);
 
       switch (icdCode.length) {
-          case 1:
-              codelength = 3;
-              break;
           case 3:
               codelength = 5;
               break;
           case 5:
               codelength = 6;
+              break;
+          case 6:
+              if (this.props.icdSelectionFromSearch === true) {
+                  codelength = 6
+                  icdCode= icdCode.substring(0, 5);
+              }
               break;
       }
 
@@ -188,7 +211,6 @@ class Sidebar extends React.Component {
               return 0;
           }
       });
-
       selection = selection.filter((value) => {
           return value !== 0;
       });
@@ -203,11 +225,47 @@ class Sidebar extends React.Component {
               hierarchyEnd: false
           });
       } else {
+          if (this.props.icdSelectionFromSearch === true) {
+              switch (icdCode.length) {
+                  case 3:
+                      codelength = 3;
+                      icdCode = '';
+                      break;
+                  case 5:
+                      codelength = 5;
+                      icdCode = icdCode.substring(0, 3);
+                      break;
+              }
+
+              let selection = ICDs.map((icd) => {
+                  if (icd.code.toString().includes(icdCode)
+                      && icd.code.toString().length === codelength) {
+                      return icd;
+                  } else {
+                      return 0;
+                  }
+              });
+              selection = selection.filter((value) => {
+                  return value !== 0;
+              });
+
+              this.setState({
+                  icdSelection: selection.sort(),
+                  filtered: true,
+                  icdCodelength: codelength,
+                  term: icdCode,
+                  hierarchyEnd: false
+              });
+          }
+
           this.setState({
               filtered: true,
-              hierarchyEnd: true
+              icdCodelength: icdCode.length,
+              hierarchyEnd: true,
+              term: icdCode,
           });
       }
+      console.log(this.state.hierarchyEnd);
 
       this.sendIcdToMainUI(icd);
     }
@@ -218,26 +276,33 @@ class Sidebar extends React.Component {
      */
     stepBackHierarchy() {
         const state = this.state;
-        let ICDs = state.icds;
+        let ICDs = this.ICDsInCurrentChapter;
+        const hierarchyEnd = state.hierarchyEnd;
 
         let term = state.term;
+        const termLength = term.toString().length;
         let filtered = true;
         let codelength;
 
-        if (term.toString().length === 0) {
-            ICDs = this.allICDs;
+        if (termLength === 0) {
             filtered = false;
             codelength = 3;
-        } else if (term.toString().length === 3) {
+        } else if (termLength === 3 || termLength === 4) {
             term = '';
             codelength = 3;
-        } else if (term.toString().length === 5) {
-            term = term.toString().substring(0, 3);
+        } else if (termLength === 5) {
+            if (hierarchyEnd) {
+                term = '';
+                codelength = 3;
+            } else {
+                term = term.toString().substring(0, 4);
+                codelength = 5;
+            }
+        } else if (termLength === 6) {
+            term = term.toString().substring(0, 4);
             codelength = 5;
-        } else if (term.toString().length === 6) {
-            term = term.toString().substring(0, 5);
-            codelength = 6;
         }
+        console.log(term);
 
         let selection = ICDs.map((icd) => {
             if (icd.code.toString().includes(term)
@@ -256,7 +321,8 @@ class Sidebar extends React.Component {
             icdSelection: selection.sort(),
             filtered: filtered,
             icdCodelength: codelength,
-            term: term
+            term: term,
+            hierarchyEnd: false
         });
     }
 
@@ -270,7 +336,7 @@ class Sidebar extends React.Component {
     }
 
     render() {
-        const { icds } = this.state;
+        const { icdSelection } = this.state;
 
         const withBackButtonStyle = {
             height: '82vh',
@@ -304,7 +370,7 @@ class Sidebar extends React.Component {
                 </button>
             </div>
         });
-        const icdSubGroup = icds.map((icd, index) => {
+        const icdSubGroup = icdSelection.map((icd, index) => {
             if (icd.code.toString().includes(this.state.term)
                 && icd.code.toString() !== this.state.term
                 && icd.code.toString().length === this.state.icdCodelength
@@ -333,12 +399,27 @@ class Sidebar extends React.Component {
                 </div>
             }
         });
+        let icdSubGroup2 = [];
+        if (icdSelection !== []) {
+            icdSubGroup2 = icdSelection.map((icd, index) => {
+                return <div className="list-group mr-1" key={index}>
+                    <button
+                        type="button"
+                        className="list-group-item list-group-item-action p-0 pl-2"
+                        onClick={this.filterIcdsByIcdcode.bind(this, this.state, icd)}
+                    >
+                        {icd.code}
+                    </button>
+                </div>
+          });
+        }
+
         const empty = (
             <></>
         );
         const backButton = (
             <a type="button"
-               className="btn btn-light"
+               className="btn btn-light mb-1"
                onClick={this.stepBackHierarchy.bind(this, this.state)}
             >
                 <ArrowBackIcon/>
@@ -372,14 +453,14 @@ class Sidebar extends React.Component {
 
         return (
             <div>
-                {icds.length > 0 ? empty : loadingImg}
-                <div className="mb-1">
-                    {icds.length > 0 && this.state.filtered === true ? backButton : empty}
+                {icdSelection.length > 0 ? empty : loadingImg}
+                <div>
+                    {icdSelection.length > 0 && this.state.filtered === true ? backButton : empty}
                 </div>
                 <div style={this.state.filtered ? withBackButtonStyle : withoutBackButtonStyle}>
-                    {icds.length > 0 ? empty : whileLoading}
-                    {icds.length > 0 && this.state.filtered === false ? icdChapters : empty}
-                    {icds.length > 0 && this.state.filtered === true ? icdSubGroup : empty}
+                    {icdSelection.length > 0 ? empty : whileLoading}
+                    {icdSelection.length > 0 && this.state.filtered === false ? icdChapters : empty}
+                    {icdSelection.length > 0 && this.state.filtered === true ? icdSubGroup2 : empty}
                 </div>
             </div>
         )

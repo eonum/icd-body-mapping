@@ -4,8 +4,10 @@ import Sidebar from "./Sidebar";
 import DetailsCard from "./DetailsCard";
 import SearchCard from "./SearchCard";
 import Mapping from "./Mapping";
+import NewMaps from "./NewMaps";
 import LayerList from "./LayerList";
 import Logo from "../../assets/images/favicon.ico";
+import AllMaps from "./AllMaps";
 
 /**
  * The MainUI collects the child components of which it consists
@@ -27,12 +29,13 @@ class MainUI extends React.Component {
             showingIcdId: 0,
             editMode: false,
             checkedIcdIds: [],
-			viewAll: false,
+			      viewAll: false,
             activeLanguage: 'de',
             needUpdate: false,
             hightlightedPng: '',
             selectedLayerFromList: '',
             activeLayer: 'Ohr',
+            icdSelectionFromSearch: false,
         };
     }
 
@@ -74,6 +77,7 @@ class MainUI extends React.Component {
         this.setState({
             searchTerm: searchTermFromTopbar,
             searchDisplayed: true,
+            detailsDisplayed: false,
         });
         if (searchTermFromTopbar === '' || searchTermFromTopbar === null) {
             this.setState({
@@ -133,7 +137,8 @@ class MainUI extends React.Component {
     callbackSidebar = (dataFromSidebar) => {
         this.setState({
             selectedIcd: dataFromSidebar,
-            detailsDisplayed: true
+            detailsDisplayed: true,
+            icdSelectionFromSearch: false,
         });
     };
 
@@ -144,7 +149,8 @@ class MainUI extends React.Component {
     callbackSearchCardDetails = (dataFromSearchCard) => {
         this.setState({
             selectedIcd: dataFromSearchCard,
-            detailsDisplayed: true
+            detailsDisplayed: true,
+            icdSelectionFromSearch: true,
         });
     };
 
@@ -233,6 +239,7 @@ class MainUI extends React.Component {
         };
         const style = {
             height: '86vh',
+            overflow: 'auto'
         }
 
         const sidebarStyle ={
@@ -266,14 +273,15 @@ class MainUI extends React.Component {
                                 reloadIcds={this.state.reloadIcds}
                                 selectedIcd={this.state.selectedIcd}
                                 style={sidebarStyle}
+                                icdSelectionFromSearch={this.state.icdSelectionFromSearch}
                             />
                         </div>
-                        <div className="col-5" style={style}>
+                        <div className="col-4" style={style}>
                             {this.state.detailsDisplayed ? details : empty}
                             {this.state.searchDisplayed ? searchResults : empty}
                             {!(this.state.searchDisplayed) ? layerList : empty}
                         </div>
-                        <div className="col-5">
+                        <div className="col-6" style={style}>
                             <Mapping
                                 callbackFromMainUI={this.callbackMapping}
                                 callbackFromMainUIActiveLayer={this.callbackMappingActiveLayer}

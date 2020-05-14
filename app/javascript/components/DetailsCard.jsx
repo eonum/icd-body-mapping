@@ -3,7 +3,6 @@ import CloseIcon from "@material-ui/icons/Close";
 import {Form, FormControl} from "react-bootstrap";
 import NewMaps from "./NewMaps";
 import AllMaps from "./AllMaps";
-import $ from "jquery";
 
 /**
  * DetailsCard displays an ICD given via props in a viewable fashion

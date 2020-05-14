@@ -3,7 +3,7 @@ import React from "react";
 /**
  * The NewMaps component is one, which is responsible for creating connections between the icd codes
  * and the images. It does this by creating an entry inside the maps table, which contains an
- * the icd_id, layer_id collums.
+ * the icd_id, layer_id coloms.
  * It gets the layer_id and icd_id as props from the DetailsCard, which in turn them from the MainUi$
  * @author Marius Asadauskas
  */
@@ -43,7 +43,7 @@ class NewMaps extends React.Component {
         } else {
             icd_ids.push(this.props.icd_id);
         }
-
+        console.log("here");
         for (let i=0; i<icd_ids.length; i++) {
             for (let lay=0; lay < layers.length; lay++) {
                 let body = JSON.stringify({map: {icd_id: icd_ids[i], layer_id: layers[lay].id}});
@@ -51,9 +51,9 @@ class NewMaps extends React.Component {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: body,
-                }).then((response) => {return response.json()})
-                    .then((map)=>{this.addNewMap(map)});
+                }).then((map)=>{this.addNewMap(map)});
                 event.preventDefault();
+                console.log(body);
             }
         }
     }

@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2020_04_08_143803) do
     t.string "text_it", null: false
     t.text "annotationen"
     t.integer "kapitel", limit: 2
+    t.string "code_kapitel"
   end
 
   create_table "layers", force: :cascade do |t|
