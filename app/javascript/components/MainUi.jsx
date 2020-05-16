@@ -4,7 +4,6 @@ import Sidebar from "./Sidebar";
 import DetailsCard from "./DetailsCard";
 import SearchCard from "./SearchCard";
 import Mapping from "./Mapping";
-import './MainUI.css'
 import NewMaps from "./NewMaps";
 import LayerList from "./LayerList";
 import Logo from "../../assets/images/favicon.ico";
@@ -243,9 +242,13 @@ class MainUI extends React.Component {
             overflow: 'auto'
         }
 
+        const sidebarStyle ={
+            width: '20%'
+        }
+
         return (
             <div>
-                <link rel="shortcut icon" href="./images/favicon.ico"/>
+                <link rel="shortcut icon" href={Logo}/>
                 <div className="container-fluid">
                     <div className="row mb-2">
                         <div className="w-100">
@@ -269,6 +272,7 @@ class MainUI extends React.Component {
                                 needUpdate={this.state.needUpdate}
                                 reloadIcds={this.state.reloadIcds}
                                 selectedIcd={this.state.selectedIcd}
+                                style={sidebarStyle}
                                 icdSelectionFromSearch={this.state.icdSelectionFromSearch}
                                 language={this.state.activeLanguage}
                             />

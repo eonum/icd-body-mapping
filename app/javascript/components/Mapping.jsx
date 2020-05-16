@@ -1,5 +1,6 @@
 import React from 'react';
 import $ from "jquery";
+import LayerOptions from './ManageLayers/LayerOptions'
 
 /**
  * The Mapping component is one that displays the individual layers,
@@ -12,19 +13,30 @@ class Mapping extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            allImages: [], allImagesBackup: [],
+            allImages: [],
+            maps: [],
             layers: [],
             selectedImages:[], selectedImagesBackup: [],
             x: 0, y: 0,
             activeLayer: 'Ohr'
         };
+        this.callbackallImages = this.callbackallImages.bind(this);
+        this.selectFromSelected = this.selectFromSelected.bind(this);
+    }
+
+    makeArrayIdLayerId() {
+        let allImages = this.state.allImages;
+        for(let i=0; i < allImages.length; i++) {
+        }
     }
 
     componentDidMount() {
-        $.getJSON('/api/v1/all/layers')
-            .then(response => this.setState({allImages: response, allImagesBackup: response}));
         $.getJSON('/api/v1/layers')
+            .then(response => this.setState({allImages: response}));
+        $.getJSON('/api/v1/all/layers')
             .then(response => this.setState({layers: response}));
+        $.getJSON('api/v1/maps')
+            .then(response => this.setState({maps: response}))
     }
 
     /**
@@ -34,26 +46,32 @@ class Mapping extends React.Component {
     componentDidUpdate(prevProps) {
         if(this.props.showingIcdId !== prevProps.showingIcdId) {
             if (this.props.showingIcdId !== 0){
-                $.getJSON('/api/v1/map/' + this.props.showingIcdId)
-                    .then(response => this.setState({allImages: response, selectedImages: []}));
-                $.getJSON('/api/v1/map_layers/' + this.props.showingIcdId)
-                    .then(response => this.setState({activeLayer: response[0].ebene}));
+                this.selectFromSelected(this.props.showingIcdId);
             } else {
-                this.setState({allImages: this.state.allImagesBackup, selectedImages: []});
+                this.setState({selectedImages: [], selectedImagesBackup: []});
+                this.selectAll(true);
             }
-            this.selectAll(true);
         }
+
         let selectedLayerFromList = this.props.selectedLayerFromList;
+        let hightlightedPng = this.props.hightlightedPng;
         if (selectedLayerFromList !== prevProps.selectedLayerFromList && selectedLayerFromList !== '') {
             this.selectLayer(selectedLayerFromList);
         }
-        let hightlightedPng = this.props.hightlightedPng;
         if (hightlightedPng !== prevProps.hightlightedPng && hightlightedPng !== '') {
             this.highlightPng(hightlightedPng);
         } else if (hightlightedPng !== prevProps.hightlightedPng && hightlightedPng === '') {
             this.setBackToPreviousSelection();
         }
     }
+
+    callbackallImages = (layer) => {
+        this.setState({allImages: this.state.allImages.concat(layer)});
+        $.getJSON('/api/v1/layers')
+            .then(response => this.setState({allImages: response}));
+        $.getJSON('/api/v1/all/layers')
+            .then(response => this.setState({layers: response}));
+    };
 
     /**
      * A method, which sends the chosen image back to the Main Ui, so that other components,
@@ -84,6 +102,9 @@ class Mapping extends React.Component {
             selectedImages: [],
         });
         this.props.callbackFromMainUIActiveLayer(ebene);
+        setTimeout(() => {
+            this.selectFromSelected(this.props.showingIcdId)
+        });
     }
 
     selectAll(x) {
@@ -92,11 +113,41 @@ class Mapping extends React.Component {
         for (let i = 0; i < elem.length; i++) {
             if (elem[i].ebene === activeLayer){
                 let myImg = document.getElementById(elem[i].name);
-                if (x===true){
+                if (x === true && myImg !==  null){
                     myImg.style.opacity = '1';
-                } else {myImg.style.opacity = '0.4';}
+                } else if (myImg !==  null) {
+                    myImg.style.opacity = '0.4';
+                }
             }
         }
+    }
+
+    selectFromSelected(icdId) {
+        this.selectAll(false);
+
+        let selectedImages = [];
+        let allImages = this.state.allImages;
+        let maps = this.state.maps;
+        let activeLayer = this.state.activeLayer;
+        for (let i = 0; i < maps.length; i++) {
+            if (maps[i].icd_id === icdId) {
+                let id = maps[i].layer_id;
+                for (let x = 0; x < allImages.length; x++) {
+                    if (allImages[x].id === id){
+                        let myImg = allImages[x];
+                        if (myImg.ebene === activeLayer){
+                            document.getElementById(myImg.name).style.opacity = '1';
+                            selectedImages = selectedImages.concat(myImg);
+                            x = allImages.length;
+                        }
+                    }
+                }
+            }
+        }
+        if(selectedImages.length === 0) {
+            this.selectAll(true);
+        }
+        this.setState({selectedImages: selectedImages, selectedImagesBackup: selectedImages});
     }
 
     /**
@@ -115,6 +166,7 @@ class Mapping extends React.Component {
         let elem = this.state.allImages;
         let activeLayer = this.state.activeLayer;
         let selectedImages = this.state.selectedImages;
+
         if (selectedImages.length === 0){
             this.selectAll(false);
         }
@@ -124,25 +176,22 @@ class Mapping extends React.Component {
                 context.drawImage(myImg, 0, 0);
                 let data = context.getImageData(x, y, 1, 1).data;
                 if (data[0] !== 0 && data[1] !== 0 && data[2] !== 0 && data[3] !== 0) {
-                    let contains = false
-                    let travers;
-                    for (travers = 0; travers < selectedImages.length; travers++) {
-                        if (selectedImages[travers] === elem[i]) {
-                            selectedImages.splice(travers,1);
-                            myImg.style.opacity = '0.4';
-                            x = selectedImages.length;
+                    let contains = false;
+                    let tra;
+                    for (tra = 0; tra < selectedImages.length; tra++) {
+                        if (selectedImages[tra].id === elem[i].id) {
                             contains = true;
+                            selectedImages.splice(tra,1);
+                            myImg.style.opacity = '0.4';
+                            tra = selectedImages.length;
                         }
                     }
                     if (contains === false){
                         myImg.style.opacity = '1';
-                        selectedImages[travers] = elem[i];
+                        selectedImages[tra] = elem[i];
                     }
                     i = len;
-                    this.setState({
-                        selectedImages: selectedImages,
-                        selectedImagesBackup: selectedImages,
-                    });
+                    this.setState({selectedImages: selectedImages, selectedImagesBackup: selectedImages});
                     this.sendIcdToMainUI(selectedImages);
                 }
             }
@@ -151,7 +200,6 @@ class Mapping extends React.Component {
         if (selectedImages.length === 0){
             this.selectAll(true);
         }
-        console.log(selectedImages);
     }
 
     /**
@@ -169,7 +217,6 @@ class Mapping extends React.Component {
             });
 
             this.selectAll(false);
-
             for (let i = 0; i < elem.length; i++) {
                 let myImg = document.getElementById(elem[i].name);
                 if (elem[i].name === fragment.name) {
@@ -192,26 +239,21 @@ class Mapping extends React.Component {
                 return img;
             }
         });
-
         if (selectedImgsInActiveLayer.length > 0) {
             elem = elem.filter((img) => {
                 if (img.ebene === this.state.activeLayer) {
                     return img;
                 }
             });
-
             for (let i = 0; i < elem.length; i++) {
                 let myImg = document.getElementById(elem[i].name);
-
                 found = selectedImages.find((img) => {return img.name === elem[i].name});
-
                 if (found !== undefined) {
                     myImg.style.opacity = '1';
                 } else {
                     myImg.style.opacity = '0.4';
                 }
             }
-
             this.setState({selectedImages: selectedImages});
             this.sendIcdToMainUI(selectedImages);
         } else {
@@ -220,9 +262,9 @@ class Mapping extends React.Component {
     }
 
     render() {
+        const rowStyle = {height: '8vh'};
         const divStyle = {position: 'absolute'};
         let {x, y} = this.state;
-        const len = this.state.allImages.length;
         let activeLayer = this.state.activeLayer;
 
         let alleElemente = this.state.allImages.map((elem, index) => {
@@ -252,16 +294,15 @@ class Mapping extends React.Component {
             </div>
         );
 
-        const rowStyle = {height: '3vh'};
-
         return (
             <div>
-                <div className="row" style={rowStyle}>
-
-                </div>
                 <canvas id='canvas' style={divStyle} width="600" height="530"/>
-                <div onMouseMove={this._onMouseMove.bind(this)} id='mappingComp' onClick={this.selectPng.bind(this, x, y, len)}>
+                <div onMouseMove={this._onMouseMove.bind(this)} id='mappingComp' onClick={this.selectPng.bind(this, x, y, this.state.allImages.length)}>
                     {alleElemente}
+                </div>
+                <div className="row" style={rowStyle}>
+                    {dropdown}
+                    <LayerOptions callbackFromMapping={this.callbackallImages}/>
                 </div>
             </div>
         )

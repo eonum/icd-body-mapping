@@ -3,7 +3,7 @@ import React from "react";
 /**
  * The NewMaps component is one, which is responsible for creating connections between the icd codes
  * and the images. It does this by creating an entry inside the maps table, which contains an
- * the icd_id, layer_id collums.
+ * the icd_id, layer_id coloms.
  * It gets the layer_id and icd_id as props from the DetailsCard, which in turn them from the MainUi$
  * @author Marius Asadauskas
  */
@@ -14,7 +14,8 @@ class NewMaps extends React.Component {
             maps: [],
             icd_id: '',
             icd_ids: [],
-            selectedLayer: []
+            selectedLayer: [],
+            buttonColor: 'btn btn-primary'
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -27,6 +28,12 @@ class NewMaps extends React.Component {
         fetch('/api/v1/maps')
             .then((response) => {return response.json()})
             .then((data) => {this.setState({ maps: data }) });
+    }
+
+    componentDidUpdate(prevProps) {
+        if(this.props.selectedLayer !== prevProps.selectedLayer) {
+            this.setState({buttonColor: 'btn btn-primary'});
+        }
     }
 
     /**
@@ -43,7 +50,6 @@ class NewMaps extends React.Component {
         } else {
             icd_ids.push(this.props.icd_id);
         }
-
         for (let i=0; i<icd_ids.length; i++) {
             for (let lay=0; lay < layers.length; lay++) {
                 let body = JSON.stringify({map: {icd_id: icd_ids[i], layer_id: layers[lay].id}});
@@ -51,8 +57,7 @@ class NewMaps extends React.Component {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: body,
-                }).then((response) => {return response.json()})
-                    .then((map)=>{this.addNewMap(map)});
+                }).then((map)=>{this.addNewMap(map)});
                 event.preventDefault();
             }
         }
@@ -65,9 +70,9 @@ class NewMaps extends React.Component {
         this.setState({
             icd_id: this.props.icd_id,
             icd_ids: this.props.icd_ids,
-            selectedLayer: this.props.selectedLayer
+            selectedLayer: this.props.selectedLayer,
+            buttonColor: 'btn btn-success'
         });
-		alert('Selected ICD(s) mapped with layer')
     }
 
     /**
@@ -103,7 +108,7 @@ class NewMaps extends React.Component {
                     onSubmit={this.handleSubmit.bind(this, false)}
                 >
                     <input type="submit"
-                           className="btn btn-primary"
+                           className={this.state.buttonColor}
                            value="map"
                            onClick={this.stateIdSet.bind(this)}
                     />

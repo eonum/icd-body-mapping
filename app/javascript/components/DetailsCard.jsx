@@ -2,8 +2,6 @@ import React from 'react';
 import CloseIcon from "@material-ui/icons/Close";
 import {Form, FormControl} from "react-bootstrap";
 import NewMaps from "./NewMaps";
-import AllMaps from "./AllMaps";
-import $ from "jquery";
 
 /**
  * DetailsCard displays an ICD given via props in a viewable fashion
@@ -18,30 +16,20 @@ class DetailsCard extends React.Component {
             selectedIcd: this.props.selectedIcd,
             annotationen: ''
         };
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidUpdate(prevProps) {
         if(this.props.selectedIcd !== prevProps.selectedIcd) {
-            this.props.callbackFromMainUI(0);
-            this.setState({showingIcd: 'show'});
+            this.props.callbackFromMainUI(this.props.selectedIcd.id);
         }
+    }
+
+    componentDidMount() {
+        this.props.callbackFromMainUI(this.props.selectedIcd.id);
     }
 
     stateIdSet() {
         this.setState({showingIcdId: this.props.selectedIcd.id});
-    }
-
-    handleSubmit(event) {
-        let showingIcd = this.state.showingIcd;
-        if (showingIcd === 'show'){
-            this.props.callbackFromMainUI(this.props.selectedIcd.id);
-            this.setState({showingIcd: 'unshow'});
-        } else {
-            this.props.callbackFromMainUI(0);
-            this.setState({showingIcd: 'show'});
-        }
-        event.preventDefault();
     }
 
     saveChanges(event) {
@@ -89,12 +77,6 @@ class DetailsCard extends React.Component {
 
         const empty = (<div/>);
 
-        let allMaps = (
-            <AllMaps
-                showingIcdId={this.state.showingIcdId}
-            />
-        );
-
         const buttonStyle = {
             float: 'right'
         };
@@ -138,16 +120,6 @@ class DetailsCard extends React.Component {
                             selectedLayer={selectedLayer}
                         />
                     </div>
-                    <div className="col-4 mt-2">
-                        <Form className="float-right" onSubmit={this.handleSubmit}>
-                            <input
-                                type="submit"
-                                className="btn btn-outline-primary"
-                                value={this.state.showingIcd}
-                                onClick={this.stateIdSet.bind(this)}
-                            />
-                        </Form>
-                    </div>
                 </div>
             </div>
         );
@@ -165,16 +137,6 @@ class DetailsCard extends React.Component {
         const uneditableView = (
             <div>
                 {(selectedIcd.annotationen !== null && selectedIcd.annotationen !== '') ? annotations : empty}
-                <div className="mt-2 ml-4 mr-4 mb-3 border-top border-primary">
-                    <Form className="mt-2 mb-4 float-right" onSubmit={this.handleSubmit}>
-                        <input
-                            type="submit"
-                            className="btn btn-primary"
-                            value={this.state.showingIcd}
-                            onClick={this.stateIdSet.bind(this)}
-                        />
-                    </Form>
-                </div>
             </div>
         );
         const ger = (
@@ -217,7 +179,7 @@ class DetailsCard extends React.Component {
                             {selectedIcd.code}
                         </h1>
                     </div>
-                    <div className="card m-2 mt-4 mr-4 ml-4 border-0">
+                    <div className="card m-2 mt-4 mr-4 ml-4 pb-1 border-0">
                         <h5 className="card-subtitle">Description</h5>
                         {lang === 'de' ? ger : empty}
                         {lang === 'fr' ? fr : empty}
@@ -226,7 +188,6 @@ class DetailsCard extends React.Component {
                     <div>
                         {editable ? editView : uneditableView}
                     </div>
-                    {allMaps}
                 </div>
             </div>
         )
