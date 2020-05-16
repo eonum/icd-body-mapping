@@ -21,6 +21,8 @@ class Sidebar extends React.Component {
             icdCodelength: 3,
             hierarchyEnd: false,
             chapterArray: [],
+            infoCardOpen: false,
+            activeIcd: '',
         };
     }
 
@@ -232,7 +234,6 @@ class Sidebar extends React.Component {
                 hierarchyEnd: false
             });
             this.ICDstack.push(selection);
-            console.log(this.ICDstack);
         } else {
             this.setState({
                 filtered: true,
@@ -280,17 +281,41 @@ class Sidebar extends React.Component {
         this.props.callbackFromMainUI(icd);
     }
 
+    viewInfoCard(open, activeIcd = '') {
+        this.setState({
+            infoCardOpen: open,
+            activeIcd: activeIcd,
+        });
+    }
+
     render() {
         const { icdSelection } = this.state;
 
         const withBackButtonStyle = {
             height: '82vh',
             overflow: 'auto'
-        }
+        };
         const withoutBackButtonStyle = {
             height: '86vh',
             overflow: 'auto'
-        }
+        };
+        const chapterStyle = {
+            float: 'left',
+        };
+        const chapterCodesStyle = {
+            float: 'right',
+        };
+        const icdHiddenStyle = {
+            overflow: 'hidden',
+            height: '26px'
+        };
+        const icdVisibleStyle = {
+            overflow: 'visible',
+        };
+
+        const empty = (
+            <></>
+        );
 
         const chapterArray = this.state.chapterArray;
         const whileLoading = chapterArray.map((chapter) => {
@@ -305,34 +330,74 @@ class Sidebar extends React.Component {
             </div>
         });
         const icdChapters = this.chapterICDs.map((icd, index) => {
-            return <div className="list-group mr-1" key={index}>
-                <button
-                    type="button"
-                    className="list-group-item list-group-item-action p-0 pl-2"
-                    onClick={this.filterIcdsByChapter.bind(this, icd)}
-                >
-                    {icd.kapitel}
-                </button>
-            </div>
+            if (this.state.infoCardOpen && icd === this.state.activeIcd) {
+                return <div className="list-group mr-1" key={index}>
+                    <button
+                        type="button"
+                        className="list-group-item list-group-item-action p-0 pl-2 pr-2"
+                        onClick={this.filterIcdsByChapter.bind(this, icd)}
+                        onMouseLeave={this.viewInfoCard.bind(this, false)}
+                    >
+                        <span className="text-left text-primary font-weight-bold" style={chapterStyle}>{icd.kapitel_roemisch}</span>
+                        <span className="text-right" style={chapterCodesStyle}>{icd.code_kapitel}</span>
+                        <br />
+                        <div className="border-bottom border-primary" />
+                        {this.props.language === 'de' ? <span className="text-left">{icd.kapitel_name_de}</span> : empty}
+                        {this.props.language === 'fr' ? <span className="text-left">{icd.kapitel_name_fr}</span> : empty}
+                        {this.props.language === 'it' ? <span className="text-left">{icd.kapitel_name_it}</span> : empty}
+                    </button>
+                </div>
+            } else {
+                return <div className="list-group mr-1" key={index}>
+                    <button
+                        type="button"
+                        className="list-group-item list-group-item-action p-0 pl-2 pr-2"
+                        onClick={this.filterIcdsByChapter.bind(this, icd)}
+                        onMouseEnter={this.viewInfoCard.bind(this, true, icd)}
+                    >
+                        <span className="text-left text-primary font-weight-bold" style={chapterStyle}>{icd.kapitel_roemisch}</span>
+                        <span className="text-right" style={chapterCodesStyle}>{icd.code_kapitel}</span>
+                    </button>
+                </div>
+            }
+
         });
         let icdSubGroup = [];
         if (icdSelection !== []) {
             icdSubGroup = icdSelection.map((icd, index) => {
-                return <div className="list-group mr-1" key={index}>
-                    <button
-                        type="button"
-                        className="list-group-item list-group-item-action p-0 pl-2"
-                        onClick={this.filterIcdsByIcdcode.bind(this, icd.code, icd)}
-                    >
-                        {icd.code}
-                    </button>
-                </div>
-          });
+                if (icd === this.state.activeIcd) {
+                    return <div className="list-group mr-1" key={index}>
+                        <button
+                            type="button"
+                            className="list-group-item list-group-item-action p-0 pl-2 pr-2"
+                            style={icdVisibleStyle}
+                            onClick={this.filterIcdsByIcdcode.bind(this, icd.code, icd)}
+                            onMouseLeave={this.viewInfoCard.bind(this, false)}
+                        >
+                            <span className="text-left text-primary font-weight-bold pr-2" style={chapterStyle}>{icd.code}</span>
+                            {this.props.language === 'de' ? <span className="text-left">{icd.text_de}</span> : empty}
+                            {this.props.language === 'fr' ? <span className="text-left">{icd.text_fr}</span> : empty}
+                            {this.props.language === 'it' ? <span className="text-left">{icd.text_it}</span> : empty}
+                        </button>
+                    </div>
+                } else if (icd !== this.state.activeIcd) {
+                    return <div className="list-group mr-1" key={index}>
+                        <button
+                            type="button"
+                            className="list-group-item list-group-item-action p-0 pl-2 pr-2"
+                            style={icdHiddenStyle}
+                            onClick={this.filterIcdsByIcdcode.bind(this, icd.code, icd)}
+                            onMouseEnter={this.viewInfoCard.bind(this, true, icd)}
+                        >
+                            <span className="text-left text-primary font-weight-bold pr-2" style={chapterStyle}>{icd.code}</span>
+                            {this.props.language === 'de' ? <span className="text-left">{icd.text_de}</span> : empty}
+                            {this.props.language === 'fr' ? <span className="text-left">{icd.text_fr}</span> : empty}
+                            {this.props.language === 'it' ? <span className="text-left">{icd.text_it}</span> : empty}
+                        </button>
+                    </div>
+                }
+            });
         }
-
-        const empty = (
-            <></>
-        );
         const backButton = (
             <a type="button"
                className="btn btn-light mb-1"
