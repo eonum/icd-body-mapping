@@ -2,7 +2,6 @@ import React from 'react';
 import CloseIcon from "@material-ui/icons/Close";
 import {Form, FormControl} from "react-bootstrap";
 import NewMaps from "./NewMaps";
-import AllMaps from "./AllMaps";
 
 /**
  * DetailsCard displays an ICD given via props in a viewable fashion
@@ -77,12 +76,6 @@ class DetailsCard extends React.Component {
         let lang = this.props.language;
 
         const empty = (<div/>);
-
-        let allMaps = (
-            <AllMaps
-                showingIcdId={this.state.showingIcdId}
-            />
-        );
 
         const buttonStyle = {
             float: 'right'
@@ -195,7 +188,6 @@ class DetailsCard extends React.Component {
                     <div>
                         {editable ? editView : uneditableView}
                     </div>
-                    {allMaps}
                 </div>
             </div>
         )

@@ -262,6 +262,7 @@ class Mapping extends React.Component {
     }
 
     render() {
+        const rowStyle = {height: '8vh'};
         const divStyle = {position: 'absolute'};
         let {x, y} = this.state;
         let activeLayer = this.state.activeLayer;
@@ -275,7 +276,23 @@ class Mapping extends React.Component {
             }
         });
 
-        const rowStyle = {height: '8vh', float: 'right'};
+        let alleLayers = this.state.layers.map((elem, index) => {
+            return <div className="dropdown-item" key={index} onClick={this.selectLayer.bind(this, elem.ebene)}>
+                {elem.ebene}
+            </div>
+        });
+
+        const dropdown = (
+            <div className="col-3 dropdown">
+                <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {this.state.activeLayer}
+                </button>
+                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    {alleLayers}
+                </div>
+            </div>
+        );
 
         return (
             <div>
@@ -284,7 +301,8 @@ class Mapping extends React.Component {
                     {alleElemente}
                 </div>
                 <div className="row" style={rowStyle}>
-                    <LayerOptions callbackFromMapping={this.callbackallImages} style={divStyle}/>
+                    {dropdown}
+                    <LayerOptions callbackFromMapping={this.callbackallImages}/>
                 </div>
             </div>
         )

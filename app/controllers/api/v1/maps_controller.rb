@@ -18,6 +18,11 @@ class Api::V1::MapsController < ApplicationController
     render json: map
   end
 
+  def show_layer
+    map = Layer.joins(:maps).select("layers.*, maps.icd_id").where("maps.icd_id = ? AND layers.ebene = ?", params[:id], params[:ebene])
+    render json: map
+  end
+
   def show_layers
     map = Layer.joins(:maps).select("layers.ebene, count(layers.ebene)").where("maps.icd_id = ?", params[:id]).group('layers.ebene').order(count: :desc)
     render json: map

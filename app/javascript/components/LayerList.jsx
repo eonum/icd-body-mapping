@@ -136,7 +136,8 @@ class LayerList extends React.Component {
           </button>
         );
         const displayLayers = layers.map((layer, index) => {
-            return <div key={index} style={topStyleLayer} className="list-group-item-action border rounded">
+            if (layer.ebene === activeLayer) {
+                return <div key={index} style={topStyleLayer} className="list-group-item-action border rounded">
                     <button
                         type="button"
                         className={(layer.ebene === activeLayer) ? bootstrapActiveLayerButton : bootstrapInactiveLayerButton}
@@ -144,17 +145,18 @@ class LayerList extends React.Component {
                     >
                         {layer.ebene}
                     </button>
-                <div style={hideButtonStyle}>
-                    <button
-                        type="button"
-                        className="btn btn-default p-0 m-0 mr-4 shadow-none text-primary"
-                        onClick={this.selectLayer.bind(this, layer.ebene)}
-                        title="hide Layers"
-                    >
-                        <KeyboardArrowLeftIcon/>
-                    </button>
+                    <div style={hideButtonStyle}>
+                        <button
+                            type="button"
+                            className="btn btn-default p-0 m-0 mr-4 shadow-none text-primary"
+                            onClick={this.selectLayer.bind(this, layer.ebene)}
+                            title="hide Layers"
+                        >
+                            <KeyboardArrowLeftIcon/>
+                        </button>
+                    </div>
                 </div>
-            </div>
+            }
         });
         const displayLayerFrags = layers.map((layer, index) => {
             if (layer.ebene === activeLayer) {
