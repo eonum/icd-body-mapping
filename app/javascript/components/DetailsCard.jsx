@@ -28,6 +28,14 @@ class DetailsCard extends React.Component {
         this.props.callbackFromMainUI(this.props.selectedIcd.id);
     }
 
+    callbackMaps = (Map) => {
+        this.sendIcdToMainUi(Map);
+    };
+
+    sendIcdToMainUi(Map) {
+        this.props.callbackFromMainUIMaps(Map);
+    }
+
     stateIdSet() {
         this.setState({showingIcdId: this.props.selectedIcd.id});
     }
@@ -118,6 +126,7 @@ class DetailsCard extends React.Component {
                             icd_id={selectedIcd.id}
                             icd_ids={[]}
                             selectedLayer={selectedLayer}
+                            callbackFromDetailsCard={this.callbackMaps}
                         />
                     </div>
                 </div>

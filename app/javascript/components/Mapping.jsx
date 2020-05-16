@@ -53,6 +53,13 @@ class Mapping extends React.Component {
             }
         }
 
+        if(this.props.map !== prevProps.map) {
+            setTimeout(() => {
+                $.getJSON('api/v1/maps')
+                    .then(response => this.setState({maps: response}));
+            }, 2000);
+        }
+
         let selectedLayerFromList = this.props.selectedLayerFromList;
         let hightlightedPng = this.props.hightlightedPng;
         if (selectedLayerFromList !== prevProps.selectedLayerFromList && selectedLayerFromList !== '') {
@@ -302,7 +309,6 @@ class Mapping extends React.Component {
                 </div>
                 <div className="row" style={rowStyle}>
                     {dropdown}
-                    <LayerOptions callbackFromMapping={this.callbackallImages}/>
                 </div>
             </div>
         )
@@ -310,3 +316,4 @@ class Mapping extends React.Component {
 }
 
 export default Mapping;
+// add after dropdown: <LayerOptions callbackFromMapping={this.callbackallImages}/>

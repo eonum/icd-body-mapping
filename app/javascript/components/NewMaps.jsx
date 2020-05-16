@@ -36,6 +36,10 @@ class NewMaps extends React.Component {
         }
     }
 
+    sendIcdToDetailsCard(newMap) {
+        this.props.callbackFromDetailsCard(newMap);
+    }
+
     /**
      * The handle submit method is called, once a user clicks on submit
      * it calls the backend with the Method Post and then passes the intended object,
@@ -61,6 +65,7 @@ class NewMaps extends React.Component {
                 event.preventDefault();
             }
         }
+        this.sendIcdToDetailsCard(layers);
     }
 
     /**

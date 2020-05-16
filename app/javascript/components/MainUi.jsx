@@ -4,10 +4,8 @@ import Sidebar from "./Sidebar";
 import DetailsCard from "./DetailsCard";
 import SearchCard from "./SearchCard";
 import Mapping from "./Mapping";
-import NewMaps from "./NewMaps";
 import LayerList from "./LayerList";
 import Logo from "../../assets/images/favicon.ico";
-import AllMaps from "./AllMaps";
 
 /**
  * The MainUI collects the child components of which it consists
@@ -23,6 +21,7 @@ class MainUI extends React.Component {
             searchTerm: '',
             buttonTerm: '',
             selectedIcd: '',
+            map: '',
             detailsDisplayed: false,
             searchDisplayed: false,
             selectedLayer: '',
@@ -122,6 +121,10 @@ class MainUI extends React.Component {
         this.setState({ showingIcdId: showingIcdIdFromDetails });
     };
 
+    callbackDetailsMap = (Map) => {
+        this.setState({ map: Map });
+    };
+
     callbackReloadIcds = () => {
         if (this.state.reloadIcds === true) {
           this.setState({ reloadIcds: false});
@@ -216,6 +219,7 @@ class MainUI extends React.Component {
                 editable={this.state.editMode}
                 language={this.state.activeLanguage}
                 callbackFromMainUI={this.callbackDetails}
+                callbackFromMainUIMaps={this.callbackDetailsMap}
                 callbackFromMainUIClose={this.callbackDetailsCardClose}
                 callbackFromMainUIReloadIcds={this.callbackReloadIcds}
             />
@@ -286,6 +290,7 @@ class MainUI extends React.Component {
                             <Mapping
                                 callbackFromMainUI={this.callbackMapping}
                                 callbackFromMainUIActiveLayer={this.callbackMappingActiveLayer}
+                                map={this.state.map}
                                 showingIcdId={this.state.showingIcdId}
                                 needUpdate={this.state.needUpdate}
                                 selectedLayerFromList={this.state.selectedLayerFromList}
