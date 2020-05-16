@@ -270,6 +270,7 @@ class MainUI extends React.Component {
                                 reloadIcds={this.state.reloadIcds}
                                 selectedIcd={this.state.selectedIcd}
                                 icdSelectionFromSearch={this.state.icdSelectionFromSearch}
+                                language={this.state.activeLanguage}
                             />
                         </div>
                         <div className="col-4" style={style}>
