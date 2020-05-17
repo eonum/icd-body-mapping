@@ -33,7 +33,7 @@ class MainUI extends React.Component {
             needUpdate: false,
             hightlightedPng: '',
             selectedLayerFromList: '',
-            activeLayer: 'Ohr',
+            activeLayer: 'Gehirn Längsschnitt',
             icdSelectionFromSearch: false,
         };
     }

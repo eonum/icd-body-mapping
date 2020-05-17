@@ -18,7 +18,7 @@ class Mapping extends React.Component {
             layers: [],
             selectedImages:[], selectedImagesBackup: [],
             x: 0, y: 0,
-            activeLayer: 'Ohr'
+            activeLayer: 'Gehirn Längsschnitt'
         };
         this.callbackallImages = this.callbackallImages.bind(this);
         this.selectFromSelected = this.selectFromSelected.bind(this);
