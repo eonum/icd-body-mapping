@@ -31,7 +31,7 @@ class NewMaps extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if(this.props.selectedLayer !== prevProps.selectedLayer) {
+        if(this.props.icd_id !== prevProps.icd_id) {
             this.setState({buttonColor: 'btn btn-primary'});
         }
     }
