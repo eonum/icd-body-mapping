@@ -4,11 +4,8 @@ import Sidebar from "./Sidebar";
 import DetailsCard from "./DetailsCard";
 import SearchCard from "./SearchCard";
 import Mapping from "./Mapping";
-import './MainUI.css'
-import NewMaps from "./NewMaps";
 import LayerList from "./LayerList";
 import Logo from "../../assets/images/favicon.ico";
-import AllMaps from "./AllMaps";
 
 /**
  * The MainUI collects the child components of which it consists
@@ -24,6 +21,7 @@ class MainUI extends React.Component {
             searchTerm: '',
             buttonTerm: '',
             selectedIcd: '',
+            map: '',
             detailsDisplayed: false,
             searchDisplayed: false,
             selectedLayer: '',
@@ -123,6 +121,10 @@ class MainUI extends React.Component {
         this.setState({ showingIcdId: showingIcdIdFromDetails });
     };
 
+    callbackDetailsMap = (Map) => {
+        this.setState({ map: Map });
+    };
+
     callbackReloadIcds = () => {
         if (this.state.reloadIcds === true) {
           this.setState({ reloadIcds: false});
@@ -217,6 +219,7 @@ class MainUI extends React.Component {
                 editable={this.state.editMode}
                 language={this.state.activeLanguage}
                 callbackFromMainUI={this.callbackDetails}
+                callbackFromMainUIMaps={this.callbackDetailsMap}
                 callbackFromMainUIClose={this.callbackDetailsCardClose}
                 callbackFromMainUIReloadIcds={this.callbackReloadIcds}
             />
@@ -243,9 +246,13 @@ class MainUI extends React.Component {
             overflow: 'auto'
         }
 
+        const sidebarStyle ={
+            width: '20%'
+        }
+
         return (
             <div>
-                <link rel="shortcut icon" href="./images/favicon.ico"/>
+                <link rel="shortcut icon" href={Logo}/>
                 <div className="container-fluid">
                     <div className="row mb-2">
                         <div className="w-100">
@@ -269,6 +276,7 @@ class MainUI extends React.Component {
                                 needUpdate={this.state.needUpdate}
                                 reloadIcds={this.state.reloadIcds}
                                 selectedIcd={this.state.selectedIcd}
+                                style={sidebarStyle}
                                 icdSelectionFromSearch={this.state.icdSelectionFromSearch}
                                 language={this.state.activeLanguage}
                             />
@@ -282,6 +290,7 @@ class MainUI extends React.Component {
                             <Mapping
                                 callbackFromMainUI={this.callbackMapping}
                                 callbackFromMainUIActiveLayer={this.callbackMappingActiveLayer}
+                                map={this.state.map}
                                 showingIcdId={this.state.showingIcdId}
                                 needUpdate={this.state.needUpdate}
                                 selectedLayerFromList={this.state.selectedLayerFromList}

@@ -1,2 +1,0 @@
-module IcdsHelper
-end

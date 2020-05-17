@@ -21,9 +21,9 @@ class LayerList extends React.Component {
     }
 
     componentDidMount() {
-        $.getJSON('/api/v1/all/layers')
-            .then(response => this.setState({fragments: response}));
         $.getJSON('/api/v1/layers')
+            .then(response => this.setState({fragments: response}));
+        $.getJSON('/api/v1/all/layers')
             .then(response => this.setState({layers: response}));
         if (this.props.selectedIcd !== '') {
             this.getMapsOfIcd(this.props.selectedIcd);
@@ -137,13 +137,13 @@ class LayerList extends React.Component {
         );
         const displayLayers = layers.map((layer, index) => {
             return <div key={index} style={topStyleLayer} className="list-group-item-action border rounded">
-                    <button
-                        type="button"
-                        className={(layer.ebene === activeLayer) ? bootstrapActiveLayerButton : bootstrapInactiveLayerButton}
-                        onClick={this.selectLayer.bind(this, layer.ebene)}
-                    >
-                        {layer.ebene}
-                    </button>
+                <button
+                    type="button"
+                    className={(layer.ebene === activeLayer) ? bootstrapActiveLayerButton : bootstrapInactiveLayerButton}
+                    onClick={this.selectLayer.bind(this, layer.ebene)}
+                >
+                    {layer.ebene}
+                </button>
                 <div style={hideButtonStyle}>
                     <button
                         type="button"
