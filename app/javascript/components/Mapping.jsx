@@ -71,7 +71,7 @@ class Mapping extends React.Component {
             this.setBackToPreviousSelection();
         }
         let layerFragmentStack = this.props.layerFragmentStack;
-        if (layerFragmentStack !== prevProps.layerFragmentStack && layerFragmentStack !== []) {
+        if (layerFragmentStack !== prevProps.layerFragmentStack) {
             this.selectPngsFromList(layerFragmentStack);
         }
     }
@@ -229,16 +229,44 @@ class Mapping extends React.Component {
 
             this.selectAll(false);
             for (let i = 0; i < elem.length; i++) {
-                let myImg = document.getElementById(elem[i].name);
                 if (elem[i].name === fragment.name) {
-                    myImg.style.opacity = '1';
-                } else {
-                    myImg.style.opacity = '0.4';
+                    document.getElementById(elem[i].name).style.opacity = '1';
+                    i = elem.length;
                 }
             }
         }
     }
 
+    selectPngsFromList(fragment) {
+        if (fragment.ebene === this.state.activeLayer) {
+            let elem = this.state.allImages;
+            let selectedImages = this.state.selectedImagesBackup;
+
+            elem = elem.filter((img) => {
+                if (img.ebene === fragment.ebene) {
+                    return img;
+                }
+            });
+
+            for (let i = 0; i < elem.length; i++) {
+                if (elem[i].name === fragment.name) {
+                    let contains = false
+                    for (let j = 0; j < selectedImages.length; j++) {
+                        if(selectedImages[j] === elem[i]) {
+                            selectedImages.splice(j,1);
+                            contains = true;
+                        }
+                    }
+                    if (contains === false){
+                        selectedImages = selectedImages.concat(elem[i]);
+                    }
+                    this.setState({selectedImagesBackup: selectedImages});
+                }
+            }
+        }
+    }
+
+    /**
     selectPngsFromList(layerFragmentList) {
         let elem = this.state.allImages;
         let frags = layerFragmentList;
@@ -277,7 +305,7 @@ class Mapping extends React.Component {
             selectedImagesBackup: selectedImages,
         });
         this.sendIcdToMainUI(selectedImages);
-    }
+    }**/
 
     setBackToPreviousSelection() {
         let elem = this.state.allImages;

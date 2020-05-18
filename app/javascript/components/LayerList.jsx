@@ -51,6 +51,10 @@ class LayerList extends React.Component {
         });
     }
 
+    selectFragments(frag) {
+        this.props.callbackFromMainUISelectPngs(frag);
+    }
+
     highlightFragment(fragment) {
         this.props.callbackFromMainUIHighlight(fragment);
     }
@@ -65,6 +69,7 @@ class LayerList extends React.Component {
         });
     }
 
+    /**
     selectFragments(frag, add) {
         let selection
         if (this.state.change === false) {
@@ -91,7 +96,7 @@ class LayerList extends React.Component {
         if (this.state.checkedFrags.length > 0) {
             this.props.callbackFromMainUISelectPngs(selection);
         }
-    }
+    }**/
 
     render() {
         const layers = this.state.layers;
@@ -228,7 +233,7 @@ class LayerList extends React.Component {
                                             className={bootstrapMappedLayerEdit}
                                             selected
                                             key={frag.id}
-                                            onClick={this.selectFragments.bind(this, frag, false)}
+                                            onClick={this.selectFragments.bind(this, frag)}
                                             onMouseEnter={this.highlightFragment.bind(this, frag)}
                                             onMouseLeave={this.setBackToPreviousSelection.bind(this)}
                                         >
@@ -241,7 +246,7 @@ class LayerList extends React.Component {
                                             className={bootstrapMappedLayerEdit}
                                             selected
                                             key={frag.id}
-                                            onClick={this.selectFragments.bind(this, frag, false)}
+                                            onClick={this.selectFragments.bind(this, frag)}
                                             onMouseEnter={this.highlightFragment.bind(this, frag)}
                                             onMouseLeave={this.setBackToPreviousSelection.bind(this)}
                                         >
@@ -253,7 +258,7 @@ class LayerList extends React.Component {
                                             className={bootstrapUnmappedLayer}
                                             selected
                                             key={frag.id}
-                                            onClick={this.selectFragments.bind(this, frag, true)}
+                                            onClick={this.selectFragments.bind(this, frag)}
                                             onMouseEnter={this.highlightFragment.bind(this, frag)}
                                             onMouseLeave={this.setBackToPreviousSelection.bind(this)}
                                         >
