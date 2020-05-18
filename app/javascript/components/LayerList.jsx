@@ -23,9 +23,9 @@ class LayerList extends React.Component {
     }
 
     componentDidMount() {
-        $.getJSON('/api/v1/all/layers')
-            .then(response => this.setState({fragments: response}));
         $.getJSON('/api/v1/layers')
+            .then(response => this.setState({fragments: response}));
+        $.getJSON('/api/v1/all/layers')
             .then(response => this.setState({layers: response}));
         if (this.props.selectedIcd !== '') {
             this.getMapsOfIcd(this.props.selectedIcd);
