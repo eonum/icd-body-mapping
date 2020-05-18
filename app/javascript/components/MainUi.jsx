@@ -36,6 +36,7 @@ class MainUI extends React.Component {
             activeLayer: 'Gehirn Längsschnitt',
             icdSelectionFromSearch: false,
             layerFragmentStack: [],
+            addToSelection: false,
         };
     }
 
@@ -183,9 +184,7 @@ class MainUI extends React.Component {
     };
 
     callbackLayerListSelectPngs = (fragments) => {
-        this.setState({
-            layerFragmentStack: fragments,
-        });
+        this.setState({layerFragmentStack: fragments});
     }
 
     callbackSearchCardClose = () => {
@@ -306,6 +305,7 @@ class MainUI extends React.Component {
                                 selectedLayerFromList={this.state.selectedLayerFromList}
                                 hightlightedPng={this.state.hightlightedPng}
                                 layerFragmentStack={this.state.layerFragmentStack}
+                                addToSelection={this.state.addToSelection}
                             />
                         </div>
                     </div>

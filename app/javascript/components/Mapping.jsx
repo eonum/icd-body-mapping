@@ -237,32 +237,42 @@ class Mapping extends React.Component {
         }
     }
 
-    selectPngsFromList(fragment) {
+    selectPngsFromList(fragment, add) {
         if (fragment.ebene === this.state.activeLayer) {
-            let elem = this.state.allImages;
             let selectedImages = this.state.selectedImagesBackup;
+            if (add) {
+                let elem = this.state.allImages;
 
-            elem = elem.filter((img) => {
-                if (img.ebene === fragment.ebene) {
-                    return img;
-                }
-            });
+                elem = elem.filter((img) => {
+                    if (img.ebene === fragment.ebene) {
+                        return img;
+                    }
+                });
 
-            for (let i = 0; i < elem.length; i++) {
-                if (elem[i].name === fragment.name) {
-                    let contains = false
-                    for (let j = 0; j < selectedImages.length; j++) {
-                        if(selectedImages[j] === elem[i]) {
-                            selectedImages.splice(j,1);
-                            contains = true;
+                for (let i = 0; i < elem.length; i++) {
+                    if (elem[i].name === fragment.name) {
+                        let contains = false
+                        for (let j = 0; j < selectedImages.length; j++) {
+                            if(selectedImages[j] === elem[i]) {
+                                selectedImages.splice(j,1);
+                                contains = true;
+                            }
                         }
+                        if (contains === false){
+                            selectedImages = selectedImages.concat(elem[i]);
+                        }
+                        this.setState({selectedImagesBackup: selectedImages});
                     }
-                    if (contains === false){
-                        selectedImages = selectedImages.concat(elem[i]);
-                    }
-                    this.setState({selectedImagesBackup: selectedImages});
                 }
+            } else {
+                selectedImages = selectedImages.filter((img) => {
+                    if (img.name !== fragment.name) {
+                        return img;
+                    }
+                });
+                this.setState({selectedImagesBackup: selectedImages});
             }
+
         }
     }
 
