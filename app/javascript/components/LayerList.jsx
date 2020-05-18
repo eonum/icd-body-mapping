@@ -37,7 +37,6 @@ class LayerList extends React.Component {
             this.getMapsOfIcd(this.props.selectedIcd);
         }
         if (this.props.selectionFromMapping !== prevProps.selectionFromMapping && this.props.selectionFromMapping === true) {
-            console.log(this.props.selectedLayer);
             this.setState({
                 checkedFrags: this.props.selectedLayer,
                 change: true,

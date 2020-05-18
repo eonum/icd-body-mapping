@@ -117,8 +117,6 @@ class SearchCard extends React.Component {
             });
         }
 
-        console.log(selection);
-
         this.setState({
             checkedIcds: selection
         });

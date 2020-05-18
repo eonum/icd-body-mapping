@@ -286,6 +286,7 @@ class Mapping extends React.Component {
     render() {
         const rowStyle = {height: '8vh'};
         const divStyle = {position: 'absolute'};
+        const dropdownStyle = {height: '30px'};
         let {x, y} = this.state;
         let activeLayer = this.state.activeLayer;
 
@@ -306,7 +307,7 @@ class Mapping extends React.Component {
 
         const dropdown = (
             <div className="col-3 dropdown">
-                <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                <button className="btn btn-outline-primary p-0 pl-2 pr-2 font-weight-bold dropdown-toggle" style={dropdownStyle} type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {this.state.activeLayer}
                 </button>

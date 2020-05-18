@@ -117,8 +117,6 @@ class MainUI extends React.Component {
           selectedLayer: selectedLayerFromMapping,
           selectionFromMapping: selectionFromMapping,
         });
-        console.log(selectedLayerFromMapping);
-        console.log(selectionFromMapping);
     };
 
     callbackMappingActiveLayer = (activeLayer) => {
