@@ -53,6 +53,10 @@ class Mapping extends React.Component {
         } else if (hightlightedPng !== prevProps.hightlightedPng && hightlightedPng === '') {
             this.setBackToPreviousSelection();
         }
+        let layerFragmentStack = this.props.layerFragmentStack;
+        if (layerFragmentStack !== prevProps.layerFragmentStack && layerFragmentStack !== []) {
+            this.selectPngsFromList(layerFragmentStack);
+        }
     }
 
     /**
@@ -179,6 +183,46 @@ class Mapping extends React.Component {
                 }
             }
         }
+    }
+
+    selectPngsFromList(layerFragmentList) {
+        let elem = this.state.allImages;
+        let frags = layerFragmentList;
+        let frag;
+        let selectedImages = [];
+
+        elem = elem.filter((img) => {
+            if (img.ebene === this.state.activeLayer) {
+                return img;
+            }
+        });
+        console.log(elem);
+
+        this.selectAll(false);
+
+        for (let i = 0; i < elem.length; i++) {
+            let myImg = document.getElementById(elem[i].name);
+
+            frag = frags.filter((frag) => {
+                if (frag.name === elem[i].name) {
+                    return frag;
+                }
+            })
+
+            if (frag.length > 0) {
+                myImg.style.opacity = '1';
+                selectedImages.push(myImg);
+            } else {
+                myImg.style.opacity = '0.4';
+            }
+        }
+        console.log(selectedImages);
+
+        this.setState({
+            selectedImages: selectedImages,
+            selectedImagesBackup: selectedImages,
+        });
+        this.sendIcdToMainUI(selectedImages);
     }
 
     setBackToPreviousSelection() {

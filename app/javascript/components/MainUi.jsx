@@ -37,6 +37,7 @@ class MainUI extends React.Component {
             selectedLayerFromList: '',
             activeLayer: 'Ohr',
             icdSelectionFromSearch: false,
+            layerFragmentStack: [],
         };
     }
 
@@ -179,6 +180,12 @@ class MainUI extends React.Component {
         });
     };
 
+    callbackLayerListSelectPngs = (fragments) => {
+        this.setState({
+            layerFragmentStack: fragments,
+        });
+    }
+
     callbackSearchCardClose = () => {
         this.setState({
             searchDisplayed: false,
@@ -226,8 +233,11 @@ class MainUI extends React.Component {
                 callbackFromMainUISelect={this.callbackLayerListSelectLayer}
                 callbackFromMainUIHighlight={this.callbackLayerListHighlightPng}
                 callbackFromMainUIResetToSelection={this.callbackLayerlistResetSelection}
+                callbackFromMainUISelectPngs={this.callbackLayerListSelectPngs}
                 activeLayer={this.state.activeLayer}
                 selectedIcd={this.state.selectedIcd}
+                selectedLayer={this.state.selectedLayer}
+                editable={this.state.editMode}
             />
         )
 
@@ -286,6 +296,7 @@ class MainUI extends React.Component {
                                 needUpdate={this.state.needUpdate}
                                 selectedLayerFromList={this.state.selectedLayerFromList}
                                 hightlightedPng={this.state.hightlightedPng}
+                                layerFragmentStack={this.state.layerFragmentStack}
                             />
                         </div>
                     </div>

@@ -17,6 +17,8 @@ class LayerList extends React.Component {
             maps: [],
             mappedFragments: [],
             showLayers: false,
+            checkedFrags: [],
+            change: false,
         };
     }
 
@@ -45,6 +47,7 @@ class LayerList extends React.Component {
         this.props.callbackFromMainUISelect(layer);
         this.setState({
             showLayers: false,
+            change: false,
         });
     }
 
@@ -62,13 +65,45 @@ class LayerList extends React.Component {
         });
     }
 
+    selectFragments(frag, add) {
+        let selection
+        if (this.state.change === false) {
+            selection = this.state.maps;
+        } else {
+            selection = this.state.checkedFrags;
+        }
+
+        if (add) {
+            selection.push(frag);
+        } else {
+            selection = selection.filter((item) => {
+                if (item.name !== frag.name) {
+                    return item;
+                }
+            });
+        }
+
+        this.setState({
+            checkedFrags: selection,
+            change: true,
+        });
+
+        if (this.state.checkedFrags.length > 0) {
+            this.props.callbackFromMainUISelectPngs(selection);
+        }
+    }
+
     render() {
         const layers = this.state.layers;
         const frags = this.state.fragments;
         const activeLayer = this.props.activeLayer;
         const maps = this.state.maps;
         const showLayers = this.state.showLayers;
+        const editable = this.props.editable;
+        const checkedFrags = this.state.checkedFrags;
         let mappedFragments = [];
+        let checkedFragments = [];
+        let mapped = false;
 
         const style = {
             overflow: 'visible'
@@ -104,8 +139,14 @@ class LayerList extends React.Component {
         const topStyleFrags = {
             height: '35px',
         }
+        const checkboxStyle = {
+            float: 'right'
+        }
         const bootstrapActiveLayerButton = "btn btn-default p-0 m-0 ml-4 shadow-none font-weight-bold text-primary text-left";
         const bootstrapInactiveLayerButton = "btn btn-default p-0 m-0 ml-4 shadow-none text-left";
+        const bootstrapMappedLayer = "list-group-item list-group-item-action p-0 pl-2 pr-2 shadow-none text-primary font-weight-bold";
+        const bootstrapUnmappedLayer = "list-group-item list-group-item-action p-0 pl-2 pr-2 shadow-none";
+        const bootstrapMappedLayerEdit = "list-group-item list-group-item-action p-0 pl-2 pr-2 shadow-none text-primary font-weight-bold bg-light";
 
         const empty = (<></>);
 
@@ -115,35 +156,15 @@ class LayerList extends React.Component {
                 {layer.ebene}
             </div>
         });
-        const showButton = (
-          <button
-              type="button"
-              className="btn btn-default p-0 m-0 shadow-none text-primary"
-              onClick={this.showLayers.bind(this)}
-              title="hide Layers"
-          >
-              <KeyboardArrowLeftIcon/>
-          </button>
-        );
-        const hideButton = (
-          <button
-              type="button"
-              className="btn btn-default p-0 m-0 shadow-none text-primary"
-              onClick={this.showLayers.bind(this)}
-              title="show Layers"
-          >
-              <KeyboardArrowDownIcon/>
-          </button>
-        );
         const displayLayers = layers.map((layer, index) => {
             return <div key={index} style={topStyleLayer} className="list-group-item-action border rounded">
-                    <button
-                        type="button"
-                        className={(layer.ebene === activeLayer) ? bootstrapActiveLayerButton : bootstrapInactiveLayerButton}
-                        onClick={this.selectLayer.bind(this, layer.ebene)}
-                    >
-                        {layer.ebene}
-                    </button>
+                <button
+                    type="button"
+                    className={(layer.ebene === activeLayer) ? bootstrapActiveLayerButton : bootstrapInactiveLayerButton}
+                    onClick={this.selectLayer.bind(this, layer.ebene)}
+                >
+                    {layer.ebene}
+                </button>
                 <div style={hideButtonStyle}>
                     <button
                         type="button"
@@ -159,62 +180,101 @@ class LayerList extends React.Component {
         const displayLayerFrags = layers.map((layer, index) => {
             if (layer.ebene === activeLayer) {
                 return <div key={index}>
-                          <div style={topStyleFrags}>
-                              <div className="dropdown list-group-item-action mb-1 border rounded">
-                                  <button
-                                      type="button"
-                                      className="btn btn-default p-0 m-0 ml-4 shadow-none font-weight-bold text-primary text-left"
-                                      style={dropdownStyle}
-                                      id="dropdownMenuButton"
-                                      data-toggle="dropdown"
-                                      aria-haspopup="true"
-                                      aria-expanded="false"
-                                      onClick={this.selectLayer.bind(this, layer.ebene)}
-                                  >
-                                      {layer.ebene}
-                                  </button>
-                                  <div className="dropdown-menu" style={dropdownMenuStyle} aria-labelledby="dropdownMenuButton">
-                                      {dropdownMenu}
-                                  </div>
-                              </div>
-                              <div className="text-left" style={showButtonStyle}>
-                                  {hideButton}
-                              </div>
-                          </div>
-                          <ul>
-                              { frags.map((frag, index) => {
-                                  mappedFragments = maps.filter((map) => {
-                                      if (frag.name === map.name) {
-                                          return map;
-                                      }
-                                  });
-
-                                  if (frag.ebene === layer.ebene) {
-                                      if (mappedFragments.length > 0 && mappedFragments[0].name === frag.name) {
-                                          return <li
-                                                      type="button"
-                                                      className="list-group-item list-group-item-action p-0 text-primary font-weight-bold"
-                                                      key={frag.id}
-                                                      onMouseEnter={this.highlightFragment.bind(this, frag)}
-                                                      onMouseLeave={this.setBackToPreviousSelection.bind(this)}
-                                                  >
-                                                      {frag.name}
-                                                  </li>
-                                      } else {
-                                          return <li
-                                                      type="button"
-                                                      className="list-group-item list-group-item-action p-0"
-                                                      key={frag.id}
-                                                      onMouseEnter={this.highlightFragment.bind(this, frag)}
-                                                      onMouseLeave={this.setBackToPreviousSelection.bind(this)}
-                                                  >
-                                                      {frag.name}
-                                                  </li>
-                                      }
-                                  }
-                              }) }
-                          </ul>
+                    <div style={topStyleFrags}>
+                        <div className="dropdown list-group-item-action mb-1 border rounded" >
+                            <div
+                                type="button"
+                                className="btn btn-default p-0 m-0 ml-4 shadow-none font-weight-bold text-primary text-left"
+                            >
+                                {layer.ebene}
+                            </div>
+                            <button
+                                type="button"
+                                id="dropdownMenuButton"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                className="btn btn-default p-0 m-0 shadow-none text-primary"
+                                onClick={this.selectLayer.bind(this, layer.ebene)}
+                                title="select Layers"
+                            >
+                                <KeyboardArrowDownIcon/>
+                            </button>
+                            <div className="dropdown-menu" style={dropdownMenuStyle} aria-labelledby="dropdownMenuButton">
+                                {dropdownMenu}
+                            </div>
+                        </div>
                     </div>
+                    <div className="ml-4">
+                        { frags.map((frag, index) => {
+                            mappedFragments = maps.filter((map) => {
+                                if (frag.name === map.name) {
+                                    return map;
+                                }
+                            });
+                            checkedFragments = checkedFrags.filter((checkedFrag) => {
+                                if (frag.name === checkedFrag.name) {
+                                    return checkedFrag;
+                                }
+                            });
+                            mapped = (mappedFragments.length > 0
+                              && mappedFragments[0].name === frag.name);
+
+                            if (frag.ebene === layer.ebene) {
+                                if (editable) {
+                                    if (this.state.change === false && mapped) {
+                                        return <div
+                                            type="button"
+                                            className={bootstrapMappedLayerEdit}
+                                            selected
+                                            key={frag.id}
+                                            onClick={this.selectFragments.bind(this, frag, false)}
+                                            onMouseEnter={this.highlightFragment.bind(this, frag)}
+                                            onMouseLeave={this.setBackToPreviousSelection.bind(this)}
+                                        >
+                                            {frag.name}
+                                        </div>
+                                    } else if (checkedFragments.length > 0
+                                                && checkedFragments[0].name === frag.name) {
+                                        return <div
+                                            type="button"
+                                            className={bootstrapMappedLayerEdit}
+                                            selected
+                                            key={frag.id}
+                                            onClick={this.selectFragments.bind(this, frag, false)}
+                                            onMouseEnter={this.highlightFragment.bind(this, frag)}
+                                            onMouseLeave={this.setBackToPreviousSelection.bind(this)}
+                                        >
+                                            {frag.name}
+                                        </div>
+                                    } else {
+                                        return <div
+                                            type="button"
+                                            className={bootstrapUnmappedLayer}
+                                            selected
+                                            key={frag.id}
+                                            onClick={this.selectFragments.bind(this, frag, true)}
+                                            onMouseEnter={this.highlightFragment.bind(this, frag)}
+                                            onMouseLeave={this.setBackToPreviousSelection.bind(this)}
+                                        >
+                                            {frag.name}
+                                        </div>
+                                    }
+                                } else {
+                                    return <div
+                                        type="button"
+                                        className={mapped ? bootstrapMappedLayer : bootstrapUnmappedLayer}
+                                        key={frag.id}
+                                        onMouseEnter={this.highlightFragment.bind(this, frag)}
+                                        onMouseLeave={this.setBackToPreviousSelection.bind(this)}
+                                    >
+                                        {frag.name}
+                                    </div>
+                                }
+                            }
+                        }) }
+                    </div>
+                </div>
             }
         });
 
