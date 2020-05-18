@@ -183,9 +183,7 @@ class MainUI extends React.Component {
     };
 
     callbackLayerListSelectPngs = (fragments) => {
-        this.setState({
-            layerFragmentStack: fragments,
-        });
+        this.setState({layerFragmentStack: fragments});
     }
 
     callbackSearchCardClose = () => {

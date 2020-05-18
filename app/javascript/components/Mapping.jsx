@@ -53,6 +53,10 @@ class Mapping extends React.Component {
             }
         }
 
+        if (this.props.layerFragmentStack !== prevProps.layerFragmentStack) {
+            this.selectPngsFromList(this.props.layerFragmentStack);
+        }
+
         if(this.props.map !== prevProps.map) {
             setTimeout(() => {
                 $.getJSON('api/v1/maps')
@@ -60,19 +64,13 @@ class Mapping extends React.Component {
             }, 2000);
         }
 
-        let selectedLayerFromList = this.props.selectedLayerFromList;
-        let hightlightedPng = this.props.hightlightedPng;
-        if (selectedLayerFromList !== prevProps.selectedLayerFromList && selectedLayerFromList !== '') {
-            this.selectLayer(selectedLayerFromList);
+        if (this.props.selectedLayerFromList !== prevProps.selectedLayerFromList && this.props.selectedLayerFromList !== '') {
+            this.selectLayer(this.props.selectedLayerFromList);
         }
-        if (hightlightedPng !== prevProps.hightlightedPng && hightlightedPng !== '') {
-            this.highlightPng(hightlightedPng);
-        } else if (hightlightedPng !== prevProps.hightlightedPng && hightlightedPng === '') {
+        if (this.props.hightlightedPng !== prevProps.hightlightedPng && this.props.hightlightedPng !== '') {
+            this.highlightPng(this.props.hightlightedPng);
+        } else if (this.props.hightlightedPng !== prevProps.hightlightedPng && this.props.hightlightedPng === '') {
             this.setBackToPreviousSelection();
-        }
-        let layerFragmentStack = this.props.layerFragmentStack;
-        if (layerFragmentStack !== prevProps.layerFragmentStack) {
-            this.selectPngsFromList(layerFragmentStack);
         }
     }
 
@@ -236,7 +234,7 @@ class Mapping extends React.Component {
             }
         }
     }
-
+    /**
     selectPngsFromList(fragment) {
         if (fragment.ebene === this.state.activeLayer) {
             let elem = this.state.allImages;
@@ -265,47 +263,22 @@ class Mapping extends React.Component {
             }
         }
     }
+    **/
 
-    /**
     selectPngsFromList(layerFragmentList) {
         let elem = this.state.allImages;
         let frags = layerFragmentList;
-        let frag;
         let selectedImages = [];
-
-        elem = elem.filter((img) => {
-            if (img.ebene === this.state.activeLayer) {
-                return img;
-            }
-        });
-        console.log(elem);
-
-        this.selectAll(false);
-
-        for (let i = 0; i < elem.length; i++) {
-            let myImg = document.getElementById(elem[i].name);
-
-            frag = frags.filter((frag) => {
-                if (frag.name === elem[i].name) {
-                    return frag;
+        
+        for(let x=0; x < frags.length; x++) {
+            for (let i = 0; i < elem.length; i++) {
+                if (frags[x].name === elem[i].name) {
+                    selectedImages = selectedImages.concat(elem[i]);
                 }
-            })
-
-            if (frag.length > 0) {
-                myImg.style.opacity = '1';
-                selectedImages.push(myImg);
-            } else {
-                myImg.style.opacity = '0.4';
             }
         }
-        console.log(selectedImages);
-
-        this.setState({
-            selectedImages: selectedImages,
-            selectedImagesBackup: selectedImages,
-        });
-        this.sendIcdToMainUI(selectedImages);
-    }**/
+        this.setState({selectedImagesBackup: selectedImages});
+    }
 
     setBackToPreviousSelection() {
         let elem = this.state.allImages;
