@@ -87,8 +87,8 @@ class Mapping extends React.Component {
      * like the details card can access it.
      * @param image holds the layer_id of an image
      */
-    sendIcdToMainUI(image) {
-        this.props.callbackFromMainUI(image);
+    sendIcdToMainUI(image, selectedFromMapping) {
+        this.props.callbackFromMainUI(image, selectedFromMapping);
     }
 
     /**
@@ -201,7 +201,7 @@ class Mapping extends React.Component {
                     }
                     i = len;
                     this.setState({selectedImages: selectedImages, selectedImagesBackup: selectedImages});
-                    this.sendIcdToMainUI(selectedImages);
+                    this.sendIcdToMainUI(selectedImages, true);
                 }
             }
             context.clearRect(0, 0, canvas.width, canvas.height);
@@ -277,7 +277,7 @@ class Mapping extends React.Component {
                 }
             }
             this.setState({selectedImages: selectedImages});
-            this.sendIcdToMainUI(selectedImages);
+            this.sendIcdToMainUI(selectedImages, false);
         } else {
             this.selectAll(true);
         }

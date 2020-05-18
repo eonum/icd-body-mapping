@@ -36,6 +36,13 @@ class LayerList extends React.Component {
         if(this.props.selectedIcd !== prevProps.selectedIcd && this.props.selectedIcd !== '') {
             this.getMapsOfIcd(this.props.selectedIcd);
         }
+        if (this.props.selectionFromMapping !== prevProps.selectionFromMapping && this.props.selectionFromMapping === true) {
+            console.log(this.props.selectedLayer);
+            this.setState({
+                checkedFrags: this.props.selectedLayer,
+                change: true,
+            });
+        }
     }
 
     getMapsOfIcd(showedIcd) {
@@ -84,6 +91,7 @@ class LayerList extends React.Component {
         this.setState({
             checkedFrags: selection,
             change: true,
+            selectionFromList: true,
         });
         this.props.callbackFromMainUISelectPngs(selection);
     }
@@ -191,7 +199,6 @@ class LayerList extends React.Component {
                                     </div>
                                 } else {
                                     return <div
-                                        type="button"
                                         className={mapped ? bootstrapMappedLayer : bootstrapUnmappedLayer}
                                         key={frag.id}
                                         onMouseEnter={this.highlightFragment.bind(this, frag)}

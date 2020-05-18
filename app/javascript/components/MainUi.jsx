@@ -37,6 +37,7 @@ class MainUI extends React.Component {
             icdSelectionFromSearch: false,
             layerFragmentStack: [],
             addToSelection: false,
+            selectionFromMapping: false,
         };
     }
 
@@ -111,8 +112,13 @@ class MainUI extends React.Component {
     		});
   	};
 
-    callbackMapping = (selectedLayerFromMapping) => {
-        this.setState({ selectedLayer: selectedLayerFromMapping });
+    callbackMapping = (selectedLayerFromMapping, selectionFromMapping) => {
+        this.setState({
+          selectedLayer: selectedLayerFromMapping,
+          selectionFromMapping: selectionFromMapping,
+        });
+        console.log(selectedLayerFromMapping);
+        console.log(selectionFromMapping);
     };
 
     callbackMappingActiveLayer = (activeLayer) => {
@@ -240,6 +246,7 @@ class MainUI extends React.Component {
                 selectedIcd={this.state.selectedIcd}
                 selectedLayer={this.state.selectedLayer}
                 editable={this.state.editMode}
+                selectionFromMapping={this.state.selectionFromMapping}
             />
         )
 
