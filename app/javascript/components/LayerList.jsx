@@ -46,8 +46,8 @@ class LayerList extends React.Component {
         }
     }
 
-    getMapsOfIcd(showedIcd) {
-        $.getJSON('/api/v1/map/' + this.props.selectedIcd.id)
+    getMapsOfIcd(icd) {
+        $.getJSON('/api/v1/map/' + icd.id)
             .then(response => this.setState({maps: response}));
     }
 
@@ -101,6 +101,16 @@ class LayerList extends React.Component {
             selectionFromList: true,
         });
         this.props.callbackFromMainUISelectPngs(selection);
+    }
+
+    deleteMapping(frag) {
+
+
+        //-----DELETE MAPPING OF SPECIFIC LAYER
+
+
+        //reload maps
+        this.getMapsOfIcd(this.props.selectedIcd);
     }
 
     render() {
@@ -197,7 +207,7 @@ class LayerList extends React.Component {
                             mouseOverCurrent = (mouseOver === frag);
 
                             if (frag.ebene === layer.ebene) {
-                                if (editable) {
+                                if (editable && !mapped) {
                                     return <div
                                         type="button"
                                         className={showAsSelected ? bootstrapMappedLayerEdit : bootstrapUnmappedLayer}
@@ -213,6 +223,25 @@ class LayerList extends React.Component {
                                               style={floatRightStyle}
                                           >
                                               {showAsSelected ? 'unselect' : 'select'}
+                                          </span>
+                                          : null}
+                                    </div>
+                                } else if (editable && mapped) {
+                                    return <div
+                                        type="button"
+                                        className={showAsSelected ? bootstrapMappedLayerEdit : bootstrapUnmappedLayer}
+                                        key={frag.id}
+                                        onClick={this.deleteMapping.bind(this, frag)}
+                                        onMouseEnter={this.highlightFragment.bind(this, frag)}
+                                        onMouseLeave={this.setBackToPreviousSelection.bind(this)}
+                                    >
+                                        {frag.name}
+                                        {mouseOverCurrent ?
+                                          <span
+                                              className="pl-2 pr-2 text-white bg-danger font-weight-normal"
+                                              style={floatRightStyle}
+                                          >
+                                              delete mapping <CloseIcon />
                                           </span>
                                           : null}
                                     </div>
