@@ -168,8 +168,9 @@ class LayerList extends React.Component {
             if (layer.ebene === activeLayer) {
                 return <div key={index}>
                     <div className="dropdown list-group-item-action mb-1 border rounded" style={topStyle}>
-                        <div className="ml-4 mr-2 font-weight-bold text-primary text-left">
-                            {layer.ebene}
+                        <div className="ml-4 mr-2 text-left">
+                            <span className="font-weight-normal text-secondary">Details: </span>
+                            <span className="font-weight-bold text-primary">{layer.ebene}</span>
                         </div>
                         <div className="text-left" style={showHideStyle}>
                             {showFrags ? hideButton : showButton}

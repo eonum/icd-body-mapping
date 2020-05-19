@@ -121,12 +121,15 @@ class DetailsCard extends React.Component {
                             />
                         </Form>
                     </div>
+                    <div className="col-4 mt-2" />
                     <div className="col-4 mt-2">
                         <NewMaps
+                            style={buttonStyle}
                             icd_id={selectedIcd.id}
                             icd_ids={[]}
                             selectedLayer={selectedLayer}
-                            callbackFromDetailsCard={this.callbackMaps}
+                            callbackFromDetailsCard={this.props.callbackFromMainUIMaps}
+                            parent={'details'}
                         />
                     </div>
                 </div>

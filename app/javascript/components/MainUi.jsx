@@ -219,6 +219,7 @@ class MainUI extends React.Component {
                 callbackFromMainUIMapping={this.callbackSearchCardMapping}
                 callbackFromMainUIClose={this.callbackSearchCardClose}
 				        callbackFromMainUIViewAll={this.callbackViewAll}
+                callbackFromMainUIMaps={this.callbackDetailsMap}
             />
         );
         const details = (
@@ -311,6 +312,9 @@ class MainUI extends React.Component {
                                 hightlightedPng={this.state.hightlightedPng}
                                 layerFragmentStack={this.state.layerFragmentStack}
                                 addToSelection={this.state.addToSelection}
+                                selectedIcd={this.state.selectedIcd}
+                                checkedIcdIds={this.state.checkedIcdIds}
+                                editable={this.state.editMode}
                             />
                         </div>
                     </div>

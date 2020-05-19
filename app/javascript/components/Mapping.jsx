@@ -248,6 +248,8 @@ class Mapping extends React.Component {
             }
         }
         this.setState({selectedImagesBackup: selectedImages});
+        this.setState({selectedImages: selectedImages});
+        this.sendIcdToMainUI(selectedImages, false);
     }
 
     setBackToPreviousSelection() {
@@ -277,7 +279,6 @@ class Mapping extends React.Component {
                 }
             }
             this.setState({selectedImages: selectedImages});
-            this.sendIcdToMainUI(selectedImages, false);
         } else {
             this.selectAll(true);
         }
@@ -289,6 +290,7 @@ class Mapping extends React.Component {
         const dropdownStyle = {height: '30px'};
         let {x, y} = this.state;
         let activeLayer = this.state.activeLayer;
+        const editable = this.props.editable;
 
         let alleElemente = this.state.allImages.map((elem, index) => {
             if (elem.ebene === activeLayer){
@@ -320,7 +322,13 @@ class Mapping extends React.Component {
         return (
             <div>
                 <div className="row" style={rowStyle}>
-                    {dropdown}
+                    <div className="col-md-auto">
+                        {dropdown}
+                    </div>
+                    <div className="col" />
+                    <div className="col-3">
+                        {editable ? <LayerOptions callbackFromMapping={this.callbackallImages}/> : null}
+                    </div>
                 </div>
                 <canvas id='canvas' style={divStyle} width="600" height="530"/>
                 <div onMouseMove={this._onMouseMove.bind(this)} id='mappingComp' onClick={this.selectPng.bind(this, x, y, this.state.allImages.length)}>
