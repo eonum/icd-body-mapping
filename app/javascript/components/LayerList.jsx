@@ -2,6 +2,7 @@ import React from 'react';
 import $ from "jquery";
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
+import CloseIcon from '@material-ui/icons/Close';
 
 /**
  * The MappingList gets the Mappings corresponding to either, chosen Layers
@@ -19,6 +20,7 @@ class LayerList extends React.Component {
             showFrags: true,
             checkedFrags: [],
             change: false,
+            mouseOver: '',
         };
     }
 
@@ -58,10 +60,16 @@ class LayerList extends React.Component {
 
     highlightFragment(fragment) {
         this.props.callbackFromMainUIHighlight(fragment);
+        this.setState({
+            mouseOver: fragment,
+        });
     }
 
     setBackToPreviousSelection() {
         this.props.callbackFromMainUIResetToSelection();
+        this.setState({
+            mouseOver: '',
+        });
     }
 
     showFrags(show) {
@@ -103,10 +111,12 @@ class LayerList extends React.Component {
         const showFrags = this.state.showFrags;
         const editable = this.props.editable;
         const checkedFrags = this.state.checkedFrags;
+        let mouseOver = this.state.mouseOver;
         let mappedFragments = [];
         let checkedFragments = [];
         let mapped = false;
         let showAsSelected = false;
+        let mouseOverCurrent = false;
 
         const style = {
             overflow: 'visible'
@@ -122,14 +132,14 @@ class LayerList extends React.Component {
         const topStyle = {
             height: '30px',
         }
-        const checkboxStyle = {
+        const floatRightStyle = {
             float: 'right'
         }
         const bootstrapActiveLayerButton = "btn btn-default p-0 m-0 ml-4 shadow-none font-weight-bold text-primary text-left";
         const bootstrapInactiveLayerButton = "btn btn-default p-0 m-0 ml-4 shadow-none text-left";
         const bootstrapMappedLayer = "list-group-item list-group-item-action p-0 pl-2 pr-2 shadow-none text-primary font-weight-bold";
-        const bootstrapUnmappedLayer = "list-group-item list-group-item-action p-0 pl-2 pr-2 shadow-none";
-        const bootstrapMappedLayerEdit = "list-group-item list-group-item-action p-0 pl-2 pr-2 shadow-none text-primary font-weight-bold bg-light";
+        const bootstrapUnmappedLayer = "list-group-item list-group-item-action p-0 pl-2 shadow-none";
+        const bootstrapMappedLayerEdit = "list-group-item list-group-item-action p-0 pl-2 shadow-none text-primary font-weight-bold bg-light";
 
         const empty = (<></>);
 
@@ -183,6 +193,7 @@ class LayerList extends React.Component {
                             showAsSelected = ((this.state.change === false && mapped) ||
                                             (checkedFragments.length > 0
                                               && checkedFragments[0].name === frag.name));
+                            mouseOverCurrent = (mouseOver === frag);
 
                             if (frag.ebene === layer.ebene) {
                                 if (editable) {
@@ -195,6 +206,14 @@ class LayerList extends React.Component {
                                         onMouseLeave={this.setBackToPreviousSelection.bind(this)}
                                     >
                                         {frag.name}
+                                        {mouseOverCurrent ?
+                                          <span
+                                              className="pl-2 pr-2 text-white bg-primary font-weight-normal"
+                                              style={floatRightStyle}
+                                          >
+                                              {showAsSelected ? 'unselect' : 'select'}
+                                          </span>
+                                          : null}
                                     </div>
                                 } else {
                                     return <div

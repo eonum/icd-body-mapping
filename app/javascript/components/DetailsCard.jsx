@@ -40,7 +40,7 @@ class DetailsCard extends React.Component {
         this.setState({showingIcdId: this.props.selectedIcd.id});
     }
 
-    saveChanges(event) {
+    saveChanges() {
 		    event.preventDefault();
         let body = JSON.stringify({
             icd: {
@@ -102,9 +102,9 @@ class DetailsCard extends React.Component {
                 <Form>
                     <FormControl
                         onChange={event => {this.setState({annotationen: event.target.value})}}
-						onKeyDown={event => {if (event.key === 'Enter') {this.saveChanges.bind(this)}}}
+						            onKeyDown={event => {if (event.key === 'Enter') {this.saveChanges.bind(this)}}}
                         type="text"
-						key={this.props.selectedIcd.annotationen}
+						            key={this.props.selectedIcd.annotationen}
                         defaultValue={this.props.selectedIcd.annotationen}
                         className="mr-sm-2"
                     />
