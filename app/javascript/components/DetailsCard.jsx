@@ -41,7 +41,6 @@ class DetailsCard extends React.Component {
     }
 
     saveChanges(event) {
-		    event.preventDefault();
         let body = JSON.stringify({
             icd: {
                 id: this.state.selectedIcd.id,
@@ -67,8 +66,6 @@ class DetailsCard extends React.Component {
 		    });
 
         this.props.callbackFromMainUIReloadIcds();
-
-        alert('saved following annotations: ' + this.state.annotationen);
     }
 
     closeDetailsCard() {
@@ -102,7 +99,6 @@ class DetailsCard extends React.Component {
                 <Form>
                     <FormControl
                         onChange={event => {this.setState({annotationen: event.target.value})}}
-						onKeyDown={event => {if (event.key === 'Enter') {this.saveChanges.bind(this)}}}
                         type="text"
 						key={this.props.selectedIcd.annotationen}
                         defaultValue={this.props.selectedIcd.annotationen}
@@ -111,17 +107,7 @@ class DetailsCard extends React.Component {
                 </Form>
                 <div className="mt-4 border-top border-primary" />
                 <div className="row">
-                    <div className="col-4 mt-2">
-                        <Form className="float-left">
-                            <input
-                                type="submit"
-                                className="btn btn-primary"
-                                value="save"
-                                onClick={this.saveChanges.bind(this)}
-                            />
-                        </Form>
-                    </div>
-                    <div className="col-4 mt-2">
+                    <div onClick={this.saveChanges.bind(this)} className="col-4 mt-2 float-left">
                         <NewMaps
                             icd_id={selectedIcd.id}
                             icd_ids={[]}

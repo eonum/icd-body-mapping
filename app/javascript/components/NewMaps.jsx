@@ -11,23 +11,12 @@ class NewMaps extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            maps: [],
             icd_id: '',
             icd_ids: [],
             selectedLayer: [],
             buttonColor: 'btn btn-primary'
         };
         this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    /**
-     * This method makes sure to get all the existing maps from the maps table
-     * and saves them into the maps array. This is later needed, as to add new maps.
-     */
-    componentDidMount(){
-        fetch('/api/v1/maps')
-            .then((response) => {return response.json()})
-            .then((data) => {this.setState({ maps: data }) });
     }
 
     componentDidUpdate(prevProps) {
@@ -46,13 +35,18 @@ class NewMaps extends React.Component {
      * which should be posted.
      * event.preventDefault(); is needed as to not reload the site every time.
      */
-    handleSubmit(multiMapping, event) {
-        let icd_ids = [];
+    handleSubmit(event) {
+        let icd_ids = this.props.icd_ids;
+        let icd_id = this.props.icd_id
         let layers = this.state.selectedLayer;
-        if (multiMapping) {
-            icd_ids = this.props.icd_ids;
-        } else {
-            icd_ids.push(this.props.icd_id);
+        let contains = false
+        for(let i = 0; i < icd_ids.length; i++) {
+            if(icd_id === icd_ids[i]){
+                contains = true;
+            }
+        }
+        if(contains === false) {
+            icd_ids = icd_ids.concat(icd_id);
         }
         for (let i=0; i<icd_ids.length; i++) {
             for (let lay=0; lay < layers.length; lay++) {
@@ -62,10 +56,15 @@ class NewMaps extends React.Component {
                     headers: {'Content-Type': 'application/json'},
                     body: body,
                 }).then((map)=>{this.addNewMap(map)});
-                event.preventDefault();
             }
         }
-        this.sendIcdToDetailsCard(layers);
+        this.sendIcdToDetailsCard(this.state.maps);
+        this.setState({maps: []});
+        event.preventDefault();
+    }
+
+    addNewMap(map){
+        this.setState({maps: this.state.maps.concat(map)});
     }
 
     /**
@@ -80,50 +79,19 @@ class NewMaps extends React.Component {
         });
     }
 
-    /**
-     * A method, which purpose is to concat a new map onto the existing maps array
-     * @param map is an object, which contains the icd_id and layer_id
-     */
-    addNewMap(map){
-        this.setState({maps: this.state.maps.concat(map)});
-    }
-
     render() {
-        let icd_id = this.props.icd_id;
-        let selectedLayer = this.props.selectedLayer;
-        let icd_ids = this.props.icd_ids;
-
-        if (icd_id === undefined && icd_ids.length !== 0 && selectedLayer.length !== 0) {
-            return(
-                <form
-                    onSubmit={this.handleSubmit.bind(this, true)}
-                    className="text-center"
-                >
-                    <input type="submit"
-                           className="btn btn-primary"
-                           value="map selected"
-                           onClick={this.stateIdSet.bind(this)}
-                    />
-                </form>
-            );
-        } else if (icd_id !== undefined && icd_ids.length === 0 && selectedLayer.length !== 0) {
-            return(
-                <form
-                    className="text-center"
-                    onSubmit={this.handleSubmit.bind(this, false)}
-                >
-                    <input type="submit"
-                           className={this.state.buttonColor}
-                           value="map"
-                           onClick={this.stateIdSet.bind(this)}
-                    />
-                </form>
-            );
-        } else {
-            return(
-                <div/>
-            );
-        }
+        return(
+            <form
+                className="text-center"
+                onSubmit={this.handleSubmit.bind(this)}
+            >
+                <input type="submit"
+                       className={this.state.buttonColor}
+                       value="save"
+                       onClick={this.stateIdSet.bind(this)}
+                />
+            </form>
+        )
     }
 }
 export default NewMaps

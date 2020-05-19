@@ -24,12 +24,6 @@ class Mapping extends React.Component {
         this.selectFromSelected = this.selectFromSelected.bind(this);
     }
 
-    makeArrayIdLayerId() {
-        let allImages = this.state.allImages;
-        for(let i=0; i < allImages.length; i++) {
-        }
-    }
-
     componentDidMount() {
         $.getJSON('/api/v1/layers')
             .then(response => this.setState({allImages: response}));
@@ -58,10 +52,11 @@ class Mapping extends React.Component {
         }
 
         if(this.props.map !== prevProps.map) {
+            this.addNewMap(this.props.map);
             setTimeout(() => {
                 $.getJSON('api/v1/maps')
                     .then(response => this.setState({maps: response}));
-            }, 2000);
+            }, 5000);
         }
 
         if (this.props.selectedLayerFromList !== prevProps.selectedLayerFromList && this.props.selectedLayerFromList !== '') {
@@ -72,6 +67,10 @@ class Mapping extends React.Component {
         } else if (this.props.hightlightedPng !== prevProps.hightlightedPng && this.props.hightlightedPng === '') {
             this.setBackToPreviousSelection();
         }
+    }
+
+    addNewMap(map){
+        this.setState({maps: this.state.maps.concat(map)});
     }
 
     callbackallImages = (layer) => {
