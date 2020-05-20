@@ -39,6 +39,7 @@ class MainUI extends React.Component {
             addToSelection: false,
             selectionFromMapping: false,
             updateList: false,
+            showFrags: true,
         };
     }
 
@@ -123,6 +124,10 @@ class MainUI extends React.Component {
 
     callbackMappingActiveLayer = (activeLayer) => {
         this.setState({activeLayer: activeLayer});
+    };
+
+    callbackMappingMinimizeLayerList = (minimize) => {
+        this.setState({showFrags: minimize});
     };
 
     callbackDetails = (showingIcdIdFromDetails) => {
@@ -268,6 +273,7 @@ class MainUI extends React.Component {
                 editable={this.state.editMode}
                 selectionFromMapping={this.state.selectionFromMapping}
                 updateList={this.state.updateList}
+                showFrags={this.state.showFrags}
             />
         )
 
@@ -327,6 +333,7 @@ class MainUI extends React.Component {
                             <Mapping
                                 callbackFromMainUI={this.callbackMapping}
                                 callbackFromMainUIActiveLayer={this.callbackMappingActiveLayer}
+                                callbackFromMainUIMinimizeLayerList={this.callbackMappingMinimizeLayerList}
                                 map={this.state.map}
                                 mapLayerList={this.state.mapLayerList}
                                 showingIcdId={this.state.showingIcdId}

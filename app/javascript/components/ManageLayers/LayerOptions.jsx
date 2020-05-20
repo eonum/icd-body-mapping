@@ -1,13 +1,13 @@
 import React from "react";
 import AddImage from "./AddImage";
 import DeleteImage from "./DeleteImage";
+import AddIcon from '@material-ui/icons/Add';
 
 class LayerOptions extends React.Component {
     constructor(props) {
         super(props);
-        this.toggleHidden = this.toggleHidden.bind(this);
         this.state = {
-            isVisible: false,
+            add: false,
             isMounted: false
         }
     }
@@ -22,28 +22,46 @@ class LayerOptions extends React.Component {
 
     callbackallImages = (layer) => {
         this.sendIcdToMapping(layer);
+        this.setState({
+            add: false,
+        })
     };
 
     sendIcdToMapping(newImage) {
         this.props.callbackFromMapping(newImage);
     }
 
-    toggleHidden() {
+    addView() {
         this.setState({
-            isVisible: !this.state.isVisible
-        })
+            add: true,
+        });
     }
 
     render() {
-        return (
-            <div className='analytics' onMouseEnter={this.toggleHidden} onMouseLeave={this.toggleHidden}>
+        const floatRightStyle = {float: 'right'}
+        const addButton = (
+            <button
+                type="button"
+                className="btn btn-primary p-0 text-center"
+                style={floatRightStyle}
+                data-toggle="tooltip"
+                data-placement="bottom"
+                title="add new image"
+                onClick={this.addView.bind(this)}
+            >
+                <AddIcon/>
+            </button>
+        );
 
-                {!this.state.isVisible ? <div>Settings</div> : null}
-                <div>
-                    {this.state.isVisible ?
-                        <AddImage callbackFromMapping={this.callbackallImages} style="z-index: 5"/> : null}
-                    {this.state.isVisible ? <DeleteImage style="z-index: 5"/> : null}
-                </div>
+        return (
+            <div className="p-4">
+                {this.state.add ?
+                    <AddImage
+                        callbackFromMapping={this.callbackallImages}
+                        style="z-index: 5"
+                    />
+                    : addButton }
+                <DeleteImage style="z-index: 5"/>
             </div>
         )
     }

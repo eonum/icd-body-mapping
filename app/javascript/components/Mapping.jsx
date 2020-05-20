@@ -18,7 +18,8 @@ class Mapping extends React.Component {
             layers: [],
             selectedImages: [], selectedImagesBackup: [],
             x: 0, y: 0,
-            activeLayer: 'Gehirn Längsschnitt'
+            activeLayer: 'Gehirn Längsschnitt',
+            mapView: true,
         };
         this.callbackallImages = this.callbackallImages.bind(this);
         this.selectMappedImages = this.selectMappedImages.bind(this);
@@ -313,6 +314,20 @@ class Mapping extends React.Component {
         }
     }
 
+    changeViewTo(view) {
+        if (view === 'map') {
+            this.setState({
+                mapView: true,
+            });
+            this.props.callbackFromMainUIMinimizeLayerList(true);
+        } else {
+            this.setState({
+                mapView: false,
+            });
+            this.props.callbackFromMainUIMinimizeLayerList(false);
+        }
+    }
+
     render() {
         const rowStyle = {height: '8vh'};
         const divStyle = {position: 'absolute'};
@@ -320,6 +335,12 @@ class Mapping extends React.Component {
         let {x, y} = this.state;
         let activeLayer = this.state.activeLayer;
         const editable = this.props.editable;
+        const mapView = this.state.mapView;
+
+        const bootstrapSelectedMapButton = "col-6 border border-primary bg-primary rounded-left text-white p-0 pl-2 pr-2 font-weight-bold";
+        const bootstrapSelectedListButton = "col-6 border border-primary bg-primary rounded-right text-white p-0 pl-2 pr-2 font-weight-bold";
+        const bootstrapUnselectedMapButton = "col-6 border border-primary rounded-left text-primary p-0 pl-2 pr-2";
+        const bootstrapUnselectedListButton = "col-6 border border-primary rounded-right text-primary p-0 pl-2 pr-2";
 
         let alleElemente = this.state.allImages.map((elem, index) => {
             if (elem.ebene === activeLayer) {
@@ -352,22 +373,51 @@ class Mapping extends React.Component {
             </div>
         );
 
+        const viewButton = (
+            <div className="row pr-4 text-center">
+                <div
+                    className={mapView ? bootstrapSelectedMapButton : bootstrapUnselectedMapButton}
+                    type="button"
+                    style={dropdownStyle}
+                    onClick={this.changeViewTo.bind(this, 'map')}
+                >
+                    map
+                </div>
+                <div
+                    className={mapView ? bootstrapUnselectedListButton : bootstrapSelectedListButton}
+                    type="button"
+                    style={dropdownStyle}
+                    onClick={this.changeViewTo.bind(this, 'list')}
+                >
+                    list
+                </div>
+            </div>
+        );
+
+        const map = (
+          <>
+            <canvas id='canvas' style={divStyle} width="600" height="530"/>
+            <div onMouseMove={this._onMouseMove.bind(this)} id='mappingComp'
+                 onClick={this.selectPng.bind(this, x, y, this.state.allImages.length)}>
+                {alleElemente}
+            </div>
+          </>
+        );
+
+        const list = (<LayerOptions callbackFromMapping={this.callbackallImages}/>)
+
         return (
             <div>
                 <div className="row" style={rowStyle}>
                     <div className="col-md-auto">
                         {dropdown}
                     </div>
-                    <div className="col"/>
+                    <div className="col" />
                     <div className="col-3">
-                        {editable ? <LayerOptions callbackFromMapping={this.callbackallImages}/> : null}
+                        {editable ? viewButton : null}
                     </div>
                 </div>
-                <canvas id='canvas' style={divStyle} width="600" height="530"/>
-                <div onMouseMove={this._onMouseMove.bind(this)} id='mappingComp'
-                     onClick={this.selectPng.bind(this, x, y, this.state.allImages.length)}>
-                    {alleElemente}
-                </div>
+                { mapView ? map : list }
             </div>
         )
     }

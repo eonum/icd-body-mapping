@@ -60,6 +60,11 @@ class LayerList extends React.Component {
             this.props.callbackFromMainUISelectPngs([]);
             this.props.callbackFromMainUIUpdateListDone();
         }
+        if (this.props.showFrags !== prevProps.showFrags) {
+            this.setState({
+                showFrags: this.props.showFrags,
+            });
+        }
     }
 
     getMapsOfIcd(icd) {
@@ -86,9 +91,11 @@ class LayerList extends React.Component {
     }
 
     showFrags(show) {
-        this.setState({
-            showFrags: show,
-        });
+        if (this.props.showFrags === true) {
+            this.setState({
+                showFrags: show,
+            });
+        };
     }
 
     selectFragments(frag, add) {
@@ -175,6 +182,9 @@ class LayerList extends React.Component {
         const bootstrapUnmappedLayer = "list-group-item list-group-item-action p-0 pl-2 shadow-none";
         const bootstrapMappedLayerEdit = "list-group-item list-group-item-action p-0 pl-2 shadow-none text-primary font-weight-bold bg-light";
 
+        const bootstrapButtonEnabled = "btn btn-default p-0 m-0 shadow-none text-primary";
+        const bootstrapButtonDisabled = "btn btn-default p-0 m-0 shadow-none text-secondary";
+
         const empty = (<></>);
 
 
@@ -207,7 +217,14 @@ class LayerList extends React.Component {
                             <span className="font-weight-bold text-primary">{layer.ebene}</span>
                         </div>
                         <div className="text-left" style={showHideStyle}>
-                            {showFrags ? hideButton : showButton}
+                            <button
+                                type="button"
+                                className={(this.props.showFrags === false) ? bootstrapButtonDisabled : bootstrapButtonEnabled}
+                                onClick={this.showFrags.bind(this, !(showFrags))}
+                                title="hide Layers"
+                            >
+                                {showFrags ? <KeyboardArrowDownIcon/> : <KeyboardArrowLeftIcon/>}
+                            </button>
                         </div>
                     </div>
                     <div className="ml-4">
