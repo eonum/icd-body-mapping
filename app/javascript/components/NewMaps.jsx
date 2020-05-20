@@ -74,6 +74,7 @@ class NewMaps extends React.Component {
             selectedLayer: this.props.selectedLayer,
             buttonColor: 'btn btn-success'
         });
+        this.props.callbackFromMainUIUpdateList();
     }
 
     render() {

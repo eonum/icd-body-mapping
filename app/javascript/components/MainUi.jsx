@@ -38,6 +38,7 @@ class MainUI extends React.Component {
             layerFragmentStack: [],
             addToSelection: false,
             selectionFromMapping: false,
+            updateList: false,
         };
     }
 
@@ -210,6 +211,18 @@ class MainUI extends React.Component {
         });
     };
 
+    callbackUpdateList = () => {
+        this.setState({
+            updateList: true,
+        });
+    };
+
+    callbackUpdateListDone = () => {
+        this.setState({
+            updateList: false,
+        });
+    };
+
     render() {
         const searchResults = (
             <SearchCard
@@ -238,6 +251,7 @@ class MainUI extends React.Component {
                 callbackFromMainUIMaps={this.callbackDetailsMap}
                 callbackFromMainUIClose={this.callbackDetailsCardClose}
                 callbackFromMainUIReloadIcds={this.callbackReloadIcds}
+                callbackFromMainUIUpdateList={this.callbackUpdateList}
             />
         );
         const layerList = (
@@ -247,11 +261,13 @@ class MainUI extends React.Component {
                 callbackFromMainUIResetToSelection={this.callbackLayerlistResetSelection}
                 callbackFromMainUISelectPngs={this.callbackLayerListSelectPngs}
                 callbackFromMainUIDeleteMap={this.callbackLayerListDeleteMap}
+                callbackFromMainUIUpdateListDone={this.callbackUpdateListDone}
                 activeLayer={this.state.activeLayer}
                 selectedIcd={this.state.selectedIcd}
                 selectedLayer={this.state.selectedLayer}
                 editable={this.state.editMode}
                 selectionFromMapping={this.state.selectionFromMapping}
+                updateList={this.state.updateList}
             />
         )
 

@@ -120,6 +120,7 @@ class DetailsCard extends React.Component {
                             icd_ids={[]}
                             selectedLayer={selectedLayer}
                             callbackFromDetailsCard={this.callbackMaps}
+                            callbackFromMainUIUpdateList={this.props.callbackFromMainUIUpdateList}
                             parent={'details'}
                         />
                     </div>
