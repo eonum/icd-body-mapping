@@ -19,7 +19,6 @@ class LayerList extends React.Component {
             mappedFragments: [],
             showFrags: true,
             checkedFrags: [],
-            change: false,
             mouseOver: '',
         };
         this.handleDelete = this.handleDelete.bind(this)
@@ -42,7 +41,6 @@ class LayerList extends React.Component {
                 this.getMapsOfIcd(this.props.selectedIcd);
                 this.setState({
                     checkedFrags: [],
-                    change: false,
                 });
             }
             this.props.callbackFromMainUISelectPngs([]);
@@ -50,7 +48,6 @@ class LayerList extends React.Component {
         if (this.props.selectionFromMapping !== prevProps.selectionFromMapping && this.props.selectionFromMapping === true) {
             this.setState({
                 checkedFrags: this.props.selectedLayer,
-                change: true,
             });
         }
     }
@@ -62,9 +59,6 @@ class LayerList extends React.Component {
 
     selectLayer(layer) {
         this.props.callbackFromMainUISelect(layer);
-        this.setState({
-            change: false,
-        });
     }
 
     highlightFragment(fragment) {
@@ -88,12 +82,7 @@ class LayerList extends React.Component {
     }
 
     selectFragments(frag, add) {
-        let selection = [];
-        if (this.state.change === false) {
-            selection = this.state.maps;
-        } else {
-            selection = this.state.checkedFrags;
-        }
+        let selection = this.state.checkedFrags;
 
         if (add) {
             selection = selection.concat(frag);
@@ -106,7 +95,6 @@ class LayerList extends React.Component {
         }
         this.setState({
             checkedFrags: selection,
-            change: true,
             selectionFromList: true,
         });
         this.props.callbackFromMainUISelectPngs(selection);
@@ -227,7 +215,7 @@ class LayerList extends React.Component {
                             });
                             mapped = (mappedFragments.length > 0
                               && mappedFragments[0].name === frag.name);
-                            showAsSelected = ((this.state.change === false && mapped) ||
+                            showAsSelected = ((mapped) ||
                                             (checkedFragments.length > 0
                                               && checkedFragments[0].name === frag.name));
                             mouseOverCurrent = (mouseOver === frag);

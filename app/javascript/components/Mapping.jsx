@@ -300,6 +300,7 @@ class Mapping extends React.Component {
         let {x, y} = this.state;
         let activeLayer = this.state.activeLayer;
         const editable = this.props.editable;
+        console.log(this.props.layerFragmentStack);
 
         let alleElemente = this.state.allImages.map((elem, index) => {
             if (elem.ebene === activeLayer){
