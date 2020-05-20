@@ -51,12 +51,16 @@ class Mapping extends React.Component {
             this.selectPngsFromList(this.props.layerFragmentStack);
         }
 
-        if(this.props.map !== prevProps.map) {
+        if (this.props.map !== prevProps.map) {
             this.addNewMap(this.props.map);
             setTimeout(() => {
                 $.getJSON('api/v1/maps')
                     .then(response => this.setState({maps: response}));
             }, 3000);
+        }
+
+        if (this.props.map_id !== prevProps.map_id) {
+            this.deleteMap(this.props.map_id);
         }
 
         if (this.props.selectedLayerFromList !== prevProps.selectedLayerFromList && this.props.selectedLayerFromList !== '') {
@@ -71,6 +75,11 @@ class Mapping extends React.Component {
 
     addNewMap(map){
         this.setState({maps: this.state.maps.concat(map)});
+    }
+
+    deleteMap(map_id){
+        let newMaps = this.state.maps.filter((map) => map.map_id !== map_id);
+        this.setState({maps: newMaps});
     }
 
     callbackallImages = (layer) => {

@@ -21,7 +21,7 @@ class MainUI extends React.Component {
             searchTerm: '',
             buttonTerm: '',
             selectedIcd: '',
-            map: '',
+            map: '', map_id: 0,
             detailsDisplayed: false,
             searchDisplayed: false,
             selectedLayer: '',
@@ -191,6 +191,10 @@ class MainUI extends React.Component {
         this.setState({layerFragmentStack: fragments});
     }
 
+    callbackLayerListDeleteMap = (map_id) => {
+        this.setState({map_id: map_id});
+    }
+
     callbackSearchCardClose = () => {
         this.setState({
             searchDisplayed: false,
@@ -241,6 +245,7 @@ class MainUI extends React.Component {
                 callbackFromMainUIHighlight={this.callbackLayerListHighlightPng}
                 callbackFromMainUIResetToSelection={this.callbackLayerlistResetSelection}
                 callbackFromMainUISelectPngs={this.callbackLayerListSelectPngs}
+                callbackFromMainUIDeleteMap={this.callbackLayerListDeleteMap}
                 activeLayer={this.state.activeLayer}
                 selectedIcd={this.state.selectedIcd}
                 selectedLayer={this.state.selectedLayer}
@@ -306,6 +311,7 @@ class MainUI extends React.Component {
                                 callbackFromMainUI={this.callbackMapping}
                                 callbackFromMainUIActiveLayer={this.callbackMappingActiveLayer}
                                 map={this.state.map}
+                                map_id={this.state.map_id}
                                 showingIcdId={this.state.showingIcdId}
                                 needUpdate={this.state.needUpdate}
                                 selectedLayerFromList={this.state.selectedLayerFromList}

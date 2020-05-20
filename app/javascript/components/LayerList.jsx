@@ -128,6 +128,7 @@ class LayerList extends React.Component {
     deleteMap(map_id){
         let newMaps = this.state.maps.filter((map) => map.map_id !== map_id);
         this.setState({maps: newMaps});
+        this.props.callbackFromMainUIDeleteMap(map_id);
     }
 
     render() {
