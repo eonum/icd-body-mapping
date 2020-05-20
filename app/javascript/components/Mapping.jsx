@@ -7,7 +7,7 @@ import LayerOptions from './ManageLayers/LayerOptions'
  * so that the user can see them and interact with them.
  * It allows the user to choose between the Layers with a dropdown Menu,
  * It also registers clicks from a user and checks which image was chosen in the selectPng Method.
- * @author Marius Asadauskas
+ * @author Marius Asadauskas, Aaron Saegesser
  */
 class Mapping extends React.Component {
     constructor(props) {

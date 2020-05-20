@@ -83,7 +83,7 @@ class NewMaps extends React.Component {
     render() {
         return(
             <form
-                className="text-center"
+                className="text-right"
                 onSubmit={this.handleSubmit.bind(this)}
             >
                 <input type="submit"

@@ -5,7 +5,7 @@ import NewMaps from "./NewMaps";
 
 /**
  * DetailsCard displays an ICD given via props in a viewable fashion
- * @author Aaron Saegesser
+ * @author Aaron Saegesser, Marius Asadauskas
  */
 class DetailsCard extends React.Component {
     constructor(props) {
@@ -102,14 +102,15 @@ class DetailsCard extends React.Component {
                     <FormControl
                         type="text"
                         onChange={e => {this.setState({annotationen: e.target.value})}}
-						key={this.props.selectedIcd.code}
+						            key={this.props.selectedIcd.code}
                         defaultValue={this.props.selectedIcd.annotationen}
                         onKeyDown={e => this.handleKeyDown(e)}
                         className="mr-sm-2"
                     />
                 </Form>
                 <div className="row">
-                    <div onClick={this.saveChanges.bind(this)} className="col-4 mt-2 float-left">
+                    <div className="col-8" />
+                    <div onClick={this.saveChanges.bind(this)} className="col-4 mt-2 float-right">
                         <NewMaps
                             icd_id={selectedIcd.id}
                             icd_ids={[]}

@@ -10,7 +10,7 @@ import Logo from "../../assets/images/favicon.ico";
 /**
  * The MainUI collects the child components of which it consists
  * and handles the communication between these components
- * @author Aaron Saegesser
+ * @author Aaron Saegesser, Joshua Felder
  */
 class MainUI extends React.Component {
     constructor(props) {

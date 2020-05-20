@@ -9,7 +9,7 @@ import HomeIcon from '@material-ui/icons/Home';
 /**
  * The Topbar contains the searchbar and header and is responsible for the searching.
  * Possible search results are handed over to parent via callback.
- * @author Aaron Saegesser, Linn Haeffner
+ * @author Aaron Saegesser, Linn Haeffner, Marius Asadauskas, Joshua Felder
  */
 class Topbar extends React.Component {
 

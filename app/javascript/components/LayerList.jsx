@@ -7,7 +7,7 @@ import CloseIcon from '@material-ui/icons/Close';
 /**
  * The MappingList gets the Mappings corresponding to either, chosen Layers
  * or a selected ICD
- * @author Aaron Saegesser
+ * @author Aaron Saegesser, Marius Asadauskas
  */
 class LayerList extends React.Component {
     constructor(props) {
@@ -39,6 +39,10 @@ class LayerList extends React.Component {
     componentDidUpdate(prevProps) {
         if(this.props.selectedIcd !== prevProps.selectedIcd && this.props.selectedIcd !== '') {
             this.getMapsOfIcd(this.props.selectedIcd);
+            this.setState({
+                checkedFrags: [],
+                change: false,
+            })
         }
         if (this.props.selectionFromMapping !== prevProps.selectionFromMapping && this.props.selectionFromMapping === true) {
             this.setState({
