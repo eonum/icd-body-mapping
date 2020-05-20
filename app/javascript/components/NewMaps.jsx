@@ -80,36 +80,37 @@ class NewMaps extends React.Component {
         let icd_id = this.props.icd_id;
         let selectedLayer = this.props.selectedLayer;
         let icd_ids = this.props.icd_ids;
+        const parent = this.props.parent;
 
-        if (icd_id === undefined && icd_ids.length !== 0 && selectedLayer.length !== 0) {
-            return (
+        let disabled = ((icd_id === undefined && icd_ids.length === 0) || selectedLayer.length === 0);
+        let inSearch = (parent === 'search');
+
+        if (disabled) {
+            return(
                 <form
-                    onSubmit={this.handleSubmit.bind(this, true)}
-                    className="text-center"
+                    onSubmit={this.handleSubmit.bind(this, inSearch)}
+                    className={inSearch ? "text-center" : "text-right"}
                 >
                     <input type="submit"
                            className={this.state.buttonColor}
-                           value="map selected"
+                           value={inSearch ? "Map Selected" : "Map"}
                            onClick={this.stateIdSet.bind(this)}
-                    />
-                </form>
-            );
-        } else if (icd_id !== undefined && icd_ids.length === 0 && selectedLayer.length !== 0) {
-            return (
-                <form
-                    className="text-center"
-                    onSubmit={this.handleSubmit.bind(this, false)}
-                >
-                    <input type="submit"
-                           className={this.state.buttonColor}
-                           value="map"
-                           onClick={this.stateIdSet.bind(this)}
+                           disabled
                     />
                 </form>
             );
         } else {
-            return (
-                <div/>
+            return(
+                <form
+                    onSubmit={this.handleSubmit.bind(this, inSearch)}
+                    className={inSearch ? "text-center" : "text-right"}
+                >
+                    <input type="submit"
+                           className={this.state.buttonColor}
+                           value={inSearch ? "Map Selected" : "Map"}
+                           onClick={this.stateIdSet.bind(this)}
+                    />
+                </form>
             );
         }
     }
