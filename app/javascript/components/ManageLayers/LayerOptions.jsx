@@ -38,12 +38,10 @@ class LayerOptions extends React.Component {
     }
 
     render() {
-        const floatRightStyle = {float: 'right'}
         const addButton = (
             <button
                 type="button"
                 className="btn btn-primary p-0 text-center"
-                style={floatRightStyle}
                 data-toggle="tooltip"
                 data-placement="bottom"
                 title="add new image"
@@ -54,13 +52,17 @@ class LayerOptions extends React.Component {
         );
 
         return (
-            <div className="p-4">
-                {this.state.add ?
-                    <AddImage
-                        callbackFromMapping={this.callbackallImages}
-                        style="z-index: 5"
-                    />
-                    : addButton }
+            <div className="p-2 pr-4">
+                <div className="m-2">
+                    {this.state.add ?
+                        <AddImage
+                            callbackFromMapping={this.callbackallImages}
+                            style="z-index: 5"
+                        />
+                        :
+                        addButton
+                    }
+                </div>
                 <DeleteImage style="z-index: 5"/>
             </div>
         )

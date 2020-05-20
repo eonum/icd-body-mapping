@@ -76,6 +76,9 @@ class Mapping extends React.Component {
         } else if (this.props.hightlightedPng !== prevProps.hightlightedPng && this.props.hightlightedPng === '') {
             this.setBackToPreviousSelection();
         }
+        if (this.props.editable !== prevProps.editable && this.props.editable === false) {
+            this.changeViewTo('map');
+        }
     }
 
     addNewMap(map) {
@@ -354,7 +357,7 @@ class Mapping extends React.Component {
     }
 
     render() {
-        const rowStyle = {height: '8vh'};
+        const rowStyle = {height: '5vh'};
         const divStyle = {position: 'absolute'};
         const dropdownStyle = {height: '30px'};
         let {x, y} = this.state;
@@ -407,7 +410,7 @@ class Mapping extends React.Component {
         );
 
         const viewButton = (
-            <div className="row pr-4 text-center">
+            <div className="row mr-4 text-center">
                 <div
                     className={mapView ? bootstrapSelectedMapButton : bootstrapUnselectedMapButton}
                     type="button"
@@ -443,7 +446,7 @@ class Mapping extends React.Component {
             <div>
                 <div className="row" style={rowStyle}>
                     <div className="col-md-auto">
-                        {dropdown}
+                        {mapView ? dropdown : null}
                     </div>
                     <div className="col" />
                     <div className="col-3">
