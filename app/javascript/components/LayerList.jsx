@@ -110,13 +110,13 @@ class LayerList extends React.Component {
     }
 
     handleDelete(name){
-        let map_id = this.findMap(name);
-        if (map_id > 0){
-            fetch(`http://localhost:3000/api/v1/maps/${map_id}`,
+        let map = this.findMap(name);
+        if (map.map_id > 0){
+            fetch(`http://localhost:3000/api/v1/maps/${map.map_id}`,
                 {
                     method: 'DELETE',
                     headers: {'Content-Type': 'application/json'}
-                }).then((response) => {this.deleteMap(map_id)})
+                }).then((response) => {this.deleteMap(map)})
         }
     }
 
@@ -124,15 +124,16 @@ class LayerList extends React.Component {
         let maps = this.state.maps
         for (let i = 0; i < maps.length; i++){
             if (maps[i].name === name){
-                return maps[i].map_id;
+                return maps[i]
             }
         }
     }
 
-    deleteMap(map_id){
+    deleteMap(map){
+        let map_id = map.map_id
         let newMaps = this.state.maps.filter((map) => map.map_id !== map_id);
         this.setState({maps: newMaps});
-        this.props.callbackFromMainUIDeleteMap(map_id);
+        this.props.callbackFromMainUIDeleteMap(map);
     }
 
     render() {

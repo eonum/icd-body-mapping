@@ -59,8 +59,8 @@ class Mapping extends React.Component {
             }, 3000);
         }
 
-        if (this.props.map_id !== prevProps.map_id) {
-            this.deleteMap(this.props.map_id);
+        if (this.props.mapLayerList !== prevProps.mapLayerList) {
+            this.deleteMap(this.props.mapLayerList);
         }
 
         if (this.props.selectedLayerFromList !== prevProps.selectedLayerFromList && this.props.selectedLayerFromList !== '') {
@@ -77,9 +77,10 @@ class Mapping extends React.Component {
         this.setState({maps: this.state.maps.concat(map)});
     }
 
-    deleteMap(map_id){
-        let newMaps = this.state.maps.filter((map) => map.map_id !== map_id);
-        this.setState({maps: newMaps});
+    deleteMap(map){
+        let newBackup = this.state.selectedImagesBackup.filter((image) => (image.name !== map.name || image.ebene !== map.ebene));
+        let newMaps = this.state.maps.filter((map) => map.id !== map.id);
+        this.setState({maps: newMaps, selectedImagesBackup: newBackup});
     }
 
     callbackallImages = (layer) => {

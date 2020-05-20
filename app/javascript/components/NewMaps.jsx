@@ -36,18 +36,14 @@ class NewMaps extends React.Component {
      * which should be posted.
      * event.preventDefault(); is needed as to not reload the site every time.
      */
-    handleSubmit(event) {
-        let icd_ids = this.props.icd_ids;
-        let icd_id = this.props.icd_id
+    handleSubmit(multiMapping, event) {
+        let icd_ids = [];
         let layers = this.state.selectedLayer;
-        let contains = false
-        for(let i = 0; i < icd_ids.length; i++) {
-            if(icd_id === icd_ids[i]){
-                contains = true;
-            }
-        }
-        if(contains === false) {
-            icd_ids = icd_ids.concat(icd_id);
+
+        if (multiMapping) {
+            icd_ids = this.props.icd_ids;
+        } else {
+            icd_ids = icd_ids.concat(this.props.icd_id);
         }
         for (let i=0; i<icd_ids.length; i++) {
             for (let lay=0; lay < layers.length; lay++) {
@@ -81,18 +77,41 @@ class NewMaps extends React.Component {
     }
 
     render() {
-        return(
-            <form
-                className="text-right"
-                onSubmit={this.handleSubmit.bind(this)}
-            >
-                <input type="submit"
-                       className={this.state.buttonColor}
-                       value="Save Changes"
-                       onClick={this.stateIdSet.bind(this)}
-                />
-            </form>
-        )
+        let icd_id = this.props.icd_id;
+        let selectedLayer = this.props.selectedLayer;
+        let icd_ids = this.props.icd_ids;
+
+        if (icd_id === undefined && icd_ids.length !== 0 && selectedLayer.length !== 0) {
+            return (
+                <form
+                    onSubmit={this.handleSubmit.bind(this, true)}
+                    className="text-center"
+                >
+                    <input type="submit"
+                           className={this.state.buttonColor}
+                           value="map selected"
+                           onClick={this.stateIdSet.bind(this)}
+                    />
+                </form>
+            );
+        } else if (icd_id !== undefined && icd_ids.length === 0 && selectedLayer.length !== 0) {
+            return (
+                <form
+                    className="text-center"
+                    onSubmit={this.handleSubmit.bind(this, false)}
+                >
+                    <input type="submit"
+                           className={this.state.buttonColor}
+                           value="map"
+                           onClick={this.stateIdSet.bind(this)}
+                    />
+                </form>
+            );
+        } else {
+            return (
+                <div/>
+            );
+        }
     }
 }
 export default NewMaps
