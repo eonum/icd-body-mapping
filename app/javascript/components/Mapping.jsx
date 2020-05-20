@@ -14,7 +14,9 @@ class Mapping extends React.Component {
         super(props);
         this.state = {
             allImages: [],
-            maps: [], mappedImages: [],
+            maps: [],
+            mappedImages: [], selectedMappedImages: [],
+            mappedLayers: [],
             layers: [],
             selectedImages: [], selectedImagesBackup: [],
             x: 0, y: 0,
@@ -22,7 +24,6 @@ class Mapping extends React.Component {
             mapView: true,
         };
         this.callbackallImages = this.callbackallImages.bind(this);
-        this.selectMappedImages = this.selectMappedImages.bind(this);
     }
 
     componentDidMount() {
@@ -41,7 +42,10 @@ class Mapping extends React.Component {
     componentDidUpdate(prevProps) {
         if (this.props.showingIcdId !== prevProps.showingIcdId) {
             if (this.props.showingIcdId !== 0) {
-                this.selectMappedImages(this.props.showingIcdId);
+                let mappedImages = this.getImagesFromMaps(this.props.showingIcdId);
+                this.setState({mappedImages: mappedImages});
+                this.selectMappedImages(mappedImages);
+                this.selectMappedLayers(mappedImages);
             } else {
                 this.setState({selectedImages: [], selectedImagesBackup: []});
                 this.selectAll(true);
@@ -83,7 +87,8 @@ class Mapping extends React.Component {
         let newMaps = this.state.maps.filter((map) => map.id !== map_id);
         let newBackup = this.state.selectedImagesBackup.filter((image) => (image.name !== map.name || image.ebene !== map.ebene));
         let newMapped = this.state.mappedImages.filter((image) => image.name !== map.name);
-        this.setState({maps: newMaps, selectedImagesBackup: newBackup, mappedImages: newMapped});
+        let newSelectedMap = this.state.selectedMappedImages.filter((image) => image.name !== map.name);
+        this.setState({maps: newMaps, selectedImagesBackup: newBackup, mappedImages: newMapped, selectedMappedImages: newSelectedMap});
     }
 
     callbackallImages = (layer) => {
@@ -124,7 +129,7 @@ class Mapping extends React.Component {
         });
         this.props.callbackFromMainUIActiveLayer(ebene);
         setTimeout(() => {
-            this.selectMappedImages(this.props.showingIcdId)
+            this.selectMappedImages(this.state.mappedImages)
         });
     }
 
@@ -143,25 +148,33 @@ class Mapping extends React.Component {
         }
     }
 
-    selectMappedImages(icdId) {
-        this.selectAll(false);
-        let selectedImages = [];
+    getImagesFromMaps(icdId){
         let allImages = this.state.allImages;
         let maps = this.state.maps;
-        let activeLayer = this.state.activeLayer;
+        let mappedImages = [];
         for (let i = 0; i < maps.length; i++) {
             if (maps[i].icd_id === icdId) {
                 let id = maps[i].layer_id;
                 for (let x = 0; x < allImages.length; x++) {
                     if (allImages[x].id === id) {
-                        let myImg = allImages[x];
-                        if (myImg.ebene === activeLayer) {
-                            document.getElementById(myImg.name).style.opacity = '1';
-                            selectedImages = selectedImages.concat(myImg);
-                            x = allImages.length;
-                        }
+                        mappedImages = mappedImages.concat(allImages[x]);
+                        x = allImages.length;
                     }
                 }
+            }
+        }
+        return mappedImages;
+    }
+
+    selectMappedImages(mappedImages) {
+        this.selectAll(false);
+        let selectedImages = [];
+        let activeLayer = this.state.activeLayer
+        for (let i = 0; i < mappedImages.length; i++) {
+            if (mappedImages[i].ebene === activeLayer) {
+                console.log(mappedImages[i].name);
+                document.getElementById(mappedImages[i].name).style.opacity = '1';
+                selectedImages = selectedImages.concat(mappedImages[i]);
             }
         }
         if (selectedImages.length === 0) {
@@ -169,8 +182,18 @@ class Mapping extends React.Component {
         }
         this.setState({
             selectedImages: selectedImages, selectedImagesBackup: selectedImages,
-            mappedImages: selectedImages
+            selectedMappedImages: selectedImages
         });
+    }
+
+    selectMappedLayers(mappedImages){
+        let notMappedLayers = this.state.layers;
+        let mappedLayers = [];
+        for(let i = 0; i < mappedImages.length; i++) {
+            mappedLayers = mappedLayers.concat(notMappedLayers.filter((layer) => layer.ebene === mappedImages[i].ebene));
+            notMappedLayers = notMappedLayers.filter((layer) => layer.ebene !== mappedImages[i].ebene);
+        }
+        this.setState({mappedLayers: mappedLayers});
     }
 
     /**
@@ -183,47 +206,49 @@ class Mapping extends React.Component {
      * @param y is the Y coordinate, at which a click happens
      * @param len The size of the selectedLayers array, the amount of images.
      */
-    selectPng(x, y, len) {
-        let canvas = document.getElementById('canvas');
-        let context = canvas.getContext('2d');
-        let elem = this.state.allImages;
-        let activeLayer = this.state.activeLayer;
-        let selectedImages = this.state.selectedImages;
+    selectPng(x, y, editable) {
+        if (editable === true){
+            let canvas = document.getElementById('canvas');
+            let context = canvas.getContext('2d');
+            let elem = this.state.allImages;
+            let activeLayer = this.state.activeLayer;
+            let selectedImages = this.state.selectedImages;
 
-        if (selectedImages.length === 0) {
-            this.selectAll(false);
-        }
-        for (let i = 0; i < len; i++) {
-            if (elem[i].ebene === activeLayer) {
-                let myImg = document.getElementById(elem[i].name);
-                context.drawImage(myImg, 0, 0);
-                let data = context.getImageData(x, y, 1, 1).data;
-                if (data[0] !== 0 && data[1] !== 0 && data[2] !== 0 && data[3] !== 0) {
-                    let cont = this.containsImage(elem[i], selectedImages);
-                    if (cont === false){
-                        myImg.style.opacity = '1';
-                        selectedImages = selectedImages.concat(elem[i]);
-                    } else {
-                        if (this.isMapped(elem[i]) === false){
-                            selectedImages.splice(cont, 1);
-                            myImg.style.opacity = '0.3';
-                        }
-                    }
-                    this.setState({selectedImages: selectedImages, selectedImagesBackup: selectedImages});
-                    this.sendIcdToMainUI(selectedImages, true);
-                }
+            if (selectedImages.length === 0) {
+                this.selectAll(false);
             }
-            context.clearRect(0, 0, canvas.width, canvas.height);
-        }
-        if (selectedImages.length === 0) {
-            this.selectAll(true);
+            for (let i = 0; i < elem.length; i++) {
+                if (elem[i].ebene === activeLayer) {
+                    let myImg = document.getElementById(elem[i].name);
+                    context.drawImage(myImg, 0, 0);
+                    let data = context.getImageData(x, y, 1, 1).data;
+                    if (data[0] !== 0 && data[1] !== 0 && data[2] !== 0 && data[3] !== 0) {
+                        let cont = this.containsImage(elem[i], selectedImages);
+                        if (cont === false){
+                            myImg.style.opacity = '1';
+                            selectedImages = selectedImages.concat(elem[i]);
+                        } else {
+                            if (this.isMapped(elem[i]) === false){
+                                selectedImages.splice(cont, 1);
+                                myImg.style.opacity = '0.3';
+                            }
+                        }
+                        this.setState({selectedImages: selectedImages, selectedImagesBackup: selectedImages});
+                        this.sendIcdToMainUI(selectedImages, true);
+                    }
+                }
+                context.clearRect(0, 0, canvas.width, canvas.height);
+            }
+            if (selectedImages.length === 0) {
+                this.selectAll(true);
+            }
         }
     }
 
     isMapped(elem){
-        let mappedImages = this.state.mappedImages;
-        for (let i = 0; i < mappedImages.length; i++){
-            if (elem.id === mappedImages[i].id){
+        let selectedMappedImages = this.state.selectedMappedImages;
+        for (let i = 0; i < selectedMappedImages.length; i++){
+            if (elem.id === selectedMappedImages[i].id){
                 return true;
             }
         }
@@ -266,7 +291,7 @@ class Mapping extends React.Component {
     selectPngsFromList(layerFragmentList) {
         let elem = this.state.allImages;
         let frags = layerFragmentList;
-        let selectedImages = this.state.mappedImages;
+        let selectedImages = this.state.selectedMappedImages;
 
         for (let x = 0; x < frags.length; x++) {
             for (let i = 0; i < elem.length; i++) {
@@ -355,6 +380,14 @@ class Mapping extends React.Component {
         });
 
         let alleLayers = this.state.layers.map((elem, index) => {
+            let mappedLayers = this.state.mappedLayers;
+            for (let i = 0; i < mappedLayers.length; i++){
+                if(elem === mappedLayers[i]){
+                    return <div className="dropdown-item text-primary" key={index} onClick={this.selectLayer.bind(this, elem.ebene)}>
+                        {elem.ebene}
+                    </div>
+                }
+            }
             return <div className="dropdown-item" key={index} onClick={this.selectLayer.bind(this, elem.ebene)}>
                 {elem.ebene}
             </div>
@@ -398,7 +431,7 @@ class Mapping extends React.Component {
           <>
             <canvas id='canvas' style={divStyle} width="600" height="530"/>
             <div onMouseMove={this._onMouseMove.bind(this)} id='mappingComp'
-                 onClick={this.selectPng.bind(this, x, y, this.state.allImages.length)}>
+                 onClick={this.selectPng.bind(this, x, y, editable)}>
                 {alleElemente}
             </div>
           </>
