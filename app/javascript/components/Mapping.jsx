@@ -14,14 +14,14 @@ class Mapping extends React.Component {
         super(props);
         this.state = {
             allImages: [],
-            maps: [],
+            maps: [], mappedImages: [],
             layers: [],
             selectedImages: [], selectedImagesBackup: [],
             x: 0, y: 0,
             activeLayer: 'Gehirn Längsschnitt'
         };
         this.callbackallImages = this.callbackallImages.bind(this);
-        this.selectFromSelected = this.selectFromSelected.bind(this);
+        this.selectMappedImages = this.selectMappedImages.bind(this);
     }
 
     componentDidMount() {
@@ -40,7 +40,7 @@ class Mapping extends React.Component {
     componentDidUpdate(prevProps) {
         if (this.props.showingIcdId !== prevProps.showingIcdId) {
             if (this.props.showingIcdId !== 0) {
-                this.selectFromSelected(this.props.showingIcdId);
+                this.selectMappedImages(this.props.showingIcdId);
             } else {
                 this.setState({selectedImages: [], selectedImagesBackup: []});
                 this.selectAll(true);
@@ -79,8 +79,8 @@ class Mapping extends React.Component {
 
     deleteMap(map) {
         let map_id = map.map_id;
-        let newBackup = this.state.selectedImagesBackup.filter((image) => (image.name !== map.name || image.ebene !== map.ebene));
         let newMaps = this.state.maps.filter((map) => map.id !== map_id);
+        let newBackup = this.state.selectedImagesBackup.filter((image) => (image.name !== map.name || image.ebene !== map.ebene));
         this.setState({maps: newMaps, selectedImagesBackup: newBackup});
     }
 
@@ -122,7 +122,7 @@ class Mapping extends React.Component {
         });
         this.props.callbackFromMainUIActiveLayer(ebene);
         setTimeout(() => {
-            this.selectFromSelected(this.props.showingIcdId)
+            this.selectMappedImages(this.props.showingIcdId)
         });
     }
 
@@ -141,9 +141,8 @@ class Mapping extends React.Component {
         }
     }
 
-    selectFromSelected(icdId) {
+    selectMappedImages(icdId) {
         this.selectAll(false);
-
         let selectedImages = [];
         let allImages = this.state.allImages;
         let maps = this.state.maps;
@@ -166,7 +165,11 @@ class Mapping extends React.Component {
         if (selectedImages.length === 0) {
             this.selectAll(true);
         }
-        this.setState({selectedImages: selectedImages, selectedImagesBackup: selectedImages});
+        this.setState({
+            selectedImages: selectedImages,
+            selectedImagesBackup: selectedImages,
+            mappedImages: selectedImages
+        });
     }
 
     /**
@@ -200,8 +203,10 @@ class Mapping extends React.Component {
                         myImg.style.opacity = '1';
                         selectedImages = selectedImages.concat(elem[i]);
                     } else {
-                        selectedImages.splice(cont, 1);
-                        myImg.style.opacity = '0.3';
+                        if (this.isMapped(elem[i]) === false){
+                            selectedImages.splice(cont, 1);
+                            myImg.style.opacity = '0.3';
+                        }
                     }
                     this.setState({selectedImages: selectedImages, selectedImagesBackup: selectedImages});
                     this.sendIcdToMainUI(selectedImages, true);
@@ -212,6 +217,16 @@ class Mapping extends React.Component {
         if (selectedImages.length === 0) {
             this.selectAll(true);
         }
+    }
+
+    isMapped(elem){
+        let mappedImages = this.state.mappedImages;
+        for (let i = 0; i < mappedImages.length; i++){
+            if (elem.id === mappedImages){
+                return true;
+            }
+        }
+        return false;
     }
 
     containsImage(elem, selectedImages){
