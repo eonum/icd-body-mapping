@@ -1,5 +1,5 @@
 class Layer < ApplicationRecord
-  validates_uniqueness_of   :ebene, scope: :img
+  validates_uniqueness_of :ebene, scope: :img
 
   validates :ebene, presence: true
   validates :name, presence: true

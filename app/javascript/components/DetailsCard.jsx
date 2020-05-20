@@ -19,7 +19,7 @@ class DetailsCard extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if(this.props.selectedIcd !== prevProps.selectedIcd) {
+        if (this.props.selectedIcd !== prevProps.selectedIcd) {
             this.props.callbackFromMainUI(this.props.selectedIcd.id);
         }
     }
@@ -57,11 +57,13 @@ class DetailsCard extends React.Component {
         fetch('http://localhost:3000/api/v1/icds/' + this.state.selectedIcd.id, {
             method: 'PUT',
             headers: {
-      				'Accept': 'application/json',
-      				'Content-Type': 'application/json'
-      			},
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
             body: body,
-        }).then((response) => {return response.json()});
+        }).then((response) => {
+            return response.json()
+        });
     }
 
     closeDetailsCard() {
@@ -101,15 +103,17 @@ class DetailsCard extends React.Component {
                 <Form>
                     <FormControl
                         type="text"
-                        onChange={e => {this.setState({annotationen: e.target.value})}}
-						            key={this.props.selectedIcd.code}
+                        onChange={e => {
+                            this.setState({annotationen: e.target.value})
+                        }}
+                        key={this.props.selectedIcd.code}
                         defaultValue={this.props.selectedIcd.annotationen}
                         onKeyDown={e => this.handleKeyDown(e)}
                         className="mr-sm-2"
                     />
                 </Form>
                 <div className="row">
-                    <div className="col-8" />
+                    <div className="col-8"/>
                     <div onClick={this.saveChanges.bind(this)} className="col-4 mt-2 float-right">
                         <NewMaps
                             icd_id={selectedIcd.id}
@@ -166,12 +170,12 @@ class DetailsCard extends React.Component {
             <div style={searchVisible ? detailsWithSearchStyle : detailsWithoutSearchStyle}>
                 <div className="card mb-2">
                     <div className="card-header bg-primary">
-                        <div className="overlay bg-primary" />
+                        <div className="overlay bg-primary"/>
                         <button type="button"
-                           className="btn btn-default btn-sm text-right text-white ml-4"
-                           style={buttonStyle}
-                           onClick={this.closeDetailsCard.bind(this)}>
-                            <CloseIcon />
+                                className="btn btn-default btn-sm text-right text-white ml-4"
+                                style={buttonStyle}
+                                onClick={this.closeDetailsCard.bind(this)}>
+                            <CloseIcon/>
                         </button>
                         <h1 className="card-title text-white ml-2 mt-1">
                             {selectedIcd.code}

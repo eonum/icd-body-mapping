@@ -1,5 +1,5 @@
 class Icd < ApplicationRecord
-  validates_uniqueness_of   :code
+  validates_uniqueness_of :code
 
   validates :code, presence: true
   validates :version, presence: true

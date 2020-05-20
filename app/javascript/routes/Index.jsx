@@ -5,7 +5,7 @@ import MainUI from "../components/MainUi";
 export default (
     <Router>
         <Switch>
-            <Route path="/" exact component={MainUI} />
+            <Route path="/" exact component={MainUI}/>
         </Switch>
     </Router>
 );

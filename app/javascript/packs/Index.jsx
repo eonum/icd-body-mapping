@@ -5,8 +5,8 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import App from "../components/App";
 
 document.addEventListener("DOMContentLoaded", () => {
-  render(
-      <App />,
-      document.body.appendChild(document.createElement("div"))
-  );
+    render(
+        <App/>,
+        document.body.appendChild(document.createElement("div"))
+    );
 });

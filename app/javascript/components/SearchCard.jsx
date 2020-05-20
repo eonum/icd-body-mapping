@@ -1,7 +1,5 @@
 import React from 'react';
-import Button from "@material-ui/core/Button";
 import CloseIcon from '@material-ui/icons/Close';
-import {Form} from "react-bootstrap";
 import NewMaps from "./NewMaps";
 import $ from "jquery";
 import loadingGif from '../../assets/images/Preloader_2.gif'
@@ -17,77 +15,77 @@ class SearchCard extends React.Component {
         super(props);
         this.state = {
             icds: [],
-      			checkedIcds: [],
-      			viewAll: this.props.viewAll,
-      			term: this.props.searchTerm,
+            checkedIcds: [],
+            viewAll: this.props.viewAll,
+            term: this.props.searchTerm,
             checkedAll: false,
             load: false,
         }
     }
 
-  	componentDidMount() {
+    componentDidMount() {
         this.setState({
             load: true,
         });
         this.getSearchResults(this.props.searchTerm, this.props.viewAll);
-  	}
+    }
 
-  	componentDidUpdate(prevProps) {
-    		if (prevProps.viewAll !== this.props.viewAll) {
-      			this.setState({
-        				viewAll: this.props.viewAll
-      			});
+    componentDidUpdate(prevProps) {
+        if (prevProps.viewAll !== this.props.viewAll) {
+            this.setState({
+                viewAll: this.props.viewAll
+            });
             if (this.props.viewAll === true) {
                 this.setState({
                     load: true,
                 });
             }
-      			this.getSearchResults(this.props.searchTerm, this.props.viewAll);
-    		}
-    		if (prevProps.searchTerm !== this.props.searchTerm) {
-      			this.setState({
-        				term: this.props.searchTerm,
+            this.getSearchResults(this.props.searchTerm, this.props.viewAll);
+        }
+        if (prevProps.searchTerm !== this.props.searchTerm) {
+            this.setState({
+                term: this.props.searchTerm,
                 load: true,
-      			});
-      			this.getSearchResults(this.props.searchTerm, this.props.viewAll);
-    		}
-  	}
-
-  	/**
-       * Gets the search results from the link '/search?q=' + this.state.term
-       * and saves them into the icds array, this will be later passed on to the search results component
-       * via callbackFromMainUI function
-       */
-    getSearchResults = async (term, viewAll) => {
-        if (viewAll) {
-      			$.getJSON('/api/v1/searchAll_' + this.props.language + '?q=' + await term)
-        				.then(async response =>
-          					this.setState({
-            						icds: await response,
-                        term: term,
-                        load: false,
-          					})
-        				);
-    		} else {
-      			$.getJSON('/api/v1/search_' + this.props.language + '?q=' + term)
-        				.then(async response =>
-          					this.setState({
-            						icds: await response,
-                        term: term,
-                        load: false,
-          					})
-        				);
-    		}
+            });
+            this.getSearchResults(this.props.searchTerm, this.props.viewAll);
+        }
     }
 
-  	viewAllSearchResults() {
-    		this.setState({
-      			viewAll: true,
+    /**
+     * Gets the search results from the link '/search?q=' + this.state.term
+     * and saves them into the icds array, this will be later passed on to the search results component
+     * via callbackFromMainUI function
+     */
+    getSearchResults = async (term, viewAll) => {
+        if (viewAll) {
+            $.getJSON('/api/v1/searchAll_' + this.props.language + '?q=' + await term)
+                .then(async response =>
+                    this.setState({
+                        icds: await response,
+                        term: term,
+                        load: false,
+                    })
+                );
+        } else {
+            $.getJSON('/api/v1/search_' + this.props.language + '?q=' + term)
+                .then(async response =>
+                    this.setState({
+                        icds: await response,
+                        term: term,
+                        load: false,
+                    })
+                );
+        }
+    }
+
+    viewAllSearchResults() {
+        this.setState({
+            viewAll: true,
             load: true,
-    		});
-    		this.getSearchResults(this.state.term, true);
-    		this.props.callbackFromMainUIViewAll(true);
-  	}
+        });
+        this.getSearchResults(this.state.term, true);
+        this.props.callbackFromMainUIViewAll(true);
+    }
 
     viewIcd(icd) {
         this.props.callbackFromMainUIDetails(icd);
@@ -99,7 +97,7 @@ class SearchCard extends React.Component {
         let selection = [];
 
         if (this.state.checkedAll === false) {
-            for (i = 0; i<checkboxes.length; i++) {
+            for (i = 0; i < checkboxes.length; i++) {
                 checkboxes[i].checked = true;
                 if (checkboxes[i].checked === true) {
                     selection.push(parseInt(checkboxes[i].id, 10));
@@ -109,7 +107,7 @@ class SearchCard extends React.Component {
                 checkedAll: true,
             });
         } else {
-            for (i = 0; i<checkboxes.length; i++) {
+            for (i = 0; i < checkboxes.length; i++) {
                 checkboxes[i].checked = false;
             }
             this.setState({
@@ -131,7 +129,7 @@ class SearchCard extends React.Component {
         if (checkbox.checked === true) {
             selection.push(icdId);
         } else {
-            for (let i=0; i<selection.length; i++) {
+            for (let i = 0; i < selection.length; i++) {
                 if (selection[i] === icdId) {
                     selection.splice(i, 1);
                 }
@@ -156,7 +154,7 @@ class SearchCard extends React.Component {
         const editable = this.props.editable;
         const selection = this.state.checkedIcds;
         const selectedLayer = this.props.selectedLayer;
-		    const viewAll = this.state.viewAll;
+        const viewAll = this.state.viewAll;
         const lang = this.props.language;
         const loading = this.state.load;
 
@@ -171,9 +169,9 @@ class SearchCard extends React.Component {
         const checkboxStyle = {
             float: 'right'
         }
-    		const viewAllButtonStyle = {
-    			  float: 'center'
-    		}
+        const viewAllButtonStyle = {
+            float: 'center'
+        }
         const closeButtonStyle = {
             float: 'right'
         }
@@ -227,15 +225,15 @@ class SearchCard extends React.Component {
         const noIcd = (
             <div className="text-uppercase">no match found...</div>
         );
-    		const viewAllButton = (
-      			<button type="button"
-        			   className="btn btn-default text-primary"
-        			   style={viewAllButtonStyle}
-        			   onClick={this.viewAllSearchResults.bind(this)}
+        const viewAllButton = (
+            <button type="button"
+                    className="btn btn-default text-primary"
+                    style={viewAllButtonStyle}
+                    onClick={this.viewAllSearchResults.bind(this)}
             >
-        				view all
-      			</button>
-    		);
+                view all
+            </button>
+        );
 
         const cardBorder = "border-top border-primary";
         const cardNoBorder = "";
@@ -280,16 +278,16 @@ class SearchCard extends React.Component {
                                 className="btn btn-default mr-2 text-primary"
                                 style={closeButtonStyle}
                                 onClick={this.closeSearchCard.bind(this)}>
-                            <CloseIcon />
+                            <CloseIcon/>
                         </button>
                     </div>
                 </div>
                 <div style={detailsVisible ? searchNextToDetailsStyle : searchOnlyStyle}>
                     {loading ? loadingImg : empty}
                     {icds.length > 0 ? resultIcds : noIcd}
-          					<div className="text-center">
-          						{(viewAll || icds.length < 20) ? empty : viewAllButton}
-          					</div>
+                    <div className="text-center">
+                        {(viewAll || icds.length < 20) ? empty : viewAllButton}
+                    </div>
                 </div>
             </div>
         )

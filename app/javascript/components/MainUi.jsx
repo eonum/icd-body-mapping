@@ -28,7 +28,7 @@ class MainUI extends React.Component {
             showingIcdId: 0,
             editMode: false,
             checkedIcdIds: [],
-			      viewAll: false,
+            viewAll: false,
             activeLanguage: 'de',
             needUpdate: false,
             hightlightedPng: '',
@@ -45,7 +45,7 @@ class MainUI extends React.Component {
      */
 
     resetUI = () => {
-        this.setState( {
+        this.setState({
             searchedIcds: '',
             searchTerm: '',
             selectedIcd: '',
@@ -59,7 +59,7 @@ class MainUI extends React.Component {
             activeLanguage: 'de',
         });
         if (this.state.needUpdate === true) {
-            this.setState( {
+            this.setState({
                 needUpdate: false
             });
 
@@ -67,7 +67,8 @@ class MainUI extends React.Component {
             this.setState({
                 needUpdate: true
             });
-        };
+        }
+
     };
 
     /**
@@ -106,36 +107,36 @@ class MainUI extends React.Component {
         });
     };
 
-  	callbackViewAll = (viewAll) => {
-    		this.setState({
-    			   viewAll: viewAll
-    		});
-  	};
+    callbackViewAll = (viewAll) => {
+        this.setState({
+            viewAll: viewAll
+        });
+    };
 
     callbackMapping = (selectedLayerFromMapping, selectionFromMapping) => {
         this.setState({
-          selectedLayer: selectedLayerFromMapping,
-          selectionFromMapping: selectionFromMapping,
+            selectedLayer: selectedLayerFromMapping,
+            selectionFromMapping: selectionFromMapping,
         });
     };
 
     callbackMappingActiveLayer = (activeLayer) => {
-        this.setState({ activeLayer: activeLayer});
+        this.setState({activeLayer: activeLayer});
     };
 
     callbackDetails = (showingIcdIdFromDetails) => {
-        this.setState({ showingIcdId: showingIcdIdFromDetails });
+        this.setState({showingIcdId: showingIcdIdFromDetails});
     };
 
     callbackDetailsMap = (Map) => {
-        this.setState({ map: Map });
+        this.setState({map: Map});
     };
 
     callbackReloadIcds = () => {
         if (this.state.reloadIcds === true) {
-          this.setState({ reloadIcds: false});
+            this.setState({reloadIcds: false});
         } else {
-          this.setState({ reloadIcds: true});
+            this.setState({reloadIcds: true});
         }
     }
 
@@ -198,7 +199,7 @@ class MainUI extends React.Component {
     callbackSearchCardClose = () => {
         this.setState({
             searchDisplayed: false,
-			      viewAll: false
+            viewAll: false
         });
     };
 
@@ -217,12 +218,12 @@ class MainUI extends React.Component {
                 detailsDisplayed={this.state.detailsDisplayed}
                 editable={this.state.editMode}
                 selectedLayer={this.state.selectedLayer}
-				        viewAll={this.state.viewAll}
+                viewAll={this.state.viewAll}
                 language={this.state.activeLanguage}
                 callbackFromMainUIDetails={this.callbackSearchCardDetails}
                 callbackFromMainUIMapping={this.callbackSearchCardMapping}
                 callbackFromMainUIClose={this.callbackSearchCardClose}
-				        callbackFromMainUIViewAll={this.callbackViewAll}
+                callbackFromMainUIViewAll={this.callbackViewAll}
                 callbackFromMainUIMaps={this.callbackDetailsMap}
             />
         );
@@ -266,7 +267,7 @@ class MainUI extends React.Component {
             overflow: 'auto'
         }
 
-        const sidebarStyle ={
+        const sidebarStyle = {
             width: '20%'
         }
 
@@ -278,11 +279,11 @@ class MainUI extends React.Component {
                         <div className="w-100">
                             <Topbar
                                 editable={this.state.editMode}
-								                viewAll={this.state.viewAll}
+                                viewAll={this.state.viewAll}
                                 callbackFromMainUISearch={this.callbackTopbarSearch}
                                 callbackFromMainUIButton={this.callbackTopbarButtonTerm}
                                 callbackFromMainUIEdit={this.callbackTopbarEdit}
-								                callbackFromMainUIViewAll={this.callbackViewAll}
+                                callbackFromMainUIViewAll={this.callbackViewAll}
                                 callbackFromMainUISetLanguage={this.callbackTopbarSetLang}
                                 callbackFromMainUIresetUI={this.resetUI}
                             />

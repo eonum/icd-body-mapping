@@ -1,5 +1,4 @@
 import React from 'react';
-import {IconButton} from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import loadingGif from '../../assets/images/Preloader_2.gif'
 
@@ -28,7 +27,7 @@ class Sidebar extends React.Component {
 
     componentDidMount() {
         let chapterArray = [];
-        for (var i=1; i<23; i++) {
+        for (var i = 1; i < 23; i++) {
             chapterArray.push({index: i});
         }
         this.setState({
@@ -66,7 +65,7 @@ class Sidebar extends React.Component {
                 let subCodeSplit;
                 let i = 1;
                 let code;
-                while (i < (subCode.length+1)) {
+                while (i < (subCode.length + 1)) {
                     subCodeSplit = subCode.substring(0, i);
                     code = codeMain + '.' + subCodeSplit;
 
@@ -77,23 +76,24 @@ class Sidebar extends React.Component {
                     }
                     i++;
                 }
-            } else if (codeSplit.length === 1) {} else {
+            } else if (codeSplit.length === 1) {
+            } else {
                 alert('unexpected code structure. ICD code should be of form ***, ***.* or ***.** and have a maximal length of 6 characters.');
             }
         }
     }
 
     loadIcds() {
-      const url = "/api/v1/icds";
-      fetch(url)
-          .then(response => {
-              if (response.ok) {
-                  return response.json();
-              }
-              throw new Error("Network response wasn't ok.");
-          })
-          .then(async response => this.storeDatabase(await response))
-          .catch(() => this.props.history.push("/"));
+        const url = "/api/v1/icds";
+        fetch(url)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error("Network response wasn't ok.");
+            })
+            .then(async response => this.storeDatabase(await response))
+            .catch(() => this.props.history.push("/"));
     }
 
     /**
@@ -221,8 +221,8 @@ class Sidebar extends React.Component {
 
             codelength++;
         } while (selection.length === 0
-                && codelength <= maxCodelength
-                && codelength >= 0)
+        && codelength <= maxCodelength
+        && codelength >= 0)
 
         selection = selection.sort();
 
@@ -257,7 +257,7 @@ class Sidebar extends React.Component {
         let codelength = 3;
 
         if (this.ICDstack.length > 1) {
-            selection = this.ICDstack[this.ICDstack.length-1];
+            selection = this.ICDstack[this.ICDstack.length - 1];
             firstICD = selection[0];
             codelength = firstICD.code.toString().length;
         } else {
@@ -289,7 +289,7 @@ class Sidebar extends React.Component {
     }
 
     render() {
-        const { icdSelection } = this.state;
+        const {icdSelection} = this.state;
 
         const withBackButtonStyle = {
             height: '82vh',
@@ -338,13 +338,17 @@ class Sidebar extends React.Component {
                         onClick={this.filterIcdsByChapter.bind(this, icd)}
                         onMouseLeave={this.viewInfoCard.bind(this, false)}
                     >
-                        <span className="text-left text-primary font-weight-bold" style={chapterStyle}>{icd.kapitel_roemisch}</span>
+                        <span className="text-left text-primary font-weight-bold"
+                              style={chapterStyle}>{icd.kapitel_roemisch}</span>
                         <span className="text-right" style={chapterCodesStyle}>{icd.code_kapitel}</span>
-                        <br />
-                        <div className="border-bottom border-primary" />
-                        {this.props.language === 'de' ? <span className="text-left">{icd.kapitel_name_de}</span> : empty}
-                        {this.props.language === 'fr' ? <span className="text-left">{icd.kapitel_name_fr}</span> : empty}
-                        {this.props.language === 'it' ? <span className="text-left">{icd.kapitel_name_it}</span> : empty}
+                        <br/>
+                        <div className="border-bottom border-primary"/>
+                        {this.props.language === 'de' ?
+                            <span className="text-left">{icd.kapitel_name_de}</span> : empty}
+                        {this.props.language === 'fr' ?
+                            <span className="text-left">{icd.kapitel_name_fr}</span> : empty}
+                        {this.props.language === 'it' ?
+                            <span className="text-left">{icd.kapitel_name_it}</span> : empty}
                     </button>
                 </div>
             } else {
@@ -355,7 +359,8 @@ class Sidebar extends React.Component {
                         onClick={this.filterIcdsByChapter.bind(this, icd)}
                         onMouseEnter={this.viewInfoCard.bind(this, true, icd)}
                     >
-                        <span className="text-left text-primary font-weight-bold" style={chapterStyle}>{icd.kapitel_roemisch}</span>
+                        <span className="text-left text-primary font-weight-bold"
+                              style={chapterStyle}>{icd.kapitel_roemisch}</span>
                         <span className="text-right" style={chapterCodesStyle}>{icd.code_kapitel}</span>
                     </button>
                 </div>
@@ -374,7 +379,8 @@ class Sidebar extends React.Component {
                             onClick={this.filterIcdsByIcdcode.bind(this, icd.code, icd)}
                             onMouseLeave={this.viewInfoCard.bind(this, false)}
                         >
-                            <span className="text-left text-primary font-weight-bold pr-2" style={chapterStyle}>{icd.code}</span>
+                            <span className="text-left text-primary font-weight-bold pr-2"
+                                  style={chapterStyle}>{icd.code}</span>
                             {this.props.language === 'de' ? <span className="text-left">{icd.text_de}</span> : empty}
                             {this.props.language === 'fr' ? <span className="text-left">{icd.text_fr}</span> : empty}
                             {this.props.language === 'it' ? <span className="text-left">{icd.text_it}</span> : empty}
@@ -389,7 +395,8 @@ class Sidebar extends React.Component {
                             onClick={this.filterIcdsByIcdcode.bind(this, icd.code, icd)}
                             onMouseEnter={this.viewInfoCard.bind(this, true, icd)}
                         >
-                            <span className="text-left text-primary font-weight-bold pr-2" style={chapterStyle}>{icd.code}</span>
+                            <span className="text-left text-primary font-weight-bold pr-2"
+                                  style={chapterStyle}>{icd.code}</span>
                             {this.props.language === 'de' ? <span className="text-left">{icd.text_de}</span> : empty}
                             {this.props.language === 'fr' ? <span className="text-left">{icd.text_fr}</span> : empty}
                             {this.props.language === 'it' ? <span className="text-left">{icd.text_it}</span> : empty}

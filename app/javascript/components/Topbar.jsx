@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, FormControl } from "react-bootstrap";
+import {FormControl} from "react-bootstrap";
 import logo from '../../assets/images/eonum_logo.png';
 import SearchIcon from '@material-ui/icons/Search';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -24,11 +24,11 @@ class Topbar extends React.Component {
         this.timeout = 0;
     }
 
-  	componentDidUpdate(prevProps) {
-    		if (this.props.viewAll !== prevProps.viewAll) {
-    			   this.setViewAll(this.props.viewAll);
-    		}
-  	}
+    componentDidUpdate(prevProps) {
+        if (this.props.viewAll !== prevProps.viewAll) {
+            this.setViewAll(this.props.viewAll);
+        }
+    }
 
     setUIDefault() {
         this.props.callbackFromMainUIresetUI();
@@ -50,19 +50,19 @@ class Topbar extends React.Component {
     setSearchTerm(term) {
         this.setState({term: term});
         this.setViewAll(false);
-        if(this.timeout) clearTimeout(this.timeout);
+        if (this.timeout) clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
             this.props.callbackFromMainUISearch(term);
         }, 300);
     }
 
-  	setViewAll(viewAll) {
-    		this.setState({
-    			   viewAll: viewAll
-    		});
-    		event.preventDefault();
-    		this.props.callbackFromMainUIViewAll(viewAll);
-  	}
+    setViewAll(viewAll) {
+        this.setState({
+            viewAll: viewAll
+        });
+        event.preventDefault();
+        this.props.callbackFromMainUIViewAll(viewAll);
+    }
 
     setEditMode(edit) {
         this.props.callbackFromMainUIEdit(edit);
@@ -157,10 +157,16 @@ class Topbar extends React.Component {
                     </button>
                 </div>
                 <div className="col-10 navbar navbar-light bg-primary">
-                    <form ref={ form => this.searchForm = form }>
+                    <form ref={form => this.searchForm = form}>
                         <FormControl
-                            onChange={event => {this.setSearchTerm(event.target.value)}}
-                            onKeyDown={event => {if (event.key === 'Enter') {this.setViewAll(true)}}}
+                            onChange={event => {
+                                this.setSearchTerm(event.target.value)
+                            }}
+                            onKeyDown={event => {
+                                if (event.key === 'Enter') {
+                                    this.setViewAll(true)
+                                }
+                            }}
                             type="text"
                             placeholder='Search...'
                             className="mr-sm-2"
@@ -169,12 +175,14 @@ class Topbar extends React.Component {
                     <button
                         type="button"
                         className="btn btn-default text-white ml-2"
-                        onClick={event => {this.setViewAll(true)}}
+                        onClick={event => {
+                            this.setViewAll(true)
+                        }}
                     >
                         <SearchIcon/>
                     </button>
                     <button
-                        type = "button"
+                        type="button"
                         className="btn btn-default text-white navbar-brand mx-auto"
                         style={headerStyle}
                         onClick={this.setUIDefault.bind(this)}

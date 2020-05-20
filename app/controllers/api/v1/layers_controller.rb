@@ -29,7 +29,8 @@ class Api::V1::LayersController < ApplicationController
   end
 
   private
-    def layer_params
-      params.require(:layer).permit(:ebene, :name, :img)
-    end
+
+  def layer_params
+    params.require(:layer).permit(:ebene, :name, :img)
+  end
 end

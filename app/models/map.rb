@@ -1,5 +1,5 @@
 class Map < ApplicationRecord
-  validates_uniqueness_of   :layer_id, scope: :icd_id
+  validates_uniqueness_of :layer_id, scope: :icd_id
   validates :icd_id, presence: true
   validates :layer_id, presence: true
 

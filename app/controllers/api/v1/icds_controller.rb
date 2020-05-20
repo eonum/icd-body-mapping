@@ -27,7 +27,8 @@ class Api::V1::IcdsController < ApplicationController
   end
 
   private
-    def icd_params
-      params.require(:icd).permit(:code, :version, :text_de, :text_fr, :text_it, :annotationen, :kapitel)
-    end
+
+  def icd_params
+    params.require(:icd).permit(:code, :version, :text_de, :text_fr, :text_it, :annotationen, :kapitel)
+  end
 end

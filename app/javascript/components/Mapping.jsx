@@ -16,7 +16,7 @@ class Mapping extends React.Component {
             allImages: [],
             maps: [],
             layers: [],
-            selectedImages:[], selectedImagesBackup: [],
+            selectedImages: [], selectedImagesBackup: [],
             x: 0, y: 0,
             activeLayer: 'Gehirn Längsschnitt'
         };
@@ -38,8 +38,8 @@ class Mapping extends React.Component {
      * once the prop showingIcdId changes.
      */
     componentDidUpdate(prevProps) {
-        if(this.props.showingIcdId !== prevProps.showingIcdId) {
-            if (this.props.showingIcdId !== 0){
+        if (this.props.showingIcdId !== prevProps.showingIcdId) {
+            if (this.props.showingIcdId !== 0) {
                 this.selectFromSelected(this.props.showingIcdId);
             } else {
                 this.setState({selectedImages: [], selectedImagesBackup: []});
@@ -73,13 +73,14 @@ class Mapping extends React.Component {
         }
     }
 
-    addNewMap(map){
+    addNewMap(map) {
         this.setState({maps: this.state.maps.concat(map)});
     }
 
-    deleteMap(map){
+    deleteMap(map) {
+        let map_id = map.map_id;
         let newBackup = this.state.selectedImagesBackup.filter((image) => (image.name !== map.name || image.ebene !== map.ebene));
-        let newMaps = this.state.maps.filter((map) => map.id !== map.id);
+        let newMaps = this.state.maps.filter((map) => map.id !== map_id);
         this.setState({maps: newMaps, selectedImagesBackup: newBackup});
     }
 
@@ -129,11 +130,11 @@ class Mapping extends React.Component {
         let elem = this.state.allImages;
         let activeLayer = this.state.activeLayer;
         for (let i = 0; i < elem.length; i++) {
-            if (elem[i].ebene === activeLayer){
+            if (elem[i].ebene === activeLayer) {
                 let myImg = document.getElementById(elem[i].name);
-                if (x === true && myImg !==  null){
+                if (x === true && myImg !== null) {
                     myImg.style.opacity = '1';
-                } else if (myImg !==  null) {
+                } else if (myImg !== null) {
                     myImg.style.opacity = '0.3';
                 }
             }
@@ -151,9 +152,9 @@ class Mapping extends React.Component {
             if (maps[i].icd_id === icdId) {
                 let id = maps[i].layer_id;
                 for (let x = 0; x < allImages.length; x++) {
-                    if (allImages[x].id === id){
+                    if (allImages[x].id === id) {
                         let myImg = allImages[x];
-                        if (myImg.ebene === activeLayer){
+                        if (myImg.ebene === activeLayer) {
                             document.getElementById(myImg.name).style.opacity = '1';
                             selectedImages = selectedImages.concat(myImg);
                             x = allImages.length;
@@ -162,7 +163,7 @@ class Mapping extends React.Component {
                 }
             }
         }
-        if(selectedImages.length === 0) {
+        if (selectedImages.length === 0) {
             this.selectAll(true);
         }
         this.setState({selectedImages: selectedImages, selectedImagesBackup: selectedImages});
@@ -185,7 +186,7 @@ class Mapping extends React.Component {
         let activeLayer = this.state.activeLayer;
         let selectedImages = this.state.selectedImages;
 
-        if (selectedImages.length === 0){
+        if (selectedImages.length === 0) {
             this.selectAll(false);
         }
         for (let i = 0; i < len; i++) {
@@ -194,30 +195,32 @@ class Mapping extends React.Component {
                 context.drawImage(myImg, 0, 0);
                 let data = context.getImageData(x, y, 1, 1).data;
                 if (data[0] !== 0 && data[1] !== 0 && data[2] !== 0 && data[3] !== 0) {
-                    let contains = false;
-                    let tra;
-                    for (tra = 0; tra < selectedImages.length; tra++) {
-                        if (selectedImages[tra].id === elem[i].id) {
-                            contains = true;
-                            selectedImages.splice(tra,1);
-                            myImg.style.opacity = '0.3';
-                            tra = selectedImages.length;
-                        }
-                    }
-                    if (contains === false){
+                    let cont = this.containsImage(elem[i], selectedImages);
+                    if (cont === false){
                         myImg.style.opacity = '1';
-                        selectedImages[tra] = elem[i];
+                        selectedImages = selectedImages.concat(elem[i]);
+                    } else {
+                        selectedImages.splice(cont, 1);
+                        myImg.style.opacity = '0.3';
                     }
-                    i = len;
                     this.setState({selectedImages: selectedImages, selectedImagesBackup: selectedImages});
                     this.sendIcdToMainUI(selectedImages, true);
                 }
             }
             context.clearRect(0, 0, canvas.width, canvas.height);
         }
-        if (selectedImages.length === 0){
+        if (selectedImages.length === 0) {
             this.selectAll(true);
         }
+    }
+
+    containsImage(elem, selectedImages){
+        for (let i = 0; i < selectedImages.length; i++) {
+            if (selectedImages[i].id === elem.id) {
+                return i;
+            }
+        }
+        return false;
     }
 
     /**
@@ -249,7 +252,7 @@ class Mapping extends React.Component {
         let frags = layerFragmentList;
         let selectedImages = [];
 
-        for(let x=0; x < frags.length; x++) {
+        for (let x = 0; x < frags.length; x++) {
             for (let i = 0; i < elem.length; i++) {
                 if (frags[x].name === elem[i].name) {
                     selectedImages = selectedImages.concat(elem[i]);
@@ -280,7 +283,9 @@ class Mapping extends React.Component {
             });
             for (let i = 0; i < elem.length; i++) {
                 let myImg = document.getElementById(elem[i].name);
-                found = selectedImages.find((img) => {return img.name === elem[i].name});
+                found = selectedImages.find((img) => {
+                    return img.name === elem[i].name
+                });
                 if (found !== undefined) {
                     myImg.style.opacity = '1';
                 } else {
@@ -302,10 +307,13 @@ class Mapping extends React.Component {
         const editable = this.props.editable;
 
         let alleElemente = this.state.allImages.map((elem, index) => {
-            if (elem.ebene === activeLayer){
+            if (elem.ebene === activeLayer) {
                 return <div key={index}>
                     <img src={elem.img} style={divStyle} id={elem.name} alt='missing images'
-                         onError={(e)=>{e.target.onerror = null; e.target.src="./images/error.png"}}/>
+                         onError={(e) => {
+                             e.target.onerror = null;
+                             e.target.src = "./images/error.png"
+                         }}/>
                 </div>
             }
         });
@@ -318,7 +326,8 @@ class Mapping extends React.Component {
 
         const dropdown = (
             <div className="col-3 dropdown">
-                <button className="btn btn-outline-primary p-0 pl-2 pr-2 font-weight-bold dropdown-toggle" style={dropdownStyle} type="button" id="dropdownMenuButton"
+                <button className="btn btn-outline-primary p-0 pl-2 pr-2 font-weight-bold dropdown-toggle"
+                        style={dropdownStyle} type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {this.state.activeLayer}
                 </button>
@@ -334,13 +343,14 @@ class Mapping extends React.Component {
                     <div className="col-md-auto">
                         {dropdown}
                     </div>
-                    <div className="col" />
+                    <div className="col"/>
                     <div className="col-3">
                         {editable ? <LayerOptions callbackFromMapping={this.callbackallImages}/> : null}
                     </div>
                 </div>
                 <canvas id='canvas' style={divStyle} width="600" height="530"/>
-                <div onMouseMove={this._onMouseMove.bind(this)} id='mappingComp' onClick={this.selectPng.bind(this, x, y, this.state.allImages.length)}>
+                <div onMouseMove={this._onMouseMove.bind(this)} id='mappingComp'
+                     onClick={this.selectPng.bind(this, x, y, this.state.allImages.length)}>
                     {alleElemente}
                 </div>
             </div>
@@ -349,4 +359,3 @@ class Mapping extends React.Component {
 }
 
 export default Mapping;
-// add after dropdown: <LayerOptions callbackFromMapping={this.callbackallImages}/>

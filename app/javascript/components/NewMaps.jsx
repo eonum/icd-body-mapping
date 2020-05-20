@@ -21,7 +21,7 @@ class NewMaps extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if(this.props.icd_id !== prevProps.icd_id) {
+        if (this.props.icd_id !== prevProps.icd_id) {
             this.setState({buttonColor: 'btn btn-primary'});
         }
     }
@@ -45,14 +45,16 @@ class NewMaps extends React.Component {
         } else {
             icd_ids = icd_ids.concat(this.props.icd_id);
         }
-        for (let i=0; i<icd_ids.length; i++) {
-            for (let lay=0; lay < layers.length; lay++) {
+        for (let i = 0; i < icd_ids.length; i++) {
+            for (let lay = 0; lay < layers.length; lay++) {
                 let body = JSON.stringify({map: {icd_id: icd_ids[i], layer_id: layers[lay].id}});
                 fetch('http://localhost:3000/api/v1/maps', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: body,
-                }).then((map)=>{this.addNewMap(map)});
+                }).then((map) => {
+                    this.addNewMap(map)
+                });
             }
         }
         this.sendIcdToDetailsCard(this.state.maps);
@@ -60,7 +62,7 @@ class NewMaps extends React.Component {
         event.preventDefault();
     }
 
-    addNewMap(map){
+    addNewMap(map) {
         this.setState({maps: this.state.maps.concat(map)});
     }
 
@@ -94,7 +96,7 @@ class NewMaps extends React.Component {
                     />
                 </form>
             );
-        } else if (icd_id !== undefined && icd_ids.length === 0 && selectedLayer.length !== 0) {
+        } else if (icd_id !== undefined && icd_ids.length === 0) {
             return (
                 <form
                     className="text-center"
@@ -102,7 +104,7 @@ class NewMaps extends React.Component {
                 >
                     <input type="submit"
                            className={this.state.buttonColor}
-                           value="map"
+                           value="Save Changes"
                            onClick={this.stateIdSet.bind(this)}
                     />
                 </form>
@@ -114,4 +116,5 @@ class NewMaps extends React.Component {
         }
     }
 }
+
 export default NewMaps
