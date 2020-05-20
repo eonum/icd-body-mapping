@@ -37,12 +37,15 @@ class LayerList extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if(this.props.selectedIcd !== prevProps.selectedIcd && this.props.selectedIcd !== '') {
-            this.getMapsOfIcd(this.props.selectedIcd);
-            this.setState({
-                checkedFrags: [],
-                change: false,
-            })
+        if(this.props.selectedIcd !== prevProps.selectedIcd) {
+            if (this.props.selectedIcd !== '') {
+                this.getMapsOfIcd(this.props.selectedIcd);
+                this.setState({
+                    checkedFrags: [],
+                    change: false,
+                });
+            }
+            this.props.callbackFromMainUISelectPngs([]);
         }
         if (this.props.selectionFromMapping !== prevProps.selectionFromMapping && this.props.selectionFromMapping === true) {
             this.setState({
