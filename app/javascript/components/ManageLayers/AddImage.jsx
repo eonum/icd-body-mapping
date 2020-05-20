@@ -28,14 +28,34 @@ class AddImage extends React.Component {
     render() {
         let formFields = {};
         let addImage = (
-            <form onSubmit={(e) => {
-                this.handleFormSubmit(formFields.name.value, formFields.ebene.value, formFields.img.value);
-                e.preventDefault();
-            }}>
-                <input ref={input => formFields.ebene = input} placeholder='Enter the name of the item'/>
-                <input ref={input => formFields.name = input} placeholder='Enter the name of the image'/>
-                <input ref={input => formFields.img = input} placeholder='Enter the image url'/>
-                <button>Submit</button>
+            <form
+                onSubmit={(e) => {
+                    this.handleFormSubmit(formFields.name.value, formFields.ebene.value, formFields.img.value);
+                    e.preventDefault();
+                }}
+                className="form-group"
+            >
+                <input
+                    ref={input => formFields.ebene = input}
+                    placeholder='Enter the name of the item'
+                    className="form-control"
+                />
+                <input
+                    ref={input => formFields.name = input}
+                    placeholder='Enter the name of the image'
+                    className="form-control"
+                />
+                <input
+                    ref={input => formFields.img = input}
+                    placeholder='Enter the image url'
+                    className="form-control"
+                />
+                <button
+                    type="button"
+                    className="btn btn-primary"
+                >
+                    Submit
+                </button>
             </form>
         );
         return (
