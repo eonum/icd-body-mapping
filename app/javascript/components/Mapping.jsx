@@ -332,7 +332,7 @@ class Mapping extends React.Component {
     }
 
     render() {
-        const rowStyle = {height: '8vh'};
+        const rowStyle = {height: '5vh'};
         const divStyle = {position: 'absolute'};
         const dropdownStyle = {height: '30px'};
         let {x, y} = this.state;
