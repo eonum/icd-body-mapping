@@ -36,6 +36,8 @@ class MainUI extends React.Component {
             activeLayer: 'Gehirn Längsschnitt',
             icdSelectionFromSearch: false,
             layerFragmentStack: [],
+            addToSelection: false,
+            selectionFromMapping: false,
         };
     }
 
@@ -110,8 +112,11 @@ class MainUI extends React.Component {
     		});
   	};
 
-    callbackMapping = (selectedLayerFromMapping) => {
-        this.setState({ selectedLayer: selectedLayerFromMapping });
+    callbackMapping = (selectedLayerFromMapping, selectionFromMapping) => {
+        this.setState({
+          selectedLayer: selectedLayerFromMapping,
+          selectionFromMapping: selectionFromMapping,
+        });
     };
 
     callbackMappingActiveLayer = (activeLayer) => {
@@ -214,6 +219,7 @@ class MainUI extends React.Component {
                 callbackFromMainUIMapping={this.callbackSearchCardMapping}
                 callbackFromMainUIClose={this.callbackSearchCardClose}
 				        callbackFromMainUIViewAll={this.callbackViewAll}
+                callbackFromMainUIMaps={this.callbackDetailsMap}
             />
         );
         const details = (
@@ -239,6 +245,7 @@ class MainUI extends React.Component {
                 selectedIcd={this.state.selectedIcd}
                 selectedLayer={this.state.selectedLayer}
                 editable={this.state.editMode}
+                selectionFromMapping={this.state.selectionFromMapping}
             />
         )
 
@@ -304,6 +311,10 @@ class MainUI extends React.Component {
                                 selectedLayerFromList={this.state.selectedLayerFromList}
                                 hightlightedPng={this.state.hightlightedPng}
                                 layerFragmentStack={this.state.layerFragmentStack}
+                                addToSelection={this.state.addToSelection}
+                                selectedIcd={this.state.selectedIcd}
+                                checkedIcdIds={this.state.checkedIcdIds}
+                                editable={this.state.editMode}
                             />
                         </div>
                     </div>

@@ -7,8 +7,16 @@ class LayerOptions extends React.Component {
         super(props);
         this.toggleHidden = this.toggleHidden.bind(this);
         this.state = {
-            isVisible: false
+            isVisible: false,
+            isMounted: false
         }
+    }
+    componentDidMount() {
+        this.setState({isMounted: true});
+    }
+
+    componentWillUnmount() {
+        this.setState({isMounted: false});
     }
 
     callbackallImages = (layer) => {

@@ -14,7 +14,7 @@ class DetailsCard extends React.Component {
             showingIcdId: 0,
             showingIcd: 'show',
             selectedIcd: this.props.selectedIcd,
-            annotationen: ''
+            annotationen: this.props.selectedIcd.annotationen
         };
     }
 
@@ -40,7 +40,7 @@ class DetailsCard extends React.Component {
         this.setState({showingIcdId: this.props.selectedIcd.id});
     }
 
-    saveChanges(event) {
+    saveChanges() {
         let body = JSON.stringify({
             icd: {
                 id: this.state.selectedIcd.id,
@@ -61,16 +61,18 @@ class DetailsCard extends React.Component {
       				'Content-Type': 'application/json'
       			},
             body: body,
-        }).then((response) => {
-			       return response.json()
-		    });
-
-        this.props.callbackFromMainUIReloadIcds();
+        }).then((response) => {return response.json()});
     }
 
     closeDetailsCard() {
         this.props.callbackFromMainUIClose();
         this.props.callbackFromMainUI(0);
+    }
+
+    handleKeyDown(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+        }
     }
 
     render() {
@@ -98,14 +100,14 @@ class DetailsCard extends React.Component {
                 <h5 className="card-subtitle text-primary">Annotations</h5>
                 <Form>
                     <FormControl
-                        onChange={event => {this.setState({annotationen: event.target.value})}}
                         type="text"
-						key={this.props.selectedIcd.annotationen}
+                        onChange={e => {this.setState({annotationen: e.target.value})}}
+						key={this.props.selectedIcd.code}
                         defaultValue={this.props.selectedIcd.annotationen}
+                        onKeyDown={e => this.handleKeyDown(e)}
                         className="mr-sm-2"
                     />
                 </Form>
-                <div className="mt-4 border-top border-primary" />
                 <div className="row">
                     <div onClick={this.saveChanges.bind(this)} className="col-4 mt-2 float-left">
                         <NewMaps

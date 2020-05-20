@@ -56,7 +56,7 @@ class Mapping extends React.Component {
             setTimeout(() => {
                 $.getJSON('api/v1/maps')
                     .then(response => this.setState({maps: response}));
-            }, 5000);
+            }, 3000);
         }
 
         if (this.props.selectedLayerFromList !== prevProps.selectedLayerFromList && this.props.selectedLayerFromList !== '') {
@@ -86,8 +86,8 @@ class Mapping extends React.Component {
      * like the details card can access it.
      * @param image holds the layer_id of an image
      */
-    sendIcdToMainUI(image) {
-        this.props.callbackFromMainUI(image);
+    sendIcdToMainUI(image, selectedFromMapping) {
+        this.props.callbackFromMainUI(image, selectedFromMapping);
     }
 
     /**
@@ -124,7 +124,7 @@ class Mapping extends React.Component {
                 if (x === true && myImg !==  null){
                     myImg.style.opacity = '1';
                 } else if (myImg !==  null) {
-                    myImg.style.opacity = '0.4';
+                    myImg.style.opacity = '0.3';
                 }
             }
         }
@@ -190,7 +190,7 @@ class Mapping extends React.Component {
                         if (selectedImages[tra].id === elem[i].id) {
                             contains = true;
                             selectedImages.splice(tra,1);
-                            myImg.style.opacity = '0.4';
+                            myImg.style.opacity = '0.3';
                             tra = selectedImages.length;
                         }
                     }
@@ -200,7 +200,7 @@ class Mapping extends React.Component {
                     }
                     i = len;
                     this.setState({selectedImages: selectedImages, selectedImagesBackup: selectedImages});
-                    this.sendIcdToMainUI(selectedImages);
+                    this.sendIcdToMainUI(selectedImages, true);
                 }
             }
             context.clearRect(0, 0, canvas.width, canvas.height);
@@ -233,42 +233,12 @@ class Mapping extends React.Component {
             }
         }
     }
-    /**
-    selectPngsFromList(fragment) {
-        if (fragment.ebene === this.state.activeLayer) {
-            let elem = this.state.allImages;
-            let selectedImages = this.state.selectedImagesBackup;
-
-            elem = elem.filter((img) => {
-                if (img.ebene === fragment.ebene) {
-                    return img;
-                }
-            });
-
-            for (let i = 0; i < elem.length; i++) {
-                if (elem[i].name === fragment.name) {
-                    let contains = false
-                    for (let j = 0; j < selectedImages.length; j++) {
-                        if(selectedImages[j] === elem[i]) {
-                            selectedImages.splice(j,1);
-                            contains = true;
-                        }
-                    }
-                    if (contains === false){
-                        selectedImages = selectedImages.concat(elem[i]);
-                    }
-                    this.setState({selectedImagesBackup: selectedImages});
-                }
-            }
-        }
-    }
-    **/
 
     selectPngsFromList(layerFragmentList) {
         let elem = this.state.allImages;
         let frags = layerFragmentList;
         let selectedImages = [];
-        
+
         for(let x=0; x < frags.length; x++) {
             for (let i = 0; i < elem.length; i++) {
                 if (frags[x].name === elem[i].name) {
@@ -277,6 +247,8 @@ class Mapping extends React.Component {
             }
         }
         this.setState({selectedImagesBackup: selectedImages});
+        this.setState({selectedImages: selectedImages});
+        this.sendIcdToMainUI(selectedImages, false);
     }
 
     setBackToPreviousSelection() {
@@ -302,11 +274,10 @@ class Mapping extends React.Component {
                 if (found !== undefined) {
                     myImg.style.opacity = '1';
                 } else {
-                    myImg.style.opacity = '0.4';
+                    myImg.style.opacity = '0.3';
                 }
             }
             this.setState({selectedImages: selectedImages});
-            this.sendIcdToMainUI(selectedImages);
         } else {
             this.selectAll(true);
         }
@@ -315,8 +286,10 @@ class Mapping extends React.Component {
     render() {
         const rowStyle = {height: '8vh'};
         const divStyle = {position: 'absolute'};
+        const dropdownStyle = {height: '30px'};
         let {x, y} = this.state;
         let activeLayer = this.state.activeLayer;
+        const editable = this.props.editable;
 
         let alleElemente = this.state.allImages.map((elem, index) => {
             if (elem.ebene === activeLayer){
@@ -335,7 +308,7 @@ class Mapping extends React.Component {
 
         const dropdown = (
             <div className="col-3 dropdown">
-                <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                <button className="btn btn-outline-primary p-0 pl-2 pr-2 font-weight-bold dropdown-toggle" style={dropdownStyle} type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {this.state.activeLayer}
                 </button>
@@ -347,12 +320,18 @@ class Mapping extends React.Component {
 
         return (
             <div>
+                <div className="row" style={rowStyle}>
+                    <div className="col-md-auto">
+                        {dropdown}
+                    </div>
+                    <div className="col" />
+                    <div className="col-3">
+                        {editable ? <LayerOptions callbackFromMapping={this.callbackallImages}/> : null}
+                    </div>
+                </div>
                 <canvas id='canvas' style={divStyle} width="600" height="530"/>
                 <div onMouseMove={this._onMouseMove.bind(this)} id='mappingComp' onClick={this.selectPng.bind(this, x, y, this.state.allImages.length)}>
                     {alleElemente}
-                </div>
-                <div className="row" style={rowStyle}>
-                    {dropdown}
                 </div>
             </div>
         )

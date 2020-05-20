@@ -117,8 +117,6 @@ class SearchCard extends React.Component {
             });
         }
 
-        console.log(selection);
-
         this.setState({
             checkedIcds: selection
         });
@@ -195,12 +193,14 @@ class SearchCard extends React.Component {
                 icd_id={undefined}
                 icd_ids={selection}
                 selectedLayer={selectedLayer}
+                callbackFromDetailsCard={this.props.callbackFromMainUIMaps}
+                parent={'search'}
             />
         );
 
         const resultIcds = icds.map((icd, index) => (
             <div key={index} className="card mb-4 mr-1">
-                <div className="card-body">
+                <div className="card-body pb-2">
                     {editable ?
                         <div className="checkbox" style={checkboxStyle}>
                             <label>
@@ -212,7 +212,7 @@ class SearchCard extends React.Component {
                         </div>
                         : empty
                     }
-                    <h5 className="card-title text-primary">{icd.code}</h5>
+                    <h5 className="card-title text-primary m-0">{icd.code}</h5>
                     {lang === 'de' ? <h6 className="card-description">{icd.text_de}</h6> : empty}
                     {lang === 'fr' ? <h6 className="card-description">{icd.text_fr}</h6> : empty}
                     {lang === 'it' ? <h6 className="card-description">{icd.text_it}</h6> : empty}

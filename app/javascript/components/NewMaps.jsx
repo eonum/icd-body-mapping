@@ -11,6 +11,7 @@ class NewMaps extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            maps: [],
             icd_id: '',
             icd_ids: [],
             selectedLayer: [],
@@ -87,7 +88,7 @@ class NewMaps extends React.Component {
             >
                 <input type="submit"
                        className={this.state.buttonColor}
-                       value="save"
+                       value="Save Changes"
                        onClick={this.stateIdSet.bind(this)}
                 />
             </form>

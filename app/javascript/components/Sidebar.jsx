@@ -400,7 +400,7 @@ class Sidebar extends React.Component {
         }
         const backButton = (
             <a type="button"
-               className="btn btn-light mb-1"
+               className="btn btn-light p-0 mb-1"
                onClick={this.stepBackHierarchyStack.bind(this)}
             >
                 <ArrowBackIcon/>

@@ -14,6 +14,8 @@ class DeleteImage extends React.Component {
         $.getJSON('/api/v1/layers')
             .then(response => this.setState({allImages: response}));
     }
+    componentWillUnmount() {
+    }
 
     handleDelete(id){
         fetch(`http://localhost:3000/api/v1/layers/${id}`,
