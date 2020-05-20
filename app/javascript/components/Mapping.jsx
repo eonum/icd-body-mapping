@@ -47,7 +47,7 @@ class Mapping extends React.Component {
             }
         }
 
-        if (this.props.layerFragmentStack !== prevProps.layerFragmentStack) {
+        if (this.props.layerFragmentStack !== prevProps.layerFragmentStack && this.props.showingIcdId === prevProps.showingIcdId) {
             this.selectPngsFromList(this.props.layerFragmentStack);
         }
 
@@ -81,7 +81,8 @@ class Mapping extends React.Component {
         let map_id = map.map_id;
         let newMaps = this.state.maps.filter((map) => map.id !== map_id);
         let newBackup = this.state.selectedImagesBackup.filter((image) => (image.name !== map.name || image.ebene !== map.ebene));
-        this.setState({maps: newMaps, selectedImagesBackup: newBackup});
+        let newMapped = this.state.mappedImages.filter((image) => image.name !== map.name);
+        this.setState({maps: newMaps, selectedImagesBackup: newBackup, mappedImages: newMapped});
     }
 
     callbackallImages = (layer) => {
@@ -166,8 +167,7 @@ class Mapping extends React.Component {
             this.selectAll(true);
         }
         this.setState({
-            selectedImages: selectedImages,
-            selectedImagesBackup: selectedImages,
+            selectedImages: selectedImages, selectedImagesBackup: selectedImages,
             mappedImages: selectedImages
         });
     }
@@ -222,7 +222,7 @@ class Mapping extends React.Component {
     isMapped(elem){
         let mappedImages = this.state.mappedImages;
         for (let i = 0; i < mappedImages.length; i++){
-            if (elem.id === mappedImages){
+            if (elem.id === mappedImages[i].id){
                 return true;
             }
         }
@@ -265,7 +265,7 @@ class Mapping extends React.Component {
     selectPngsFromList(layerFragmentList) {
         let elem = this.state.allImages;
         let frags = layerFragmentList;
-        let selectedImages = [];
+        let selectedImages = this.state.mappedImages;
 
         for (let x = 0; x < frags.length; x++) {
             for (let i = 0; i < elem.length; i++) {
@@ -274,8 +274,8 @@ class Mapping extends React.Component {
                 }
             }
         }
-        this.setState({selectedImagesBackup: selectedImages});
-        this.setState({selectedImages: selectedImages});
+
+        this.setState({selectedImages: selectedImages, selectedImagesBackup: selectedImages});
         this.sendIcdToMainUI(selectedImages, false);
     }
 
@@ -320,7 +320,6 @@ class Mapping extends React.Component {
         let {x, y} = this.state;
         let activeLayer = this.state.activeLayer;
         const editable = this.props.editable;
-        console.log(this.props.layerFragmentStack);
 
         let alleElemente = this.state.allImages.map((elem, index) => {
             if (elem.ebene === activeLayer) {

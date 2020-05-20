@@ -45,7 +45,8 @@ class LayerList extends React.Component {
             }
             this.props.callbackFromMainUISelectPngs([]);
         }
-        if (this.props.selectionFromMapping !== prevProps.selectionFromMapping && this.props.selectionFromMapping === true) {
+        if (this.props.selectedLayer !== prevProps.selectedLayer && this.props.selectionFromMapping === true) {
+            console.log(this.props.selectedLayer);
             this.setState({
                 checkedFrags: this.props.selectedLayer,
             });
