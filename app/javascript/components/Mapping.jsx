@@ -204,6 +204,7 @@ class Mapping extends React.Component {
             selectedImages: selectedImages, selectedImagesBackup: selectedImages,
             selectedMappedImages: selectedImages
         });
+        this.sendIcdToMainUI(selectedImages, false);
     }
 
     selectMappedLayers(mappedImages){

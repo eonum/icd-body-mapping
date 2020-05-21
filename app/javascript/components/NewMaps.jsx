@@ -82,38 +82,19 @@ class NewMaps extends React.Component {
         let selectedLayer = this.props.selectedLayer;
         let icd_ids = this.props.icd_ids;
         const parent = this.props.parent;
-
-        let disabled = ((icd_id === undefined && icd_ids.length === 0) || selectedLayer.length === 0);
         let inSearch = (parent === 'search');
-
-        if (disabled) {
-            return(
-                <form
-                    onSubmit={this.handleSubmit.bind(this, inSearch)}
-                    className={inSearch ? "text-center" : "text-right"}
-                >
-                    <input type="submit"
-                           className={this.state.buttonColor}
-                           value={inSearch ? "Map Selected" : "Map"}
-                           onClick={this.stateIdSet.bind(this)}
-                           disabled
-                    />
-                </form>
-            );
-        } else {
-            return(
-                <form
-                    onSubmit={this.handleSubmit.bind(this, inSearch)}
-                    className={inSearch ? "text-center" : "text-right"}
-                >
-                    <input type="submit"
-                           className={this.state.buttonColor}
-                           value={inSearch ? "Map Selected" : "Map"}
-                           onClick={this.stateIdSet.bind(this)}
-                    />
-                </form>
-            );
-        }
+        return(
+            <form
+                onSubmit={this.handleSubmit.bind(this, inSearch)}
+                className={inSearch ? "text-center" : "text-right"}
+            >
+                <input type="submit"
+                       className={this.state.buttonColor}
+                       value={inSearch ? "Map Selected" : "Save"}
+                       onClick={this.stateIdSet.bind(this)}
+                />
+            </form>
+        );
     }
 }
 export default NewMaps
