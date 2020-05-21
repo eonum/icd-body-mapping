@@ -6,43 +6,48 @@ class AddImage extends React.Component {
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
     }
 
-    sendIcdToMapping(newImage) {
-        this.props.callbackFromMapping(newImage);
-    }
-
     handleFormSubmit(ebene, name, img) {
-        let body = JSON.stringify({image: {ebene: ebene, name: name, img: img}});
+        let body = JSON.stringify({layer: {ebene: ebene, name: name, img: img}});
         fetch('http://localhost:3000/api/v1/layers', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: body,
-        }).then((image) => {
-            this.addNewImage(layer)
+        }).then((layer) => {
+            if (layer.ok){
+                this.addNewImage(layer);
+            }
         })
     }
 
     addNewImage(image) {
-        this.sendIcdToMapping(image);
+        this.props.callbackFromMapping(image);
+    }
+
+    handleKeyDown(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+        }
     }
 
     render() {
         let formFields = {};
-        let addImage = (
+        return (
             <form
                 onSubmit={(e) => {
                     this.handleFormSubmit(formFields.name.value, formFields.ebene.value, formFields.img.value);
                     e.preventDefault();
                 }}
+                onKeyDown={e => this.handleKeyDown(e)}
                 className="form-group"
             >
                 <input
                     ref={input => formFields.ebene = input}
-                    placeholder='Enter the name of the item'
+                    placeholder='Enter the layer E.g. Ohr'
                     className="form-control"
                 />
                 <input
                     ref={input => formFields.name = input}
-                    placeholder='Enter the name of the image'
+                    placeholder='Enter the name E.g. Auricula'
                     className="form-control"
                 />
                 <input
@@ -50,18 +55,10 @@ class AddImage extends React.Component {
                     placeholder='Enter the image url'
                     className="form-control"
                 />
-                <button
-                    type="button"
-                    className="btn btn-primary"
-                >
+                <button className="btn btn-primary">
                     Submit
                 </button>
             </form>
-        );
-        return (
-            <div>
-                {addImage}
-            </div>
         );
     }
 }

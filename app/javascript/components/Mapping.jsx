@@ -96,11 +96,23 @@ class Mapping extends React.Component {
 
     callbackallImages = (layer) => {
         this.setState({allImages: this.state.allImages.concat(layer)});
-        $.getJSON('/api/v1/layers')
-            .then(response => this.setState({allImages: response}));
-        $.getJSON('/api/v1/all/layers')
-            .then(response => this.setState({layers: response}));
+        setTimeout(() => {
+            $.getJSON('/api/v1/layers')
+                .then(response => this.setState({allImages: response}));
+            $.getJSON('/api/v1/all/layers')
+                .then(response => this.setState({layers: response}));
+        });
+
     };
+
+    callbackDeleteFromMapping = (id) => {
+        let newImages = this.state.allImages.filter((image) => image.id !== id);
+        this.setState({allImages: newImages});
+        setTimeout(() => {
+            $.getJSON('/api/v1/all/layers')
+                .then(response => this.setState({layers: response}));
+        });
+    }
 
     /**
      * A method, which sends the chosen image back to the Main Ui, so that other components,
@@ -440,7 +452,7 @@ class Mapping extends React.Component {
           </>
         );
 
-        const list = (<LayerOptions callbackFromMapping={this.callbackallImages}/>)
+        const list = (<LayerOptions callbackFromMapping={this.callbackallImages} callbackDeleteFromMapping={this.callbackDeleteFromMapping}/>)
 
         return (
             <div>

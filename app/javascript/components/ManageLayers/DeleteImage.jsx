@@ -30,6 +30,27 @@ class DeleteImage extends React.Component {
             }));
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props.layer !== prevProps.layer){
+            setTimeout(() => {
+                $.getJSON('/api/v1/layers')
+                    .then(response => this.setState({
+                        allImages: response.sort((a, b) => {
+                            var nameA = a.name.toUpperCase();
+                            var nameB = b.name.toUpperCase();
+                            if (nameA < nameB) {
+                                return -1;
+                            }
+                            if (nameA > nameB) {
+                                return 1;
+                            }
+                            return 0;
+                        })
+                    }));
+            });
+        }
+    }
+
     componentWillUnmount() {
     }
 
@@ -43,14 +64,17 @@ class DeleteImage extends React.Component {
                     method: 'DELETE',
                     headers: {'Content-Type': 'application/json'}
                 }).then((response) => {
-                this.deleteImage(id)
+                    if (response.ok){
+                        this.deleteImage(id);
+                    }
             })
         }
     }
 
     deleteImage(id) {
-        let newImages = this.state.maps.filter((image) => image.id !== id);
+        let newImages = this.state.allImages.filter((image) => image.id !== id);
         this.setState({allImages: newImages});
+        this.props.callbackDeleteFromMapping(id);
     }
 
     render() {

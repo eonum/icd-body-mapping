@@ -8,7 +8,8 @@ class LayerOptions extends React.Component {
         super(props);
         this.state = {
             add: false,
-            isMounted: false
+            isMounted: false,
+            layer: ''
         }
     }
 
@@ -20,16 +21,17 @@ class LayerOptions extends React.Component {
         this.setState({isMounted: false});
     }
 
+    callbackDeleteFromMapping = (id) => {
+        this.props.callbackDeleteFromMapping(id);
+    }
+
     callbackallImages = (layer) => {
-        this.sendIcdToMapping(layer);
+        this.props.callbackFromMapping(layer);
         this.setState({
             add: false,
+            layer: layer
         })
     };
-
-    sendIcdToMapping(newImage) {
-        this.props.callbackFromMapping(newImage);
-    }
 
     addView() {
         this.setState({
@@ -63,7 +65,7 @@ class LayerOptions extends React.Component {
                         addButton
                     }
                 </div>
-                <DeleteImage style="z-index: 5"/>
+                <DeleteImage style="z-index: 5" callbackDeleteFromMapping={this.callbackDeleteFromMapping} layer={this.state.layer}/>
             </div>
         )
     }
