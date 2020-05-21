@@ -39,7 +39,7 @@ class Mapping extends React.Component {
      * Updates the image array with the images of an icd,
      * once the prop showingIcdId changes.
      */
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps, prevState) {
         if (this.props.showingIcdId !== prevProps.showingIcdId) {
             if (this.props.showingIcdId !== 0) {
                 let mappedImages = this.getImagesFromMaps(this.props.showingIcdId);
@@ -57,11 +57,16 @@ class Mapping extends React.Component {
         }
 
         if (this.props.map !== prevProps.map) {
-            this.addNewMap(this.props.map);
             setTimeout(() => {
                 $.getJSON('api/v1/maps')
-                    .then(response => this.setState({maps: response}));
-            }, 3000);
+                    .then(response => this.setState({maps: response}))
+            }, 2000);
+        }
+        if (this.state.maps !== prevState.maps){
+            let mappedImages = this.getImagesFromMaps(this.props.showingIcdId);
+            this.setState({mappedImages: mappedImages});
+            this.selectMappedImages(mappedImages);
+            this.selectMappedLayers(mappedImages);
         }
 
         if (this.props.mapLayerList !== prevProps.mapLayerList) {
