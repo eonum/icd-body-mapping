@@ -21,6 +21,7 @@ class MainUI extends React.Component {
             searchTerm: '',
             buttonTerm: '',
             selectedIcd: '',
+            updatedIcd: '',
             map: '', mapLayerList: 0,
             detailsDisplayed: false,
             searchDisplayed: false,
@@ -215,6 +216,12 @@ class MainUI extends React.Component {
         });
     };
 
+    callbackDetailsAnnotationen = (icd) => {
+        this.setState({
+            updatedIcd: icd
+        });
+    }
+
     callbackUpdateList = () => {
         this.setState({
             updateList: true,
@@ -251,6 +258,7 @@ class MainUI extends React.Component {
                 selectedLayer={this.state.selectedLayer}
                 editable={this.state.editMode}
                 language={this.state.activeLanguage}
+                callbackFromMainUIAnnotationen={this.callbackDetailsAnnotationen}
                 callbackFromMainUI={this.callbackDetails}
                 callbackFromMainUIMaps={this.callbackDetailsMap}
                 callbackFromMainUIClose={this.callbackDetailsCardClose}
@@ -321,6 +329,7 @@ class MainUI extends React.Component {
                                 style={sidebarStyle}
                                 icdSelectionFromSearch={this.state.icdSelectionFromSearch}
                                 language={this.state.activeLanguage}
+                                updatedIcd={this.state.updatedIcd}
                             />
                         </div>
                         <div className="col-4" style={style}>

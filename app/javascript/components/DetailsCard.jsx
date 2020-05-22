@@ -36,23 +36,17 @@ class DetailsCard extends React.Component {
         this.props.callbackFromMainUIMaps(Map);
     }
 
+    sendIcdToSidebar(icd) {
+        this.props.callbackFromSidebar(icd);
+    }
+
     stateIdSet() {
         this.setState({showingIcdId: this.props.selectedIcd.id});
     }
 
     saveChanges() {
-        let body = JSON.stringify({
-            icd: {
-                id: this.state.selectedIcd.id,
-                code: this.state.selectedIcd.code,
-                version: this.state.selectedIcd.version,
-                text_de: this.state.selectedIcd.text_de,
-                text_fr: this.state.selectedIcd.text_fr,
-                text_it: this.state.selectedIcd.text_it,
-                annotationen: this.state.annotationen,
-                kapitel: this.state.selectedIcd.kapitel
-            }
-        });
+        let icd = this.props.selectedIcd;
+        icd.annotationen = this.state.annotationen;
 
         fetch('http://localhost:3000/api/v1/icds/' + this.state.selectedIcd.id, {
             method: 'PUT',
@@ -60,9 +54,9 @@ class DetailsCard extends React.Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: body,
+            body: JSON.stringify({icd: icd}),
         }).then((response) => {
-            return response.json()
+            this.props.callbackFromMainUIAnnotationen(icd);
         });
     }
 
