@@ -84,6 +84,11 @@ class Mapping extends React.Component {
         if (this.props.editable !== prevProps.editable && this.props.editable === false) {
             this.changeViewTo('map');
         }
+        if (this.props.needUpdate !== prevProps.needUpdate) {
+            this.setState({
+                activeLayer: 'Gehirn Längsschnitt',
+            });
+        }
     }
 
     callbackallImages = (layer) => {

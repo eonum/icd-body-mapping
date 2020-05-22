@@ -65,6 +65,11 @@ class LayerList extends React.Component {
                 showFrags: this.props.showFrags,
             });
         }
+        if (this.props.needUpdate !== prevProps.needUpdate) {
+            this.setState({
+                activeLayer: 'Gehirn Längsschnitt',
+            });
+        }
     }
 
     getMapsOfIcd(icd) {
