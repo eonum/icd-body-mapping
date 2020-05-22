@@ -31,7 +31,7 @@ class DeleteImage extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.layer !== prevProps.layer){
+        if (this.props.image !== prevProps.image){
             setTimeout(() => {
                 $.getJSON('/api/v1/layers')
                     .then(response => this.setState({
@@ -54,9 +54,9 @@ class DeleteImage extends React.Component {
     componentWillUnmount() {
     }
 
-    handleDelete(elem) {
-        const id = elem.id;
-        const deletion = confirm('Do you want to delete ' + elem.name);
+    handleDelete(image) {
+        const id = image.id;
+        const deletion = confirm('Do you want to delete ' + image.name);
 
         if (deletion) {
             fetch(`http://localhost:3000/api/v1/layers/${id}`,

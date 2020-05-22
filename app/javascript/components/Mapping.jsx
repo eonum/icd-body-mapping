@@ -86,19 +86,6 @@ class Mapping extends React.Component {
         }
     }
 
-    addNewMap(map) {
-        this.setState({maps: this.state.maps.concat(map)});
-    }
-
-    deleteMap(map) {
-        let map_id = map.map_id;
-        let newMaps = this.state.maps.filter((map) => map.id !== map_id);
-        let newBackup = this.state.selectedImagesBackup.filter((image) => (image.name !== map.name || image.ebene !== map.ebene));
-        let newMapped = this.state.mappedImages.filter((image) => image.name !== map.name);
-        let newSelectedMap = this.state.selectedMappedImages.filter((image) => image.name !== map.name);
-        this.setState({maps: newMaps, selectedImagesBackup: newBackup, mappedImages: newMapped, selectedMappedImages: newSelectedMap});
-    }
-
     callbackallImages = (layer) => {
         this.setState({allImages: this.state.allImages.concat(layer)});
         setTimeout(() => {
@@ -126,6 +113,19 @@ class Mapping extends React.Component {
      */
     sendIcdToMainUI(image, selectedFromMapping) {
         this.props.callbackFromMainUI(image, selectedFromMapping);
+    }
+
+    addNewMap(map) {
+        this.setState({maps: this.state.maps.concat(map)});
+    }
+
+    deleteMap(map) {
+        let map_id = map.map_id;
+        let newMaps = this.state.maps.filter((map) => map.id !== map_id);
+        let newBackup = this.state.selectedImagesBackup.filter((image) => (image.name !== map.name || image.ebene !== map.ebene));
+        let newMapped = this.state.mappedImages.filter((image) => image.name !== map.name);
+        let newSelectedMap = this.state.selectedMappedImages.filter((image) => image.name !== map.name);
+        this.setState({maps: newMaps, selectedImagesBackup: newBackup, mappedImages: newMapped, selectedMappedImages: newSelectedMap});
     }
 
     /**
@@ -281,8 +281,24 @@ class Mapping extends React.Component {
             if (selectedImages[i].id === elem.id) {
                 return i;
             }
+        } return false;
+    }
+
+    selectPngsFromList(layerFragmentList) {
+        let elem = this.state.allImages;
+        let frags = layerFragmentList;
+        let selectedImages = this.state.selectedMappedImages;
+
+        for (let x = 0; x < frags.length; x++) {
+            for (let i = 0; i < elem.length; i++) {
+                if (frags[x].name === elem[i].name) {
+                    selectedImages = selectedImages.concat(elem[i]);
+                }
+            }
         }
-        return false;
+
+        this.setState({selectedImages: selectedImages, selectedImagesBackup: selectedImages});
+        this.sendIcdToMainUI(selectedImages, false);
     }
 
     /**
@@ -307,23 +323,6 @@ class Mapping extends React.Component {
                 }
             }
         }
-    }
-
-    selectPngsFromList(layerFragmentList) {
-        let elem = this.state.allImages;
-        let frags = layerFragmentList;
-        let selectedImages = this.state.selectedMappedImages;
-
-        for (let x = 0; x < frags.length; x++) {
-            for (let i = 0; i < elem.length; i++) {
-                if (frags[x].name === elem[i].name) {
-                    selectedImages = selectedImages.concat(elem[i]);
-                }
-            }
-        }
-
-        this.setState({selectedImages: selectedImages, selectedImagesBackup: selectedImages});
-        this.sendIcdToMainUI(selectedImages, false);
     }
 
     setBackToPreviousSelection() {
