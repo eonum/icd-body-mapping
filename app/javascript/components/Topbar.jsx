@@ -36,7 +36,6 @@ class Topbar extends React.Component {
             query: '',
             term: '',
             viewAll: this.props.viewAll,
-            activeLanguage: 'de',
         });
         this.searchForm.reset();
     }

@@ -44,6 +44,7 @@ class Sidebar extends React.Component {
                 icdCodeLength: 3,
                 hierarchyEnd: false
             });
+            this.ICDstack = [this.chapterICDs];
         }
         if (this.props.reloadIcds !== prevProps.reloadIcds) {
             this.loadIcds();
@@ -427,7 +428,6 @@ class Sidebar extends React.Component {
             zIndex: 99,
             top: '0%',
             left: '0%',
-            height: '100%',
             width: '100%',
             position: 'absolute',
             height: '88vh',

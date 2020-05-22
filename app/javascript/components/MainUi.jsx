@@ -53,12 +53,11 @@ class MainUI extends React.Component {
             selectedIcd: '',
             detailsDisplayed: false,
             searchDisplayed: false,
-            selectedLayer: 'Ohr',
             showingIcdId: 0,
             editMode: false,
             checkedIcdIds: [],
             viewAll: false,
-            activeLanguage: 'de',
+            activeLayer: 'Gehirn Längsschnitt',
         });
         if (this.state.needUpdate === true) {
             this.setState({
