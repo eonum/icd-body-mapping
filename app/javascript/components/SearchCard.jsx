@@ -51,6 +51,10 @@ class SearchCard extends React.Component {
         }
     }
 
+    callbackNewMapsLoading = (loading) => {
+        this.setState({load: loading});
+    };
+
     /**
      * Gets the search results from the link '/search?q=' + this.state.term
      * and saves them into the icds array, this will be later passed on to the search results component
@@ -192,6 +196,7 @@ class SearchCard extends React.Component {
                 icd_ids={selection}
                 selectedLayer={selectedLayer}
                 callbackFromDetailsCard={this.props.callbackFromMainUIMaps}
+                callbackFromSearchCard={this.callbackNewMapsLoading}
                 parent={'search'}
             />
         );

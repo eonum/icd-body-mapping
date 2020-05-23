@@ -28,10 +28,6 @@ class DetailsCard extends React.Component {
         this.props.callbackFromMainUI(this.props.selectedIcd.id);
     }
 
-    callbackMaps = (Map) => {
-        this.sendIcdToMainUi(Map);
-    };
-
     sendIcdToMainUi(Map) {
         this.props.callbackFromMainUIMaps(Map);
     }
@@ -48,7 +44,6 @@ class DetailsCard extends React.Component {
         let icd = this.props.selectedIcd;
         icd.annotationen = this.state.annotationen;
 
-        console.log(icd);
         fetch('http://localhost:3000/api/v1/icds/' + this.state.selectedIcd.id, {
             method: 'PUT',
             headers: {
@@ -114,7 +109,7 @@ class DetailsCard extends React.Component {
                             icd_id={selectedIcd.id}
                             icd_ids={[]}
                             selectedLayer={selectedLayer}
-                            callbackFromDetailsCard={this.callbackMaps}
+                            callbackFromDetailsCard={this.props.callbackFromMainUIMaps}
                             callbackFromMainUIUpdateList={this.props.callbackFromMainUIUpdateList}
                             parent={'details'}
                         />
