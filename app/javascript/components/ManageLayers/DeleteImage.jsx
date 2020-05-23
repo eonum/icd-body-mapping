@@ -3,7 +3,7 @@ import $ from "jquery";
 import DeleteIcon from '@material-ui/icons/Delete';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
-import loadingGif from '../../../assets/images/Preloader_2.gif'
+import loadingGif from '../../../assets/images/Preloader_2.gif';
 
 
 class DeleteImage extends React.Component {
@@ -21,51 +21,46 @@ class DeleteImage extends React.Component {
     }
 
     componentDidMount() {
-        $.getJSON('/api/v1/layers')
-            .then(response => this.setState({
-                allImages: response.sort((a, b) => {
-                  var nameA = (a.ebene + ": " + a.name).toUpperCase();
-                  var nameB = (b.ebene + ": " + b.name).toUpperCase();
-                  if (nameA < nameB) {
-                    return -1;
-                  }
-                  if (nameA > nameB) {
-                    return 1;
-                  }
-                  return 0;
-                })
-            }));
-        $.getJSON('/api/v1/all/layers')
-            .then(response => this.setState({
-              layers: response,
-              load: false,
-            }));
+        this.getImages();
+        this.getLayers();
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.image !== prevProps.image){
             this.setState({load: true});
             setTimeout(() => {
-                $.getJSON('/api/v1/layers')
-                    .then(response => this.setState({
-                        allImages: response.sort((a, b) => {
-                            var nameA = a.name.toUpperCase();
-                            var nameB = b.name.toUpperCase();
-                            if (nameA < nameB) {
-                                return -1;
-                            }
-                            if (nameA > nameB) {
-                                return 1;
-                            }
-                            return 0;
-                        })
-                    }));
+                this.getImages();
+                this.getLayers();
             });
-            this.setState({load: false});
         }
     }
 
     componentWillUnmount() {
+    }
+
+    getImages() {
+        $.getJSON('/api/v1/layers')
+            .then(response => this.setState({
+                allImages: response.sort((a, b) => {
+                    var nameA = a.name.toUpperCase();
+                    var nameB = b.name.toUpperCase();
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
+                    return 0;
+                })
+            }));
+    }
+
+    getLayers() {
+        $.getJSON('/api/v1/all/layers')
+            .then(response => this.setState({
+              layers: response,
+              load: false,
+            }));
     }
 
     handleDelete(image) {
@@ -89,8 +84,8 @@ class DeleteImage extends React.Component {
     deleteImage(id) {
         let newImages = this.state.allImages.filter((image) => image.id !== id);
         this.setState({allImages: newImages});
+        this.getLayers();
         this.props.callbackDeleteFromMapping(id);
-        this.setState({load: false});
     }
 
     showImages(layer, visible) {

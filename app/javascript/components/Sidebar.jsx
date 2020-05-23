@@ -1,6 +1,6 @@
 import React from 'react';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import loadingGif from '../../assets/images/Preloader_2.gif'
+import loadingGif from '../../assets/images/Preloader_2.gif';
 
 /**
  * The Sidebar gets the database from backend and renders

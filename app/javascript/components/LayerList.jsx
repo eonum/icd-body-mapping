@@ -3,6 +3,7 @@ import $ from "jquery";
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import CloseIcon from '@material-ui/icons/Close';
+import loadingGif from '../../assets/images/Preloader_2.gif';
 
 /**
  * The MappingList gets the Mappings corresponding to either, chosen Layers
@@ -20,6 +21,7 @@ class LayerList extends React.Component {
             showFrags: true,
             checkedFrags: [],
             mouseOver: '',
+            load: true,
         };
         this.handleDelete = this.handleDelete.bind(this)
         this.deleteMap = this.deleteMap.bind(this)
@@ -29,15 +31,20 @@ class LayerList extends React.Component {
         $.getJSON('/api/v1/layers')
             .then(response => this.setState({fragments: response}));
         $.getJSON('/api/v1/all/layers')
-            .then(response => this.setState({layers: response}));
-        if (this.props.selectedIcd !== '') {
-            this.getMapsOfIcd(this.props.selectedIcd);
-        }
+            .then(response => {
+              this.setState({layers: response});
+              if (this.props.selectedIcd !== '') {
+                  this.getMapsOfIcd(this.props.selectedIcd);
+              } else {
+                  this.setState({load: false});
+              }
+            });
     }
 
     componentDidUpdate(prevProps) {
         if(this.props.selectedIcd !== prevProps.selectedIcd) {
             if (this.props.selectedIcd !== '') {
+                this.setState({load: true});
                 this.getMapsOfIcd(this.props.selectedIcd);
             } else {
                 this.setState({
@@ -55,6 +62,7 @@ class LayerList extends React.Component {
             });
         }
         if (this.props.updateList !== prevProps.updateList && this.props.updateList === true) {
+            this.setState({load: true});
             setTimeout(() => {
                 this.getMapsOfIcd(this.props.selectedIcd);
             }, 800);
@@ -78,7 +86,10 @@ class LayerList extends React.Component {
 
     getMapsOfIcd(icd) {
         $.getJSON('/api/v1/map/' + icd.id)
-            .then(response => this.setState({maps: response}));
+            .then(response => this.setState({
+              maps: response,
+              load: false,
+            }));
     }
 
     selectLayer(layer) {
@@ -129,6 +140,7 @@ class LayerList extends React.Component {
     handleDelete(name){
         let map = this.findMap(name);
         if (map.map_id > 0){
+            this.setState({load: true});
             fetch(`http://localhost:3000/api/v1/maps/${map.map_id}`,
                 {
                     method: 'DELETE',
@@ -149,7 +161,10 @@ class LayerList extends React.Component {
     deleteMap(map){
         let map_id = map.map_id
         let newMaps = this.state.maps.filter((map) => map.map_id !== map_id);
-        this.setState({maps: newMaps});
+        this.setState({
+          maps: newMaps,
+          load: false,
+        });
         this.props.callbackFromMainUIDeleteMap(map);
     }
 
@@ -161,9 +176,11 @@ class LayerList extends React.Component {
         const showFrags = this.state.showFrags;
         const editable = this.props.editable;
         const checkedFrags = this.state.checkedFrags;
+        const loading = this.state.load;
         let mouseOver = this.state.mouseOver;
         let mappedFragments = [];
         let checkedFragments = [];
+        let displayLayerFrags = [];
         let mapped = false;
         let showAsSelected = false;
         let mouseOverCurrent = false;
@@ -196,7 +213,7 @@ class LayerList extends React.Component {
 
         const empty = (<></>);
 
-        const displayLayerFrags = layers.map((layer, index) => {
+        displayLayerFrags = layers.map((layer, index) => {
             if (layer.ebene === activeLayer) {
                 return <div key={index} className="list-group d-inline">
                     <div className="list-group-item-action mb-1 pl-4 pr-2 border rounded" style={topStyle}>
@@ -287,8 +304,34 @@ class LayerList extends React.Component {
             }
         });
 
+        const loadingImgStyle = {
+            zIndex: 100,
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            width: '50px',
+            height: '50px',
+            marginTop: '-25px',
+            marginLeft: '-25px',
+        }
+        const loadingDivStyle = {
+            zIndex: 99,
+            top: '0%',
+            left: '0%',
+            height: '100%',
+            width: '100%',
+            position: 'absolute',
+            backgroundColor: 'rgba(255,255,255,0.7)',
+        }
+        const loadingImg = (
+            <div style={loadingDivStyle}>
+                <img src={loadingGif} style={loadingImgStyle}/>
+            </div>
+        )
+
         return (
             <div style={style}>
+                {loading ? loadingImg : null}
                 {displayLayerFrags}
             </div>
         )

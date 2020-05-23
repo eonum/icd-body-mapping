@@ -21,10 +21,6 @@ class LayerOptions extends React.Component {
         this.setState({isMounted: false});
     }
 
-    callbackDeleteFromMapping = (id) => {
-        this.props.callbackDeleteFromMapping(id);
-    }
-
     callbackallImages = (image) => {
         this.props.callbackFromMapping(image);
         this.setState({
@@ -65,7 +61,7 @@ class LayerOptions extends React.Component {
                         addButton
                     }
                 </div>
-                <DeleteImage style="z-index: 5" callbackDeleteFromMapping={this.callbackDeleteFromMapping} image={this.state.image}/>
+                <DeleteImage style="z-index: 5" callbackDeleteFromMapping={this.props.callbackDeleteFromMapping} image={this.state.image}/>
             </div>
         )
     }

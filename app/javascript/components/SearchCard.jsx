@@ -2,7 +2,7 @@ import React from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 import NewMaps from "./NewMaps";
 import $ from "jquery";
-import loadingGif from '../../assets/images/Preloader_2.gif'
+import loadingGif from '../../assets/images/Preloader_2.gif';
 
 
 /**

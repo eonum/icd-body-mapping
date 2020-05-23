@@ -1,6 +1,8 @@
 import React from 'react';
 import $ from "jquery";
-import LayerOptions from './ManageLayers/LayerOptions'
+import LayerOptions from './ManageLayers/LayerOptions';
+import loadingGif from '../../assets/images/Preloader_2.gif';
+
 
 /**
  * The Mapping component is one that displays the individual layers,
@@ -116,6 +118,7 @@ class Mapping extends React.Component {
             $.getJSON('/api/v1/all/layers')
                 .then(response => this.setState({layers: response}));
         });
+        console.log('deleted');
     }
 
     /**
@@ -215,7 +218,7 @@ class Mapping extends React.Component {
             selectedImages: selectedImages, selectedImagesBackup: selectedImages,
             selectedMappedImages: selectedImages
         });
-        
+
         this.sendIcdToMainUI(selectedImages, false);
     }
 
@@ -389,7 +392,9 @@ class Mapping extends React.Component {
         const rowStyle = {height: '5vh'};
         const divStyle = {position: 'absolute'};
         const dropdownStyle = {height: '30px'};
-        
+        let alleElemente = [];
+        let alleLayers = [];
+
         let {x, y} = this.state;
         let activeLayer = this.state.activeLayer;
         const editable = this.props.editable;
@@ -400,7 +405,7 @@ class Mapping extends React.Component {
         const bootstrapUnselectedMapButton = "col-6 border border-primary rounded-left text-primary p-0 pl-2 pr-2";
         const bootstrapUnselectedListButton = "col-6 border border-primary rounded-right text-primary p-0 pl-2 pr-2";
 
-        let alleElemente = this.state.allImages.map((elem, index) => {
+        alleElemente = this.state.allImages.map((elem, index) => {
             if (elem.ebene === activeLayer) {
                 return <div key={index}>
                     <img src={elem.img} style={divStyle} id={elem.name} alt='missing images'
@@ -412,7 +417,7 @@ class Mapping extends React.Component {
             }
         });
 
-        let alleLayers = this.state.layers.map((elem, index) => {
+        alleLayers = this.state.layers.map((elem, index) => {
             let mappedLayers = this.state.mappedLayers;
             for (let i = 0; i < mappedLayers.length; i++){
                 if(elem === mappedLayers[i]){
@@ -472,6 +477,32 @@ class Mapping extends React.Component {
 
         const list = (<LayerOptions callbackFromMapping={this.callbackallImages} callbackDeleteFromMapping={this.callbackDeleteFromMapping}/>)
 
+        const loadingImgStyle = {
+            zIndex: 100,
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            width: '50px',
+            height: '50px',
+            marginTop: '-25px',
+            marginLeft: '-25px',
+        }
+        const loadingDivStyle = {
+            zIndex: 99,
+            top: '0%',
+            left: '0%',
+            height: '100%',
+            width: '100%',
+            position: 'absolute',
+            backgroundColor: 'rgba(255,255,255,0.7)',
+        }
+        const loadingImg = (
+            <div style={loadingDivStyle}>
+                <img src={loadingGif} style={loadingImgStyle}/>
+            </div>
+        )
+        const loading = (alleElemente.length === 0 && mapView);
+
         return (
             <div>
                 <div className="row" style={rowStyle}>
@@ -483,6 +514,7 @@ class Mapping extends React.Component {
                         {editable ? viewButton : null}
                     </div>
                 </div>
+                {loading ? loadingImg : null}
                 { mapView ? map : list }
             </div>
         )
