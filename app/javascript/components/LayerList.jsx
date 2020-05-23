@@ -39,10 +39,14 @@ class LayerList extends React.Component {
         if(this.props.selectedIcd !== prevProps.selectedIcd) {
             if (this.props.selectedIcd !== '') {
                 this.getMapsOfIcd(this.props.selectedIcd);
+            } else {
                 this.setState({
-                    checkedFrags: [],
-                });
+                    maps: [],
+                })
             }
+            this.setState({
+                checkedFrags: [],
+            });
             this.props.callbackFromMainUISelectPngs([]);
         }
         if (this.props.selectedLayer !== prevProps.selectedLayer && this.props.selectionFromMapping === true) {

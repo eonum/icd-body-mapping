@@ -66,7 +66,7 @@ class SearchCard extends React.Component {
                         load: false,
                     })
                 );
-        } else {
+        } else if (!viewAll) {
             $.getJSON('/api/v1/search_' + this.props.language + '?q=' + term)
                 .then(async response =>
                     this.setState({
@@ -85,6 +85,8 @@ class SearchCard extends React.Component {
         });
         this.getSearchResults(this.state.term, true);
         this.props.callbackFromMainUIViewAll(true);
+
+        console.log(this.state.viewAll);
     }
 
     viewIcd(icd) {
