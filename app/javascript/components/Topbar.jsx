@@ -20,13 +20,16 @@ class Topbar extends React.Component {
             term: '',
             viewAll: this.props.viewAll,
             activeLanguage: 'de',
+
         };
         this.timeout = 0;
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.viewAll !== prevProps.viewAll) {
-            this.setViewAll(this.props.viewAll);
+        if (this.props.viewAll !== prevProps.viewAll
+          && this.props.searchDisplayed !== prevProps.searchDisplayed
+          && this.props.searchDisplayed === true) {
+            this.setSearchTerm(this.state.term, this.props.viewAll);
         }
     }
 
@@ -46,21 +49,18 @@ class Topbar extends React.Component {
      * via callback function
      */
 
-    setSearchTerm(term) {
-        this.setState({term: term});
-        this.setViewAll(false);
+    setSearchTerm(term, viewAll) {
+        this.props.callbackFromMainUIViewAll(viewAll);
+        this.setState({
+            term: term,
+            viewAll: viewAll
+        });
+
         if (this.timeout) clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
             this.props.callbackFromMainUISearch(term);
         }, 300);
-    }
-
-    setViewAll(viewAll) {
-        this.setState({
-            viewAll: viewAll
-        });
         event.preventDefault();
-        this.props.callbackFromMainUIViewAll(viewAll);
     }
 
     setEditMode(edit) {
@@ -159,11 +159,11 @@ class Topbar extends React.Component {
                     <form ref={form => this.searchForm = form}>
                         <FormControl
                             onChange={event => {
-                                this.setSearchTerm(event.target.value)
+                                this.setSearchTerm(event.target.value, false)
                             }}
                             onKeyDown={event => {
                                 if (event.key === 'Enter') {
-                                    this.setViewAll(true)
+                                    this.setSearchTerm(event.target.value, true)
                                 }
                             }}
                             type="text"
@@ -175,7 +175,7 @@ class Topbar extends React.Component {
                         type="button"
                         className="btn btn-default text-white ml-2"
                         onClick={event => {
-                            this.setViewAll(true)
+                            this.setSearchTerm(this.state.term, true)
                         }}
                     >
                         <SearchIcon/>

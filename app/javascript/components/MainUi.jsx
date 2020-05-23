@@ -205,7 +205,7 @@ class MainUI extends React.Component {
     callbackSearchCardClose = () => {
         this.setState({
             searchDisplayed: false,
-            viewAll: false
+            viewAll: false,
         });
     };
 
@@ -309,6 +309,7 @@ class MainUI extends React.Component {
                             <Topbar
                                 editable={this.state.editMode}
                                 viewAll={this.state.viewAll}
+                                searchDisplayed={this.state.searchDisplayed}
                                 callbackFromMainUISearch={this.callbackTopbarSearch}
                                 callbackFromMainUIButton={this.callbackTopbarButtonTerm}
                                 callbackFromMainUIEdit={this.callbackTopbarEdit}

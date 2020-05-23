@@ -382,6 +382,7 @@ class Mapping extends React.Component {
         const rowStyle = {height: '5vh'};
         const divStyle = {position: 'absolute'};
         const dropdownStyle = {height: '30px'};
+        
         let {x, y} = this.state;
         let activeLayer = this.state.activeLayer;
         const editable = this.props.editable;
@@ -439,7 +440,7 @@ class Mapping extends React.Component {
                     style={dropdownStyle}
                     onClick={this.changeViewTo.bind(this, 'map')}
                 >
-                    map
+                    Mapping
                 </div>
                 <div
                     className={mapView ? bootstrapUnselectedListButton : bootstrapSelectedListButton}
@@ -447,7 +448,7 @@ class Mapping extends React.Component {
                     style={dropdownStyle}
                     onClick={this.changeViewTo.bind(this, 'list')}
                 >
-                    list
+                    Edit Layers
                 </div>
             </div>
         );
@@ -471,7 +472,7 @@ class Mapping extends React.Component {
                         {mapView ? dropdown : null}
                     </div>
                     <div className="col" />
-                    <div className="col-3">
+                    <div className="col-5">
                         {editable ? viewButton : null}
                     </div>
                 </div>
