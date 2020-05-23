@@ -156,8 +156,7 @@ class Mapping extends React.Component {
      */
     selectLayer(ebene) {
         this.setState({
-            activeLayer: ebene,
-            selectedImages: [],
+            activeLayer: ebene, selectedImages: []
         });
         this.props.callbackFromMainUIActiveLayer(ebene);
         setTimeout(() => {
