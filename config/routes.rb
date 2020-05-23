@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      resources :maps, only: [:index, :create, :destroy, :update, :show]
+      resources :maps, only: [:index, :create, :destroy, :show]
       get '/map/:id', to: 'maps#show_icd'
       get '/map/:id/:ebene', to: 'maps#show_layer'
       get '/map_layers/:id', to: 'maps#show_layers'

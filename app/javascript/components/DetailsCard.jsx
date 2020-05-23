@@ -48,6 +48,7 @@ class DetailsCard extends React.Component {
         let icd = this.props.selectedIcd;
         icd.annotationen = this.state.annotationen;
 
+        console.log(icd);
         fetch('http://localhost:3000/api/v1/icds/' + this.state.selectedIcd.id, {
             method: 'PUT',
             headers: {
@@ -56,7 +57,7 @@ class DetailsCard extends React.Component {
             },
             body: JSON.stringify({icd: icd}),
         }).then((response) => {
-            this.props.callbackFromMainUIAnnotationen(icd);
+            if(response.ok){this.props.callbackFromMainUIAnnotationen(icd);}
         });
     }
 

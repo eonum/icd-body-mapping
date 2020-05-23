@@ -11,7 +11,6 @@ class NewMaps extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            maps: [],
             icd_id: '',
             icd_ids: [],
             selectedLayer: [],
@@ -38,6 +37,7 @@ class NewMaps extends React.Component {
      */
     handleSubmit(multiMapping, event) {
         let icd_ids = [];
+        let bodyArray = [];
         let layers = this.state.selectedLayer;
 
         if (multiMapping) {
@@ -45,23 +45,24 @@ class NewMaps extends React.Component {
         } else {
             icd_ids = icd_ids.concat(this.props.icd_id);
         }
+
         for (let i=0; i<icd_ids.length; i++) {
             for (let lay=0; lay < layers.length; lay++) {
-                let body = JSON.stringify({map: {icd_id: icd_ids[i], layer_id: layers[lay].id}});
-                fetch('http://localhost:3000/api/v1/maps', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: body,
-                }).then((map)=>{this.addNewMap(map)});
+                bodyArray = bodyArray.concat({icd_id: icd_ids[i], layer_id: layers[lay].id});
             }
         }
-        this.sendIcdToDetailsCard(this.state.maps);
-        this.setState({maps: []});
-        event.preventDefault();
-    }
+        bodyArray = JSON.stringify({maps_list: bodyArray});
+        fetch('http://localhost:3000/api/v1/maps', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: bodyArray,
+        }).then((map)=>{
+            if (map.ok){
+                this.sendIcdToDetailsCard(bodyArray);
+            }
+        });
 
-    addNewMap(map){
-        this.setState({maps: this.state.maps.concat(map)});
+        event.preventDefault();
     }
 
     /**
@@ -78,9 +79,6 @@ class NewMaps extends React.Component {
     }
 
     render() {
-        let icd_id = this.props.icd_id;
-        let selectedLayer = this.props.selectedLayer;
-        let icd_ids = this.props.icd_ids;
         const parent = this.props.parent;
         let inSearch = (parent === 'search');
         return(

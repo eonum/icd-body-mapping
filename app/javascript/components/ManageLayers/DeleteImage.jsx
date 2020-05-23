@@ -17,8 +17,8 @@ class DeleteImage extends React.Component {
         $.getJSON('/api/v1/layers')
             .then(response => this.setState({
                 allImages: response.sort((a, b) => {
-                  var nameA = a.name.toUpperCase();
-                  var nameB = b.name.toUpperCase();
+                  var nameA = (a.ebene + ": " + a.name).toUpperCase();
+                  var nameB = (b.ebene + ": " + b.name).toUpperCase();
                   if (nameA < nameB) {
                     return -1;
                   }
@@ -87,7 +87,7 @@ class DeleteImage extends React.Component {
                     onMouseEnter={() => this.setState({mouseOver: elem})}
                     onMouseLeave={() => this.setState({mouseOver: ''})}
                 >
-                    {elem.name}
+                    {elem.ebene}: <span className="text-primary">{elem.name}</span>
                     {(mouseOver === elem) ?
                       <button
                           type="button"

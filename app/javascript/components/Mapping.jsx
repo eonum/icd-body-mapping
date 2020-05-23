@@ -52,6 +52,12 @@ class Mapping extends React.Component {
             }
         }
 
+        if(this.props.editable !== prevProps.editable){
+            this.setState({selectedImages: this.state.selectedMappedImages});
+            this.selectMappedImages(this.state.mappedImages);
+            this.sendIcdToMainUI([], true);
+        }
+
         if (this.props.layerFragmentStack !== prevProps.layerFragmentStack && this.props.showingIcdId === prevProps.showingIcdId) {
             this.selectPngsFromList(this.props.layerFragmentStack);
         }
@@ -197,7 +203,6 @@ class Mapping extends React.Component {
         let activeLayer = this.state.activeLayer
         for (let i = 0; i < mappedImages.length; i++) {
             if (mappedImages[i].ebene === activeLayer) {
-                console.log(mappedImages[i].name);
                 document.getElementById(mappedImages[i].name).style.opacity = '1';
                 selectedImages = selectedImages.concat(mappedImages[i]);
             }
@@ -209,6 +214,7 @@ class Mapping extends React.Component {
             selectedImages: selectedImages, selectedImagesBackup: selectedImages,
             selectedMappedImages: selectedImages
         });
+        
         this.sendIcdToMainUI(selectedImages, false);
     }
 

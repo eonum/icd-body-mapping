@@ -34,7 +34,7 @@ class AddImage extends React.Component {
         return (
             <form
                 onSubmit={(e) => {
-                    this.handleFormSubmit(formFields.name.value, formFields.ebene.value, formFields.img.value);
+                    this.handleFormSubmit(formFields.ebene.value, formFields.name.value, formFields.img.value);
                     e.preventDefault();
                 }}
                 onKeyDown={e => this.handleKeyDown(e)}

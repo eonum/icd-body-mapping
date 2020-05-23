@@ -4,8 +4,13 @@ class Api::V1::MapsController < ApplicationController
   end
 
   def create
-    map = Map.create(map_params)
-    render json: map
+    maps = []
+    params[:maps_list].each do |map_params|
+      map = Map.new(select_permited(map_params))
+      maps << ( map.save ? "OK" : map.errors )
+    end if params[:maps_list]
+
+    render json: maps
   end
 
   def show
@@ -32,15 +37,9 @@ class Api::V1::MapsController < ApplicationController
     Map.destroy(params[:id])
   end
 
-  def update
-    map = Map.find(params[:id])
-    map.update_attributes(map_params)
-    render json: map
-  end
-
   private
 
-  def map_params
-    params.require(:map).permit(:id, :icd_id, :layer_id)
+  def select_permited(map_params)
+    map_params.permit(:id, :icd_id, :layer_id)
   end
 end

@@ -14,8 +14,6 @@ class Api::V1::IcdsController < ApplicationController
     render json: icd
   end
 
-  # PATCH/PUT /icds/1
-  # PATCH/PUT /icds/1.json
   def update
     icd = Icd.find(params[:id])
     icd.update(icd_params)
@@ -29,6 +27,6 @@ class Api::V1::IcdsController < ApplicationController
   private
 
   def icd_params
-    params.require(:icd).permit(:code, :version, :text_de, :text_fr, :text_it, :annotationen, :kapitel)
+    params.require(:icd).permit(:code, :text_de, :text_fr, :text_it, :annotationen, :kapitel, :code_kapitel, :kapitel_name_de, :kapitel_name_fr, :kapitel_name_it, :kapitel_roemisch)
   end
 end
