@@ -196,45 +196,20 @@ class LayerList extends React.Component {
 
         const empty = (<></>);
 
-
-        const showButton = (
-          <button
-              type="button"
-              className="btn btn-default p-0 m-0 shadow-none text-primary"
-              onClick={this.showFrags.bind(this, true)}
-              title="hide Layers"
-          >
-              <KeyboardArrowLeftIcon/>
-          </button>
-        );
-        const hideButton = (
-          <button
-              type="button"
-              className="btn btn-default p-0 m-0 shadow-none text-primary"
-              onClick={this.showFrags.bind(this, false)}
-              title="show Layers"
-          >
-              <KeyboardArrowDownIcon/>
-          </button>
-        );
         const displayLayerFrags = layers.map((layer, index) => {
             if (layer.ebene === activeLayer) {
-                return <div key={index}>
-                    <div className="dropdown list-group-item-action mb-1 border rounded" style={topStyle}>
-                        <div className="ml-4 mr-2 text-left">
-                            <span className="font-weight-normal text-secondary">Details: </span>
-                            <span className="font-weight-bold text-primary">{layer.ebene}</span>
-                        </div>
-                        <div className="text-left" style={showHideStyle}>
-                            <button
-                                type="button"
-                                className={(this.props.showFrags === false) ? bootstrapButtonDisabled : bootstrapButtonEnabled}
-                                onClick={this.showFrags.bind(this, !(showFrags))}
-                                title="hide Layers"
-                            >
-                                {showFrags ? <KeyboardArrowDownIcon/> : <KeyboardArrowLeftIcon/>}
-                            </button>
-                        </div>
+                return <div key={index} className="list-group d-inline">
+                    <div className="list-group-item-action mb-1 pl-4 pr-2 border rounded" style={topStyle}>
+                        <span className="font-weight-normal align-middle text-secondary">Details: </span>
+                        <span className="font-weight-bold align-middle text-primary">{layer.ebene}</span>
+                        <button
+                            type="button"
+                            className={(this.props.showFrags === false) ? bootstrapButtonDisabled : bootstrapButtonEnabled}
+                            style={floatRightStyle}
+                            onClick={this.showFrags.bind(this, !(showFrags))}
+                        >
+                            {showFrags ? <KeyboardArrowDownIcon/> : <KeyboardArrowLeftIcon/>}
+                        </button>
                     </div>
                     <div className="ml-4">
                         { showFrags ?

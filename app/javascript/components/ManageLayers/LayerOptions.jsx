@@ -55,7 +55,7 @@ class LayerOptions extends React.Component {
 
         return (
             <div className="p-2 pr-4">
-                <div className="m-2">
+                <div className="m-0">
                     {this.state.add ?
                         <AddImage
                             callbackFromMapping={this.callbackallImages}
