@@ -21,6 +21,7 @@ class DetailsCard extends React.Component {
     componentDidUpdate(prevProps) {
         if (this.props.selectedIcd !== prevProps.selectedIcd) {
             this.props.callbackFromMainUI(this.props.selectedIcd.id);
+            this.setState({annotationen: this.props.selectedIcd.annotationen});
         }
     }
 

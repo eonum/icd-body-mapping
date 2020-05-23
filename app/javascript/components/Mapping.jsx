@@ -48,6 +48,7 @@ class Mapping extends React.Component {
                 this.setState({mappedImages: mappedImages});
                 this.selectMappedImages(mappedImages);
                 this.selectMappedLayers(mappedImages);
+                console.log("Change" + mappedImages);
             } else {
                 this.setState({selectedImages: [], selectedImagesBackup: [], mappedImages: [],
                     selectedMappedImages: [], mappedLayers: []});
@@ -58,7 +59,7 @@ class Mapping extends React.Component {
         if(this.props.editable !== prevProps.editable){
             this.setState({selectedImages: this.state.selectedMappedImages});
             this.selectMappedImages(this.state.mappedImages);
-            this.sendIcdToMainUI([], true);
+            this.sendIcdToMainUI([], true, []);
         }
 
         if (this.props.layerFragmentStack !== prevProps.layerFragmentStack && this.props.showingIcdId === prevProps.showingIcdId) {
@@ -69,7 +70,7 @@ class Mapping extends React.Component {
             setTimeout(() => {
                 $.getJSON('api/v1/maps')
                     .then(response => this.setState({maps: response}))
-            }, 2000);
+            }, 1500);
         }
         if (this.state.maps !== prevState.maps){
             let mappedImages = this.getImagesFromMaps(this.props.showingIcdId);
@@ -126,7 +127,10 @@ class Mapping extends React.Component {
      * like the details card can access it.
      * @param image holds the layer_id of an image
      */
-    sendIcdToMainUI(image, selectedFromMapping) {
+    sendIcdToMainUI(image, selectedFromMapping, mappedImages) {
+        for (let i = 0; i < mappedImages.length; i ++){
+            image = image.filter((image) => image.name !== mappedImages[i].name);
+        }
         this.props.callbackFromMainUI(image, selectedFromMapping);
     }
 
@@ -206,8 +210,11 @@ class Mapping extends React.Component {
         let activeLayer = this.state.activeLayer
         for (let i = 0; i < mappedImages.length; i++) {
             if (mappedImages[i].ebene === activeLayer) {
-                document.getElementById(mappedImages[i].name).style.opacity = '1';
-                selectedImages = selectedImages.concat(mappedImages[i]);
+                let myImg = document.getElementById(mappedImages[i].name);
+                if (myImg !== null){
+                    myImg.style.opacity = '1';
+                    selectedImages = selectedImages.concat(mappedImages[i]);
+                }
             }
         }
         if (selectedImages.length === 0) {
@@ -218,7 +225,7 @@ class Mapping extends React.Component {
             selectedMappedImages: selectedImages
         });
 
-        this.sendIcdToMainUI(selectedImages, false);
+        this.sendIcdToMainUI([], false, []);
     }
 
     selectMappedLayers(mappedImages){
@@ -269,7 +276,7 @@ class Mapping extends React.Component {
                             }
                         }
                         this.setState({selectedImages: selectedImages, selectedImagesBackup: selectedImages});
-                        this.sendIcdToMainUI(selectedImages, true);
+                        this.sendIcdToMainUI(selectedImages, true, this.state.selectedMappedImages);
                     }
                 }
                 context.clearRect(0, 0, canvas.width, canvas.height);
@@ -302,17 +309,20 @@ class Mapping extends React.Component {
         let elem = this.state.allImages;
         let frags = layerFragmentList;
         let selectedImages = this.state.selectedMappedImages;
+        let nonMapped = [];
 
         for (let x = 0; x < frags.length; x++) {
             for (let i = 0; i < elem.length; i++) {
                 if (frags[x].name === elem[i].name) {
-                    selectedImages = selectedImages.concat(elem[i]);
+                    nonMapped = nonMapped.concat(elem[i]);
+                    i = elem.length;
                 }
             }
         }
+        selectedImages = selectedImages.concat(nonMapped);
 
         this.setState({selectedImages: selectedImages, selectedImagesBackup: selectedImages});
-        this.sendIcdToMainUI(selectedImages, false);
+        this.sendIcdToMainUI(nonMapped, false, []);
     }
 
     /**
@@ -378,7 +388,11 @@ class Mapping extends React.Component {
             this.setState({
                 mapView: true,
             });
+            setTimeout(() => {
+                this.selectMappedImages(this.state.mappedImages)
+            });
             this.props.callbackFromMainUIMinimizeLayerList(true);
+
         } else {
             this.setState({
                 mapView: false,

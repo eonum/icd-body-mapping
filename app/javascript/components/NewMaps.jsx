@@ -60,16 +60,17 @@ class NewMaps extends React.Component {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: bodyArray,
-        }).then((map)=>{
-            if (map.ok){
-                this.sendIcdToDetailsCard(bodyArray);
+        }).then((response)=>{
+            if (response.ok){
                 if (this.props.parent === 'search') {
                     this.props.callbackFromSearchCard(false);
                 }
                 this.setState({buttonColor: 'btn btn-success'});
+                if (response.success){
+                    this.sendIcdToDetailsCard(bodyArray);
+                }
             }
-        });
-
+        })
         event.preventDefault();
     }
 
