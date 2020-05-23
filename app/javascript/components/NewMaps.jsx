@@ -40,6 +40,10 @@ class NewMaps extends React.Component {
         let bodyArray = [];
         let layers = this.state.selectedLayer;
 
+        if (this.props.parent === 'search') {
+            this.props.callbackFromSearchCard(true);
+        }
+
         if (multiMapping) {
             icd_ids = this.props.icd_ids;
         } else {
@@ -59,6 +63,10 @@ class NewMaps extends React.Component {
         }).then((map)=>{
             if (map.ok){
                 this.sendIcdToDetailsCard(bodyArray);
+                if (this.props.parent === 'search') {
+                    this.props.callbackFromSearchCard(false);
+                }
+                this.setState({buttonColor: 'btn btn-success'});
             }
         });
 
@@ -73,9 +81,10 @@ class NewMaps extends React.Component {
             icd_id: this.props.icd_id,
             icd_ids: this.props.icd_ids,
             selectedLayer: this.props.selectedLayer,
-            buttonColor: 'btn btn-success'
         });
-        this.props.callbackFromMainUIUpdateList();
+        if (this.props.parent === 'details') {
+            this.props.callbackFromMainUIUpdateList();
+        }
     }
 
     render() {
