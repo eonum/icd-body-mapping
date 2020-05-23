@@ -3,6 +3,8 @@ import $ from "jquery";
 import DeleteIcon from '@material-ui/icons/Delete';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
+import loadingGif from '../../../assets/images/Preloader_2.gif'
+
 
 class DeleteImage extends React.Component {
     constructor(props) {
@@ -12,6 +14,7 @@ class DeleteImage extends React.Component {
             layers: [],
             mouseOver: '',
             showLayer: '',
+            load: true,
         };
         this.handleDelete = this.handleDelete.bind(this);
         this.deleteImage = this.deleteImage.bind(this);
@@ -33,11 +36,15 @@ class DeleteImage extends React.Component {
                 })
             }));
         $.getJSON('/api/v1/all/layers')
-            .then(response => this.setState({layers: response}));
+            .then(response => this.setState({
+              layers: response,
+              load: false,
+            }));
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.image !== prevProps.image){
+            this.setState({load: true});
             setTimeout(() => {
                 $.getJSON('/api/v1/layers')
                     .then(response => this.setState({
@@ -54,6 +61,7 @@ class DeleteImage extends React.Component {
                         })
                     }));
             });
+            this.setState({load: false});
         }
     }
 
@@ -65,6 +73,7 @@ class DeleteImage extends React.Component {
         const deletion = confirm('Do you want to delete ' + image.name);
 
         if (deletion) {
+            this.setState({load: true});
             fetch(`http://localhost:3000/api/v1/layers/${id}`,
                 {
                     method: 'DELETE',
@@ -81,6 +90,7 @@ class DeleteImage extends React.Component {
         let newImages = this.state.allImages.filter((image) => image.id !== id);
         this.setState({allImages: newImages});
         this.props.callbackDeleteFromMapping(id);
+        this.setState({load: false});
     }
 
     showImages(layer, visible) {
@@ -100,6 +110,7 @@ class DeleteImage extends React.Component {
         const layers = this.state.layers;
         const images = this.state.allImages;
         const showLayer = this.state.showLayer;
+        const loading = this.state.load;
         let imgsOfLayer = [];
         let imgsVisible = false;
 
@@ -109,6 +120,31 @@ class DeleteImage extends React.Component {
         const floatRightStyle = {
             float: 'right'
         }
+
+        const loadingImgStyle = {
+            zIndex: 100,
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            width: '50px',
+            height: '50px',
+            marginTop: '-25px',
+            marginLeft: '-25px',
+        }
+        const loadingDivStyle = {
+            zIndex: 99,
+            top: '0%',
+            left: '0%',
+            height: '100%',
+            width: '100%',
+            position: 'absolute',
+            backgroundColor: 'rgba(255,255,255,0.7)',
+        }
+        const loadingImg = (
+            <div style={loadingDivStyle}>
+                <img src={loadingGif} style={loadingImgStyle}/>
+            </div>
+        )
 
         const displayLayerImages = layers.map((layer, index) => {
             imgsVisible = (layer.ebene === showLayer);
@@ -163,6 +199,7 @@ class DeleteImage extends React.Component {
 
         return (
             <div>
+                {loading ? loadingImg : null}
                 {displayLayerImages}
             </div>
         );
