@@ -47,7 +47,8 @@ class Mapping extends React.Component {
                 this.selectMappedImages(mappedImages);
                 this.selectMappedLayers(mappedImages);
             } else {
-                this.setState({selectedImages: [], selectedImagesBackup: []});
+                this.setState({selectedImages: [], selectedImagesBackup: [], mappedImages: [],
+                    selectedMappedImages: [], mappedLayers: []});
                 this.selectAll(true);
             }
         }
