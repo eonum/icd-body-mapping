@@ -391,13 +391,13 @@ class Mapping extends React.Component {
             setTimeout(() => {
                 this.selectMappedImages(this.state.mappedImages)
             });
-            this.props.callbackFromMainUIMinimizeLayerList(true);
+            this.props.callbackFromMainUIMinimizeLayerList(false);
 
         } else {
             this.setState({
                 mapView: false,
             });
-            this.props.callbackFromMainUIMinimizeLayerList(false);
+            this.props.callbackFromMainUIMinimizeLayerList(true);
         }
     }
 

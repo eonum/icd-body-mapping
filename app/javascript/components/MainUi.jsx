@@ -41,6 +41,7 @@ class MainUI extends React.Component {
             selectionFromMapping: false,
             updateList: false,
             showFrags: true,
+            mapView: true,
         };
     }
 
@@ -127,7 +128,10 @@ class MainUI extends React.Component {
     };
 
     callbackMappingMinimizeLayerList = (minimize) => {
-        this.setState({showFrags: minimize});
+        this.setState({
+            showFrags: !minimize,
+            mapView: !minimize,
+        });
     };
 
     callbackDetails = (showingIcdIdFromDetails) => {
@@ -281,6 +285,7 @@ class MainUI extends React.Component {
                 selectionFromMapping={this.state.selectionFromMapping}
                 updateList={this.state.updateList}
                 showFrags={this.state.showFrags}
+                mapView={this.state.mapView}
             />
         )
 

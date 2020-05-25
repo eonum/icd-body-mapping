@@ -18,7 +18,7 @@ class LayerList extends React.Component {
             fragments: [],
             maps: [],
             mappedFragments: [],
-            showFrags: true,
+            showFrags: false,
             checkedFrags: [],
             mouseOver: '',
             load: true,
@@ -53,6 +53,9 @@ class LayerList extends React.Component {
                   this.setState({load: false});
               }
             });
+        if (this.props.mapView === true) {
+            this.setState({showFrags: true});
+        }
     }
 
     componentDidUpdate(prevProps) {
@@ -94,6 +97,11 @@ class LayerList extends React.Component {
         if (this.props.needUpdate !== prevProps.needUpdate) {
             this.setState({
                 activeLayer: 'Gehirn Längsschnitt',
+            });
+        }
+        if (this.props.mapView !== prevProps.mapView) {
+            this.setState({
+                showFrags: (this.props.showFrags && this.props.mapView),
             });
         }
     }
