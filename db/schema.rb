@@ -10,28 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_08_143803) do
+ActiveRecord::Schema.define(version: 2020_05_23_134701) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "icds", force: :cascade do |t|
     t.string "code", null: false
-    t.string "version", null: false
     t.string "text_de", null: false
     t.string "text_fr", null: false
     t.string "text_it", null: false
     t.text "annotationen"
     t.integer "kapitel", limit: 2
     t.string "code_kapitel"
+    t.string "kapitel_name_de"
+    t.string "kapitel_name_fr"
+    t.string "kapitel_name_it"
+    t.string "kapitel_roemisch"
   end
 
   create_table "layers", force: :cascade do |t|
     t.string "ebene", null: false
     t.string "name", null: false
     t.string "img", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "maps", force: :cascade do |t|

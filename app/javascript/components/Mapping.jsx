@@ -87,7 +87,13 @@ class Mapping extends React.Component {
         if (this.props.needUpdate !== prevProps.needUpdate) {
             this.setState({
                 activeLayer: 'Gehirn Längsschnitt',
+                mappedImage: [],
+                mappedLayers: [],
+                selectedImage: [],
+                selectedImagesBackup: [],
+                selectedMappedImages: [],
             });
+            this.selectMappedImages([]);
         }
     }
 
@@ -388,10 +394,10 @@ class Mapping extends React.Component {
         const editable = this.props.editable;
         const mapView = this.state.mapView;
 
-        const bootstrapSelectedMapButton = "col-6 border border-primary bg-primary rounded-left text-white p-0 pl-2 pr-2 font-weight-bold";
-        const bootstrapSelectedListButton = "col-6 border border-primary bg-primary rounded-right text-white p-0 pl-2 pr-2 font-weight-bold";
-        const bootstrapUnselectedMapButton = "col-6 border border-primary rounded-left text-primary p-0 pl-2 pr-2";
-        const bootstrapUnselectedListButton = "col-6 border border-primary rounded-right text-primary p-0 pl-2 pr-2";
+        const bootstrapSelectedMapButton = "col-10 border border-primary bg-primary rounded-left text-white p-0 pl-2 pr-2 font-weight-bold";
+        const bootstrapSelectedListButton = "col-10 border border-primary bg-primary rounded-right text-white p-0 pl-2 pr-2 font-weight-bold";
+        const bootstrapUnselectedMapButton = "col-10 border border-primary rounded-left text-primary p-0 pl-2 pr-2";
+        const bootstrapUnselectedListButton = "col-10 border border-primary rounded-right text-primary p-0 pl-2 pr-2";
 
         let alleElemente = this.state.allImages.map((elem, index) => {
             if (elem.ebene === activeLayer) {
@@ -433,14 +439,14 @@ class Mapping extends React.Component {
         );
 
         const viewButton = (
-            <div className="row mr-4 text-center">
+            <div className="row mr-5 text-center">
                 <div
                     className={mapView ? bootstrapSelectedMapButton : bootstrapUnselectedMapButton}
                     type="button"
                     style={dropdownStyle}
                     onClick={this.changeViewTo.bind(this, 'map')}
                 >
-                    map
+                    edit mapping
                 </div>
                 <div
                     className={mapView ? bootstrapUnselectedListButton : bootstrapSelectedListButton}
@@ -448,7 +454,7 @@ class Mapping extends React.Component {
                     style={dropdownStyle}
                     onClick={this.changeViewTo.bind(this, 'list')}
                 >
-                    list
+                    edit layers
                 </div>
             </div>
         );

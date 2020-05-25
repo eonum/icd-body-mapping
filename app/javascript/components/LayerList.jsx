@@ -68,7 +68,10 @@ class LayerList extends React.Component {
         if (this.props.needUpdate !== prevProps.needUpdate) {
             this.setState({
                 activeLayer: 'Gehirn Längsschnitt',
+                showFrags: true,
+                checkedFrags: [],
             });
+            console.log(this.state.checkedFrags);
         }
     }
 

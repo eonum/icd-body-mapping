@@ -266,6 +266,8 @@ class MainUI extends React.Component {
                 callbackFromMainUISelectPngs={this.callbackLayerListSelectPngs}
                 callbackFromMainUIDeleteMap={this.callbackLayerListDeleteMap}
                 callbackFromMainUIUpdateListDone={this.callbackUpdateListDone}
+                callbackFromMainUIresetUI={this.resetUI}
+                needUpdate={this.state.needUpdate}
                 activeLayer={this.state.activeLayer}
                 selectedIcd={this.state.selectedIcd}
                 selectedLayer={this.state.selectedLayer}
@@ -333,6 +335,7 @@ class MainUI extends React.Component {
                                 callbackFromMainUI={this.callbackMapping}
                                 callbackFromMainUIActiveLayer={this.callbackMappingActiveLayer}
                                 callbackFromMainUIMinimizeLayerList={this.callbackMappingMinimizeLayerList}
+                                callbackFromMainUIresetUI={this.resetUI}
                                 map={this.state.map}
                                 mapLayerList={this.state.mapLayerList}
                                 showingIcdId={this.state.showingIcdId}
