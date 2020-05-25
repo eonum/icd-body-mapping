@@ -145,14 +145,14 @@ class Topbar extends React.Component {
 
         return (
             <div className="row">
-                <div className="col-2 navbar navbar-light bg-dark text-center">
+                <div className="col-2 navbar navbar-light bg-dark text-left">
                     <button
                         type="button"
-                        className="btn btn-default shadow-none text-white ml-3"
+                        className="btn btn-default p-0 my-auto ml-2 shadow-none text-white"
                         onClick={this.setUIDefault.bind(this)}
                     >
-                        <HomeIcon/>
-                        <img className="ml-4" src={logo} alt="eonum" height="20px"/>
+                        <HomeIcon className="ml-2"/>
+                        <img className="ml-2" src={logo} alt="eonum" height="20px"/>
                     </button>
                 </div>
                 <div className="col-10 navbar navbar-light bg-primary">
