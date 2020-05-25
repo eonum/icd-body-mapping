@@ -260,7 +260,6 @@ class SearchCard extends React.Component {
             height: '100%',
             width: '100%',
             position: 'absolute',
-            height: '86vh',
             backgroundColor: 'rgba(255,255,255,0.7)',
         }
         const loadingImg = (

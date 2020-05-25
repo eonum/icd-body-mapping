@@ -28,6 +28,10 @@ gem 'ransack'
 gem 'react-rails'
 gem 'react_on_rails'
 
+gem 'rspec-rails'
+gem 'factory_bot_rails'
+gem 'database_cleaner'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
