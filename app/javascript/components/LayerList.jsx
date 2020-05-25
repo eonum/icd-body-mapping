@@ -3,6 +3,7 @@ import $ from "jquery";
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import CloseIcon from '@material-ui/icons/Close';
+import loadingGif from '../../assets/images/Preloader_2.gif';
 
 /**
  * The MappingList gets the Mappings corresponding to either, chosen Layers
@@ -17,9 +18,10 @@ class LayerList extends React.Component {
             fragments: [],
             maps: [],
             mappedFragments: [],
-            showFrags: true,
+            showFrags: false,
             checkedFrags: [],
             mouseOver: '',
+            load: true,
         };
         this.handleDelete = this.handleDelete.bind(this)
         this.deleteMap = this.deleteMap.bind(this)
@@ -27,22 +29,48 @@ class LayerList extends React.Component {
 
     componentDidMount() {
         $.getJSON('/api/v1/layers')
-            .then(response => this.setState({fragments: response}));
+            .then(response => this.setState({
+                fragments: response
+            }));
         $.getJSON('/api/v1/all/layers')
-            .then(response => this.setState({layers: response}));
-        if (this.props.selectedIcd !== '') {
-            this.getMapsOfIcd(this.props.selectedIcd);
+            .then(response => {
+              this.setState({
+                  layers: response.sort((a, b) => {
+                      var layerA = a.ebene.toUpperCase();
+                      var layerB = b.ebene.toUpperCase();
+                      if (layerA < layerB) {
+                          return -1;
+                      }
+                      if (layerA > layerB) {
+                          return 1;
+                      }
+                      return 0;
+                  })
+              });
+              if (this.props.selectedIcd !== '') {
+                  this.getMapsOfIcd(this.props.selectedIcd);
+              } else {
+                  this.setState({load: false});
+              }
+            });
+        if (this.props.mapView === true) {
+            this.setState({showFrags: true});
         }
     }
 
     componentDidUpdate(prevProps) {
         if(this.props.selectedIcd !== prevProps.selectedIcd) {
             if (this.props.selectedIcd !== '') {
+                this.setState({load: true});
                 this.getMapsOfIcd(this.props.selectedIcd);
+            } else {
                 this.setState({
-                    checkedFrags: [],
-                });
+                    maps: [],
+                })
             }
+            this.setState({
+                checkedFrags: [],
+            });
             this.props.callbackFromMainUISelectPngs([]);
         }
         if (this.props.selectedLayer !== prevProps.selectedLayer && this.props.selectionFromMapping === true) {
@@ -51,9 +79,10 @@ class LayerList extends React.Component {
             });
         }
         if (this.props.updateList !== prevProps.updateList && this.props.updateList === true) {
+            this.setState({load: true});
             setTimeout(() => {
                 this.getMapsOfIcd(this.props.selectedIcd);
-            }, 700);
+            }, 2000);
             this.setState({
                 checkedFrags: [],
             });
@@ -73,11 +102,19 @@ class LayerList extends React.Component {
             });
             console.log(this.state.checkedFrags);
         }
+        if (this.props.mapView !== prevProps.mapView) {
+            this.setState({
+                showFrags: (this.props.showFrags && this.props.mapView),
+            });
+        }
     }
 
     getMapsOfIcd(icd) {
         $.getJSON('/api/v1/map/' + icd.id)
-            .then(response => this.setState({maps: response}));
+            .then(response => this.setState({
+              maps: response,
+              load: false,
+            }));
     }
 
     selectLayer(layer) {
@@ -128,6 +165,7 @@ class LayerList extends React.Component {
     handleDelete(name){
         let map = this.findMap(name);
         if (map.map_id > 0){
+            this.setState({load: true});
             fetch(`http://localhost:3000/api/v1/maps/${map.map_id}`,
                 {
                     method: 'DELETE',
@@ -148,21 +186,37 @@ class LayerList extends React.Component {
     deleteMap(map){
         let map_id = map.map_id
         let newMaps = this.state.maps.filter((map) => map.map_id !== map_id);
-        this.setState({maps: newMaps});
+        this.setState({
+          maps: newMaps,
+          load: false,
+        });
         this.props.callbackFromMainUIDeleteMap(map);
     }
 
     render() {
         const layers = this.state.layers;
-        const frags = this.state.fragments;
+        let frags = this.state.fragments
+        frags = frags.sort((a, b) => {
+            var nameA = a.name.toUpperCase();
+            var nameB = b.name.toUpperCase();
+            if (nameA < nameB) {
+                return -1;
+            }
+            if (nameA > nameB) {
+                return 1;
+            }
+            return 0;
+        });
         const activeLayer = this.props.activeLayer;
         const maps = this.state.maps;
         const showFrags = this.state.showFrags;
         const editable = this.props.editable;
         const checkedFrags = this.state.checkedFrags;
+        const loading = this.state.load;
         let mouseOver = this.state.mouseOver;
         let mappedFragments = [];
         let checkedFragments = [];
+        let displayLayerFrags = [];
         let mapped = false;
         let showAsSelected = false;
         let mouseOverCurrent = false;
@@ -195,124 +249,123 @@ class LayerList extends React.Component {
 
         const empty = (<></>);
 
-
-        const showButton = (
-          <button
-              type="button"
-              className="btn btn-default p-0 m-0 shadow-none text-primary"
-              onClick={this.showFrags.bind(this, true)}
-              title="hide Layers"
-          >
-              <KeyboardArrowLeftIcon/>
-          </button>
-        );
-        const hideButton = (
-          <button
-              type="button"
-              className="btn btn-default p-0 m-0 shadow-none text-primary"
-              onClick={this.showFrags.bind(this, false)}
-              title="show Layers"
-          >
-              <KeyboardArrowDownIcon/>
-          </button>
-        );
-        const displayLayerFrags = layers.map((layer, index) => {
-            if (layer.ebene === activeLayer) {
-                return <div key={index}>
-                    <div className="dropdown list-group-item-action mb-1 border rounded" style={topStyle}>
-                        <div className="ml-4 mr-2 text-left">
-                            <span className="font-weight-normal text-secondary">Details: </span>
-                            <span className="font-weight-bold text-primary">{layer.ebene}</span>
-                        </div>
-                        <div className="text-left" style={showHideStyle}>
-                            <button
-                                type="button"
-                                className={(this.props.showFrags === false) ? bootstrapButtonDisabled : bootstrapButtonEnabled}
-                                onClick={this.showFrags.bind(this, !(showFrags))}
-                                title="hide Layers"
-                            >
-                                {showFrags ? <KeyboardArrowDownIcon/> : <KeyboardArrowLeftIcon/>}
-                            </button>
-                        </div>
-                    </div>
-                    <div className="ml-4">
-                        { showFrags ?
-                          frags.map((frag) => {
-                            mappedFragments = maps.filter((map) => {
-                                if (frag.name === map.name) {
-                                    return map;
-                                }
-                            });
-                            checkedFragments = checkedFrags.filter((checkedFrag) => {
-                                if (frag.name === checkedFrag.name) {
-                                    return checkedFrag;
-                                }
-                            });
-                            mapped = (mappedFragments.length > 0
-                              && mappedFragments[0].name === frag.name);
-                            showAsSelected = ((mapped) ||
-                                            (checkedFragments.length > 0
-                                              && checkedFragments[0].name === frag.name));
-                            mouseOverCurrent = (mouseOver === frag);
-
-                            if (frag.ebene === layer.ebene) {
-                                if (editable && !mapped) {
-                                    return <div
-                                        type="button"
-                                        className={showAsSelected ? bootstrapMappedLayerEdit : bootstrapUnmappedLayer}
-                                        key={frag.id}
-                                        onClick={this.selectFragments.bind(this, frag, !(showAsSelected))}
-                                        onMouseEnter={this.highlightFragment.bind(this, frag)}
-                                        onMouseLeave={this.setBackToPreviousSelection.bind(this)}
-                                    >
-                                        {frag.name}
-                                        {mouseOverCurrent ?
-                                          <span
-                                              className="pl-2 pr-2 text-white bg-primary font-weight-normal"
-                                              style={floatRightStyle}
-                                          >
-                                              {showAsSelected ? 'unselect' : 'select'}
-                                          </span>
-                                          : null}
-                                    </div>
-                                } else if (editable && mapped) {
-                                    return <div
-                                        type="button"
-                                        className={showAsSelected ? bootstrapMappedLayerEdit : bootstrapUnmappedLayer}
-                                        key={frag.id}
-                                        onClick={() => this.handleDelete(frag.name)}
-                                        onMouseEnter={this.highlightFragment.bind(this, frag)}
-                                        onMouseLeave={this.setBackToPreviousSelection.bind(this)}
-                                    >
-                                        {frag.name}
-                                        {mouseOverCurrent ?
-                                          <span
-                                              className="pl-2 pr-2 text-white bg-danger font-weight-normal"
-                                              style={floatRightStyle}
-                                          >
-                                              delete mapping <CloseIcon />
-                                          </span>
-                                          : null}
-                                    </div>
-                                } else {
-                                    return <div
-                                        className={mapped ? bootstrapMappedLayer : bootstrapUnmappedLayer}
-                                        key={frag.id}
-                                        onMouseEnter={this.highlightFragment.bind(this, frag)}
-                                        onMouseLeave={this.setBackToPreviousSelection.bind(this)}
-                                    >
-                                        {frag.name}
-                                    </div>
-                                }
-                            }
-                          }) : empty }
-                    </div>
+        displayLayerFrags = (
+          <div className="list-group d-inline">
+                <div className="list-group-item-action mb-1 pl-4 pr-2 border rounded" style={topStyle}>
+                    <span className="font-weight-normal align-middle text-secondary">Details: </span>
+                    <span className="font-weight-bold align-middle text-primary">{activeLayer}</span>
+                    <button
+                        type="button"
+                        className={(this.props.showFrags === false) ? bootstrapButtonDisabled : bootstrapButtonEnabled}
+                        style={floatRightStyle}
+                        onClick={this.showFrags.bind(this, !(showFrags))}
+                    >
+                        {showFrags ? <KeyboardArrowDownIcon/> : <KeyboardArrowLeftIcon/>}
+                    </button>
                 </div>
-            }
-        });
+                <div className="ml-4">
+                    { showFrags ?
+                      frags.map((frag) => {
+                        mappedFragments = maps.filter((map) => {
+                            if (frag.name === map.name) {
+                                return map;
+                            }
+                        });
+                        checkedFragments = checkedFrags.filter((checkedFrag) => {
+                            if (frag.name === checkedFrag.name) {
+                                return checkedFrag;
+                            }
+                        });
+                        mapped = (mappedFragments.length > 0
+                          && mappedFragments[0].name === frag.name);
+                        showAsSelected = ((mapped) ||
+                                        (checkedFragments.length > 0
+                                          && checkedFragments[0].name === frag.name));
+                        mouseOverCurrent = (mouseOver === frag);
+
+                        if (frag.ebene === activeLayer) {
+                            if (editable && !mapped) {
+                                return <div
+                                    type="button"
+                                    className={showAsSelected ? bootstrapMappedLayerEdit : bootstrapUnmappedLayer}
+                                    key={frag.id}
+                                    onClick={this.selectFragments.bind(this, frag, !(showAsSelected))}
+                                    onMouseEnter={this.highlightFragment.bind(this, frag)}
+                                    onMouseLeave={this.setBackToPreviousSelection.bind(this)}
+                                >
+                                    {frag.name}
+                                    {mouseOverCurrent ?
+                                      <span
+                                          className="pl-2 pr-2 text-white bg-primary font-weight-normal"
+                                          style={floatRightStyle}
+                                      >
+                                          {showAsSelected ? 'unselect' : 'select'}
+                                      </span>
+                                      : null}
+                                </div>
+                            } else if (editable && mapped) {
+                                return <div
+                                    type="button"
+                                    className={showAsSelected ? bootstrapMappedLayerEdit : bootstrapUnmappedLayer}
+                                    key={frag.id}
+                                    onClick={() => this.handleDelete(frag.name)}
+                                    onMouseEnter={this.highlightFragment.bind(this, frag)}
+                                    onMouseLeave={this.setBackToPreviousSelection.bind(this)}
+                                >
+                                    {frag.name}
+                                    {mouseOverCurrent ?
+                                      <span
+                                          className="pl-2 pr-2 text-white bg-danger font-weight-normal"
+                                          style={floatRightStyle}
+                                      >
+                                          delete mapping <CloseIcon />
+                                      </span>
+                                      : null}
+                                </div>
+                            } else {
+                                return <div
+                                    className={mapped ? bootstrapMappedLayer : bootstrapUnmappedLayer}
+                                    key={frag.id}
+                                    onMouseEnter={this.highlightFragment.bind(this, frag)}
+                                    onMouseLeave={this.setBackToPreviousSelection.bind(this)}
+                                >
+                                    {frag.name}
+                                </div>
+                            }
+                        }
+                      }) : empty }
+                </div>
+            </div>
+        );
+
+        const loadingImgStyle = {
+            zIndex: 100,
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            width: '50px',
+            height: '50px',
+            marginTop: '-25px',
+            marginLeft: '-25px',
+        }
+        const loadingDivStyle = {
+            zIndex: 99,
+            top: '0%',
+            left: '0%',
+            height: '100%',
+            width: '100%',
+            position: 'absolute',
+            backgroundColor: 'rgba(255,255,255,0.7)',
+        }
+        const loadingImg = (
+            <div style={loadingDivStyle}>
+                <img src={loadingGif} style={loadingImgStyle}/>
+            </div>
+        )
 
         return (
             <div style={style}>
+                {loading ? loadingImg : null}
                 {displayLayerFrags}
             </div>
         )

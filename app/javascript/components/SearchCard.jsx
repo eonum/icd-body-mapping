@@ -2,7 +2,7 @@ import React from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 import NewMaps from "./NewMaps";
 import $ from "jquery";
-import loadingGif from '../../assets/images/Preloader_2.gif'
+import loadingGif from '../../assets/images/Preloader_2.gif';
 
 
 /**
@@ -51,6 +51,10 @@ class SearchCard extends React.Component {
         }
     }
 
+    callbackNewMapsLoading = (loading) => {
+        this.setState({load: loading});
+    };
+
     /**
      * Gets the search results from the link '/search?q=' + this.state.term
      * and saves them into the icds array, this will be later passed on to the search results component
@@ -66,7 +70,7 @@ class SearchCard extends React.Component {
                         load: false,
                     })
                 );
-        } else {
+        } else if (!viewAll) {
             $.getJSON('/api/v1/search_' + this.props.language + '?q=' + term)
                 .then(async response =>
                     this.setState({
@@ -183,7 +187,7 @@ class SearchCard extends React.Component {
                 className="btn btn-outline-primary"
                 onClick={this.checkAllIcds.bind(this)}
             >
-                select all
+                Select All
             </button>
         );
         const mapButton = (
@@ -192,6 +196,7 @@ class SearchCard extends React.Component {
                 icd_ids={selection}
                 selectedLayer={selectedLayer}
                 callbackFromDetailsCard={this.props.callbackFromMainUIMaps}
+                callbackFromSearchCard={this.callbackNewMapsLoading}
                 parent={'search'}
             />
         );
@@ -218,7 +223,7 @@ class SearchCard extends React.Component {
                 <a type="button"
                    className="btn btn-light text-primary"
                    onClick={this.viewIcd.bind(this, icd)}>
-                    view details
+                    View Details
                 </a>
             </div>
         ));
@@ -231,7 +236,7 @@ class SearchCard extends React.Component {
                     style={viewAllButtonStyle}
                     onClick={this.viewAllSearchResults.bind(this)}
             >
-                view all
+                View All
             </button>
         );
 

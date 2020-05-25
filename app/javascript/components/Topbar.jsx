@@ -20,13 +20,16 @@ class Topbar extends React.Component {
             term: '',
             viewAll: this.props.viewAll,
             activeLanguage: 'de',
+
         };
         this.timeout = 0;
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.viewAll !== prevProps.viewAll) {
-            this.setViewAll(this.props.viewAll);
+        if (this.props.viewAll !== prevProps.viewAll
+          && this.props.searchDisplayed !== prevProps.searchDisplayed
+          && this.props.searchDisplayed === true) {
+            this.setSearchTerm(this.state.term, this.props.viewAll);
         }
     }
 
@@ -46,21 +49,18 @@ class Topbar extends React.Component {
      * via callback function
      */
 
-    setSearchTerm(term) {
-        this.setState({term: term});
-        this.setViewAll(false);
+    setSearchTerm(term, viewAll) {
+        this.props.callbackFromMainUIViewAll(viewAll);
+        this.setState({
+            term: term,
+            viewAll: viewAll
+        });
+
         if (this.timeout) clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
             this.props.callbackFromMainUISearch(term);
         }, 300);
-    }
-
-    setViewAll(viewAll) {
-        this.setState({
-            viewAll: viewAll
-        });
         event.preventDefault();
-        this.props.callbackFromMainUIViewAll(viewAll);
     }
 
     setEditMode(edit) {
@@ -145,25 +145,25 @@ class Topbar extends React.Component {
 
         return (
             <div className="row">
-                <div className="col-2 navbar navbar-light bg-dark text-center">
+                <div className="col-2 navbar navbar-light bg-dark text-left">
                     <button
                         type="button"
-                        className="btn btn-default shadow-none text-white ml-3"
+                        className="btn btn-default p-0 my-auto ml-2 shadow-none text-white"
                         onClick={this.setUIDefault.bind(this)}
                     >
-                        <HomeIcon/>
-                        <img className="ml-4" src={logo} alt="eonum" height="20px"/>
+                        <HomeIcon className="ml-2"/>
+                        <img className="ml-2" src={logo} alt="eonum" height="20px"/>
                     </button>
                 </div>
                 <div className="col-10 navbar navbar-light bg-primary">
                     <form ref={form => this.searchForm = form}>
                         <FormControl
                             onChange={event => {
-                                this.setSearchTerm(event.target.value)
+                                this.setSearchTerm(event.target.value, false)
                             }}
                             onKeyDown={event => {
                                 if (event.key === 'Enter') {
-                                    this.setViewAll(true)
+                                    this.setSearchTerm(event.target.value, true)
                                 }
                             }}
                             type="text"
@@ -175,7 +175,7 @@ class Topbar extends React.Component {
                         type="button"
                         className="btn btn-default text-white ml-2"
                         onClick={event => {
-                            this.setViewAll(true)
+                            this.setSearchTerm(this.state.term, true)
                         }}
                     >
                         <SearchIcon/>

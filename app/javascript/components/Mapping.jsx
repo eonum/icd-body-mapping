@@ -1,6 +1,8 @@
 import React from 'react';
 import $ from "jquery";
-import LayerOptions from './ManageLayers/LayerOptions'
+import LayerOptions from './ManageLayers/LayerOptions';
+import loadingGif from '../../assets/images/Preloader_2.gif';
+
 
 /**
  * The Mapping component is one that displays the individual layers,
@@ -46,10 +48,20 @@ class Mapping extends React.Component {
                 this.setState({mappedImages: mappedImages});
                 this.selectMappedImages(mappedImages);
                 this.selectMappedLayers(mappedImages);
+                console.log("Change" + mappedImages);
             } else {
-                this.setState({selectedImages: [], selectedImagesBackup: []});
+                this.setState({
+                    selectedImages: [], selectedImagesBackup: [], mappedImages: [],
+                    selectedMappedImages: [], mappedLayers: []
+                });
                 this.selectAll(true);
             }
+        }
+
+        if (this.props.editable !== prevProps.editable) {
+            this.setState({selectedImages: this.state.selectedMappedImages});
+            this.selectMappedImages(this.state.mappedImages);
+            this.sendIcdToMainUI([], true, []);
         }
 
         if (this.props.layerFragmentStack !== prevProps.layerFragmentStack && this.props.showingIcdId === prevProps.showingIcdId) {
@@ -60,9 +72,9 @@ class Mapping extends React.Component {
             setTimeout(() => {
                 $.getJSON('api/v1/maps')
                     .then(response => this.setState({maps: response}))
-            }, 2000);
+            }, 1500);
         }
-        if (this.state.maps !== prevState.maps){
+        if (this.state.maps !== prevState.maps) {
             let mappedImages = this.getImagesFromMaps(this.props.showingIcdId);
             this.setState({mappedImages: mappedImages});
             this.selectMappedImages(mappedImages);
@@ -97,6 +109,38 @@ class Mapping extends React.Component {
         }
     }
 
+    callbackallImages = (layer) => {
+        this.setState({allImages: this.state.allImages.concat(layer)});
+        setTimeout(() => {
+            $.getJSON('/api/v1/layers')
+                .then(response => this.setState({allImages: response}));
+            $.getJSON('/api/v1/all/layers')
+                .then(response => this.setState({layers: response}));
+        });
+    };
+
+    callbackDeleteFromMapping = (id) => {
+        let newImages = this.state.allImages.filter((image) => image.id !== id);
+        this.setState({allImages: newImages});
+        setTimeout(() => {
+            $.getJSON('/api/v1/all/layers')
+                .then(response => this.setState({layers: response}));
+        });
+        console.log('deleted');
+    }
+
+    /**
+     * A method, which sends the chosen image back to the Main Ui, so that other components,
+     * like the details card can access it.
+     * @param image holds the layer_id of an image
+     */
+    sendIcdToMainUI(image, selectedFromMapping, mappedImages) {
+        for (let i = 0; i < mappedImages.length; i ++){
+            image = image.filter((image) => image.name !== mappedImages[i].name);
+        }
+        this.props.callbackFromMainUI(image, selectedFromMapping);
+    }
+
     addNewMap(map) {
         this.setState({maps: this.state.maps.concat(map)});
     }
@@ -108,35 +152,6 @@ class Mapping extends React.Component {
         let newMapped = this.state.mappedImages.filter((image) => image.name !== map.name);
         let newSelectedMap = this.state.selectedMappedImages.filter((image) => image.name !== map.name);
         this.setState({maps: newMaps, selectedImagesBackup: newBackup, mappedImages: newMapped, selectedMappedImages: newSelectedMap});
-    }
-
-    callbackallImages = (layer) => {
-        this.setState({allImages: this.state.allImages.concat(layer)});
-        setTimeout(() => {
-            $.getJSON('/api/v1/layers')
-                .then(response => this.setState({allImages: response}));
-            $.getJSON('/api/v1/all/layers')
-                .then(response => this.setState({layers: response}));
-        });
-
-    };
-
-    callbackDeleteFromMapping = (id) => {
-        let newImages = this.state.allImages.filter((image) => image.id !== id);
-        this.setState({allImages: newImages});
-        setTimeout(() => {
-            $.getJSON('/api/v1/all/layers')
-                .then(response => this.setState({layers: response}));
-        });
-    }
-
-    /**
-     * A method, which sends the chosen image back to the Main Ui, so that other components,
-     * like the details card can access it.
-     * @param image holds the layer_id of an image
-     */
-    sendIcdToMainUI(image, selectedFromMapping) {
-        this.props.callbackFromMainUI(image, selectedFromMapping);
     }
 
     /**
@@ -155,8 +170,7 @@ class Mapping extends React.Component {
      */
     selectLayer(ebene) {
         this.setState({
-            activeLayer: ebene,
-            selectedImages: [],
+            activeLayer: ebene, selectedImages: []
         });
         this.props.callbackFromMainUIActiveLayer(ebene);
         setTimeout(() => {
@@ -203,9 +217,11 @@ class Mapping extends React.Component {
         let activeLayer = this.state.activeLayer
         for (let i = 0; i < mappedImages.length; i++) {
             if (mappedImages[i].ebene === activeLayer) {
-                console.log(mappedImages[i].name);
-                document.getElementById(mappedImages[i].name).style.opacity = '1';
-                selectedImages = selectedImages.concat(mappedImages[i]);
+                let myImg = document.getElementById(mappedImages[i].name);
+                if (myImg !== null){
+                    myImg.style.opacity = '1';
+                    selectedImages = selectedImages.concat(mappedImages[i]);
+                }
             }
         }
         if (selectedImages.length === 0) {
@@ -215,7 +231,8 @@ class Mapping extends React.Component {
             selectedImages: selectedImages, selectedImagesBackup: selectedImages,
             selectedMappedImages: selectedImages
         });
-        this.sendIcdToMainUI(selectedImages, false);
+
+        this.sendIcdToMainUI([], false, []);
     }
 
     selectMappedLayers(mappedImages){
@@ -266,7 +283,7 @@ class Mapping extends React.Component {
                             }
                         }
                         this.setState({selectedImages: selectedImages, selectedImagesBackup: selectedImages});
-                        this.sendIcdToMainUI(selectedImages, true);
+                        this.sendIcdToMainUI(selectedImages, true, this.state.selectedMappedImages);
                     }
                 }
                 context.clearRect(0, 0, canvas.width, canvas.height);
@@ -292,8 +309,27 @@ class Mapping extends React.Component {
             if (selectedImages[i].id === elem.id) {
                 return i;
             }
+        } return false;
+    }
+
+    selectPngsFromList(layerFragmentList) {
+        let elem = this.state.allImages;
+        let frags = layerFragmentList;
+        let selectedImages = this.state.selectedMappedImages;
+        let nonMapped = [];
+
+        for (let x = 0; x < frags.length; x++) {
+            for (let i = 0; i < elem.length; i++) {
+                if (frags[x].name === elem[i].name) {
+                    nonMapped = nonMapped.concat(elem[i]);
+                    i = elem.length;
+                }
+            }
         }
-        return false;
+        selectedImages = selectedImages.concat(nonMapped);
+
+        this.setState({selectedImages: selectedImages, selectedImagesBackup: selectedImages});
+        this.sendIcdToMainUI(nonMapped, false, []);
     }
 
     /**
@@ -318,23 +354,6 @@ class Mapping extends React.Component {
                 }
             }
         }
-    }
-
-    selectPngsFromList(layerFragmentList) {
-        let elem = this.state.allImages;
-        let frags = layerFragmentList;
-        let selectedImages = this.state.selectedMappedImages;
-
-        for (let x = 0; x < frags.length; x++) {
-            for (let i = 0; i < elem.length; i++) {
-                if (frags[x].name === elem[i].name) {
-                    selectedImages = selectedImages.concat(elem[i]);
-                }
-            }
-        }
-
-        this.setState({selectedImages: selectedImages, selectedImagesBackup: selectedImages});
-        this.sendIcdToMainUI(selectedImages, false);
     }
 
     setBackToPreviousSelection() {
@@ -376,12 +395,16 @@ class Mapping extends React.Component {
             this.setState({
                 mapView: true,
             });
-            this.props.callbackFromMainUIMinimizeLayerList(true);
+            setTimeout(() => {
+                this.selectMappedImages(this.state.mappedImages)
+            });
+            this.props.callbackFromMainUIMinimizeLayerList(false);
+
         } else {
             this.setState({
                 mapView: false,
             });
-            this.props.callbackFromMainUIMinimizeLayerList(false);
+            this.props.callbackFromMainUIMinimizeLayerList(true);
         }
     }
 
@@ -389,17 +412,20 @@ class Mapping extends React.Component {
         const rowStyle = {height: '5vh'};
         const divStyle = {position: 'absolute'};
         const dropdownStyle = {height: '30px'};
+        let alleElemente = [];
+        let alleLayers = [];
+
         let {x, y} = this.state;
         let activeLayer = this.state.activeLayer;
         const editable = this.props.editable;
         const mapView = this.state.mapView;
 
-        const bootstrapSelectedMapButton = "col-10 border border-primary bg-primary rounded-left text-white p-0 pl-2 pr-2 font-weight-bold";
-        const bootstrapSelectedListButton = "col-10 border border-primary bg-primary rounded-right text-white p-0 pl-2 pr-2 font-weight-bold";
-        const bootstrapUnselectedMapButton = "col-10 border border-primary rounded-left text-primary p-0 pl-2 pr-2";
-        const bootstrapUnselectedListButton = "col-10 border border-primary rounded-right text-primary p-0 pl-2 pr-2";
+        const bootstrapSelectedMapButton = "col-6 border border-primary bg-primary rounded-left text-white p-0 pl-2 pr-2 font-weight-bold";
+        const bootstrapSelectedListButton = "col-6 border border-primary bg-primary rounded-right text-white p-0 pl-2 pr-2 font-weight-bold";
+        const bootstrapUnselectedMapButton = "col-6 border border-primary rounded-left text-primary p-0 pl-2 pr-2";
+        const bootstrapUnselectedListButton = "col-6 border border-primary rounded-right text-primary p-0 pl-2 pr-2";
 
-        let alleElemente = this.state.allImages.map((elem, index) => {
+        alleElemente = this.state.allImages.map((elem, index) => {
             if (elem.ebene === activeLayer) {
                 return <div key={index}>
                     <img src={elem.img} style={divStyle} id={elem.name} alt='missing images'
@@ -411,7 +437,7 @@ class Mapping extends React.Component {
             }
         });
 
-        let alleLayers = this.state.layers.map((elem, index) => {
+        alleLayers = this.state.layers.map((elem, index) => {
             let mappedLayers = this.state.mappedLayers;
             for (let i = 0; i < mappedLayers.length; i++){
                 if(elem === mappedLayers[i]){
@@ -439,14 +465,14 @@ class Mapping extends React.Component {
         );
 
         const viewButton = (
-            <div className="row mr-5 text-center">
+            <div className="row mr-4 text-center">
                 <div
                     className={mapView ? bootstrapSelectedMapButton : bootstrapUnselectedMapButton}
                     type="button"
                     style={dropdownStyle}
                     onClick={this.changeViewTo.bind(this, 'map')}
                 >
-                    edit mapping
+                    Mapping
                 </div>
                 <div
                     className={mapView ? bootstrapUnselectedListButton : bootstrapSelectedListButton}
@@ -454,7 +480,7 @@ class Mapping extends React.Component {
                     style={dropdownStyle}
                     onClick={this.changeViewTo.bind(this, 'list')}
                 >
-                    edit layers
+                    Edit Layers
                 </div>
             </div>
         );
@@ -471,6 +497,32 @@ class Mapping extends React.Component {
 
         const list = (<LayerOptions callbackFromMapping={this.callbackallImages} callbackDeleteFromMapping={this.callbackDeleteFromMapping}/>)
 
+        const loadingImgStyle = {
+            zIndex: 100,
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            width: '50px',
+            height: '50px',
+            marginTop: '-25px',
+            marginLeft: '-25px',
+        }
+        const loadingDivStyle = {
+            zIndex: 99,
+            top: '0%',
+            left: '0%',
+            height: '100%',
+            width: '100%',
+            position: 'absolute',
+            backgroundColor: 'rgba(255,255,255,0.7)',
+        }
+        const loadingImg = (
+            <div style={loadingDivStyle}>
+                <img src={loadingGif} style={loadingImgStyle}/>
+            </div>
+        )
+        const loading = (alleElemente.length === 0 && mapView);
+
         return (
             <div>
                 <div className="row" style={rowStyle}>
@@ -478,10 +530,11 @@ class Mapping extends React.Component {
                         {mapView ? dropdown : null}
                     </div>
                     <div className="col" />
-                    <div className="col-3">
+                    <div className="col-5">
                         {editable ? viewButton : null}
                     </div>
                 </div>
+                {loading ? loadingImg : null}
                 { mapView ? map : list }
             </div>
         )

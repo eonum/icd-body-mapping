@@ -1,6 +1,6 @@
 import React from 'react';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import loadingGif from '../../assets/images/Preloader_2.gif'
+import loadingGif from '../../assets/images/Preloader_2.gif';
 
 /**
  * The Sidebar gets the database from backend and renders
@@ -82,6 +82,21 @@ class Sidebar extends React.Component {
                 alert('unexpected code structure. ICD code should be of form ***, ***.* or ***.** and have a maximal length of 6 characters.');
             }
         }
+
+        if (this.props.updatedIcd !== prevProps.updatedIcd){
+            this.updateIcd(this.props.updatedIcd);
+        }
+    }
+
+    updateIcd(updatedIcd) {
+        let newIcds = this.allICDs
+        for (let i = 0; i < newIcds.length; i++){
+            if (newIcds[i].id === updatedIcd.id){
+                newIcds[i] = updatedIcd;
+                i = newIcds.length;
+            }
+        }
+        this.allICDs = newIcds;
     }
 
     loadIcds() {

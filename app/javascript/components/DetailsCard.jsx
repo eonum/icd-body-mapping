@@ -21,6 +21,7 @@ class DetailsCard extends React.Component {
     componentDidUpdate(prevProps) {
         if (this.props.selectedIcd !== prevProps.selectedIcd) {
             this.props.callbackFromMainUI(this.props.selectedIcd.id);
+            this.setState({annotationen: this.props.selectedIcd.annotationen});
         }
     }
 
@@ -28,12 +29,12 @@ class DetailsCard extends React.Component {
         this.props.callbackFromMainUI(this.props.selectedIcd.id);
     }
 
-    callbackMaps = (Map) => {
-        this.sendIcdToMainUi(Map);
-    };
-
     sendIcdToMainUi(Map) {
         this.props.callbackFromMainUIMaps(Map);
+    }
+
+    sendIcdToSidebar(icd) {
+        this.props.callbackFromSidebar(icd);
     }
 
     stateIdSet() {
@@ -41,18 +42,8 @@ class DetailsCard extends React.Component {
     }
 
     saveChanges() {
-        let body = JSON.stringify({
-            icd: {
-                id: this.state.selectedIcd.id,
-                code: this.state.selectedIcd.code,
-                version: this.state.selectedIcd.version,
-                text_de: this.state.selectedIcd.text_de,
-                text_fr: this.state.selectedIcd.text_fr,
-                text_it: this.state.selectedIcd.text_it,
-                annotationen: this.state.annotationen,
-                kapitel: this.state.selectedIcd.kapitel
-            }
-        });
+        let icd = this.props.selectedIcd;
+        icd.annotationen = this.state.annotationen;
 
         fetch('http://localhost:3000/api/v1/icds/' + this.state.selectedIcd.id, {
             method: 'PUT',
@@ -60,9 +51,9 @@ class DetailsCard extends React.Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: body,
+            body: JSON.stringify({icd: icd}),
         }).then((response) => {
-            return response.json()
+            if(response.ok){this.props.callbackFromMainUIAnnotationen(icd);}
         });
     }
 
@@ -119,7 +110,7 @@ class DetailsCard extends React.Component {
                             icd_id={selectedIcd.id}
                             icd_ids={[]}
                             selectedLayer={selectedLayer}
-                            callbackFromDetailsCard={this.callbackMaps}
+                            callbackFromDetailsCard={this.props.callbackFromMainUIMaps}
                             callbackFromMainUIUpdateList={this.props.callbackFromMainUIUpdateList}
                             parent={'details'}
                         />

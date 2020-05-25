@@ -21,6 +21,7 @@ class MainUI extends React.Component {
             searchTerm: '',
             buttonTerm: '',
             selectedIcd: '',
+            updatedIcd: '',
             map: '', mapLayerList: 0,
             detailsDisplayed: false,
             searchDisplayed: false,
@@ -40,6 +41,7 @@ class MainUI extends React.Component {
             selectionFromMapping: false,
             updateList: false,
             showFrags: true,
+            mapView: true,
         };
     }
 
@@ -126,7 +128,10 @@ class MainUI extends React.Component {
     };
 
     callbackMappingMinimizeLayerList = (minimize) => {
-        this.setState({showFrags: minimize});
+        this.setState({
+            showFrags: !minimize,
+            mapView: !minimize,
+        });
     };
 
     callbackDetails = (showingIcdIdFromDetails) => {
@@ -204,7 +209,7 @@ class MainUI extends React.Component {
     callbackSearchCardClose = () => {
         this.setState({
             searchDisplayed: false,
-            viewAll: false
+            viewAll: false,
         });
     };
 
@@ -214,6 +219,12 @@ class MainUI extends React.Component {
             selectedIcd: '',
         });
     };
+
+    callbackDetailsAnnotationen = (icd) => {
+        this.setState({
+            updatedIcd: icd
+        });
+    }
 
     callbackUpdateList = () => {
         this.setState({
@@ -251,6 +262,7 @@ class MainUI extends React.Component {
                 selectedLayer={this.state.selectedLayer}
                 editable={this.state.editMode}
                 language={this.state.activeLanguage}
+                callbackFromMainUIAnnotationen={this.callbackDetailsAnnotationen}
                 callbackFromMainUI={this.callbackDetails}
                 callbackFromMainUIMaps={this.callbackDetailsMap}
                 callbackFromMainUIClose={this.callbackDetailsCardClose}
@@ -275,6 +287,7 @@ class MainUI extends React.Component {
                 selectionFromMapping={this.state.selectionFromMapping}
                 updateList={this.state.updateList}
                 showFrags={this.state.showFrags}
+                mapView={this.state.mapView}
             />
         )
 
@@ -303,6 +316,7 @@ class MainUI extends React.Component {
                             <Topbar
                                 editable={this.state.editMode}
                                 viewAll={this.state.viewAll}
+                                searchDisplayed={this.state.searchDisplayed}
                                 callbackFromMainUISearch={this.callbackTopbarSearch}
                                 callbackFromMainUIButton={this.callbackTopbarButtonTerm}
                                 callbackFromMainUIEdit={this.callbackTopbarEdit}
@@ -323,6 +337,7 @@ class MainUI extends React.Component {
                                 style={sidebarStyle}
                                 icdSelectionFromSearch={this.state.icdSelectionFromSearch}
                                 language={this.state.activeLanguage}
+                                updatedIcd={this.state.updatedIcd}
                             />
                         </div>
                         <div className="col-4" style={style}>
