@@ -15,108 +15,184 @@ import Logo from "../../assets/images/favicon.ico";
 class MainUI extends React.Component {
     constructor(props) {
         super(props);
-        this.term = '';
         this.state = {
-            searchedIcds: '',
+            activeLanguage: 'de',
+            activeLayer: 'Gehirn Längsschnitt',
             searchTerm: '',
             buttonTerm: '',
+            searchedIcds: '',
             selectedIcd: '',
             updatedIcd: '',
-            map: '', mapLayerList: 0,
-            detailsDisplayed: false,
-            searchDisplayed: false,
-            selectedLayer: '',
             showingIcdId: 0,
-            editMode: false,
             checkedIcdIds: [],
-            viewAll: false,
-            activeLanguage: 'de',
-            needUpdate: false,
-            hightlightedPng: '',
+            selectedLayer: '',
             selectedLayerFromList: '',
-            activeLayer: 'Gehirn Längsschnitt',
-            icdSelectionFromSearch: false,
+            map: '',
+            mapLayerList: 0,
+            hightlightedPng: '',
             layerFragmentStack: [],
+            needUpdate: false,
+            icdSelectionFromSearch: false,
             addToSelection: false,
             selectionFromMapping: false,
             updateList: false,
+            detailsDisplayed: false,
+            searchDisplayed: false,
+            editMode: false,
+            viewAll: false,
             showFrags: true,
             mapView: true,
         };
     }
 
-    /** Reset UI
+    /**
+     * Reset UI via Home Button
      */
-
     resetUI = () => {
         this.setState({
-            searchedIcds: '',
+            activeLayer: 'Gehirn Längsschnitt',
             searchTerm: '',
+            buttonTerm: '',
+            searchedIcds: '',
             selectedIcd: '',
+            updatedIcd: '',
+            showingIcdId: 0,
+            checkedIcdIds: [],
+            selectedLayer: '',
+            selectedLayerFromList: '',
+            map: '',
+            mapLayerList: 0,
+            hightlightedPng: '',
+            layerFragmentStack: [],
             detailsDisplayed: false,
             searchDisplayed: false,
-            showingIcdId: 0,
             editMode: false,
-            checkedIcdIds: [],
             viewAll: false,
-            activeLayer: 'Gehirn Längsschnitt',
+            icdSelectionFromSearch: false,
+            addToSelection: false,
+            selectionFromMapping: false,
+            updateList: false,
+            showFrags: true,
+            mapView: true,
         });
         if (this.state.needUpdate === true) {
-            this.setState({
-                needUpdate: false
-            });
-
+            this.setState({needUpdate: false});
         } else {
-            this.setState({
-                needUpdate: true
-            });
+            this.setState({needUpdate: true});
         }
-
     };
 
     /**
-     * Gets ICD's and searchterm from search in Topbar
-     * @params searchedIcdsFromTopbar, searchTermFromTopbar
+     * The following callbackmethods are needed for communication of
+     * child components to either another childcomponent or to the parentcomponent
+     * MainUI, after callback the name of the childcomponent using this callback
+     * is indicated and at last the purpose of the callback
+     *
+     * NOTE: the changes of the state variables can affect multiple other components
+     * via props
      */
     callbackTopbarSearch = (searchTermFromTopbar) => {
-        this.term = searchTermFromTopbar;
         this.setState({
             searchTerm: searchTermFromTopbar,
             searchDisplayed: true,
             detailsDisplayed: false,
         });
         if (searchTermFromTopbar === '' || searchTermFromTopbar === null) {
-            this.setState({
-                searchDisplayed: false,
-            });
+            this.setState({searchDisplayed: false});
         }
     };
 
     callbackTopbarButtonTerm = (buttonTermFromTopbar) => {
-        this.setState({
-            buttonTerm: buttonTermFromTopbar
-        });
+        this.setState({buttonTerm: buttonTermFromTopbar});
     };
 
     callbackTopbarEdit = (editable) => {
-        this.setState({
-            editMode: editable
-        });
+        this.setState({editMode: editable});
     };
 
     callbackTopbarSetLang = (lang) => {
+        this.setState({activeLanguage: lang});
+    };
+
+    callbackSidebarSelectIcd = (dataFromSidebar) => {
         this.setState({
-            activeLanguage: lang
+            selectedIcd: dataFromSidebar,
+            detailsDisplayed: true,
+            icdSelectionFromSearch: false,
         });
     };
 
-    callbackViewAll = (viewAll) => {
+    callbackLayerListHighlightPng = (fragment) => {
+        this.setState({hightlightedPng: fragment});
+    };
+
+    callbackLayerlistResetToSelection = () => {
+        this.setState({hightlightedPng: ''});
+    };
+
+    callbackLayerListSelectPngs = (fragments) => {
+        this.setState({layerFragmentStack: fragments});
+    }
+
+    callbackLayerListDeleteMap = (map) => {
+        this.setState({mapLayerList: map});
+    }
+
+    callbackLayerListUpdateListDone = () => {
+        this.setState({updateList: false});
+    };
+
+    callbackDetailsIcdIdForMapping = (showingIcdIdFromDetails) => {
+        this.setState({showingIcdId: showingIcdIdFromDetails});
+    };
+
+    callbackDetailsMap = (Map) => {
+        this.setState({map: Map});
+    };
+
+    callbackDetailsReloadIcds = () => {
+        if (this.state.reloadIcds === true) {
+            this.setState({reloadIcds: false});
+        } else {
+            this.setState({reloadIcds: true});
+        }
+    }
+
+    callbackDetailsUpdatedAnnotations = (icd) => {
+        this.setState({updatedIcd: icd});
+    }
+
+    callbackDetailsUpdateList = () => {
+        this.setState({updateList: true});
+    };
+
+    callbackDetailsCardClose = () => {
         this.setState({
-            viewAll: viewAll
+            detailsDisplayed: false,
+            selectedIcd: '',
         });
     };
 
-    callbackMapping = (selectedLayerFromMapping, selectionFromMapping) => {
+    callbackSearchCardDetails = (dataFromSearchCard) => {
+        this.setState({
+            selectedIcd: dataFromSearchCard,
+            detailsDisplayed: true,
+            icdSelectionFromSearch: true,
+        });
+    };
+
+    callbackSearchCardMapping = (checkedIcdIds) => {
+        this.setState({checkedIcdIds: checkedIcdIds});
+    };
+
+    callbackSearchCardClose = () => {
+        this.setState({
+            searchDisplayed: false,
+            viewAll: false,
+        });
+    };
+
+    callbackMappingSelection = (selectedLayerFromMapping, selectionFromMapping) => {
         this.setState({
             selectedLayer: selectedLayerFromMapping,
             selectionFromMapping: selectionFromMapping,
@@ -134,114 +210,81 @@ class MainUI extends React.Component {
         });
     };
 
-    callbackDetails = (showingIcdIdFromDetails) => {
-        this.setState({showingIcdId: showingIcdIdFromDetails});
-    };
-
-    callbackDetailsMap = (Map) => {
-        this.setState({map: Map});
-    };
-
-    callbackReloadIcds = () => {
-        if (this.state.reloadIcds === true) {
-            this.setState({reloadIcds: false});
-        } else {
-            this.setState({reloadIcds: true});
-        }
-    }
-
-    /**
-     * Gets selected ICD
-     * @params dataFromSidebar
-     */
-    callbackSidebar = (dataFromSidebar) => {
-        this.setState({
-            selectedIcd: dataFromSidebar,
-            detailsDisplayed: true,
-            icdSelectionFromSearch: false,
-        });
-    };
-
-    /**
-     * Gets selected ICD
-     * @params dataFromSearchCard
-     */
-    callbackSearchCardDetails = (dataFromSearchCard) => {
-        this.setState({
-            selectedIcd: dataFromSearchCard,
-            detailsDisplayed: true,
-            icdSelectionFromSearch: true,
-        });
-    };
-
-    callbackSearchCardMapping = (checkedIcdIds) => {
-        this.setState({
-            checkedIcdIds: checkedIcdIds
-        });
-    };
-
-    callbackLayerListSelectLayer = (layer) => {
-        this.setState({
-            selectedLayerFromList: layer,
-        });
-    };
-
-    callbackLayerListHighlightPng = (fragment) => {
-        this.setState({
-            hightlightedPng: fragment,
-        });
-    };
-
-    callbackLayerlistResetSelection = () => {
-        this.setState({
-            hightlightedPng: '',
-        });
-    };
-
-    callbackLayerListSelectPngs = (fragments) => {
-        this.setState({layerFragmentStack: fragments});
-    }
-
-    callbackLayerListDeleteMap = (map) => {
-        this.setState({mapLayerList: map});
-    }
-
-    callbackSearchCardClose = () => {
-        this.setState({
-            searchDisplayed: false,
-            viewAll: false,
-        });
-    };
-
-    callbackDetailsCardClose = () => {
-        this.setState({
-            detailsDisplayed: false,
-            selectedIcd: '',
-        });
-    };
-
-    callbackDetailsAnnotationen = (icd) => {
-        this.setState({
-            updatedIcd: icd
-        });
-    }
-
-    callbackUpdateList = () => {
-        this.setState({
-            updateList: true,
-        });
-    };
-
-    callbackUpdateListDone = () => {
-        this.setState({
-            updateList: false,
-        });
+    callbackViewAll = (viewAll) => {
+        this.setState({viewAll: viewAll});
     };
 
     render() {
+        const style = {
+            height: '86vh',
+            overflow: 'auto'
+        };
+        const sidebarStyle = {
+            width: '20%'
+        };
+
+        const topbar = (
+            <Topbar
+                editable={this.state.editMode}
+                viewAll={this.state.viewAll}
+                searchDisplayed={this.state.searchDisplayed}
+                callbackFromMainUISearch={this.callbackTopbarSearch}
+                callbackFromMainUIButton={this.callbackTopbarButtonTerm}
+                callbackFromMainUIEdit={this.callbackTopbarEdit}
+                callbackFromMainUIViewAll={this.callbackViewAll}
+                callbackFromMainUISetLanguage={this.callbackTopbarSetLang}
+                callbackFromMainUIresetUI={this.resetUI}
+            />
+        );
+        const sidebar = (
+            <Sidebar
+                style={sidebarStyle}
+                editable={this.state.editMode}
+                needUpdate={this.state.needUpdate}
+                reloadIcds={this.state.reloadIcds}
+                selectedIcd={this.state.selectedIcd}
+                icdSelectionFromSearch={this.state.icdSelectionFromSearch}
+                language={this.state.activeLanguage}
+                updatedIcd={this.state.updatedIcd}
+                callbackFromMainUI={this.callbackSidebarSelectIcd}
+            />
+        );
+        const layerList = (
+            <LayerList
+                needUpdate={this.state.needUpdate}
+                activeLayer={this.state.activeLayer}
+                selectedIcd={this.state.selectedIcd}
+                selectedLayer={this.state.selectedLayer}
+                editable={this.state.editMode}
+                selectionFromMapping={this.state.selectionFromMapping}
+                updateList={this.state.updateList}
+                showFrags={this.state.showFrags}
+                mapView={this.state.mapView}
+                callbackFromMainUIHighlight={this.callbackLayerListHighlightPng}
+                callbackFromMainUIResetToSelection={this.callbackLayerlistResetToSelection}
+                callbackFromMainUISelectPngs={this.callbackLayerListSelectPngs}
+                callbackFromMainUIDeleteMap={this.callbackLayerListDeleteMap}
+                callbackFromMainUIUpdateListDone={this.callbackLayerListUpdateListDone}
+            />
+        );
+        const details = (
+            <DetailsCard
+                selectedIcd={this.state.selectedIcd}
+                searchDisplayed={this.state.searchDisplayed}
+                selectedLayer={this.state.selectedLayer}
+                editable={this.state.editMode}
+                language={this.state.activeLanguage}
+                callbackFromMainUIAnnotations={this.callbackDetailsUpdatedAnnotations}
+                callbackFromMainUIIcdIdForMapping={this.callbackDetailsIcdIdForMapping}
+                callbackFromMainUIMaps={this.callbackDetailsMap}
+                callbackFromMainUIClose={this.callbackDetailsCardClose}
+                callbackFromMainUIReloadIcds={this.callbackDetailsReloadIcds}
+                callbackFromMainUIUpdateList={this.callbackDetailsUpdateList}
+            />
+        );
         const searchResults = (
             <SearchCard
-                searchTerm={this.term}
+                searchTerm={this.state.searchTerm}
                 buttonTerm={this.state.buttonTerm}
                 detailsDisplayed={this.state.detailsDisplayed}
                 editable={this.state.editMode}
@@ -255,57 +298,24 @@ class MainUI extends React.Component {
                 callbackFromMainUIMaps={this.callbackDetailsMap}
             />
         );
-        const details = (
-            <DetailsCard
-                selectedIcd={this.state.selectedIcd}
-                searchDisplayed={this.state.searchDisplayed}
-                selectedLayer={this.state.selectedLayer}
-                editable={this.state.editMode}
-                language={this.state.activeLanguage}
-                callbackFromMainUIAnnotationen={this.callbackDetailsAnnotationen}
-                callbackFromMainUI={this.callbackDetails}
-                callbackFromMainUIMaps={this.callbackDetailsMap}
-                callbackFromMainUIClose={this.callbackDetailsCardClose}
-                callbackFromMainUIReloadIcds={this.callbackReloadIcds}
-                callbackFromMainUIUpdateList={this.callbackUpdateList}
-            />
-        );
-        const layerList = (
-            <LayerList
-                callbackFromMainUISelect={this.callbackLayerListSelectLayer}
-                callbackFromMainUIHighlight={this.callbackLayerListHighlightPng}
-                callbackFromMainUIResetToSelection={this.callbackLayerlistResetSelection}
-                callbackFromMainUISelectPngs={this.callbackLayerListSelectPngs}
-                callbackFromMainUIDeleteMap={this.callbackLayerListDeleteMap}
-                callbackFromMainUIUpdateListDone={this.callbackUpdateListDone}
-                callbackFromMainUIresetUI={this.resetUI}
+        const mapping = (
+            <Mapping
+                map={this.state.map}
+                mapLayerList={this.state.mapLayerList}
+                showingIcdId={this.state.showingIcdId}
                 needUpdate={this.state.needUpdate}
-                activeLayer={this.state.activeLayer}
+                selectedLayerFromList={this.state.selectedLayerFromList}
+                hightlightedPng={this.state.hightlightedPng}
+                layerFragmentStack={this.state.layerFragmentStack}
+                addToSelection={this.state.addToSelection}
                 selectedIcd={this.state.selectedIcd}
-                selectedLayer={this.state.selectedLayer}
+                checkedIcdIds={this.state.checkedIcdIds}
                 editable={this.state.editMode}
-                selectionFromMapping={this.state.selectionFromMapping}
-                updateList={this.state.updateList}
-                showFrags={this.state.showFrags}
-                mapView={this.state.mapView}
+                callbackFromMainUISelection={this.callbackMappingSelection}
+                callbackFromMainUIActiveLayer={this.callbackMappingActiveLayer}
+                callbackFromMainUIMinimizeLayerList={this.callbackMappingMinimizeLayerList}
             />
-        )
-
-        const empty = (
-            <></>
         );
-
-        const notVisibleStyle = {
-            height: '0vh',
-        };
-        const style = {
-            height: '86vh',
-            overflow: 'auto'
-        }
-
-        const sidebarStyle = {
-            width: '20%'
-        }
 
         return (
             <div>
@@ -313,56 +323,20 @@ class MainUI extends React.Component {
                 <div className="container-fluid">
                     <div className="row mb-2">
                         <div className="w-100">
-                            <Topbar
-                                editable={this.state.editMode}
-                                viewAll={this.state.viewAll}
-                                searchDisplayed={this.state.searchDisplayed}
-                                callbackFromMainUISearch={this.callbackTopbarSearch}
-                                callbackFromMainUIButton={this.callbackTopbarButtonTerm}
-                                callbackFromMainUIEdit={this.callbackTopbarEdit}
-                                callbackFromMainUIViewAll={this.callbackViewAll}
-                                callbackFromMainUISetLanguage={this.callbackTopbarSetLang}
-                                callbackFromMainUIresetUI={this.resetUI}
-                            />
+                            {topbar}
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-2">
-                            <Sidebar
-                                callbackFromMainUI={this.callbackSidebar}
-                                editable={this.state.editMode}
-                                needUpdate={this.state.needUpdate}
-                                reloadIcds={this.state.reloadIcds}
-                                selectedIcd={this.state.selectedIcd}
-                                style={sidebarStyle}
-                                icdSelectionFromSearch={this.state.icdSelectionFromSearch}
-                                language={this.state.activeLanguage}
-                                updatedIcd={this.state.updatedIcd}
-                            />
+                            {sidebar}
                         </div>
                         <div className="col-4" style={style}>
-                            {this.state.detailsDisplayed ? details : empty}
-                            {this.state.searchDisplayed ? searchResults : empty}
-                            {!(this.state.searchDisplayed) ? layerList : empty}
+                            {this.state.detailsDisplayed ? details : null}
+                            {this.state.searchDisplayed ? searchResults : null}
+                            {!(this.state.searchDisplayed) ? layerList : null}
                         </div>
                         <div className="col-6" style={style}>
-                            <Mapping
-                                callbackFromMainUI={this.callbackMapping}
-                                callbackFromMainUIActiveLayer={this.callbackMappingActiveLayer}
-                                callbackFromMainUIMinimizeLayerList={this.callbackMappingMinimizeLayerList}
-                                callbackFromMainUIresetUI={this.resetUI}
-                                map={this.state.map}
-                                mapLayerList={this.state.mapLayerList}
-                                showingIcdId={this.state.showingIcdId}
-                                needUpdate={this.state.needUpdate}
-                                selectedLayerFromList={this.state.selectedLayerFromList}
-                                hightlightedPng={this.state.hightlightedPng}
-                                layerFragmentStack={this.state.layerFragmentStack}
-                                addToSelection={this.state.addToSelection}
-                                selectedIcd={this.state.selectedIcd}
-                                checkedIcdIds={this.state.checkedIcdIds}
-                                editable={this.state.editMode}
-                            />
+                            {mapping}
                         </div>
                     </div>
                 </div>

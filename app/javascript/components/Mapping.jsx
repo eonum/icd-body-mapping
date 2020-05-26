@@ -138,7 +138,7 @@ class Mapping extends React.Component {
         for (let i = 0; i < mappedImages.length; i ++){
             image = image.filter((image) => image.name !== mappedImages[i].name);
         }
-        this.props.callbackFromMainUI(image, selectedFromMapping);
+        this.props.callbackFromMainUISelection(image, selectedFromMapping);
     }
 
     addNewMap(map) {
