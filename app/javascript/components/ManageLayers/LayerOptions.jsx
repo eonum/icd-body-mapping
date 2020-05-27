@@ -30,12 +30,11 @@ class LayerOptions extends React.Component {
     };
 
     addView() {
-        this.setState({
-            add: true,
-        });
+        this.setState({add: true});
     }
 
     render() {
+        // Component Parts
         const addButton = (
             <button
                 type="button"
@@ -48,20 +47,26 @@ class LayerOptions extends React.Component {
                 <AddIcon/>
             </button>
         );
+        const submitNewImageForm = (
+            <AddImage
+                callbackFromMapping={this.callbackallImages}
+                style="z-index: 5"
+            />
+        );
+        const imagesList = (
+            <DeleteImage
+                style="z-index: 5"
+                callbackDeleteFromMapping={this.props.callbackDeleteFromMapping}
+                image={this.state.image}
+            />
+        );
 
         return (
             <div className="p-2 pr-4">
                 <div className="m-0">
-                    {this.state.add ?
-                        <AddImage
-                            callbackFromMapping={this.callbackallImages}
-                            style="z-index: 5"
-                        />
-                        :
-                        addButton
-                    }
+                    {this.state.add ? submitNewImageForm :  addButton}
                 </div>
-                <DeleteImage style="z-index: 5" callbackDeleteFromMapping={this.props.callbackDeleteFromMapping} image={this.state.image}/>
+                {imagesList}
             </div>
         )
     }

@@ -5,7 +5,6 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import loadingGif from '../../../assets/images/Preloader_2.gif';
 
-
 class DeleteImage extends React.Component {
     constructor(props) {
         super(props);
@@ -33,9 +32,6 @@ class DeleteImage extends React.Component {
                 this.getLayers();
             });
         }
-    }
-
-    componentWillUnmount() {
     }
 
     getImages() {
@@ -77,7 +73,7 @@ class DeleteImage extends React.Component {
                     if (response.ok){
                         this.deleteImage(id);
                     }
-            })
+                })
         }
     }
 
@@ -90,17 +86,14 @@ class DeleteImage extends React.Component {
 
     showImages(layer, visible) {
         if (visible) {
-            this.setState({
-                showLayer: '',
-            });
+            this.setState({showLayer: ''});
         } else {
-            this.setState({
-                showLayer: layer,
-            });
+            this.setState({showLayer: layer});
         }
     }
 
     render() {
+        // Variables
         const mouseOver = this.state.mouseOver;
         const layers = this.state.layers;
         const images = this.state.allImages;
@@ -109,13 +102,13 @@ class DeleteImage extends React.Component {
         let imgsOfLayer = [];
         let imgsVisible = false;
 
+        // Styles
         const topStyle = {
             height: '25px',
-        }
+        };
         const floatRightStyle = {
             float: 'right'
-        }
-
+        };
         const loadingImgStyle = {
             zIndex: 100,
             position: 'fixed',
@@ -125,7 +118,7 @@ class DeleteImage extends React.Component {
             height: '50px',
             marginTop: '-25px',
             marginLeft: '-25px',
-        }
+        };
         const loadingDivStyle = {
             zIndex: 99,
             top: '10%',
@@ -134,13 +127,14 @@ class DeleteImage extends React.Component {
             width: '50%',
             position: 'fixed',
             backgroundColor: 'rgba(255,255,255,0.7)',
-        }
+        };
+
+        // Component Parts
         const loadingImg = (
             <div style={loadingDivStyle}>
                 <img src={loadingGif} style={loadingImgStyle}/>
             </div>
-        )
-
+        );
         const displayLayerImages = layers.map((layer, index) => {
             imgsVisible = (layer.ebene === showLayer);
             if (imgsVisible) {
@@ -165,7 +159,7 @@ class DeleteImage extends React.Component {
                     </button>
                 </div>
                 <div className="ml-4">
-                    {(layer.ebene === showLayer) ?
+                    {imgsVisible ?
                       imgsOfLayer.map((elem, index) => {
                         return (
                             <div
