@@ -17,7 +17,6 @@ class Topbar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            query: '',
             term: '',
             viewAll: this.props.viewAll,
             activeLanguage: 'de',
@@ -39,7 +38,6 @@ class Topbar extends React.Component {
     setUIDefault() {
         this.props.callbackFromMainUIresetUI();
         this.setState({
-            query: '',
             term: '',
             viewAll: this.props.viewAll,
         });

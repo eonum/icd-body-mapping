@@ -63,7 +63,7 @@ class Mapping extends React.Component {
             this.sendIcdToMainUI([], true, []);
         }
 
-        if (this.props.layerFragmentStack !== prevProps.layerFragmentStack && this.props.showingIcdId === prevProps.showingIcdId) {
+        if (this.props.layerFragmentStack !== prevProps.layerFragmentStack && this.props.showingIcdId === prevProps.showingIcdId && this.props.map === prevProps.map) {
             this.selectPngsFromList(this.props.layerFragmentStack);
         }
 
@@ -71,7 +71,7 @@ class Mapping extends React.Component {
             setTimeout(() => {
                 $.getJSON('api/v1/maps')
                     .then(response => this.setState({maps: response}))
-            }, 1500);
+            }, 1000);
         }
         if (this.state.maps !== prevState.maps) {
             let mappedImages = this.getImagesFromMaps(this.props.showingIcdId);

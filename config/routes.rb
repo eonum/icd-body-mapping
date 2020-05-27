@@ -3,8 +3,6 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :maps, only: [:index, :create, :destroy, :show]
       get '/map/:id', to: 'maps#show_icd'
-      get '/map/:id/:ebene', to: 'maps#show_layer'
-      get '/map_layers/:id', to: 'maps#show_layers'
 
       resources :layers, only: [:index, :create, :show, :destroy, :update]
       get '/all/layers', to: 'layers#index_images'
