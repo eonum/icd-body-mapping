@@ -3,6 +3,10 @@ require 'rails_helper'
 RSpec.describe Api::V1::MapsController, type: :controller do
 
   before(:all) do
+    @icd1 = FactoryBot.create(:icd)
+    @icd2 = FactoryBot.create(:icd)
+    @lay1 = FactoryBot.create(:layer)
+    @lay2 = FactoryBot.create(:layer)
     @map1 = FactoryBot.create(:map)
     @map2 = FactoryBot.create(:map)
   end

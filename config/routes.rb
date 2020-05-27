@@ -15,8 +15,6 @@ Rails.application.routes.draw do
       get :searchAll_de, controller: :search
       get :searchAll_fr, controller: :search
       get :searchAll_it, controller: :search
-
-      resources :chapter, only: [ :index, :show]
     end
   end
   root 'homepage#index'
