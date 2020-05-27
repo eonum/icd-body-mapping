@@ -116,10 +116,6 @@ class LayerList extends React.Component {
             }));
     }
 
-    selectLayer(layer) {
-        this.props.callbackFromMainUISelect(layer);
-    }
-
     highlightFragment(fragment) {
         this.props.callbackFromMainUIHighlight(fragment);
         this.setState({

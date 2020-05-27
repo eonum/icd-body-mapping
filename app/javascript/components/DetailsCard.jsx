@@ -19,13 +19,13 @@ class DetailsCard extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.selectedIcd !== prevProps.selectedIcd) {
-            this.props.callbackFromMainUI(this.props.selectedIcd.id);
+            this.props.callbackFromMainUIIcdIdForMapping(this.props.selectedIcd.id);
             this.setState({annotationen: this.props.selectedIcd.annotationen});
         }
     }
 
     componentDidMount() {
-        this.props.callbackFromMainUI(this.props.selectedIcd.id);
+        this.props.callbackFromMainUIIcdIdForMapping(this.props.selectedIcd.id);
     }
 
     sendIcdToMainUi(Map) {
@@ -52,13 +52,13 @@ class DetailsCard extends React.Component {
             },
             body: JSON.stringify({icd: icd}),
         }).then((response) => {
-            if(response.ok){this.props.callbackFromMainUIAnnotationen(icd);}
+            if(response.ok){this.props.callbackFromMainUIAnnotations(icd);}
         });
     }
 
     closeDetailsCard() {
         this.props.callbackFromMainUIClose();
-        this.props.callbackFromMainUI(0);
+        this.props.callbackFromMainUIIcdIdForMapping(0);
     }
 
     handleKeyDown(event) {
