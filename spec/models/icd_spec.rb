@@ -6,6 +6,7 @@ RSpec.describe Icd, :type => :model do
 
   subject {
     described_class.new(
+        id: 1,
         code: "A00",
         text_de: "Anything",
         text_fr: "Anything",
@@ -76,6 +77,11 @@ RSpec.describe Icd, :type => :model do
 
   it "is valid without a kapitel_roemisch" do
     subject.kapitel_roemisch = nil
+    expect(subject).to be_valid
+  end
+
+  it "is valid without a id" do
+    subject.id = nil
     expect(subject).to be_valid
   end
 end

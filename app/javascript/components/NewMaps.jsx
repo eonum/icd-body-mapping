@@ -66,11 +66,9 @@ class NewMaps extends React.Component {
                     this.props.callbackFromSearchCard(false);
                 }
                 this.setState({buttonColor: 'btn btn-success'});
-                if (response.success){
-                    this.sendIcdToDetailsCard(bodyArray);
-                }
+                this.sendIcdToDetailsCard(bodyArray);
             }
-        })
+        });
         event.preventDefault();
     }
 

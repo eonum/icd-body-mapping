@@ -12,7 +12,6 @@ class DetailsCard extends React.Component {
         super(props);
         this.state = {
             showingIcdId: 0,
-            showingIcd: 'show',
             selectedIcd: this.props.selectedIcd,
             annotationen: this.props.selectedIcd.annotationen
         };

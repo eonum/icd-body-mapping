@@ -48,21 +48,22 @@ class Mapping extends React.Component {
                 this.setState({mappedImages: mappedImages});
                 this.selectMappedImages(mappedImages);
                 this.selectMappedLayers(mappedImages);
-                console.log("Change" + mappedImages);
             } else {
-                this.setState({selectedImages: [], selectedImagesBackup: [], mappedImages: [],
-                    selectedMappedImages: [], mappedLayers: []});
+                this.setState({
+                    selectedImages: [], selectedImagesBackup: [], mappedImages: [],
+                    selectedMappedImages: [], mappedLayers: []
+                });
                 this.selectAll(true);
             }
         }
 
-        if(this.props.editable !== prevProps.editable){
+        if (this.props.editable !== prevProps.editable) {
             this.setState({selectedImages: this.state.selectedMappedImages});
             this.selectMappedImages(this.state.mappedImages);
             this.sendIcdToMainUI([], true, []);
         }
 
-        if (this.props.layerFragmentStack !== prevProps.layerFragmentStack && this.props.showingIcdId === prevProps.showingIcdId) {
+        if (this.props.layerFragmentStack !== prevProps.layerFragmentStack && this.props.showingIcdId === prevProps.showingIcdId && this.props.map === prevProps.map) {
             this.selectPngsFromList(this.props.layerFragmentStack);
         }
 
@@ -70,9 +71,9 @@ class Mapping extends React.Component {
             setTimeout(() => {
                 $.getJSON('api/v1/maps')
                     .then(response => this.setState({maps: response}))
-            }, 1500);
+            }, 1000);
         }
-        if (this.state.maps !== prevState.maps){
+        if (this.state.maps !== prevState.maps) {
             let mappedImages = this.getImagesFromMaps(this.props.showingIcdId);
             this.setState({mappedImages: mappedImages});
             this.selectMappedImages(mappedImages);
@@ -97,7 +98,13 @@ class Mapping extends React.Component {
         if (this.props.needUpdate !== prevProps.needUpdate) {
             this.setState({
                 activeLayer: 'Gehirn Längsschnitt',
+                mappedImage: [],
+                mappedLayers: [],
+                selectedImage: [],
+                selectedImagesBackup: [],
+                selectedMappedImages: [],
             });
+            this.selectMappedImages([]);
         }
     }
 
@@ -109,7 +116,6 @@ class Mapping extends React.Component {
             $.getJSON('/api/v1/all/layers')
                 .then(response => this.setState({layers: response}));
         });
-
     };
 
     callbackDeleteFromMapping = (id) => {
@@ -119,7 +125,6 @@ class Mapping extends React.Component {
             $.getJSON('/api/v1/all/layers')
                 .then(response => this.setState({layers: response}));
         });
-        console.log('deleted');
     }
 
     /**
@@ -391,13 +396,13 @@ class Mapping extends React.Component {
             setTimeout(() => {
                 this.selectMappedImages(this.state.mappedImages)
             });
-            this.props.callbackFromMainUIMinimizeLayerList(true);
+            this.props.callbackFromMainUIMinimizeLayerList(false);
 
         } else {
             this.setState({
                 mapView: false,
             });
-            this.props.callbackFromMainUIMinimizeLayerList(false);
+            this.props.callbackFromMainUIMinimizeLayerList(true);
         }
     }
 

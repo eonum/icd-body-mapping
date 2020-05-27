@@ -9,7 +9,7 @@ class LayerOptions extends React.Component {
         this.state = {
             add: false,
             isMounted: false,
-            image: ''
+            image: '',
         }
     }
 

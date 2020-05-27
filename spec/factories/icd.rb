@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :icd do
-    id {1}
-    code {"A00"}
+    sequence(:code) { |n| "A0#{n}" }
     text_de { "Anything" }
     text_fr { "Anything" }
     text_it { "Anything" }

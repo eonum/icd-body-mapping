@@ -41,6 +41,7 @@ class MainUI extends React.Component {
             selectionFromMapping: false,
             updateList: false,
             showFrags: true,
+            mapView: true,
         };
     }
 
@@ -127,7 +128,10 @@ class MainUI extends React.Component {
     };
 
     callbackMappingMinimizeLayerList = (minimize) => {
-        this.setState({showFrags: minimize});
+        this.setState({
+            showFrags: !minimize,
+            mapView: !minimize,
+        });
     };
 
     callbackDetails = (showingIcdIdFromDetails) => {
@@ -274,6 +278,8 @@ class MainUI extends React.Component {
                 callbackFromMainUISelectPngs={this.callbackLayerListSelectPngs}
                 callbackFromMainUIDeleteMap={this.callbackLayerListDeleteMap}
                 callbackFromMainUIUpdateListDone={this.callbackUpdateListDone}
+                callbackFromMainUIresetUI={this.resetUI}
+                needUpdate={this.state.needUpdate}
                 activeLayer={this.state.activeLayer}
                 selectedIcd={this.state.selectedIcd}
                 selectedLayer={this.state.selectedLayer}
@@ -281,6 +287,7 @@ class MainUI extends React.Component {
                 selectionFromMapping={this.state.selectionFromMapping}
                 updateList={this.state.updateList}
                 showFrags={this.state.showFrags}
+                mapView={this.state.mapView}
             />
         )
 
@@ -343,6 +350,7 @@ class MainUI extends React.Component {
                                 callbackFromMainUI={this.callbackMapping}
                                 callbackFromMainUIActiveLayer={this.callbackMappingActiveLayer}
                                 callbackFromMainUIMinimizeLayerList={this.callbackMappingMinimizeLayerList}
+                                callbackFromMainUIresetUI={this.resetUI}
                                 map={this.state.map}
                                 mapLayerList={this.state.mapLayerList}
                                 showingIcdId={this.state.showingIcdId}

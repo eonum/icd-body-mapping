@@ -1,8 +1,7 @@
 FactoryBot.define do
   factory :layer do
-    id {1}
     name { "Ohr" }
-    ebene { "Ohr" }
+    sequence(:ebene) { |n| "Ebene#{n}" }
     img { "././images/ohr" }
   end
 end

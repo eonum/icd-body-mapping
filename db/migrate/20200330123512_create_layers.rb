@@ -4,8 +4,6 @@ class CreateLayers < ActiveRecord::Migration[6.0]
       t.string :ebene, null: false
       t.string :name, null: false
       t.string :img, null: false
-
-      t.timestamps
     end
   end
 end

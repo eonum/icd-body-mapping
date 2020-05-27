@@ -118,9 +118,9 @@ class DeleteImage extends React.Component {
 
         const loadingImgStyle = {
             zIndex: 100,
-            position: 'absolute',
+            position: 'fixed',
             top: '50%',
-            left: '50%',
+            left: '75%',
             width: '50px',
             height: '50px',
             marginTop: '-25px',
@@ -128,11 +128,11 @@ class DeleteImage extends React.Component {
         }
         const loadingDivStyle = {
             zIndex: 99,
-            top: '0%',
-            left: '0%',
-            height: '100%',
-            width: '100%',
-            position: 'absolute',
+            top: '10%',
+            left: '50%',
+            height: '90%',
+            width: '50%',
+            position: 'fixed',
             backgroundColor: 'rgba(255,255,255,0.7)',
         }
         const loadingImg = (
