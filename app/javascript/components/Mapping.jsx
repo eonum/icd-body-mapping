@@ -50,23 +50,23 @@ class Mapping extends React.Component {
                 this.selectMappedLayers(mappedImages);
             } else {
                 this.setState({
-                    selectedImages: [], selectedImagesBackup: [], mappedImages: [],
-                    selectedMappedImages: [], mappedLayers: []
+                    selectedImages: [],
+                    selectedImagesBackup: [],
+                    mappedImages: [],
+                    selectedMappedImages: [],
+                    mappedLayers: []
                 });
                 this.selectAll(true);
             }
         }
-
         if (this.props.editable !== prevProps.editable) {
             this.setState({selectedImages: this.state.selectedMappedImages});
             this.selectMappedImages(this.state.mappedImages);
             this.sendIcdToMainUI([], true, []);
         }
-
         if (this.props.layerFragmentStack !== prevProps.layerFragmentStack && this.props.showingIcdId === prevProps.showingIcdId && this.props.map === prevProps.map) {
             this.selectPngsFromList(this.props.layerFragmentStack);
         }
-
         if (this.props.map !== prevProps.map) {
             setTimeout(() => {
                 $.getJSON('api/v1/maps')
@@ -79,11 +79,9 @@ class Mapping extends React.Component {
             this.selectMappedImages(mappedImages);
             this.selectMappedLayers(mappedImages);
         }
-
         if (this.props.mapLayerList !== prevProps.mapLayerList) {
             this.deleteMap(this.props.mapLayerList);
         }
-
         if (this.props.selectedLayerFromList !== prevProps.selectedLayerFromList && this.props.selectedLayerFromList !== '') {
             this.selectLayer(this.props.selectedLayerFromList);
         }
@@ -149,7 +147,12 @@ class Mapping extends React.Component {
         let newBackup = this.state.selectedImagesBackup.filter((image) => (image.name !== map.name || image.ebene !== map.ebene));
         let newMapped = this.state.mappedImages.filter((image) => image.name !== map.name);
         let newSelectedMap = this.state.selectedMappedImages.filter((image) => image.name !== map.name);
-        this.setState({maps: newMaps, selectedImagesBackup: newBackup, mappedImages: newMapped, selectedMappedImages: newSelectedMap});
+        this.setState({
+            maps: newMaps,
+            selectedImagesBackup: newBackup,
+            mappedImages: newMapped,
+            selectedMappedImages: newSelectedMap
+        });
     }
 
     /**
@@ -168,7 +171,8 @@ class Mapping extends React.Component {
      */
     selectLayer(ebene) {
         this.setState({
-            activeLayer: ebene, selectedImages: []
+            activeLayer: ebene,
+            selectedImages: []
         });
         this.props.callbackFromMainUIActiveLayer(ebene);
         setTimeout(() => {
@@ -310,6 +314,10 @@ class Mapping extends React.Component {
         } return false;
     }
 
+    /**
+     * The selectPngFromList method receives fragments (pngs) from the Layerlist and selects them
+     * @param layerFragmentList are the selected pngs from external source
+     */
     selectPngsFromList(layerFragmentList) {
         let elem = this.state.allImages;
         let frags = layerFragmentList;
@@ -326,12 +334,15 @@ class Mapping extends React.Component {
         }
         selectedImages = selectedImages.concat(nonMapped);
 
-        this.setState({selectedImages: selectedImages, selectedImagesBackup: selectedImages});
+        this.setState({
+            selectedImages: selectedImages,
+            selectedImagesBackup: selectedImages
+        });
         this.sendIcdToMainUI(nonMapped, false, []);
     }
 
     /**
-     * The selectPngFromList method receives a fragment (png) from backend and highlights it
+     * The highlightPng method receives a fragment (png) from backend and highlights it
      * @param fragment is the selected png from external source
      */
     highlightPng(fragment) {
@@ -354,6 +365,10 @@ class Mapping extends React.Component {
         }
     }
 
+    /**
+     * The setBackToPreviousSelection method is called after the cursor exits the list of fragments
+     * it resets the higlight to the selection the user made previously
+     */
     setBackToPreviousSelection() {
         let elem = this.state.allImages;
         let selectedImages = this.state.selectedImagesBackup;
@@ -388,42 +403,72 @@ class Mapping extends React.Component {
         }
     }
 
+    /**
+     * The changeViewTo switches between the two viewmodes mapview and listview
+     */
     changeViewTo(view) {
         if (view === 'map') {
-            this.setState({
-                mapView: true,
-            });
+            this.setState({mapView: true});
             setTimeout(() => {
                 this.selectMappedImages(this.state.mappedImages)
             });
             this.props.callbackFromMainUIMinimizeLayerList(false);
-
         } else {
-            this.setState({
-                mapView: false,
-            });
+            this.setState({mapView: false});
             this.props.callbackFromMainUIMinimizeLayerList(true);
         }
     }
 
     render() {
-        const rowStyle = {height: '5vh'};
-        const divStyle = {position: 'absolute'};
-        const dropdownStyle = {height: '30px'};
-        let alleElemente = [];
-        let alleLayers = [];
+        let allElements = [];
+        let allLayers = [];
 
         let {x, y} = this.state;
         let activeLayer = this.state.activeLayer;
         const editable = this.props.editable;
         const mapView = this.state.mapView;
 
+        // Styles
+        const rowStyle = {
+            height: '5vh'
+        };
+        const divStyle = {
+            position: 'absolute'
+        };
+        const dropdownStyle = {
+            height: '30px'
+        };
         const bootstrapSelectedMapButton = "col-6 border border-primary bg-primary rounded-left text-white p-0 pl-2 pr-2 font-weight-bold";
         const bootstrapSelectedListButton = "col-6 border border-primary bg-primary rounded-right text-white p-0 pl-2 pr-2 font-weight-bold";
         const bootstrapUnselectedMapButton = "col-6 border border-primary rounded-left text-primary p-0 pl-2 pr-2";
         const bootstrapUnselectedListButton = "col-6 border border-primary rounded-right text-primary p-0 pl-2 pr-2";
+        const loadingImgStyle = {
+            zIndex: 100,
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            width: '50px',
+            height: '50px',
+            marginTop: '-25px',
+            marginLeft: '-25px',
+        };
+        const loadingDivStyle = {
+            zIndex: 99,
+            top: '0%',
+            left: '0%',
+            height: '100%',
+            width: '100%',
+            position: 'absolute',
+            backgroundColor: 'rgba(255,255,255,0.7)',
+        };
 
-        alleElemente = this.state.allImages.map((elem, index) => {
+        // Component Parts
+        const loadingImg = (
+            <div style={loadingDivStyle}>
+                <img src={loadingGif} style={loadingImgStyle}/>
+            </div>
+        );
+        allElements = this.state.allImages.map((elem, index) => {
             if (elem.ebene === activeLayer) {
                 return <div key={index}>
                     <img src={elem.img} style={divStyle} id={elem.name} alt='missing images'
@@ -434,8 +479,7 @@ class Mapping extends React.Component {
                 </div>
             }
         });
-
-        alleLayers = this.state.layers.map((elem, index) => {
+        allLayers = this.state.layers.map((elem, index) => {
             let mappedLayers = this.state.mappedLayers;
             for (let i = 0; i < mappedLayers.length; i++){
                 if(elem === mappedLayers[i]){
@@ -448,7 +492,6 @@ class Mapping extends React.Component {
                 {elem.ebene}
             </div>
         });
-
         const dropdown = (
             <div className="col-3 dropdown">
                 <button className="btn btn-outline-primary p-0 pl-2 pr-2 font-weight-bold dropdown-toggle"
@@ -457,11 +500,10 @@ class Mapping extends React.Component {
                     {this.state.activeLayer}
                 </button>
                 <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    {alleLayers}
+                    {allLayers}
                 </div>
             </div>
         );
-
         const viewButton = (
             <div className="row mr-4 text-center">
                 <div
@@ -482,44 +524,23 @@ class Mapping extends React.Component {
                 </div>
             </div>
         );
-
         const map = (
           <>
             <canvas id='canvas' style={divStyle} width="600" height="530"/>
             <div onMouseMove={this._onMouseMove.bind(this)} id='mappingComp'
                  onClick={this.selectPng.bind(this, x, y, editable)}>
-                {alleElemente}
+                {allElements}
             </div>
           </>
         );
+        const list = (
+            <LayerOptions
+                callbackFromMapping={this.callbackallImages}
+                callbackDeleteFromMapping={this.callbackDeleteFromMapping}
+            />
+        );
 
-        const list = (<LayerOptions callbackFromMapping={this.callbackallImages} callbackDeleteFromMapping={this.callbackDeleteFromMapping}/>)
-
-        const loadingImgStyle = {
-            zIndex: 100,
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            width: '50px',
-            height: '50px',
-            marginTop: '-25px',
-            marginLeft: '-25px',
-        }
-        const loadingDivStyle = {
-            zIndex: 99,
-            top: '0%',
-            left: '0%',
-            height: '100%',
-            width: '100%',
-            position: 'absolute',
-            backgroundColor: 'rgba(255,255,255,0.7)',
-        }
-        const loadingImg = (
-            <div style={loadingDivStyle}>
-                <img src={loadingGif} style={loadingImgStyle}/>
-            </div>
-        )
-        const loading = (alleElemente.length === 0 && mapView);
+        const loading = (allElements.length === 0 && mapView);
 
         return (
             <div>
