@@ -14,7 +14,6 @@ import HomeIcon from '@material-ui/icons/Home';
  * @author Aaron Saegesser, Linn Haeffner, Marius Asadauskas, Joshua Felder
  */
 class Topbar extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
