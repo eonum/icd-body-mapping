@@ -105,6 +105,7 @@ class DetailsCard extends React.Component {
                 <Form>
                     <FormControl
                         type="text"
+                        id="Annotationen"
                         onChange={e => {
                             this.setState({annotationen: e.target.value})
                         }}

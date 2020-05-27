@@ -506,22 +506,22 @@ class Mapping extends React.Component {
         );
         const viewButton = (
             <div className="row mr-4 text-center">
-                <div
+                <button
                     className={mapView ? bootstrapSelectedMapButton : bootstrapUnselectedMapButton}
                     type="button"
                     style={dropdownStyle}
                     onClick={this.changeViewTo.bind(this, 'map')}
                 >
                     Mapping
-                </div>
-                <div
+                </button>
+                <button
                     className={mapView ? bootstrapUnselectedListButton : bootstrapSelectedListButton}
                     type="button"
                     style={dropdownStyle}
                     onClick={this.changeViewTo.bind(this, 'list')}
                 >
                     Edit Layers
-                </div>
+                </button>
             </div>
         );
         const map = (
