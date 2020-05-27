@@ -22,10 +22,11 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
+  url: postgresql://46.126.162.209
   <<: *default
   username: postgres
-  password: 123456o
-  database: icd_body_mapping_development
+  password:
+  database: PSE
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -58,10 +59,11 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
+  url: postgresql://46.126.162.209
   <<: *default
   username: postgres
-  password: 123456o
-  database: icd_body_mapping_test
+  password:
+  database: PSE_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -83,7 +85,8 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
+  url: postgresql://46.126.162.209
   <<: *default
-  database: icd_body_mapping_production
-  username: icd_body_mapping
-  password: <%= ENV['ICD_BODY_MAPPING_DATABASE_PASSWORD'] %>
+  username: postgres
+  password:
+  database: PSE_prod
