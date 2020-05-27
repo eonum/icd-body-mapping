@@ -215,6 +215,7 @@ class MainUI extends React.Component {
     };
 
     render() {
+        // Styles
         const style = {
             height: '86vh',
             overflow: 'auto'
@@ -223,6 +224,7 @@ class MainUI extends React.Component {
             width: '20%'
         };
 
+        // Parts
         const topbar = (
             <Topbar
                 editable={this.state.editMode}
