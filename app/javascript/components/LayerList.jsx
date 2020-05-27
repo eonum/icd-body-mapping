@@ -100,7 +100,6 @@ class LayerList extends React.Component {
                 showFrags: true,
                 checkedFrags: [],
             });
-            console.log(this.state.checkedFrags);
         }
         if (this.props.mapView !== prevProps.mapView) {
             this.setState({

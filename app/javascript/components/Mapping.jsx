@@ -48,7 +48,6 @@ class Mapping extends React.Component {
                 this.setState({mappedImages: mappedImages});
                 this.selectMappedImages(mappedImages);
                 this.selectMappedLayers(mappedImages);
-                console.log("Change" + mappedImages);
             } else {
                 this.setState({
                     selectedImages: [], selectedImagesBackup: [], mappedImages: [],
@@ -126,7 +125,6 @@ class Mapping extends React.Component {
             $.getJSON('/api/v1/all/layers')
                 .then(response => this.setState({layers: response}));
         });
-        console.log('deleted');
     }
 
     /**
