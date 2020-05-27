@@ -37,9 +37,11 @@ class AddImage extends React.Component {
     }
 
     render() {
+        // Variables
         let formFields = {};
         const loading = this.state.load;
 
+        // Styles
         const loadingImgStyle = {
             zIndex: 100,
             position: 'fixed',
@@ -49,7 +51,7 @@ class AddImage extends React.Component {
             height: '50px',
             marginTop: '-25px',
             marginLeft: '-25px',
-        }
+        };
         const loadingDivStyle = {
             zIndex: 99,
             top: '10%',
@@ -58,43 +60,48 @@ class AddImage extends React.Component {
             width: '50%',
             position: 'fixed',
             backgroundColor: 'rgba(255,255,255,0.7)',
-        }
+        };
+
+        // Component Parts
         const loadingImg = (
             <div style={loadingDivStyle}>
                 <img src={loadingGif} style={loadingImgStyle}/>
             </div>
-        )
+        );
+        const addForm = (
+            <form
+                onSubmit={(e) => {
+                    this.handleFormSubmit(formFields.ebene.value, formFields.name.value, formFields.img.value);
+                    e.preventDefault();
+                }}
+                onKeyDown={e => this.handleKeyDown(e)}
+                className="form-group"
+            >
+                <input
+                    ref={input => formFields.ebene = input}
+                    placeholder='Enter the layer E.g. Ohr'
+                    className="form-control"
+                />
+                <input
+                    ref={input => formFields.name = input}
+                    placeholder='Enter the name E.g. Auricula'
+                    className="form-control"
+                />
+                <input
+                    ref={input => formFields.img = input}
+                    placeholder='Enter the image url'
+                    className="form-control"
+                />
+                <button className="btn btn-primary">
+                    Submit
+                </button>
+            </form>
+        );
 
         return (
             <div>
                 {loading ? loadingImg : null}
-                <form
-                    onSubmit={(e) => {
-                        this.handleFormSubmit(formFields.ebene.value, formFields.name.value, formFields.img.value);
-                        e.preventDefault();
-                    }}
-                    onKeyDown={e => this.handleKeyDown(e)}
-                    className="form-group"
-                >
-                    <input
-                        ref={input => formFields.ebene = input}
-                        placeholder='Enter the layer E.g. Ohr'
-                        className="form-control"
-                    />
-                    <input
-                        ref={input => formFields.name = input}
-                        placeholder='Enter the name E.g. Auricula'
-                        className="form-control"
-                    />
-                    <input
-                        ref={input => formFields.img = input}
-                        placeholder='Enter the image url'
-                        className="form-control"
-                    />
-                    <button className="btn btn-primary">
-                        Submit
-                    </button>
-                </form>
+                {addForm}
             </div>
         );
     }

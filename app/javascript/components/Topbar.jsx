@@ -14,7 +14,6 @@ import HomeIcon from '@material-ui/icons/Home';
  * @author Aaron Saegesser, Linn Haeffner, Marius Asadauskas, Joshua Felder
  */
 class Topbar extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -93,7 +92,7 @@ class Topbar extends React.Component {
             maxWidth: '3rem'
         };
 
-        // Buttons
+        // Component Parts
         const homeButton = (
             <button
                 type="button"
@@ -143,7 +142,6 @@ class Topbar extends React.Component {
                 <ExitToAppIcon/>
             </button>
         );
-
         const searchForm = (
             <form ref={form => this.searchForm = form}>
                 <FormControl
@@ -171,8 +169,6 @@ class Topbar extends React.Component {
                 ICD Mapping
             </button>
         );
-
-        // Languages and Dropdown
         const languages = {
             german: 'de',
             french: 'fr',

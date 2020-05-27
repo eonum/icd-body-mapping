@@ -4,10 +4,9 @@ import NewMaps from "./NewMaps";
 import $ from "jquery";
 import loadingGif from '../../assets/images/Preloader_2.gif';
 
-
 /**
- * SearchCard displays possible search results, but doesn't do the searching itself.
- * It receives an array of ICD's via props.
+ * SearchCard displays possible search results, and does the searching.
+ * It receives the searchterm from Topbar via MainUI
  * @author Aaron Saegesser
  */
 class SearchCard extends React.Component {
@@ -24,21 +23,15 @@ class SearchCard extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({
-            load: true,
-        });
+        this.setState({load: true});
         this.getSearchResults(this.props.searchTerm, this.props.viewAll);
     }
 
     componentDidUpdate(prevProps) {
         if (prevProps.viewAll !== this.props.viewAll) {
-            this.setState({
-                viewAll: this.props.viewAll
-            });
+            this.setState({viewAll: this.props.viewAll});
             if (this.props.viewAll === true) {
-                this.setState({
-                    load: true,
-                });
+                this.setState({load: true});
             }
             this.getSearchResults(this.props.searchTerm, this.props.viewAll);
         }
@@ -82,6 +75,9 @@ class SearchCard extends React.Component {
         }
     }
 
+    /**
+     * Gets all
+     */
     viewAllSearchResults() {
         this.setState({
             viewAll: true,
@@ -95,6 +91,9 @@ class SearchCard extends React.Component {
         this.props.callbackFromMainUIDetails(icd);
     }
 
+    /**
+     * Checks all displayed Icds and sends the selection to MainUI
+     */
     checkAllIcds() {
         let i;
         let checkboxes = document.getElementsByName('checkIcd');
@@ -107,25 +106,23 @@ class SearchCard extends React.Component {
                     selection.push(parseInt(checkboxes[i].id, 10));
                 }
             }
-            this.setState({
-                checkedAll: true,
-            });
+            this.setState({checkedAll: true});
         } else {
             for (i = 0; i < checkboxes.length; i++) {
                 checkboxes[i].checked = false;
             }
-            this.setState({
-                checkedAll: false,
-            });
+            this.setState({checkedAll: false});
         }
 
-        this.setState({
-            checkedIcds: selection
-        });
+        this.setState({checkedIcds: selection});
 
         this.props.callbackFromMainUIMapping(selection);
     }
 
+    /**
+     * Checks a given Icd and sends it to MainUI
+     * @param icdId   ID of the Icd to be selected
+     */
     checkSelectedIcd(icdId) {
         let checkbox = document.getElementById(icdId);
         let selection = this.state.checkedIcds;
@@ -139,9 +136,7 @@ class SearchCard extends React.Component {
                 }
             }
         }
-        this.setState({
-            checkedIcds: selection
-        });
+        this.setState({checkedIcds: selection});
 
         if (this.state.checkedIcds.length > 0) {
             this.props.callbackFromMainUIMapping(selection);
@@ -153,6 +148,7 @@ class SearchCard extends React.Component {
     }
 
     render() {
+        // Variables
         const icds = this.state.icds;
         const detailsVisible = this.props.detailsDisplayed;
         const editable = this.props.editable;
@@ -162,26 +158,53 @@ class SearchCard extends React.Component {
         const lang = this.props.language;
         const loading = this.state.load;
 
+        // Styles
         const searchOnlyStyle = {
             height: '78vh',
             overflow: 'auto'
-        }
+        };
         const searchNextToDetailsStyle = {
             height: '44vh',
             overflow: 'auto'
-        }
+        };
         const checkboxStyle = {
             float: 'right'
-        }
+        };
         const viewAllButtonStyle = {
             float: 'center'
-        }
+        };
         const closeButtonStyle = {
             float: 'right'
-        }
+        };
+        const cardBorder = "border-top border-primary";
+        const cardNoBorder = "";
+        const loadingImgStyle = {
+            zIndex: 100,
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            width: '50px',
+            height: '50px',
+            marginTop: '-25px',
+            marginLeft: '-25px',
+        };
+        const loadingDivStyle = {
+            zIndex: 99,
+            top: '0%',
+            left: '0%',
+            height: '100%',
+            width: '100%',
+            position: 'absolute',
+            backgroundColor: 'rgba(255,255,255,0.7)',
+        };
 
-        const empty = (<></>)
-        const checkboxAll = (
+        // Component Parts
+        const loadingImg = (
+            <div style={loadingDivStyle}>
+                <img src={loadingGif} style={loadingImgStyle}/>
+            </div>
+        );
+        const checkAllButton = (
             <button
                 type="button"
                 className="btn btn-outline-primary"
@@ -200,7 +223,26 @@ class SearchCard extends React.Component {
                 parent={'search'}
             />
         );
-
+        const viewAllButton = (
+            <button type="button"
+                    className="btn btn-default text-primary"
+                    style={viewAllButtonStyle}
+                    onClick={this.viewAllSearchResults.bind(this)}
+            >
+                View All
+            </button>
+        );
+        const closeButton = (
+            <button type="button"
+                    className="btn btn-default mr-2 text-primary"
+                    style={closeButtonStyle}
+                    onClick={this.closeSearchCard.bind(this)}>
+                <CloseIcon/>
+            </button>
+        );
+        const noIcd = (
+            <div className="text-uppercase">no match found...</div>
+        );
         const resultIcds = icds.map((icd, index) => (
             <div key={index} className="card mb-4 mr-1">
                 <div className="card-body pb-2">
@@ -213,12 +255,12 @@ class SearchCard extends React.Component {
                                              onClick={this.checkSelectedIcd.bind(this, icd.id)}/>
                             </label>
                         </div>
-                        : empty
+                        : null
                     }
                     <h5 className="card-title text-primary m-0">{icd.code}</h5>
-                    {lang === 'de' ? <h6 className="card-description">{icd.text_de}</h6> : empty}
-                    {lang === 'fr' ? <h6 className="card-description">{icd.text_fr}</h6> : empty}
-                    {lang === 'it' ? <h6 className="card-description">{icd.text_it}</h6> : empty}
+                    {lang === 'de' ? <h6 className="card-description">{icd.text_de}</h6> : null}
+                    {lang === 'fr' ? <h6 className="card-description">{icd.text_fr}</h6> : null}
+                    {lang === 'it' ? <h6 className="card-description">{icd.text_it}</h6> : null}
                 </div>
                 <a type="button"
                    className="btn btn-light text-primary"
@@ -227,70 +269,25 @@ class SearchCard extends React.Component {
                 </a>
             </div>
         ));
-        const noIcd = (
-            <div className="text-uppercase">no match found...</div>
-        );
-        const viewAllButton = (
-            <button type="button"
-                    className="btn btn-default text-primary"
-                    style={viewAllButtonStyle}
-                    onClick={this.viewAllSearchResults.bind(this)}
-            >
-                View All
-            </button>
-        );
-
-        const cardBorder = "border-top border-primary";
-        const cardNoBorder = "";
-
-        const loadingImgStyle = {
-            zIndex: 100,
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            width: '50px',
-            height: '50px',
-            marginTop: '-25px',
-            marginLeft: '-25px',
-        }
-        const loadingDivStyle = {
-            zIndex: 99,
-            top: '0%',
-            left: '0%',
-            height: '100%',
-            width: '100%',
-            position: 'absolute',
-            backgroundColor: 'rgba(255,255,255,0.7)',
-        }
-        const loadingImg = (
-            <div style={loadingDivStyle}>
-                <img src={loadingGif} style={loadingImgStyle}/>
-            </div>
-        )
 
         return (
             <div className={detailsVisible ? cardBorder : cardNoBorder}>
                 <div className="row mt-2 mb-1">
                     <div className="col-4">
-                        {editable ? checkboxAll : empty}
+                        {editable ? checkAllButton : null}
                     </div>
                     <div className="col-4 text-center">
-                        {(editable && selectedLayer !== undefined) ? mapButton : empty}
+                        {(editable && selectedLayer !== undefined) ? mapButton : null}
                     </div>
                     <div className="col-4 text-right">
-                        <button type="button"
-                                className="btn btn-default mr-2 text-primary"
-                                style={closeButtonStyle}
-                                onClick={this.closeSearchCard.bind(this)}>
-                            <CloseIcon/>
-                        </button>
+                        {closeButton}
                     </div>
                 </div>
                 <div style={detailsVisible ? searchNextToDetailsStyle : searchOnlyStyle}>
-                    {loading ? loadingImg : empty}
+                    {loading ? loadingImg : null}
                     {icds.length > 0 ? resultIcds : noIcd}
                     <div className="text-center">
-                        {(viewAll || icds.length < 20) ? empty : viewAllButton}
+                        {(viewAll || icds.length < 20) ? null : viewAllButton}
                     </div>
                 </div>
             </div>

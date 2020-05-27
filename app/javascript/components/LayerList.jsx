@@ -15,12 +15,12 @@ class LayerList extends React.Component {
         super(props);
         this.state = {
             layers: [],
-            fragments: [],
             maps: [],
+            fragments: [],
             mappedFragments: [],
-            showFrags: false,
             checkedFrags: [],
             mouseOver: '',
+            showFrags: false,
             load: true,
         };
         this.handleDelete = this.handleDelete.bind(this)
@@ -28,31 +28,12 @@ class LayerList extends React.Component {
     }
 
     componentDidMount() {
-        $.getJSON('/api/v1/layers')
-            .then(response => this.setState({
-                fragments: response
-            }));
-        $.getJSON('/api/v1/all/layers')
-            .then(response => {
-              this.setState({
-                  layers: response.sort((a, b) => {
-                      var layerA = a.ebene.toUpperCase();
-                      var layerB = b.ebene.toUpperCase();
-                      if (layerA < layerB) {
-                          return -1;
-                      }
-                      if (layerA > layerB) {
-                          return 1;
-                      }
-                      return 0;
-                  })
-              });
-              if (this.props.selectedIcd !== '') {
-                  this.getMapsOfIcd(this.props.selectedIcd);
-              } else {
-                  this.setState({load: false});
-              }
-            });
+        this.getFragments();
+        this.getLayersSorted();
+        if (this.props.selectedIcd !== '') {
+            this.getMapsOfIcd(this.props.selectedIcd);
+        }
+
         if (this.props.mapView === true) {
             this.setState({showFrags: true});
         }
@@ -64,35 +45,27 @@ class LayerList extends React.Component {
                 this.setState({load: true});
                 this.getMapsOfIcd(this.props.selectedIcd);
             } else {
-                this.setState({
-                    maps: [],
-                })
+                this.setState({maps: []});
             }
-            this.setState({
-                checkedFrags: [],
-            });
+            this.setState({checkedFrags: []});
             this.props.callbackFromMainUISelectPngs([]);
         }
-        if (this.props.selectedLayer !== prevProps.selectedLayer && this.props.selectionFromMapping === true) {
-            this.setState({
-                checkedFrags: this.props.selectedLayer,
-            });
+        if (this.props.selectedLayer !== prevProps.selectedLayer
+          && this.props.selectionFromMapping === true) {
+            this.setState({checkedFrags: this.props.selectedLayer});
         }
-        if (this.props.updateList !== prevProps.updateList && this.props.updateList === true) {
+        if (this.props.updateList !== prevProps.updateList
+          && this.props.updateList === true) {
             this.setState({load: true});
             setTimeout(() => {
                 this.getMapsOfIcd(this.props.selectedIcd);
             }, 1000);
-            this.setState({
-                checkedFrags: [],
-            });
+            this.setState({checkedFrags: []});
             this.props.callbackFromMainUISelectPngs([]);
             this.props.callbackFromMainUIUpdateListDone();
         }
         if (this.props.showFrags !== prevProps.showFrags) {
-            this.setState({
-                showFrags: this.props.showFrags,
-            });
+            this.setState({showFrags: this.props.showFrags});
         }
         if (this.props.needUpdate !== prevProps.needUpdate) {
             this.setState({
@@ -102,42 +75,80 @@ class LayerList extends React.Component {
             });
         }
         if (this.props.mapView !== prevProps.mapView) {
-            this.setState({
-                showFrags: (this.props.showFrags && this.props.mapView),
-            });
+            this.setState({showFrags: (this.props.showFrags
+                                      && this.props.mapView)});
         }
     }
 
+    /**
+     * Gets all image fragments from backend
+     */
+    getFragments() {
+      $.getJSON('/api/v1/layers')
+          .then(response => this.setState({
+              fragments: response
+          }));
+    }
+
+    /**
+     * Gets all layers from backend sorted after ebene
+     */
+    getLayersSorted() {
+      $.getJSON('/api/v1/all/layers')
+          .then(response => {
+            this.setState({
+                layers: response.sort((a, b) => {
+                    var layerA = a.ebene.toUpperCase();
+                    var layerB = b.ebene.toUpperCase();
+                    if (layerA < layerB) {
+                        return -1;
+                    }
+                    if (layerA > layerB) {
+                        return 1;
+                    }
+                    return 0;
+                })
+            });
+            if (this.props.selectedIcd === '') {
+              this.setState({load: false});
+            }
+          })
+    }
+
+    /**
+     * Gets all mappings of a given icd
+     * @param icd
+     */
     getMapsOfIcd(icd) {
         $.getJSON('/api/v1/map/' + icd.id)
             .then(response => this.setState({
-              maps: response,
-              load: false,
+                maps: response,
+                load: false,
             }));
     }
 
     highlightFragment(fragment) {
         this.props.callbackFromMainUIHighlight(fragment);
-        this.setState({
-            mouseOver: fragment,
-        });
+        this.setState({mouseOver: fragment});
     }
 
     setBackToPreviousSelection() {
         this.props.callbackFromMainUIResetToSelection();
-        this.setState({
-            mouseOver: '',
-        });
+        this.setState({mouseOver: ''});
     }
 
     showFrags(show) {
         if (this.props.showFrags === true) {
-            this.setState({
-                showFrags: show,
-            });
+            this.setState({showFrags: show});
         };
     }
 
+    /**
+     * Selects and unselects elements of the
+     * fragment list depending on the boolean add
+     * @param frag  fragment to be added/removed
+     * @param add   true -> add to selection, false -> remove
+     */
     selectFragments(frag, add) {
         let selection = this.state.checkedFrags;
 
@@ -157,6 +168,9 @@ class LayerList extends React.Component {
         this.props.callbackFromMainUISelectPngs(selection);
     }
 
+    /**
+     *
+     */
     handleDelete(name){
         let map = this.findMap(name);
         if (map.map_id > 0){
@@ -169,6 +183,9 @@ class LayerList extends React.Component {
         }
     }
 
+    /**
+     *
+     */
     findMap(name){
         let maps = this.state.maps
         for (let i = 0; i < maps.length; i++){
@@ -178,6 +195,9 @@ class LayerList extends React.Component {
         }
     }
 
+    /**
+     *
+     */
     deleteMap(map){
         let map_id = map.map_id
         let newMaps = this.state.maps.filter((map) => map.map_id !== map_id);
@@ -189,7 +209,10 @@ class LayerList extends React.Component {
     }
 
     render() {
+        // Variables
         const layers = this.state.layers;
+        const activeLayer = this.props.activeLayer;
+        const maps = this.state.maps;
         let frags = this.state.fragments
         frags = frags.sort((a, b) => {
             var nameA = a.name.toUpperCase();
@@ -202,23 +225,21 @@ class LayerList extends React.Component {
             }
             return 0;
         });
-        const activeLayer = this.props.activeLayer;
-        const maps = this.state.maps;
+        const checkedFrags = this.state.checkedFrags;
         const showFrags = this.state.showFrags;
         const editable = this.props.editable;
-        const checkedFrags = this.state.checkedFrags;
         const loading = this.state.load;
-        let mouseOver = this.state.mouseOver;
+        const mouseOver = this.state.mouseOver;
         let mappedFragments = [];
         let checkedFragments = [];
-        let displayLayerFrags = [];
         let mapped = false;
         let showAsSelected = false;
         let mouseOverCurrent = false;
 
+        // Styles
         const style = {
             overflow: 'visible'
-        }
+        };
         const showHideStyle = {
             position: 'relative',
             zIndex: 20,
@@ -226,25 +247,116 @@ class LayerList extends React.Component {
             left: '90%',
             width: '10%',
             height: '30px',
-        }
+        };
         const topStyle = {
             height: '30px',
-        }
+        };
         const floatRightStyle = {
             float: 'right'
-        }
+        };
         const bootstrapActiveLayerButton = "btn btn-default p-0 m-0 ml-4 shadow-none font-weight-bold text-primary text-left";
         const bootstrapInactiveLayerButton = "btn btn-default p-0 m-0 ml-4 shadow-none text-left";
         const bootstrapMappedLayer = "list-group-item list-group-item-action p-0 pl-2 pr-2 shadow-none text-primary font-weight-bold";
         const bootstrapUnmappedLayer = "list-group-item list-group-item-action p-0 pl-2 shadow-none";
         const bootstrapMappedLayerEdit = "list-group-item list-group-item-action p-0 pl-2 shadow-none text-primary font-weight-bold bg-light";
-
         const bootstrapButtonEnabled = "btn btn-default p-0 m-0 shadow-none text-primary";
         const bootstrapButtonDisabled = "btn btn-default p-0 m-0 shadow-none text-secondary";
+        const loadingImgStyle = {
+            zIndex: 100,
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            width: '50px',
+            height: '50px',
+            marginTop: '-25px',
+            marginLeft: '-25px',
+        };
+        const loadingDivStyle = {
+            zIndex: 99,
+            top: '0%',
+            left: '0%',
+            height: '100%',
+            width: '100%',
+            position: 'absolute',
+            backgroundColor: 'rgba(255,255,255,0.7)',
+        };
 
-        const empty = (<></>);
+        // Parts
+        const loadingImg = (
+            <div style={loadingDivStyle}>
+                <img src={loadingGif} style={loadingImgStyle}/>
+            </div>
+        );
+        const fragList = frags.map((frag) => {
+            mappedFragments = maps.filter((map) => {
+                if (frag.name === map.name) {
+                    return map;
+                }
+            });
+            checkedFragments = checkedFrags.filter((checkedFrag) => {
+                if (frag.name === checkedFrag.name) {
+                    return checkedFrag;
+                }
+            });
+            mapped = (mappedFragments.length > 0
+              && mappedFragments[0].name === frag.name);
+            showAsSelected = ((mapped) ||
+                            (checkedFragments.length > 0
+                              && checkedFragments[0].name === frag.name));
+            mouseOverCurrent = (mouseOver === frag);
 
-        displayLayerFrags = (
+            if (frag.ebene === activeLayer) {
+                if (editable && !mapped) {
+                    return <div
+                        type="button"
+                        className={showAsSelected ? bootstrapMappedLayerEdit : bootstrapUnmappedLayer}
+                        key={frag.id}
+                        onClick={this.selectFragments.bind(this, frag, !(showAsSelected))}
+                        onMouseEnter={this.highlightFragment.bind(this, frag)}
+                        onMouseLeave={this.setBackToPreviousSelection.bind(this)}
+                    >
+                        {frag.name}
+                        {mouseOverCurrent ?
+                          <span
+                              className="pl-2 pr-2 text-white bg-primary font-weight-normal"
+                              style={floatRightStyle}
+                          >
+                              {showAsSelected ? 'Unselect' : 'Select'}
+                          </span>
+                          : null}
+                    </div>
+                } else if (editable && mapped) {
+                    return <div
+                        type="button"
+                        className={showAsSelected ? bootstrapMappedLayerEdit : bootstrapUnmappedLayer}
+                        key={frag.id}
+                        onClick={() => this.handleDelete(frag.name)}
+                        onMouseEnter={this.highlightFragment.bind(this, frag)}
+                        onMouseLeave={this.setBackToPreviousSelection.bind(this)}
+                    >
+                        {frag.name}
+                        {mouseOverCurrent ?
+                          <span
+                              className="pl-2 pr-2 text-white bg-danger font-weight-normal"
+                              style={floatRightStyle}
+                          >
+                              Delete Mapping <CloseIcon />
+                          </span>
+                          : null}
+                    </div>
+                } else {
+                    return <div
+                        className={mapped ? bootstrapMappedLayer : bootstrapUnmappedLayer}
+                        key={frag.id}
+                        onMouseEnter={this.highlightFragment.bind(this, frag)}
+                        onMouseLeave={this.setBackToPreviousSelection.bind(this)}
+                    >
+                        {frag.name}
+                    </div>
+                }
+            }
+        });
+        const displayLayerFrags = (
           <div className="list-group d-inline">
                 <div className="list-group-item-action mb-1 pl-4 pr-2 border rounded" style={topStyle}>
                     <span className="font-weight-normal align-middle text-secondary">Details: </span>
@@ -259,104 +371,10 @@ class LayerList extends React.Component {
                     </button>
                 </div>
                 <div className="ml-4">
-                    { showFrags ?
-                      frags.map((frag) => {
-                        mappedFragments = maps.filter((map) => {
-                            if (frag.name === map.name) {
-                                return map;
-                            }
-                        });
-                        checkedFragments = checkedFrags.filter((checkedFrag) => {
-                            if (frag.name === checkedFrag.name) {
-                                return checkedFrag;
-                            }
-                        });
-                        mapped = (mappedFragments.length > 0
-                          && mappedFragments[0].name === frag.name);
-                        showAsSelected = ((mapped) ||
-                                        (checkedFragments.length > 0
-                                          && checkedFragments[0].name === frag.name));
-                        mouseOverCurrent = (mouseOver === frag);
-
-                        if (frag.ebene === activeLayer) {
-                            if (editable && !mapped) {
-                                return <div
-                                    type="button"
-                                    className={showAsSelected ? bootstrapMappedLayerEdit : bootstrapUnmappedLayer}
-                                    key={frag.id}
-                                    onClick={this.selectFragments.bind(this, frag, !(showAsSelected))}
-                                    onMouseEnter={this.highlightFragment.bind(this, frag)}
-                                    onMouseLeave={this.setBackToPreviousSelection.bind(this)}
-                                >
-                                    {frag.name}
-                                    {mouseOverCurrent ?
-                                      <span
-                                          className="pl-2 pr-2 text-white bg-primary font-weight-normal"
-                                          style={floatRightStyle}
-                                      >
-                                          {showAsSelected ? 'unselect' : 'select'}
-                                      </span>
-                                      : null}
-                                </div>
-                            } else if (editable && mapped) {
-                                return <div
-                                    type="button"
-                                    className={showAsSelected ? bootstrapMappedLayerEdit : bootstrapUnmappedLayer}
-                                    key={frag.id}
-                                    onClick={() => this.handleDelete(frag.name)}
-                                    onMouseEnter={this.highlightFragment.bind(this, frag)}
-                                    onMouseLeave={this.setBackToPreviousSelection.bind(this)}
-                                >
-                                    {frag.name}
-                                    {mouseOverCurrent ?
-                                      <span
-                                          className="pl-2 pr-2 text-white bg-danger font-weight-normal"
-                                          style={floatRightStyle}
-                                      >
-                                          delete mapping <CloseIcon />
-                                      </span>
-                                      : null}
-                                </div>
-                            } else {
-                                return <div
-                                    className={mapped ? bootstrapMappedLayer : bootstrapUnmappedLayer}
-                                    key={frag.id}
-                                    onMouseEnter={this.highlightFragment.bind(this, frag)}
-                                    onMouseLeave={this.setBackToPreviousSelection.bind(this)}
-                                >
-                                    {frag.name}
-                                </div>
-                            }
-                        }
-                      }) : empty }
+                    { showFrags ? fragList : null }
                 </div>
             </div>
         );
-
-        const loadingImgStyle = {
-            zIndex: 100,
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            width: '50px',
-            height: '50px',
-            marginTop: '-25px',
-            marginLeft: '-25px',
-        }
-        const loadingDivStyle = {
-            zIndex: 99,
-            top: '0%',
-            left: '0%',
-            height: '100%',
-            width: '100%',
-            position: 'absolute',
-            backgroundColor: 'rgba(255,255,255,0.7)',
-        }
-        const loadingImg = (
-            <div style={loadingDivStyle}>
-                <img src={loadingGif} style={loadingImgStyle}/>
-            </div>
-        )
 
         return (
             <div style={style}>

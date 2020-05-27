@@ -28,7 +28,7 @@ class DetailsCard extends React.Component {
         this.props.callbackFromMainUIIcdIdForMapping(this.props.selectedIcd.id);
     }
 
-    sendIcdToMainUi(Map) {
+    sendMapToMainUi(Map) {
         this.props.callbackFromMainUIMaps(Map);
     }
 
@@ -40,6 +40,15 @@ class DetailsCard extends React.Component {
         this.setState({showingIcdId: this.props.selectedIcd.id});
     }
 
+    handleKeyDown(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+        }
+    }
+
+    /**
+     *
+     */
     saveChanges() {
         let icd = this.props.selectedIcd;
         icd.annotationen = this.state.annotationen;
@@ -61,21 +70,15 @@ class DetailsCard extends React.Component {
         this.props.callbackFromMainUIIcdIdForMapping(0);
     }
 
-    handleKeyDown(event) {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-        }
-    }
-
     render() {
+        // Variables
         let selectedIcd = this.props.selectedIcd;
         const editable = this.props.editable;
         const searchVisible = this.props.searchDisplayed;
         const selectedLayer = this.props.selectedLayer;
         let lang = this.props.language;
 
-        const empty = (<div/>);
-
+        // Styles
         const buttonStyle = {
             float: 'right'
         };
@@ -87,6 +90,15 @@ class DetailsCard extends React.Component {
             overflow: 'auto',
         };
 
+        // Parts
+        const closeButton = (
+            <button type="button"
+                    className="btn btn-default btn-sm text-right text-white ml-4"
+                    style={buttonStyle}
+                    onClick={this.closeDetailsCard.bind(this)}>
+                <CloseIcon/>
+            </button>
+        );
         const editView = (
             <div className="card mt-2 ml-4 mr-4 mb-3 border-0">
                 <h5 className="card-subtitle text-primary">Annotations</h5>
@@ -130,7 +142,7 @@ class DetailsCard extends React.Component {
         );
         const uneditableView = (
             <div>
-                {(selectedIcd.annotationen !== null && selectedIcd.annotationen !== '') ? annotations : empty}
+                {(selectedIcd.annotationen !== null && selectedIcd.annotationen !== '') ? annotations : null}
             </div>
         );
         const ger = (
@@ -163,21 +175,16 @@ class DetailsCard extends React.Component {
                 <div className="card mb-2">
                     <div className="card-header bg-primary">
                         <div className="overlay bg-primary"/>
-                        <button type="button"
-                                className="btn btn-default btn-sm text-right text-white ml-4"
-                                style={buttonStyle}
-                                onClick={this.closeDetailsCard.bind(this)}>
-                            <CloseIcon/>
-                        </button>
+                        {closeButton}
                         <h1 className="card-title text-white ml-2 mt-1">
                             {selectedIcd.code}
                         </h1>
                     </div>
                     <div className="card m-2 mt-4 mr-4 ml-4 pb-1 border-0">
                         <h5 className="card-subtitle">Description</h5>
-                        {lang === 'de' ? ger : empty}
-                        {lang === 'fr' ? fr : empty}
-                        {lang === 'it' ? it : empty}
+                        {lang === 'de' ? ger : null}
+                        {lang === 'fr' ? fr : null}
+                        {lang === 'it' ? it : null}
                     </div>
                     <div>
                         {editable ? editView : uneditableView}

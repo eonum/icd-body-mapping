@@ -34,6 +34,8 @@ class NewMaps extends React.Component {
      * it calls the backend with the Method Post and then passes the intended object,
      * which should be posted.
      * event.preventDefault(); is needed as to not reload the site every time.
+     * @param multiMapping
+     * @param event
      */
     handleSubmit(multiMapping, event) {
         let icd_ids = [];
@@ -89,6 +91,7 @@ class NewMaps extends React.Component {
     render() {
         const parent = this.props.parent;
         let inSearch = (parent === 'search');
+        
         return(
             <form
                 onSubmit={this.handleSubmit.bind(this, inSearch)}
