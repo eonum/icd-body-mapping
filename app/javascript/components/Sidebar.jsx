@@ -16,12 +16,12 @@ class Sidebar extends React.Component {
         this.ICDstack = [];
         this.state = {
             icdSelection: [],
-            filtered: false,
-            icdCodelength: 3,
-            hierarchyEnd: false,
             chapterArray: [],
-            infoCardOpen: false,
             activeIcd: '',
+            icdCodelength: 3,
+            filtered: false,
+            hierarchyEnd: false,
+            infoCardOpen: false,
         };
     }
 
@@ -30,18 +30,15 @@ class Sidebar extends React.Component {
         for (var i = 1; i < 23; i++) {
             chapterArray.push({index: i});
         }
-        this.setState({
-            chapterArray: chapterArray
-        });
-
+        this.setState({chapterArray: chapterArray});
         this.loadIcds();
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.needUpdate !== prevProps.needUpdate) {
             this.setState({
-                filtered: false,
                 icdCodeLength: 3,
+                filtered: false,
                 hierarchyEnd: false
             });
             this.ICDstack = [this.chapterICDs];
@@ -50,17 +47,17 @@ class Sidebar extends React.Component {
             this.loadIcds();
         }
         if (this.props.selectedIcd !== prevProps.selectedIcd
-            && this.props.selectedIcd !== ''
-            && this.props.icdSelectionFromSearch === true) {
+          && this.props.selectedIcd !== ''
+          && this.props.icdSelectionFromSearch === true) {
             this.ICDstack = [this.chapterICDs];
-            this.setState({
-                icdSelection: this.allICDs,
-            });
+            this.setState({icdSelection: this.allICDs});
             this.filterIcdsByChapter(this.props.selectedIcd);
+
             const fullCode = this.props.selectedIcd.code.toString();
             const codeSplit = fullCode.split('.');
             const codeMain = codeSplit[0];
             this.filterIcdsByIcdcode(codeMain);
+
             if (codeSplit.length === 2) {
                 const subCode = codeSplit[1];
                 let subCodeSplit;
@@ -82,7 +79,6 @@ class Sidebar extends React.Component {
                 alert('unexpected code structure. ICD code should be of form ***, ***.* or ***.** and have a maximal length of 6 characters.');
             }
         }
-
         if (this.props.updatedIcd !== prevProps.updatedIcd){
             this.updateIcd(this.props.updatedIcd);
         }
@@ -118,12 +114,8 @@ class Sidebar extends React.Component {
      * @param response
      */
     storeDatabase(response) {
-        this.setIcdDatabaseStorage(response);
+        this.allICDs = response;
         this.readOutChapters(response);
-    }
-
-    setIcdDatabaseStorage(icds) {
-        this.allICDs = icds;
     }
 
     /**
@@ -133,17 +125,11 @@ class Sidebar extends React.Component {
      */
     readOutChapters(icds) {
         let chapterTemp;
-        this.chapterICDs = icds.map((icd) => {
+        this.chapterICDs = icds.filter((icd) => {
             if (icd.kapitel !== chapterTemp) {
                 chapterTemp = icd.kapitel;
                 return icd;
-            } else {
-                return 0;
             }
-        });
-
-        this.chapterICDs = this.chapterICDs.filter((value) => {
-            return value !== 0;
         });
 
         this.chapterICDs.sort((icd1, icd2) => {
@@ -160,9 +146,7 @@ class Sidebar extends React.Component {
         });
 
         this.ICDstack.push(this.chapterICDs);
-        this.setState({
-            icdSelection: this.chapterICDs
-        });
+        this.setState({icdSelection: this.chapterICDs});
     }
 
     /**
@@ -175,29 +159,19 @@ class Sidebar extends React.Component {
         const selectedChapter = icd.kapitel;
         const codelength = 3;
 
-        let selection = ICDs.map((icd) => {
+        let selection = ICDs.filter((icd) => {
             if (icd.kapitel === selectedChapter) {
                 return icd;
-            } else {
-                return 0;
             }
-        });
-        selection = selection.filter((value) => {
-            return value !== 0;
         });
         selection = selection.sort();
 
         this.ICDsInCurrentChapter = selection;
 
-        selection = this.ICDsInCurrentChapter.map((icd) => {
+        selection = this.ICDsInCurrentChapter.filter((icd) => {
             if (icd.code.toString().length === codelength) {
                 return icd;
-            } else {
-                return 0;
             }
-        });
-        selection = selection.filter((value) => {
-            return value !== 0;
         });
         selection = selection.sort();
         this.ICDstack.push(selection);
@@ -223,16 +197,11 @@ class Sidebar extends React.Component {
         let selection;
 
         do {
-            selection = ICDs.map((icd) => {
+            selection = ICDs.filter((icd) => {
                 if (icd.code.toString().includes(icdCode)
                     && icd.code.toString().length === codelength) {
                     return icd;
-                } else {
-                    return 0;
                 }
-            });
-            selection = selection.filter((value) => {
-                return value !== 0;
             });
 
             codelength++;
@@ -306,7 +275,10 @@ class Sidebar extends React.Component {
 
     render() {
         const {icdSelection} = this.state;
+        const chapterArray = this.state.chapterArray;
+        let icdSubGroup = [];
 
+        // Styles
         const withBackButtonStyle = {
             height: '82vh',
             overflow: 'auto'
@@ -328,12 +300,42 @@ class Sidebar extends React.Component {
         const icdVisibleStyle = {
             overflow: 'visible',
         };
+        const loadingImgStyle = {
+            zIndex: 100,
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            width: '50px',
+            height: '50px',
+            marginTop: '-25px',
+            marginLeft: '-25px',
+        };
+        const loadingDivStyle = {
+            zIndex: 99,
+            top: '0%',
+            left: '0%',
+            width: '100%',
+            position: 'absolute',
+            height: '88vh',
+            backgroundColor: 'rgba(255,255,255,0.7)',
+        };
 
-        const empty = (
-            <></>
+        // Buttons
+        const backButton = (
+            <a type="button"
+               className="btn btn-light p-0 mb-1"
+               onClick={this.stepBackHierarchyStack.bind(this)}
+            >
+                <ArrowBackIcon/>
+            </a>
         );
 
-        const chapterArray = this.state.chapterArray;
+        // other Parts
+        const loadingImg = (
+            <div style={loadingDivStyle}>
+                <img src={loadingGif} style={loadingImgStyle}/>
+            </div>
+        );
         const whileLoading = chapterArray.map((chapter) => {
             return <div className="list-group mr-1" key={chapter.index}>
                 <button
@@ -360,11 +362,11 @@ class Sidebar extends React.Component {
                         <br/>
                         <div className="border-bottom border-primary"/>
                         {this.props.language === 'de' ?
-                            <span className="text-left">{icd.kapitel_name_de}</span> : empty}
+                            <span className="text-left">{icd.kapitel_name_de}</span> : null}
                         {this.props.language === 'fr' ?
-                            <span className="text-left">{icd.kapitel_name_fr}</span> : empty}
+                            <span className="text-left">{icd.kapitel_name_fr}</span> : null}
                         {this.props.language === 'it' ?
-                            <span className="text-left">{icd.kapitel_name_it}</span> : empty}
+                            <span className="text-left">{icd.kapitel_name_it}</span> : null}
                     </button>
                 </div>
             } else {
@@ -381,89 +383,38 @@ class Sidebar extends React.Component {
                     </button>
                 </div>
             }
-
         });
-        let icdSubGroup = [];
         if (icdSelection !== []) {
             icdSubGroup = icdSelection.map((icd, index) => {
-                if (icd === this.state.activeIcd) {
-                    return <div className="list-group mr-1" key={index}>
-                        <button
-                            type="button"
-                            className="list-group-item list-group-item-action p-0 pl-2 pr-2"
-                            style={icdVisibleStyle}
-                            onClick={this.filterIcdsByIcdcode.bind(this, icd.code, icd)}
-                            onMouseLeave={this.viewInfoCard.bind(this, false)}
-                        >
-                            <span className="text-left text-primary font-weight-bold pr-2"
-                                  style={chapterStyle}>{icd.code}</span>
-                            {this.props.language === 'de' ? <span className="text-left">{icd.text_de}</span> : empty}
-                            {this.props.language === 'fr' ? <span className="text-left">{icd.text_fr}</span> : empty}
-                            {this.props.language === 'it' ? <span className="text-left">{icd.text_it}</span> : empty}
-                        </button>
-                    </div>
-                } else if (icd !== this.state.activeIcd) {
-                    return <div className="list-group mr-1" key={index}>
-                        <button
-                            type="button"
-                            className="list-group-item list-group-item-action p-0 pl-2 pr-2"
-                            style={icdHiddenStyle}
-                            onClick={this.filterIcdsByIcdcode.bind(this, icd.code, icd)}
-                            onMouseEnter={this.viewInfoCard.bind(this, true, icd)}
-                        >
-                            <span className="text-left text-primary font-weight-bold pr-2"
-                                  style={chapterStyle}>{icd.code}</span>
-                            {this.props.language === 'de' ? <span className="text-left">{icd.text_de}</span> : empty}
-                            {this.props.language === 'fr' ? <span className="text-left">{icd.text_fr}</span> : empty}
-                            {this.props.language === 'it' ? <span className="text-left">{icd.text_it}</span> : empty}
-                        </button>
-                    </div>
-                }
+                return <div className="list-group mr-1" key={index}>
+                    <button
+                        type="button"
+                        className="list-group-item list-group-item-action p-0 pl-2 pr-2"
+                        style={(icd === this.state.activeIcd) ? icdVisibleStyle : icdHiddenStyle}
+                        onClick={this.filterIcdsByIcdcode.bind(this, icd.code, icd)}
+                        onMouseEnter={this.viewInfoCard.bind(this, true, icd)}
+                        onMouseLeave={this.viewInfoCard.bind(this, false)}
+                    >
+                        <span className="text-left text-primary font-weight-bold pr-2"
+                              style={chapterStyle}>{icd.code}</span>
+                        {this.props.language === 'de' ? <span className="text-left">{icd.text_de}</span> : null}
+                        {this.props.language === 'fr' ? <span className="text-left">{icd.text_fr}</span> : null}
+                        {this.props.language === 'it' ? <span className="text-left">{icd.text_it}</span> : null}
+                    </button>
+                </div>
             });
-        }
-        const backButton = (
-            <a type="button"
-               className="btn btn-light p-0 mb-1"
-               onClick={this.stepBackHierarchyStack.bind(this)}
-            >
-                <ArrowBackIcon/>
-            </a>
-        );
-        const loadingImgStyle = {
-            zIndex: 100,
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            width: '50px',
-            height: '50px',
-            marginTop: '-25px',
-            marginLeft: '-25px',
-        }
-        const loadingDivStyle = {
-            zIndex: 99,
-            top: '0%',
-            left: '0%',
-            width: '100%',
-            position: 'absolute',
-            height: '88vh',
-            backgroundColor: 'rgba(255,255,255,0.7)',
-        }
-        const loadingImg = (
-            <div style={loadingDivStyle}>
-                <img src={loadingGif} style={loadingImgStyle}/>
-            </div>
-        )
+        };
 
         return (
             <div>
-                {this.ICDstack.length > 0 ? empty : loadingImg}
+                {this.ICDstack.length > 0 ? null : loadingImg}
                 <div>
-                    {this.ICDstack.length > 1 && this.state.filtered === true ? backButton : empty}
+                    {this.ICDstack.length > 1 && this.state.filtered === true ? backButton : null}
                 </div>
                 <div style={this.state.filtered ? withBackButtonStyle : withoutBackButtonStyle}>
-                    {this.ICDstack.length > 0 ? empty : whileLoading}
-                    {this.ICDstack.length === 1 && this.state.filtered === false ? icdChapters : empty}
-                    {this.ICDstack.length > 1 && this.state.filtered === true ? icdSubGroup : empty}
+                    {this.ICDstack.length > 0 ? null : whileLoading}
+                    {this.ICDstack.length === 1 && this.state.filtered === false ? icdChapters : null}
+                    {this.ICDstack.length > 1 && this.state.filtered === true ? icdSubGroup : null}
                 </div>
             </div>
         )
