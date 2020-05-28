@@ -23,7 +23,7 @@ default: &default
 
 development:
   url: postgresql://46.126.162.209
-  <<: *default
+  user: postgres
   password:
   database: PSE
 
@@ -59,7 +59,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   url: postgresql://46.126.162.209
-  <<: *default
+  user: postgres
   password:
   database: PSE_test
 
@@ -84,7 +84,7 @@ test:
 #
 production:
   url: postgresql://46.126.162.209
-  <<: *default
+  user: postgres
   password:
   database: PSE_prod
 
