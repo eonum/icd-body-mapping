@@ -84,7 +84,7 @@ class Mapping extends React.Component {
             setTimeout(() => {
                 $.getJSON('api/v1/maps')
                     .then(response => this.setState({maps: response}))
-            }, 1000);
+            });
         }
         if (this.state.maps !== prevState.maps) {
             let mappedImages = this.getImagesFromMaps(this.props.showingIcdId);

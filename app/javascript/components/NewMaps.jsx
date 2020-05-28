@@ -80,6 +80,9 @@ class NewMaps extends React.Component {
                 }
                 this.setState({buttonColor: 'btn btn-success'});
                 this.sendIcdToDetailsCard(bodyArray);
+                if (this.props.parent === 'details') {
+                    this.props.callbackFromMainUIUpdateList();
+                }
             }
         });
         event.preventDefault();
@@ -94,9 +97,6 @@ class NewMaps extends React.Component {
             icd_ids: this.props.icd_ids,
             selectedLayer: this.props.selectedLayer,
         });
-        if (this.props.parent === 'details') {
-            this.props.callbackFromMainUIUpdateList();
-        }
     }
 
     render() {
