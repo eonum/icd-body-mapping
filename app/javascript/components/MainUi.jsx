@@ -41,6 +41,7 @@ class MainUI extends React.Component {
             viewAll: false,
             showFrags: true,
             mapView: true,
+            load: false,
         };
     }
 
@@ -166,6 +167,11 @@ class MainUI extends React.Component {
         this.setState({updateList: true});
     };
 
+    callbackDetailsLoad = (load) => {
+        this.setState({load: load});
+        console.log(load);
+    };
+
     callbackDetailsCardClose = () => {
         this.setState({
             detailsDisplayed: false,
@@ -262,6 +268,7 @@ class MainUI extends React.Component {
                 updateList={this.state.updateList}
                 showFrags={this.state.showFrags}
                 mapView={this.state.mapView}
+                load={this.state.load}
                 callbackFromMainUIHighlight={this.callbackLayerListHighlightPng}
                 callbackFromMainUIResetToSelection={this.callbackLayerlistResetToSelection}
                 callbackFromMainUISelectPngs={this.callbackLayerListSelectPngs}
@@ -282,6 +289,7 @@ class MainUI extends React.Component {
                 callbackFromMainUIClose={this.callbackDetailsCardClose}
                 callbackFromMainUIReloadIcds={this.callbackDetailsReloadIcds}
                 callbackFromMainUIUpdateList={this.callbackDetailsUpdateList}
+                callbackFromMainUILoad={this.callbackDetailsLoad}
             />
         );
         const searchResults = (
