@@ -8,7 +8,7 @@ RSpec.describe Api::V1::MapsController, type: :controller do
     @lay1 = FactoryBot.create(:layer)
     @lay2 = FactoryBot.create(:layer)
     @map1 = FactoryBot.create(:map)
-    @map2 = FactoryBot.create(:map)
+    @map2 = FactoryBot.create(:map, :second)
   end
 
   describe "GET index" do
@@ -20,35 +20,34 @@ RSpec.describe Api::V1::MapsController, type: :controller do
 
   describe "GET show" do
     it 'should show map' do
-      get :show, params: {id: 1}
+      get :show, params: {id: @map1.id}
       expect(response.body).to match [@map1].to_json
     end
 
     it 'should not show all maps' do
-      get :show, params: {id: 1}
+      get :show, params: {id: @map1.id}
       expect(response.body).to_not equal [@map1,@map2].to_json
     end
 
     it 'should show layers' do
-      get :show_icd, params: {id: 1}
-      expect(response.body).to match [@lay1, @lay2].to_json
+      get :show_icd, params: {id: @map1.icd_id}
+      expect(response.body).to match [Layer.first, Layer.second].to_json
     end
   end
 
   describe "DELETE destroy" do
-    let!(:icd) { create :icd }
-    let!(:layer) { create :layer }
-    let!(:map) { create :map }
+    after(:all) do
+      let!(:map) { create :map }
+    end
 
     it 'should delete layer' do
-      expect { delete :destroy, params: { id: map.id } }.to change(Map, :count).by(-1)
+      expect { delete :destroy, params: { id: @map1.id } }.to change(Map, :count).by(-1)
     end
   end
 
   context 'POST create' do
     let!(:icd) { create :icd }
     let!(:layer) { create :layer }
-    let!(:map) { create :map }
 
     it 'should create a new map' do
       params = [{icd_id: icd.id, layer_id: layer.id}]

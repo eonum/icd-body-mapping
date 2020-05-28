@@ -1,6 +1,7 @@
 require 'capybara_helper'
+#Needs a different helper, since the normal Database cleaner messes up the Data between Tests.
 
-RSpec.describe 'LayerOptions', js: true do
+RSpec.describe 'System', js: true do
   before(:all) do
     DatabaseCleaner.clean_with(:truncation)
     @icd = FactoryBot.create(:icd)
