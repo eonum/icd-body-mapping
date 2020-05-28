@@ -124,6 +124,7 @@ class DetailsCard extends React.Component {
                             selectedLayer={selectedLayer}
                             callbackFromDetailsCard={this.props.callbackFromMainUIMaps}
                             callbackFromMainUIUpdateList={this.props.callbackFromMainUIUpdateList}
+                            callbackFromMainUILoad={this.props.callbackFromMainUILoad}
                             parent={'details'}
                         />
                     </div>

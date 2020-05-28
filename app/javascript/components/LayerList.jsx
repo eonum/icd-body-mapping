@@ -78,6 +78,10 @@ class LayerList extends React.Component {
             this.setState({showFrags: (this.props.showFrags
                                       && this.props.mapView)});
         }
+        if (this.props.load !== prevProps.load
+          && this.props.load === true) {
+            this.setState({load: true});
+        }
     }
 
     /**

@@ -55,6 +55,8 @@ class NewMaps extends React.Component {
 
         if (this.props.parent === 'search') {
             this.props.callbackFromSearchCard(true);
+        } else {
+            this.props.callbackFromMainUILoad(true);
         }
 
         if (multiMapping) {
@@ -82,6 +84,7 @@ class NewMaps extends React.Component {
                 this.sendIcdToDetailsCard(bodyArray);
                 if (this.props.parent === 'details') {
                     this.props.callbackFromMainUIUpdateList();
+                    this.props.callbackFromMainUILoad(false);
                 }
             }
         });
@@ -102,7 +105,7 @@ class NewMaps extends React.Component {
     render() {
         const parent = this.props.parent;
         let inSearch = (parent === 'search');
-        
+
         return(
             <form
                 onSubmit={this.handleSubmit.bind(this, inSearch)}
