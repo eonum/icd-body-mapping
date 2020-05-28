@@ -169,7 +169,6 @@ class MainUI extends React.Component {
 
     callbackDetailsLoad = (load) => {
         this.setState({load: load});
-        console.log(load);
     };
 
     callbackDetailsCardClose = () => {

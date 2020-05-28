@@ -81,7 +81,6 @@ class LayerList extends React.Component {
         if (this.props.load !== prevProps.load
           && this.props.load === true) {
             this.setState({load: true});
-            console.log('bla')
         }
     }
 
