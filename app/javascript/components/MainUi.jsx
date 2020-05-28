@@ -92,6 +92,8 @@ class MainUI extends React.Component {
     callbackTopbarSearch = (searchTermFromTopbar) => {
         this.setState({
             searchTerm: searchTermFromTopbar,
+            showingIcdId: 0,
+            selectedIcd: '',
             searchDisplayed: true,
             detailsDisplayed: false,
         });
