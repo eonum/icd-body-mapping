@@ -1,70 +1,70 @@
-example_id                                                  | status  | run_time        |
------------------------------------------------------------ | ------- | --------------- |
-./spec/backend/controllers/icds_controller_spec.rb[1:1:1]   | passed  | 0.11954 seconds |
-./spec/backend/controllers/icds_controller_spec.rb[1:2:1]   | passed  | 0.11267 seconds |
-./spec/backend/controllers/icds_controller_spec.rb[1:2:2]   | passed  | 0.10876 seconds |
-./spec/backend/controllers/icds_controller_spec.rb[1:3:1]   | passed  | 0.34547 seconds |
-./spec/backend/controllers/layers_controller_spec.rb[1:1:1] | passed  | 0.07848 seconds |
-./spec/backend/controllers/layers_controller_spec.rb[1:2:1] | passed  | 0.09362 seconds |
-./spec/backend/controllers/layers_controller_spec.rb[1:2:2] | passed  | 0.09407 seconds |
-./spec/backend/controllers/layers_controller_spec.rb[1:3:1] | passed  | 0.34626 seconds |
-./spec/backend/controllers/layers_controller_spec.rb[1:4:1] | passed  | 0.33943 seconds |
-./spec/backend/controllers/maps_controller_spec.rb[1:1:1]   | passed  | 0.10881 seconds |
-./spec/backend/controllers/maps_controller_spec.rb[1:2:1]   | passed  | 0.08639 seconds |
-./spec/backend/controllers/maps_controller_spec.rb[1:2:2]   | passed  | 0.11676 seconds |
-./spec/backend/controllers/maps_controller_spec.rb[1:2:3]   | passed  | 0.14588 seconds |
-./spec/backend/controllers/maps_controller_spec.rb[1:3:1]   | passed  | 0.25979 seconds |
-./spec/backend/controllers/maps_controller_spec.rb[1:4:1]   | passed  | 0.42519 seconds |
-./spec/backend/controllers/maps_controller_spec.rb[1:4:2]   | passed  | 0.59388 seconds |
-./spec/backend/controllers/search_controller_spec.rb[1:1:1] | passed  | 0.12304 seconds |
-./spec/backend/controllers/search_controller_spec.rb[1:1:2] | passed  | 0.11578 seconds |
-./spec/backend/controllers/search_controller_spec.rb[1:1:3] | passed  | 0.09565 seconds |
-./spec/backend/controllers/search_controller_spec.rb[1:1:4] | passed  | 0.12663 seconds |
-./spec/backend/controllers/search_controller_spec.rb[1:1:5] | passed  | 0.14791 seconds |
-./spec/backend/controllers/search_controller_spec.rb[1:1:6] | passed  | 0.12881 seconds |
-./spec/backend/controllers/search_controller_spec.rb[1:2:1] | passed  | 0.09477 seconds |
-./spec/backend/controllers/search_controller_spec.rb[1:2:2] | passed  | 0.12189 seconds |
-./spec/backend/controllers/search_controller_spec.rb[1:2:3] | passed  | 0.09765 seconds |
-./spec/backend/models/icd_spec.rb[1:1]                      | passed  | 0.13286 seconds |
-./spec/backend/models/icd_spec.rb[1:2]                      | passed  | 0.09398 seconds |
-./spec/backend/models/icd_spec.rb[1:3]                      | passed  | 0.12202 seconds |
-./spec/backend/models/icd_spec.rb[1:4]                      | passed  | 0.09861 seconds |
-./spec/backend/models/icd_spec.rb[1:5]                      | passed  | 0.09572 seconds |
-./spec/backend/models/icd_spec.rb[1:6]                      | passed  | 0.10028 seconds |
-./spec/backend/models/icd_spec.rb[1:7]                      | passed  | 0.10376 seconds |
-./spec/backend/models/icd_spec.rb[1:8]                      | passed  | 0.09342 seconds |
-./spec/backend/models/icd_spec.rb[1:9]                      | passed  | 0.09667 seconds |
-./spec/backend/models/icd_spec.rb[1:10]                     | passed  | 0.08574 seconds |
-./spec/backend/models/icd_spec.rb[1:11]                     | passed  | 0.08286 seconds |
-./spec/backend/models/icd_spec.rb[1:12]                     | passed  | 0.10943 seconds |
-./spec/backend/models/icd_spec.rb[1:13]                     | passed  | 0.08328 seconds |
-./spec/backend/models/layer_spec.rb[1:1]                    | passed  | 0.25819 seconds |
-./spec/backend/models/layer_spec.rb[1:2]                    | passed  | 0.35769 seconds |
-./spec/backend/models/layer_spec.rb[1:3]                    | passed  | 0.09006 seconds |
-./spec/backend/models/layer_spec.rb[1:4]                    | passed  | 0.09478 seconds |
-./spec/backend/models/layer_spec.rb[1:5]                    | passed  | 0.10816 seconds |
-./spec/backend/models/map_spec.rb[1:1]                      | passed  | 0.14511 seconds |
-./spec/backend/models/map_spec.rb[1:2]                      | passed  | 0.13027 seconds |
-./spec/backend/models/map_spec.rb[1:3]                      | passed  | 0.12062 seconds |
-./spec/backend/models/map_spec.rb[1:4]                      | passed  | 0.25623 seconds |
-./spec/backend/models/map_spec.rb[1:5]                      | passed  | 0.14548 seconds |
-./spec/system/System_spec.rb[1:1:1]                         | passed  | 11.14 seconds   |
-./spec/system/System_spec.rb[1:1:2]                         | unknown |                 |
-./spec/system/System_spec.rb[1:2:1]                         | unknown |                 |
-./spec/system/System_spec.rb[1:2:2]                         | unknown |                 |
-./spec/system/System_spec.rb[1:2:3]                         | unknown |                 |
-./spec/system/System_spec.rb[1:3:1]                         | unknown |                 |
-./spec/system/System_spec.rb[1:3:2]                         | unknown |                 |
-./spec/system/System_spec.rb[1:3:3]                         | unknown |                 |
-./spec/system/System_spec.rb[1:4:1]                         | unknown |                 |
-./spec/system/System_spec.rb[1:5:1]                         | unknown |                 |
-./spec/system/System_spec.rb[1:5:2]                         | unknown |                 |
-./spec/system/System_spec.rb[1:6:1]                         | unknown |                 |
-./spec/system/System_spec.rb[1:6:2]                         | unknown |                 |
-./spec/system/System_spec.rb[1:6:3]                         | unknown |                 |
-./spec/system/System_spec.rb[1:6:4]                         | unknown |                 |
-./spec/system/System_spec.rb[1:7:1]                         | unknown |                 |
-./spec/system/System_spec.rb[1:7:2]                         | unknown |                 |
-./spec/system/System_spec.rb[1:7:3]                         | unknown |                 |
-./spec/system/System_spec.rb[1:7:4]                         | unknown |                 |
-./spec/system/System_spec.rb[1:7:5]                         | unknown |                 |
+example_id                                                  | status | run_time        |
+----------------------------------------------------------- | ------ | --------------- |
+./spec/backend/controllers/icds_controller_spec.rb[1:1:1]   | passed | 0.11954 seconds |
+./spec/backend/controllers/icds_controller_spec.rb[1:2:1]   | passed | 0.11267 seconds |
+./spec/backend/controllers/icds_controller_spec.rb[1:2:2]   | passed | 0.10876 seconds |
+./spec/backend/controllers/icds_controller_spec.rb[1:3:1]   | passed | 0.34547 seconds |
+./spec/backend/controllers/layers_controller_spec.rb[1:1:1] | passed | 0.07848 seconds |
+./spec/backend/controllers/layers_controller_spec.rb[1:2:1] | passed | 0.09362 seconds |
+./spec/backend/controllers/layers_controller_spec.rb[1:2:2] | passed | 0.09407 seconds |
+./spec/backend/controllers/layers_controller_spec.rb[1:3:1] | passed | 0.34626 seconds |
+./spec/backend/controllers/layers_controller_spec.rb[1:4:1] | passed | 0.33943 seconds |
+./spec/backend/controllers/maps_controller_spec.rb[1:1:1]   | passed | 0.10881 seconds |
+./spec/backend/controllers/maps_controller_spec.rb[1:2:1]   | passed | 0.08639 seconds |
+./spec/backend/controllers/maps_controller_spec.rb[1:2:2]   | passed | 0.11676 seconds |
+./spec/backend/controllers/maps_controller_spec.rb[1:2:3]   | passed | 0.14588 seconds |
+./spec/backend/controllers/maps_controller_spec.rb[1:3:1]   | passed | 0.25979 seconds |
+./spec/backend/controllers/maps_controller_spec.rb[1:4:1]   | passed | 0.42519 seconds |
+./spec/backend/controllers/maps_controller_spec.rb[1:4:2]   | passed | 0.59388 seconds |
+./spec/backend/controllers/search_controller_spec.rb[1:1:1] | passed | 0.12304 seconds |
+./spec/backend/controllers/search_controller_spec.rb[1:1:2] | passed | 0.11578 seconds |
+./spec/backend/controllers/search_controller_spec.rb[1:1:3] | passed | 0.09565 seconds |
+./spec/backend/controllers/search_controller_spec.rb[1:1:4] | passed | 0.12663 seconds |
+./spec/backend/controllers/search_controller_spec.rb[1:1:5] | passed | 0.14791 seconds |
+./spec/backend/controllers/search_controller_spec.rb[1:1:6] | passed | 0.12881 seconds |
+./spec/backend/controllers/search_controller_spec.rb[1:2:1] | passed | 0.09477 seconds |
+./spec/backend/controllers/search_controller_spec.rb[1:2:2] | passed | 0.12189 seconds |
+./spec/backend/controllers/search_controller_spec.rb[1:2:3] | passed | 0.09765 seconds |
+./spec/backend/models/icd_spec.rb[1:1]                      | passed | 0.13286 seconds |
+./spec/backend/models/icd_spec.rb[1:2]                      | passed | 0.09398 seconds |
+./spec/backend/models/icd_spec.rb[1:3]                      | passed | 0.12202 seconds |
+./spec/backend/models/icd_spec.rb[1:4]                      | passed | 0.09861 seconds |
+./spec/backend/models/icd_spec.rb[1:5]                      | passed | 0.09572 seconds |
+./spec/backend/models/icd_spec.rb[1:6]                      | passed | 0.10028 seconds |
+./spec/backend/models/icd_spec.rb[1:7]                      | passed | 0.10376 seconds |
+./spec/backend/models/icd_spec.rb[1:8]                      | passed | 0.09342 seconds |
+./spec/backend/models/icd_spec.rb[1:9]                      | passed | 0.09667 seconds |
+./spec/backend/models/icd_spec.rb[1:10]                     | passed | 0.08574 seconds |
+./spec/backend/models/icd_spec.rb[1:11]                     | passed | 0.08286 seconds |
+./spec/backend/models/icd_spec.rb[1:12]                     | passed | 0.10943 seconds |
+./spec/backend/models/icd_spec.rb[1:13]                     | passed | 0.08328 seconds |
+./spec/backend/models/layer_spec.rb[1:1]                    | passed | 0.25819 seconds |
+./spec/backend/models/layer_spec.rb[1:2]                    | passed | 0.35769 seconds |
+./spec/backend/models/layer_spec.rb[1:3]                    | passed | 0.09006 seconds |
+./spec/backend/models/layer_spec.rb[1:4]                    | passed | 0.09478 seconds |
+./spec/backend/models/layer_spec.rb[1:5]                    | passed | 0.10816 seconds |
+./spec/backend/models/map_spec.rb[1:1]                      | passed | 0.14511 seconds |
+./spec/backend/models/map_spec.rb[1:2]                      | passed | 0.13027 seconds |
+./spec/backend/models/map_spec.rb[1:3]                      | passed | 0.12062 seconds |
+./spec/backend/models/map_spec.rb[1:4]                      | passed | 0.25623 seconds |
+./spec/backend/models/map_spec.rb[1:5]                      | passed | 0.14548 seconds |
+./spec/system/System_spec.rb[1:1:1]                         | passed | 2.13 seconds    |
+./spec/system/System_spec.rb[1:1:2]                         | passed | 1.43 seconds    |
+./spec/system/System_spec.rb[1:2:1]                         | passed | 1.33 seconds    |
+./spec/system/System_spec.rb[1:2:2]                         | passed | 1.37 seconds    |
+./spec/system/System_spec.rb[1:2:3]                         | passed | 1.39 seconds    |
+./spec/system/System_spec.rb[1:3:1]                         | passed | 1.7 seconds     |
+./spec/system/System_spec.rb[1:3:2]                         | passed | 10.35 seconds   |
+./spec/system/System_spec.rb[1:3:3]                         | passed | 3.59 seconds    |
+./spec/system/System_spec.rb[1:4:1]                         | passed | 1.35 seconds    |
+./spec/system/System_spec.rb[1:5:1]                         | passed | 1.59 seconds    |
+./spec/system/System_spec.rb[1:5:2]                         | passed | 1.68 seconds    |
+./spec/system/System_spec.rb[1:6:1]                         | passed | 3.12 seconds    |
+./spec/system/System_spec.rb[1:6:2]                         | passed | 2.53 seconds    |
+./spec/system/System_spec.rb[1:6:3]                         | passed | 3.29 seconds    |
+./spec/system/System_spec.rb[1:6:4]                         | passed | 1.8 seconds     |
+./spec/system/System_spec.rb[1:7:1]                         | passed | 1.23 seconds    |
+./spec/system/System_spec.rb[1:7:2]                         | passed | 1.62 seconds    |
+./spec/system/System_spec.rb[1:7:3]                         | passed | 2.81 seconds    |
+./spec/system/System_spec.rb[1:7:4]                         | passed | 1.62 seconds    |
+./spec/system/System_spec.rb[1:7:5]                         | passed | 1.86 seconds    |

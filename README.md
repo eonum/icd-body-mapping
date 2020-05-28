@@ -59,10 +59,10 @@ ruby -v
 gem install bundler
 ```
 
-#### Install Rails (6.0.2.1)
+#### Install Rails (6.0.2.2)
 
 ```
-gem install rails -v 6.0.2.1
+gem install rails -v 6.0.2.2
 rbenv rehash
 
 check version
@@ -101,7 +101,7 @@ Download yarn from 'https://classic.yarnpkg.com/en/docs/install/#windows-stable'
 
 Alternatively use Chocolatey (Package manager for windows)
 
-#### Ruby (2.7.0):
+#### Ruby (2.6.5):
 
 Download Ruby from 'https://rubyinstaller.org/downloads/' and install
 
@@ -110,7 +110,7 @@ Check version:
 C:\ ruby -v
 ```
 
-#### Rails (6.0.2.1):
+#### Rails (6.0.2.2):
 
 Open CMD to install Rails (windows + R, type "cmd", hit enter)
 ```
