@@ -2,9 +2,9 @@ import React from "react";
 
 /**
  * The NewMaps component is one, which is responsible for creating connections between the icd codes
- * and the images. It does this by creating an entry inside the maps table, which contains an
- * the icd_id, layer_id coloms.
- * It gets the layer_id and icd_id as props from the DetailsCard, which in turn them from the MainUi$
+ * and the images. It does this by creating an entry inside the maps table, which contains
+ * the icd_id, layer_id columns. It gets the layer_id and icd_id as props from the DetailsCard,
+ * which in turn them gets them from the MainUi
  * @author Marius Asadauskas
  */
 class NewMaps extends React.Component {
@@ -19,23 +19,34 @@ class NewMaps extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    /**
+     * Changes the button color back to normal once a different Icd is selected
+     * If it was green before it should turn blue. Otherwise it stays blue.
+     * @param prevProps
+     */
     componentDidUpdate(prevProps) {
         if(this.props.icd_id !== prevProps.icd_id) {
             this.setState({buttonColor: 'btn btn-primary'});
         }
     }
 
+    /**
+     * Sends the newly created maps to the details card
+     * from where they travel to the Mapping and LayerList
+     * @param newMap
+     */
     sendIcdToDetailsCard(newMap) {
         this.props.callbackFromDetailsCard(newMap);
     }
 
     /**
-     * The handle submit method is called, once a user clicks on submit
-     * it calls the backend with the Method Post and then passes the intended object,
-     * which should be posted.
+     * The handle submit method is called, once a user clicks on save.
+     * It calls the backend with the Method Post and then passes an array
+     * of Maps, which should be posted. This array is processed as a single request,
+     * as to keep the overhead low. First it builds the array from the selected Icds
+     * and selected Images and then it makes the call.
      * event.preventDefault(); is needed as to not reload the site every time.
-     * @param multiMapping
-     * @param event
+     * @param multiMapping is used, if the mapping comes from the search card
      */
     handleSubmit(multiMapping, event) {
         let icd_ids = [];

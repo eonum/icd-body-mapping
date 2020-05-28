@@ -5,10 +5,10 @@ import loadingGif from '../../assets/images/Preloader_2.gif';
 
 
 /**
- * The Mapping component is one that displays the individual layers,
- * so that the user can see them and interact with them.
- * It allows the user to choose between the Layers with a dropdown Menu,
- * It also registers clicks from a user and checks which image was chosen in the selectPng Method.
+ * The Mapping component is one that displays the individual layers e.g Ohr,
+ * so that the user can see and interact with them. It enables the user to choose
+ * between the Layers through a dropdown Menu and It also allows a User to click
+ * on specific images, to choose them.
  * @author Marius Asadauskas, Aaron Saegesser
  */
 class Mapping extends React.Component {
@@ -28,6 +28,10 @@ class Mapping extends React.Component {
         this.callbackallImages = this.callbackallImages.bind(this);
     }
 
+    /**
+     * Makes sure that Mapping has all the necessary layers and maps and Images
+     * before mounting the MainUi
+     */
     componentDidMount() {
         $.getJSON('/api/v1/layers')
             .then(response => this.setState({allImages: response}));
@@ -38,8 +42,14 @@ class Mapping extends React.Component {
     }
 
     /**
-     * Updates the image array with the images of an icd,
-     * once the prop showingIcdId changes.
+     * Has Many methods, which react to change in the environment.
+     * showingIcdId: Changes the current mapped Icd and can cause different mapped images to show
+     * editable: Allows for clicks in the Mapping and to add new Layers
+     * layerFragmentStack: Updates selected Images from the Layerlist
+     * map: sees if something new was mapped and reloads maps Array
+     * mapLayerList: Deletes a map through the layerList
+     * hightlightedPng: highlights the image when hovering over it
+     * needUpdate: resets mapping, once the ICD Mapping button is clicked
      */
     componentDidUpdate(prevProps, prevState) {
         if (this.props.showingIcdId !== prevProps.showingIcdId) {
@@ -59,11 +69,14 @@ class Mapping extends React.Component {
                 this.selectAll(true);
             }
         }
-        if (this.props.editable !== prevProps.editable) {
+
+        if (this.props.editable !== prevProps.editable || (this.state.mapView !== prevState.mapView && this.state.mapView === true)) {
+            this.changeViewTo('map');
             this.setState({selectedImages: this.state.selectedMappedImages});
             this.selectMappedImages(this.state.mappedImages);
             this.sendIcdToMainUI([], true, []);
         }
+
         if (this.props.layerFragmentStack !== prevProps.layerFragmentStack && this.props.showingIcdId === prevProps.showingIcdId && this.props.map === prevProps.map) {
             this.selectPngsFromList(this.props.layerFragmentStack);
         }
@@ -82,16 +95,13 @@ class Mapping extends React.Component {
         if (this.props.mapLayerList !== prevProps.mapLayerList) {
             this.deleteMap(this.props.mapLayerList);
         }
-        if (this.props.selectedLayerFromList !== prevProps.selectedLayerFromList && this.props.selectedLayerFromList !== '') {
-            this.selectLayer(this.props.selectedLayerFromList);
-        }
-        if (this.props.hightlightedPng !== prevProps.hightlightedPng && this.props.hightlightedPng !== '') {
-            this.highlightPng(this.props.hightlightedPng);
-        } else if (this.props.hightlightedPng !== prevProps.hightlightedPng && this.props.hightlightedPng === '') {
-            this.setBackToPreviousSelection();
-        }
-        if (this.props.editable !== prevProps.editable && this.props.editable === false) {
-            this.changeViewTo('map');
+        if (this.props.hightlightedPng !== prevProps.hightlightedPng) {
+            if (this.props.hightlightedPng !== '') {
+                this.highlightPng(this.props.hightlightedPng);
+            }
+            else {
+                this.setBackToPreviousSelection();
+            }
         }
         if (this.props.needUpdate !== prevProps.needUpdate) {
             this.setState({
@@ -106,6 +116,11 @@ class Mapping extends React.Component {
         }
     }
 
+    /**
+     * A Callback, once a new Layer is made the mapping has to be updated.
+     * It updates all the layers through the backend, since the layer id isn't known.
+     * @param layer contains (name, ebene, img) as to find and integrate the image
+     */
     callbackallImages = (layer) => {
         this.setState({allImages: this.state.allImages.concat(layer)});
         setTimeout(() => {
@@ -116,6 +131,12 @@ class Mapping extends React.Component {
         });
     };
 
+    /**
+     * Once an image has been deleted, the mapping gets a callback, as to delete it aswell
+     * The Backend has to be called again, since we don't know if the layers still contain other images
+     * or are empty after deleting this one.
+     * @param id an id as to locate the image by
+     */
     callbackDeleteFromMapping = (id) => {
         let newImages = this.state.allImages.filter((image) => image.id !== id);
         this.setState({allImages: newImages});
@@ -126,21 +147,24 @@ class Mapping extends React.Component {
     }
 
     /**
-     * A method, which sends the chosen image back to the Main Ui, so that other components,
-     * like the details card can access it.
-     * @param image holds the layer_id of an image
+     * A method, which sends the chosen images back to the Main Ui, so that other components,
+     * like the details card can access it. It also has a
+     * @param images An Array of all the selected Images
+     * @param selectedFromMapping. This is true everywhere except when coming from the LayerList
+     * @param mappedImages An array of all Mapped Images, so we could filter them out.
+     * As to not send already mapped images to NewMaps
      */
-    sendIcdToMainUI(image, selectedFromMapping, mappedImages) {
+    sendIcdToMainUI(images, selectedFromMapping, mappedImages) {
         for (let i = 0; i < mappedImages.length; i ++){
-            image = image.filter((image) => image.name !== mappedImages[i].name);
+            images = images.filter((image) => image.name !== mappedImages[i].name);
         }
-        this.props.callbackFromMainUISelection(image, selectedFromMapping);
+        this.props.callbackFromMainUISelection(images, selectedFromMapping);
     }
 
-    addNewMap(map) {
-        this.setState({maps: this.state.maps.concat(map)});
-    }
-
+    /**
+     * A Method, which simply deletes a map from all Possible arrays. No backend call is needed in this case.
+     * @param map The map, which is supposed to be deleted. Recieved from LayerList
+     */
     deleteMap(map) {
         let map_id = map.map_id;
         let newMaps = this.state.maps.filter((map) => map.id !== map_id);
@@ -156,7 +180,7 @@ class Mapping extends React.Component {
     }
 
     /**
-     * The _onMouseMove Method tracks the mouse movements of a User within the details card.
+     * The _onMouseMove Method tracks the mouse movements of a User within the Mapping.
      * This is later needed in selectPng, as to know at which coordinates a click happens.
      */
     _onMouseMove(e) {
@@ -164,10 +188,9 @@ class Mapping extends React.Component {
     }
 
     /**
-     * Once a layer is selected, the Program gets all it's images from the backend.
-     * For the ear the URL would be: localhost:3000/layers/Ohr
-     * It then saves these images into the activeLayer array.
-     * @param elem.ebene is the layer variable of the selected element.
+     * Once a layer is selected, activeLayer is set to that and selectedImages is reset,
+     * as not to keep old images. It then selects all mappedImages with the new Layer in mind.
+     * @param elem.ebene is the layer, to which we want to switch
      */
     selectLayer(ebene) {
         this.setState({
@@ -180,6 +203,12 @@ class Mapping extends React.Component {
         });
     }
 
+    /**
+     * A simple method, which sets the Opacity of all images to 1 if x=true
+     * or sets the opacity of all Images to 0.3 if x=false.
+     * This method is used in many other places of the Component, like selectPng.
+     * @param x
+     */
     selectAll(x) {
         let elem = this.state.allImages;
         let activeLayer = this.state.activeLayer;
@@ -195,12 +224,17 @@ class Mapping extends React.Component {
         }
     }
 
+    /**
+     * Once an Icd is selected this goes through the maps and Images array and selects
+     * all images, which are mapped to the selected Icd.
+     * @param icdId The id, with which to filter the maps
+     * @returns mappedImages An array with all images, that are mapped to the Icd
+     */
     getImagesFromMaps(icdId){
         let allImages = this.state.allImages;
-        let maps = this.state.maps;
+        let maps = this.state.maps.filter((map) => map.icd_id === icdId);
         let mappedImages = [];
         for (let i = 0; i < maps.length; i++) {
-            if (maps[i].icd_id === icdId) {
                 let id = maps[i].layer_id;
                 for (let x = 0; x < allImages.length; x++) {
                     if (allImages[x].id === id) {
@@ -209,10 +243,15 @@ class Mapping extends React.Component {
                     }
                 }
             }
-        }
         return mappedImages;
     }
 
+    /**
+     * This Method takes the mappedImages Array and selects them on the Screen
+     * It sets the Opacity of nonselected Images to 0.3 and the ones of selected to 1
+     * The filtering by Layers Happens here, as to not recall getImagesFromMaps every time.
+     * @param mappedImages an Array recieved from getImagesFromMaps
+     */
     selectMappedImages(mappedImages) {
         this.selectAll(false);
         let selectedImages = [];
@@ -237,6 +276,11 @@ class Mapping extends React.Component {
         this.sendIcdToMainUI([], false, []);
     }
 
+    /**
+     * This is a Method, which makes the layers with selected Images in them appear
+     * blue in the Dropdown Menu. This way you know in which Layer maps already exist.
+     * @param mappedImages Makes a List of selected Layers out of the array of Images
+     */
     selectMappedLayers(mappedImages){
         let notMappedLayers = this.state.layers;
         let mappedLayers = [];
@@ -248,14 +292,14 @@ class Mapping extends React.Component {
     }
 
     /**
-     * The selectPng Method receives the x, y coordinates and the length of the imageElements array.
-     * Then it goes through all the different images and checks, which color an image has at the specific coordinates.
-     * If the color is transparent, then the user didn't click on that image and otherwise he did.
-     * To do this it paints a 1x1 pixel cut of an image onto a canvas and then checks its colour.
-     * Afterwards the id of said image is saved to the selectedId state.
+     * The selectPng Method receives the x, y coordinates and editable, which makes a click possible or not.
+     * The Method goes through all the images and checks, which color an image has at the specific x, y coordinates.
+     * If the color is transparent, then the user didn't click on that image. If the Image isn't transparent he did.
+     * To do this it paints a 1x1 pixel cut of an image onto a canvas and then checks its color.
+     * Afterwards the image is saved to the selectedImages Array.
      * @param x is the X coordinate, at which a click happens
      * @param y is the Y coordinate, at which a click happens
-     * @param len The size of the selectedLayers array, the amount of images.
+     * @param editable This refers to the edit Mode in the Top right.
      */
     selectPng(x, y, editable) {
         if (editable === true){
@@ -296,6 +340,13 @@ class Mapping extends React.Component {
         }
     }
 
+    /**
+     * This is a helper Method of selectPng. It checks if the clicked on Image has been Mapped
+     * yet or not. If yes, then a click isn't possible, you would first have to delete the map through
+     * the Layerlist Component. If it hasn't been mapped yet, then you can select/unselect it.
+     * @param elem the clicked on image
+     * @returns {boolean} weather it has been Mapped
+     */
     isMapped(elem){
         let selectedMappedImages = this.state.selectedMappedImages;
         for (let i = 0; i < selectedMappedImages.length; i++){
@@ -306,6 +357,14 @@ class Mapping extends React.Component {
         return false;
     }
 
+    /**
+     * This is another helper Method of selectPng. It checks, where in the selectedImages
+     * array an Images is located. Once found it returns the location and the Image is cut out.
+     * If nothing is found, then false is returned and the image gets added to the array
+     * @param elem The clicked on image
+     * @param selectedImages the array of all Images
+     * @returns {boolean|number} The location in the array
+     */
     containsImage(elem, selectedImages){
         for (let i = 0; i < selectedImages.length; i++) {
             if (selectedImages[i].id === elem.id) {
@@ -405,6 +464,7 @@ class Mapping extends React.Component {
 
     /**
      * The changeViewTo switches between the two viewmodes mapview and listview
+     * listview is to add new Images and mapview is to select them
      */
     changeViewTo(view) {
         if (view === 'map') {
@@ -419,6 +479,12 @@ class Mapping extends React.Component {
         }
     }
 
+    /**
+     * The render Method, which simply displays all the elements, which we want the User to see
+     * This includes All the images and the dropdown and the selection between
+     * Adding layers and the Mapping
+     * @returns {*}
+     */
     render() {
         let allElements = [];
         let allLayers = [];

@@ -26,7 +26,6 @@ class MainUI extends React.Component {
             showingIcdId: 0,
             checkedIcdIds: [],
             selectedLayer: '',
-            selectedLayerFromList: '',
             map: '',
             mapLayerList: 0,
             hightlightedPng: '',
@@ -59,7 +58,6 @@ class MainUI extends React.Component {
             showingIcdId: 0,
             checkedIcdIds: [],
             selectedLayer: '',
-            selectedLayerFromList: '',
             map: '',
             mapLayerList: 0,
             hightlightedPng: '',
@@ -306,7 +304,6 @@ class MainUI extends React.Component {
                 mapLayerList={this.state.mapLayerList}
                 showingIcdId={this.state.showingIcdId}
                 needUpdate={this.state.needUpdate}
-                selectedLayerFromList={this.state.selectedLayerFromList}
                 hightlightedPng={this.state.hightlightedPng}
                 layerFragmentStack={this.state.layerFragmentStack}
                 addToSelection={this.state.addToSelection}
