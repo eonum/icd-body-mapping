@@ -5,6 +5,10 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import loadingGif from '../../../assets/images/Preloader_2.gif';
 
+/**
+ * The DeleteImage Component has 2 main tasks. First to display All Images, as to make finding
+ * a specific one with ease. The second is the Possibility to delete the Image once found.
+ */
 class DeleteImage extends React.Component {
     constructor(props) {
         super(props);
@@ -24,6 +28,10 @@ class DeleteImage extends React.Component {
         this.getLayers();
     }
 
+    /**
+     * The component has to reset all Images once a new one is added, so this method
+     * makes sure to call the Necessary other Methods, once a new image has been made.
+     */
     componentDidUpdate(prevProps) {
         if (this.props.image !== prevProps.image){
             this.setState({load: true});
@@ -34,6 +42,9 @@ class DeleteImage extends React.Component {
         }
     }
 
+    /**
+     * Gets a List of all Images and sorts them alphabetically
+     */
     getImages() {
         $.getJSON('/api/v1/layers')
             .then(response => this.setState({
@@ -51,6 +62,10 @@ class DeleteImage extends React.Component {
             }));
     }
 
+    /**
+     * Gets a list of all Layers, as to make a list of Dropdown Menus
+     * These then contain all them Images within the corresponding layer
+     */
     getLayers() {
         $.getJSON('/api/v1/all/layers')
             .then(response => this.setState({
@@ -59,6 +74,11 @@ class DeleteImage extends React.Component {
             }));
     }
 
+    /**
+     * Makes a call to the Backend, as to delete the selected Image
+     * Also sends the Image to Mapping, so that it can be removed.
+     * @param image The image, on which the trashcan is pressed
+     */
     handleDelete(image) {
         const id = image.id;
         const deletion = confirm('Do you want to delete ' + image.name);
@@ -77,6 +97,10 @@ class DeleteImage extends React.Component {
         }
     }
 
+    /**
+     * Makes the callback and also removes the image from tha Allimages list
+     * @param id The id by which to remove the image
+     */
     deleteImage(id) {
         let newImages = this.state.allImages.filter((image) => image.id !== id);
         this.setState({allImages: newImages});
@@ -84,6 +108,11 @@ class DeleteImage extends React.Component {
         this.props.callbackDeleteFromMapping(id);
     }
 
+    /**
+     * Choses the current Layer and shows all Images within the Layer
+     * @param layer The layerr, which you want to see
+     * @param visible, Weather you opened or closed it it shows/removes all images
+     */
     showImages(layer, visible) {
         if (visible) {
             this.setState({showLayer: ''});

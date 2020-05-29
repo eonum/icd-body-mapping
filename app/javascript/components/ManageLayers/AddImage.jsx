@@ -1,6 +1,9 @@
 import React from "react";
 import loadingGif from '../../../assets/images/Preloader_2.gif';
-
+/**
+ * The AddImage Component allows the User to add his own Images, as to expand the Mapping
+ * This is done Through 3 Input fields that appear, once the plus is clicked
+ */
 class AddImage extends React.Component {
     constructor(props) {
         super(props);
@@ -10,6 +13,11 @@ class AddImage extends React.Component {
         };
     }
 
+    /**
+     * The handleFormSubmit Method takes the Input from the 3 fields and makes
+     * a post request to the Backend. It then passes the response to Mapping and
+     * DeleteImages, so that they could update their collection.
+     */
     handleFormSubmit(ebene, name, img) {
         let body = JSON.stringify({layer: {ebene: ebene, name: name, img: img}});
 
@@ -20,16 +28,17 @@ class AddImage extends React.Component {
             body: body,
         }).then((layer) => {
             if (layer.ok){
-                this.addNewImage(layer);
+                this.props.callbackFromMapping(layer);
                 this.setState({load: false});
             }
         })
     }
 
-    addNewImage(image) {
-        this.props.callbackFromMapping(image);
-    }
-
+    /**
+     * This Method prevents the standard reaction upon enter
+     * Since there are 3 Fields we diasable submit on enter,
+     * since it would cause Problems
+     */
     handleKeyDown(event) {
         if (event.key === 'Enter') {
             event.preventDefault();
@@ -106,5 +115,4 @@ class AddImage extends React.Component {
         );
     }
 }
-
 export default AddImage

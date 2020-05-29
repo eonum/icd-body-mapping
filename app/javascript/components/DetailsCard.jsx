@@ -105,6 +105,7 @@ class DetailsCard extends React.Component {
                 <Form>
                     <FormControl
                         type="text"
+                        id="Annotationen"
                         onChange={e => {
                             this.setState({annotationen: e.target.value})
                         }}
@@ -123,6 +124,7 @@ class DetailsCard extends React.Component {
                             selectedLayer={selectedLayer}
                             callbackFromDetailsCard={this.props.callbackFromMainUIMaps}
                             callbackFromMainUIUpdateList={this.props.callbackFromMainUIUpdateList}
+                            callbackFromMainUILoad={this.props.callbackFromMainUILoad}
                             parent={'details'}
                         />
                     </div>

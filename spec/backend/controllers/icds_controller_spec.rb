@@ -16,12 +16,12 @@ RSpec.describe Api::V1::IcdsController, type: :controller do
 
   describe "GET show" do
     it 'should show Icd' do
-      get :show, params: {id: 1}
+      get :show, params: {id: @icd1.id}
       expect(response.body).to match [@icd1].to_json
     end
 
     it 'should not show all Icds' do
-      get :show, params: {id: 1}
+      get :show, params: {id: @icd1.id}
       expect(response.body).to_not equal [@icd1,@icd2].to_json
     end
   end

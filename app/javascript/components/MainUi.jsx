@@ -26,7 +26,6 @@ class MainUI extends React.Component {
             showingIcdId: 0,
             checkedIcdIds: [],
             selectedLayer: '',
-            selectedLayerFromList: '',
             map: '',
             mapLayerList: 0,
             hightlightedPng: '',
@@ -42,6 +41,7 @@ class MainUI extends React.Component {
             viewAll: false,
             showFrags: true,
             mapView: true,
+            load: false,
         };
     }
 
@@ -59,7 +59,6 @@ class MainUI extends React.Component {
             showingIcdId: 0,
             checkedIcdIds: [],
             selectedLayer: '',
-            selectedLayerFromList: '',
             map: '',
             mapLayerList: 0,
             hightlightedPng: '',
@@ -94,6 +93,8 @@ class MainUI extends React.Component {
     callbackTopbarSearch = (searchTermFromTopbar) => {
         this.setState({
             searchTerm: searchTermFromTopbar,
+            showingIcdId: 0,
+            selectedIcd: '',
             searchDisplayed: true,
             detailsDisplayed: false,
         });
@@ -164,6 +165,10 @@ class MainUI extends React.Component {
 
     callbackDetailsUpdateList = () => {
         this.setState({updateList: true});
+    };
+
+    callbackDetailsLoad = (load) => {
+        this.setState({load: load});
     };
 
     callbackDetailsCardClose = () => {
@@ -262,6 +267,7 @@ class MainUI extends React.Component {
                 updateList={this.state.updateList}
                 showFrags={this.state.showFrags}
                 mapView={this.state.mapView}
+                load={this.state.load}
                 callbackFromMainUIHighlight={this.callbackLayerListHighlightPng}
                 callbackFromMainUIResetToSelection={this.callbackLayerlistResetToSelection}
                 callbackFromMainUISelectPngs={this.callbackLayerListSelectPngs}
@@ -282,6 +288,7 @@ class MainUI extends React.Component {
                 callbackFromMainUIClose={this.callbackDetailsCardClose}
                 callbackFromMainUIReloadIcds={this.callbackDetailsReloadIcds}
                 callbackFromMainUIUpdateList={this.callbackDetailsUpdateList}
+                callbackFromMainUILoad={this.callbackDetailsLoad}
             />
         );
         const searchResults = (
@@ -306,7 +313,6 @@ class MainUI extends React.Component {
                 mapLayerList={this.state.mapLayerList}
                 showingIcdId={this.state.showingIcdId}
                 needUpdate={this.state.needUpdate}
-                selectedLayerFromList={this.state.selectedLayerFromList}
                 hightlightedPng={this.state.hightlightedPng}
                 layerFragmentStack={this.state.layerFragmentStack}
                 addToSelection={this.state.addToSelection}

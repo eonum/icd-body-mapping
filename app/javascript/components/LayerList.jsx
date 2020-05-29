@@ -59,7 +59,7 @@ class LayerList extends React.Component {
             this.setState({load: true});
             setTimeout(() => {
                 this.getMapsOfIcd(this.props.selectedIcd);
-            }, 1000);
+            });
             this.setState({checkedFrags: []});
             this.props.callbackFromMainUISelectPngs([]);
             this.props.callbackFromMainUIUpdateListDone();
@@ -77,6 +77,10 @@ class LayerList extends React.Component {
         if (this.props.mapView !== prevProps.mapView) {
             this.setState({showFrags: (this.props.showFrags
                                       && this.props.mapView)});
+        }
+        if (this.props.load !== prevProps.load
+          && this.props.load === true) {
+            this.setState({load: true});
         }
     }
 

@@ -3,6 +3,12 @@ import AddImage from "./AddImage";
 import DeleteImage from "./DeleteImage";
 import AddIcon from '@material-ui/icons/Add';
 
+/**
+ * The LayerOptions Component is one that holds two other Components, which
+ * are crutial for adding and removing Images/layers. It doesn't have any
+ * meaningful methods it just holds them Both, as to improve Design.
+ * @author Aaron Saegesser, Marius Asadauskas
+ */
 class LayerOptions extends React.Component {
     constructor(props) {
         super(props);
@@ -21,6 +27,11 @@ class LayerOptions extends React.Component {
         this.setState({isMounted: false});
     }
 
+    /**
+     * Passes the callback further to Mapping and gives it to DeleteImage,
+     * as to add it to the List.
+     * @param image The image which was just created.
+     */
     callbackallImages = (image) => {
         this.props.callbackFromMapping(image);
         this.setState({
@@ -29,12 +40,17 @@ class LayerOptions extends React.Component {
         })
     };
 
+    /**
+     * Changes once the add image button was clicked
+     */
     addView() {
         this.setState({add: true});
     }
 
+    /**
+     * Takes care of some of the design, so that the Components could worry about functionality
+     */
     render() {
-        // Component Parts
         const addButton = (
             <button
                 type="button"

@@ -234,6 +234,7 @@ class SearchCard extends React.Component {
         );
         const closeButton = (
             <button type="button"
+                    id="closeSearch"
                     className="btn btn-default mr-2 text-primary"
                     style={closeButtonStyle}
                     onClick={this.closeSearchCard.bind(this)}>

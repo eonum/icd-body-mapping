@@ -16,12 +16,12 @@ RSpec.describe Api::V1::LayersController, type: :controller do
 
   describe "GET show" do
     it 'should show layer' do
-      get :show, params: {id: 1}
+      get :show, params: {id: @lay1.id}
       expect(response.body).to match [@lay1].to_json
     end
 
     it 'should not show all Layers' do
-      get :show, params: {id: 1}
+      get :show, params: {id: @lay1.id}
       expect(response.body).to_not equal [@lay1,@lay2].to_json
     end
   end
