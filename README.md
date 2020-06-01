@@ -1,7 +1,7 @@
 # icd-body-mapping
 Web app for the mapping of ICD-codes to the human body
 
-#Authors
+# Authors
 
 Aaron Sägesser, Linn Haeffner, Joshua Felder, Marius Asadauskas
 
