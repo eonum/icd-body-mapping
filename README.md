@@ -1,5 +1,10 @@
 # icd-body-mapping
-Web app for the mapping of medical codes (ICD and CHOP) to the human body
+Web app for the mapping of ICD-codes to the human body
+
+#Authors
+
+Aaron Sägesser, Linn Haeffner, Joshua Felder, Marius Asadauskas
+
 # Documentation
 
 Required frameworks
@@ -48,8 +53,8 @@ git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
 echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc
 exec $SHELL
 
-rbenv install 2.7.0
-rbenv global 2.7.0
+rbenv install 2.6.5
+rbenv global 2.6.5
 ruby -v
 ```
 
@@ -78,15 +83,7 @@ gem install nokogiri
 
 #### Install PostgreSQL (12.2):
 ```
-sudo apt install postgresql-12 libpq-dev
-```
-You have to setup a user with permission to create databases
-```
-sudo -u postgres createuser [username] -s
-
-If you would like to set a password for the user, you can do the following
-sudo -u postgres psql
-postgres=# \password [passowrd]
+sudo apt install postgresql-10 libpq-dev
 ```
 
 ### Windows
@@ -143,34 +140,25 @@ C:\> nokogiri -v
 
 Download PostgreSQL from 'https://www.postgresql.org/download/windows/' and install
 
-Setup user with permission to create databases
-
 ## Application run guide
 
-### Install dependencies
+###Linux
 
-Open a terminal and enter the following:
+Open Terminal in $YOUR_PATH/icd-body-mapping/bin and execute the start.sh file
+
+```
+sh start.sh
+```
+
+###Windows
+
+Open Terminal in $YOUR_PATH/icd-body-mapping and install dependencies
 
 ```
 bundle install
 ```
 
-### Setup Database
-
-Open the project in a Ruby IDE of your choice and open the database.yml file under ~$YOUR_PROJECT_PATH$/ice-body-mapping/config/database.yml
-
-Replace the username and password in lines 26 & 27 aswell as lines 62 & 63 with the credentials previously configured.
-
-Next you will have to migrate the DB, so open a terminal and enter the following:
-```
-rails db:create
-rails db:migrate
-rake db:data:load
-```
-
-### Run the project
-
-Open a terminal and enter the following:
+Start the application
 
 ```
 rails server
