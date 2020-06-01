@@ -11,6 +11,8 @@ Required frameworks
 
 Ruby on Rails, PostgreSQL ReactJS, Node.js, npm (included in most Node.js installers), yarn
 
+User handbook available in Root directory (german)
+
 ## Installation guide (Always control versions, given versions are currently in use for this project)
 
 ### Linux (Ubuntu) (requires configured git account)
