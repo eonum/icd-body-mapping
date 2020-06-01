@@ -142,7 +142,7 @@ Download PostgreSQL from 'https://www.postgresql.org/download/windows/' and inst
 
 ## Application run guide
 
-###Linux
+### Linux
 
 Open Terminal in $YOUR_PATH/icd-body-mapping/bin and execute the start.sh file
 
@@ -150,7 +150,7 @@ Open Terminal in $YOUR_PATH/icd-body-mapping/bin and execute the start.sh file
 sh start.sh
 ```
 
-###Windows
+### Windows
 
 Open Terminal in $YOUR_PATH/icd-body-mapping and install dependencies
 
